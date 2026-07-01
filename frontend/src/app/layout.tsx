@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { NavHeader } from "@/components/ui/NavHeader";
+import { ToastProvider } from "@/components/ui/ToastProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -19,8 +20,9 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="min-h-screen bg-earth-dark text-text-primary antialiased">
-        <NavHeader />
-        <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
+        <ToastProvider>
+          <NavHeader />
+          <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
         <footer className="mt-16 border-t border-earth-border">
           <div className="mx-auto max-w-6xl px-4 py-8">
             <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -54,6 +56,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </ToastProvider>
       </body>
     </html>
   );

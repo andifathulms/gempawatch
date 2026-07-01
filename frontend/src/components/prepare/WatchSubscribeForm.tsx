@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { API_BASE } from "@/lib/api";
-import { Toast } from "@/components/ui/Toast";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface Props {
   lat: number;
@@ -17,7 +17,7 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
   const [label, setLabel] = useState(defaultLabel);
   const [minMag, setMinMag] = useState(5);
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
-  const [toastOpen, setToastOpen] = useState(false);
+  const { showToast } = useToast();
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,28 +35,25 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
           radius_km: 100,
         }),
       });
-      setState(res.ok ? "done" : "error");
-      setToastOpen(true);
+      if (res.ok) {
+        setState("done");
+        showToast("Notifikasi lokasi berhasil diaktifkan.", { variant: "success" });
+      } else {
+        setState("error");
+        showToast("Gagal menyimpan langganan. Coba lagi.", { variant: "error" });
+      }
     } catch {
       setState("error");
-      setToastOpen(true);
+      showToast("Gagal menyimpan langganan. Coba lagi.", { variant: "error" });
     }
   };
 
   if (state === "done") {
     return (
-      <>
-        <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-sm text-text-secondary">
-          ✓ Berhasil! Kami akan mengirim email jika ada gempa M{minMag.toFixed(1)}+ di
-          dekat lokasi ini. Cek folder spam untuk email pertama.
-        </div>
-        <Toast
-          open={toastOpen}
-          variant="success"
-          message="Notifikasi lokasi berhasil diaktifkan."
-          onClose={() => setToastOpen(false)}
-        />
-      </>
+      <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-sm text-text-secondary">
+        ✓ Berhasil! Kami akan mengirim email jika ada gempa M{minMag.toFixed(1)}+ di
+        dekat lokasi ini. Cek folder spam untuk email pertama.
+      </div>
     );
   }
 
@@ -102,12 +99,6 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
       >
         {state === "loading" ? "Menyimpan…" : "Aktifkan Notifikasi"}
       </button>
-      <Toast
-        open={toastOpen && state === "error"}
-        variant="error"
-        message="Gagal menyimpan langganan. Coba lagi."
-        onClose={() => setToastOpen(false)}
-      />
     </form>
   );
 }

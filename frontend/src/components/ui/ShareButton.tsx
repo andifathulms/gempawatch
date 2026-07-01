@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useToast } from "@/components/ui/ToastProvider";
 
 interface Props {
   /** Absolute or relative path to share (resolved against origin at click). */
@@ -12,7 +12,7 @@ interface Props {
 // WhatsApp-first share (the dominant channel in Indonesia) + native share sheet
 // + copy-link fallback. Turns the risk result into something that spreads.
 export function ShareButton({ path, caption }: Props) {
-  const [copied, setCopied] = useState(false);
+  const { showToast } = useToast();
 
   const url = () =>
     typeof window === "undefined" ? path : new URL(path, window.location.origin).toString();
@@ -27,9 +27,12 @@ export function ShareButton({ path, caption }: Props) {
         /* user cancelled — fall through to copy */
       }
     }
-    await navigator.clipboard.writeText(`${caption} ${shareUrl}`);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(`${caption} ${shareUrl}`);
+      showToast("Tautan disalin ke papan klip.", { variant: "success" });
+    } catch {
+      showToast("Gagal menyalin tautan.", { variant: "error" });
+    }
   };
 
   const whatsappHref = () =>
@@ -47,9 +50,9 @@ export function ShareButton({ path, caption }: Props) {
       </a>
       <button
         onClick={nativeShare}
-        className="rounded-lg border border-earth-border px-4 py-2 text-sm text-text-secondary hover:border-seismic-orange hover:text-seismic-orange"
+        className="rounded-lg border border-earth-border px-4 py-2 text-sm text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-orange"
       >
-        {copied ? "Tautan disalin ✓" : "Bagikan / Salin tautan"}
+        Bagikan / Salin tautan
       </button>
     </div>
   );
