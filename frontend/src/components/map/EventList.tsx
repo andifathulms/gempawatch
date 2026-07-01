@@ -18,7 +18,10 @@ export function EventList({ events }: Props) {
   return (
     <ul className="divide-y divide-earth-border">
       {events.map((e) => (
-        <li key={e.id} className="flex items-center gap-3 py-3">
+        <li
+          key={e.id}
+          className="-mx-2 flex items-center gap-3 rounded-lg px-2 py-3 transition-colors duration-[130ms] hover:bg-earth-raised/50"
+        >
           <MagnitudeBadge magnitude={e.magnitude} depthKm={e.depth_km} size={40} />
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm text-text-primary">

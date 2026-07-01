@@ -35,12 +35,26 @@ export function RegionSearch() {
 
   return (
     <div className="relative">
+      <svg
+        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        aria-hidden="true"
+      >
+        <circle cx="7" cy="7" r="4.5" />
+        <path d="M10.5 10.5L14 14" strokeLinecap="round" />
+      </svg>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
         onFocus={() => results.length && setOpen(true)}
         placeholder="Cari kabupaten/kota… (mis. Palu, Bandung)"
-        className="w-full rounded-lg border border-earth-border bg-earth-surface px-4 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
+        aria-label="Cari kabupaten atau kota"
+        className="w-full rounded-lg border border-earth-border bg-earth-surface py-2.5 pl-10 pr-4 text-sm text-text-primary shadow-sm transition-colors placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
       />
       {open && results.length > 0 && (
         <ul className="absolute z-[1200] mt-1 max-h-72 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised shadow-xl">
