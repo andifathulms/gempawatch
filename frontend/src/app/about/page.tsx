@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/Card";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { api } from "@/lib/api";
 
 export const metadata = {
   title: "Tentang & Metodologi — GempaWatch",
@@ -7,7 +8,25 @@ export const metadata = {
     "Sumber data, metodologi risiko, dan atribusi BMKG & USGS untuk GempaWatch.",
 };
 
-export default function AboutPage() {
+export const revalidate = 3600;
+
+export default async function AboutPage() {
+  let coverage: { earliest: number | null; latest: number | null; count: number } = {
+    earliest: null,
+    latest: null,
+    count: 0,
+  };
+  try {
+    const m = await api.meta();
+    coverage = { earliest: m.earliest_year, latest: m.latest_year, count: m.event_count };
+  } catch {
+    /* meta optional */
+  }
+  const span =
+    coverage.earliest && coverage.latest
+      ? `${coverage.earliest}–${coverage.latest}`
+      : "historis";
+
   return (
     <div className="max-w-3xl space-y-6">
       <div>
@@ -17,8 +36,12 @@ export default function AboutPage() {
         <p className="mt-2 text-sm leading-relaxed text-text-secondary">
           GempaWatch membantu masyarakat memahami risiko gempa di lokasi mereka
           sendiri — bukan sekadar menampilkan daftar gempa terbaru. Kami
-          menggabungkan data langsung BMKG dengan lebih dari 50 tahun catatan
-          seismik USGS untuk menghitung profil risiko regional.
+          menggabungkan data langsung BMKG dengan catatan seismik USGS untuk
+          menghitung profil risiko regional. Basis data saat ini memuat{" "}
+          <strong className="text-text-primary">
+            {coverage.count.toLocaleString("id-ID")} kejadian
+          </strong>{" "}
+          untuk periode <strong className="text-text-primary">{span}</strong>.
         </p>
       </div>
 
@@ -58,17 +81,30 @@ export default function AboutPage() {
       <Card title="Metodologi Risiko">
         <div className="space-y-3 text-sm leading-relaxed text-text-secondary">
           <p>
-            <strong className="text-text-primary">Profil risiko regional</strong>{" "}
-            menghitung jumlah gempa M4+, M5+, M6+, dan M7+ dalam radius 100km dari
-            pusat wilayah sepanjang catatan sejarah, magnitudo terbesar, kedalaman
-            rata-rata, dan sesar terdekat.
+            <strong className="text-text-primary">Skor aktivitas (0–100)</strong>{" "}
+            adalah satu angka terkalibrasi yang menimbang empat komponen dengan
+            bobot transparan: frekuensi gempa M4+ per tahun (maks 40), magnitudo
+            terbesar (maks 30), proporsi gempa dangkal &lt;70km (maks 15), dan
+            kedekatan sesar (maks 15) — semuanya dalam radius 100km.{" "}
+            <strong className="text-text-primary">Persentil</strong> memperingkat
+            skor ini terhadap seluruh wilayah lain, memberi konteks relatif
+            (&quot;lebih aktif dari X% wilayah&quot;).
+          </p>
+          <p>
+            <strong className="text-text-primary">Catatan keterbatasan:</strong>{" "}
+            jumlah kejadian dihitung dalam radius tetap (100km untuk profil, 50km
+            untuk cek risiko) dan <em>tidak</em> dinormalisasi terhadap luas
+            wilayah maupun populasi — dua wilayah dengan skor sama belum tentu
+            sebanding secara paparan. Gunakan persentil untuk perbandingan relatif.
           </p>
           <p>
             <strong className="text-text-primary">Tingkat risiko tsunami</strong>{" "}
             adalah indikator pola historis, bukan peringatan resmi. Kriteria:
             wilayah pesisir dengan gempa dangkal (&lt;70km), magnitudo ≥6.5, dalam
             radius 150km. TINGGI: 3+ kejadian; SEDANG: 1–2; RENDAH: pesisir tanpa
-            kejadian memenuhi kriteria.
+            kejadian memenuhi kriteria. Status &quot;pesisir&quot; dipakai sebagai
+            pendekatan untuk episentrum lepas pantai — sebuah penyederhanaan, bukan
+            penentuan geospasial garis pantai yang presisi.
           </p>
           <p>
             <strong className="text-text-primary">Deduplikasi</strong> — ketika BMKG

@@ -3,9 +3,12 @@ import "./globals.css";
 import { NavHeader } from "@/components/ui/NavHeader";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
   title: "GempaWatch — Intelijen Risiko Gempa Indonesia",
   description:
-    "Pahami risiko gempa di lokasi Anda berdasarkan data BMKG dan puluhan tahun catatan seismik USGS. Bukan sistem peringatan dini — indikator pola historis.",
+    "Pahami risiko gempa di lokasi Anda berdasarkan data BMKG dan catatan seismik historis USGS. Bukan sistem peringatan dini — indikator pola historis.",
 };
 
 export default function RootLayout({

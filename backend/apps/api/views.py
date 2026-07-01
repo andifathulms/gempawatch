@@ -279,6 +279,39 @@ class DisasterViewSet(
         return Response(HistoricalDisasterSerializer(disasters, many=True).data)
 
 
+class MetaView(APIView):
+    """
+    GET /api/meta/ — dataset coverage + counts. Powers honest, self-updating
+    copy on the About page instead of a hardcoded "50 years" claim.
+    """
+
+    def get(self, request):
+        from django.db.models import Max, Min
+        from django.db.models.functions import ExtractYear
+
+        agg = EarthquakeEvent.objects.aggregate(
+            earliest=Min(ExtractYear("event_time")),
+            latest=Max(ExtractYear("event_time")),
+        )
+        return Response(
+            {
+                "event_count": EarthquakeEvent.objects.count(),
+                "earliest_year": agg["earliest"],
+                "latest_year": agg["latest"],
+                "coverage_years": (
+                    agg["latest"] - agg["earliest"] + 1
+                    if agg["earliest"] and agg["latest"]
+                    else 0
+                ),
+                "region_count": AdminRegion.objects.count(),
+                "source_attribution": [
+                    "Data: Badan Meteorologi, Klimatologi, dan Geofisika (BMKG)",
+                    "Data: United States Geological Survey (USGS)",
+                ],
+            }
+        )
+
+
 class RiskCheckView(APIView):
     """POST /api/risk-check/ — body {lat, lng} → full live risk report."""
 

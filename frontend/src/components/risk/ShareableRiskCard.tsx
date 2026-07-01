@@ -5,12 +5,12 @@ import type { RiskCheckReport } from "@/lib/types";
 
 // Designed for screenshot / social sharing (PRD). Self-contained, high-contrast.
 export function ShareableRiskCard({ report }: { report: RiskCheckReport }) {
-  const band = report.overall_risk_band;
+  const tier = report.activity_tier;
   return (
     <div
       className="rounded-2xl border p-5"
       style={{
-        borderColor: `${riskTierColor(band)}66`,
+        borderColor: `${riskTierColor(tier)}66`,
         background:
           "linear-gradient(160deg, #232323 0%, #1A1A1A 100%)",
       }}
@@ -26,13 +26,23 @@ export function ShareableRiskCard({ report }: { report: RiskCheckReport }) {
 
       <div className="mt-4 flex items-baseline gap-3">
         <span
-          className="font-mono text-4xl font-bold"
-          style={{ color: riskTierColor(band) }}
+          className="font-mono text-5xl font-bold"
+          style={{ color: riskTierColor(tier) }}
         >
-          {riskTierLabel(band)}
+          {report.composite_score.toFixed(0)}
         </span>
-        <span className="text-sm text-text-secondary">risiko historis</span>
+        <div className="flex flex-col">
+          <span className="text-sm font-semibold" style={{ color: riskTierColor(tier) }}>
+            Aktivitas {riskTierLabel(tier)}
+          </span>
+          <span className="text-xs text-text-muted">skor / 100</span>
+        </div>
       </div>
+      {report.activity_percentile != null && (
+        <p className="mt-1 text-sm text-text-secondary">
+          Lebih aktif dari {report.activity_percentile}% wilayah di Indonesia.
+        </p>
+      )}
 
       <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
         <div>

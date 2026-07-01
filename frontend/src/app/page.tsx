@@ -37,7 +37,7 @@ export default async function HomePage() {
           </h1>
           <p className="mt-1 max-w-xl text-sm text-text-secondary">
             Intelijen risiko gempa Indonesia — menggabungkan data langsung BMKG dan
-            puluhan tahun catatan seismik. Bukan prediksi, melainkan pola historis.
+            catatan seismik historis USGS. Bukan prediksi, melainkan pola historis.
           </p>
         </div>
         <Link

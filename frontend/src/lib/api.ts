@@ -83,6 +83,17 @@ export const api = {
     get<HistoricalDisaster[]>("/disasters/timeline/", 86400),
   disaster: (id: number) => get<HistoricalDisaster>(`/disasters/${id}/`),
 
+  // Dataset meta (coverage)
+  meta: () =>
+    get<{
+      event_count: number;
+      earliest_year: number | null;
+      latest_year: number | null;
+      coverage_years: number;
+      region_count: number;
+      source_attribution: string[];
+    }>("/meta/", 3600),
+
   // Risk check (live POST)
   riskCheck: async (lat: number, lng: number): Promise<RiskCheckReport> => {
     const res = await fetch(`${API_BASE}/api/risk-check/`, {

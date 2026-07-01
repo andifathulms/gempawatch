@@ -5,6 +5,7 @@ from .views import (
     DisasterViewSet,
     EarthquakeViewSet,
     FaultViewSet,
+    MetaView,
     RegionViewSet,
     RiskCheckView,
     TsunamiRiskView,
@@ -20,5 +21,6 @@ urlpatterns = [
     path("", include(router.urls)),
     path("tsunami-risk/coastal-zones/", TsunamiRiskView.as_view(), name="tsunami-coastal-zones"),
     path("risk-check/", RiskCheckView.as_view(), name="risk-check"),
+    path("meta/", MetaView.as_view(), name="meta"),
     path("alerts/", include("apps.alerts.urls")),
 ]
