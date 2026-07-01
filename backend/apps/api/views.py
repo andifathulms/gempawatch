@@ -77,6 +77,7 @@ class RegionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.G
 
     queryset = AdminRegion.objects.all()
     serializer_class = AdminRegionSerializer
+    lookup_field = "slug"
 
     @action(detail=True, url_path="risk-profile")
     def risk_profile(self, request, pk=None):

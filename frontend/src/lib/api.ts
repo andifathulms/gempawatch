@@ -38,13 +38,13 @@ export const api = {
   feltEvents: () => get<Paginated<EarthquakeEvent>>("/earthquakes/felt/", 300),
   event: (id: number) => get<EarthquakeEvent>(`/earthquakes/${id}/`),
 
-  // Regions
+  // Regions (looked up by slug)
   regions: () => get<Paginated<AdminRegion>>("/regions/"),
-  region: (id: number) => get<AdminRegion>(`/regions/${id}/`),
-  riskProfile: (id: number) =>
-    get<RegionRiskProfile>(`/regions/${id}/risk-profile/`, 3600),
-  regionTimeline: (id: number) =>
-    get<RegionTimeline>(`/regions/${id}/timeline/`, 3600),
+  region: (slug: string) => get<AdminRegion>(`/regions/${slug}/`),
+  riskProfile: (slug: string) =>
+    get<RegionRiskProfile>(`/regions/${slug}/risk-profile/`, 3600),
+  regionTimeline: (slug: string) =>
+    get<RegionTimeline>(`/regions/${slug}/timeline/`, 3600),
   searchRegions: (q: string) =>
     get<AdminRegion[]>(`/regions/search/?q=${encodeURIComponent(q)}`),
   nearestRegion: (lat: number, lng: number) =>
