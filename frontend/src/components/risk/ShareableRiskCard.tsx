@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
 import { riskTierColor, riskTierLabel } from "@/lib/seismic";
 import type { RiskCheckReport } from "@/lib/types";
@@ -67,6 +68,15 @@ export function ShareableRiskCard({ report }: { report: RiskCheckReport }) {
       </dl>
 
       <p className="mt-4 text-sm text-text-secondary">{report.comparison.text}</p>
+
+      {report.nearest_region && (
+        <Link
+          href={`/region/${report.nearest_region.slug}`}
+          className="mt-3 inline-block text-sm text-seismic-orange underline underline-offset-2 hover:brightness-110"
+        >
+          Lihat profil risiko lengkap {report.nearest_region.name} →
+        </Link>
+      )}
 
       <p className="mt-4 border-t border-earth-border pt-3 text-[11px] leading-relaxed text-text-muted">
         {report.methodology_note}
