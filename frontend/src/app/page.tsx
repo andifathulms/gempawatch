@@ -21,11 +21,12 @@ function weekSummary(events: EarthquakeEvent[]) {
 
 export default async function HomePage() {
   let events: EarthquakeEvent[] = [];
+  let loadFailed = false;
   try {
     const data = await api.liveEvents();
     events = data.results;
   } catch {
-    events = [];
+    loadFailed = true;
   }
   const summary = weekSummary(events);
 
@@ -40,10 +41,16 @@ export default async function HomePage() {
         <div className="relative flex flex-col gap-5">
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/60 px-3 py-1 text-xs text-text-secondary">
             <span className="relative inline-flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-risk-green" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-risk-green" />
+              <span
+                className={`absolute inline-flex h-full w-full animate-pulse-ring rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
+              />
+              <span
+                className={`relative inline-flex h-2 w-2 rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
+              />
             </span>
-            {summary.total} gempa tercatat dalam 24 jam terakhir
+            {loadFailed
+              ? "Data langsung sementara tidak tersedia"
+              : `${summary.total} gempa tercatat dalam 24 jam terakhir`}
           </span>
 
           <div className="max-w-2xl">
@@ -89,6 +96,15 @@ export default async function HomePage() {
           </Link>
         }
       >
+        {loadFailed && (
+          <div className="mb-3 flex items-start gap-2 rounded-lg border border-risk-amber/40 bg-risk-amber/10 px-3 py-2 text-sm text-text-secondary">
+            <span aria-hidden="true">⚠️</span>
+            <span>
+              Gagal memuat data gempa langsung. Menampilkan peta tanpa kejadian
+              terbaru — muat ulang halaman untuk mencoba lagi.
+            </span>
+          </div>
+        )}
         <DynamicLiveMap events={events} />
         <SourceAttribution className="mt-3" />
       </Card>
@@ -96,7 +112,13 @@ export default async function HomePage() {
       <div className="grid gap-6 md:grid-cols-3">
         <Card title="Gempa Terkini" className="md:col-span-2">
           <div className="max-h-[380px] overflow-y-auto pr-1">
-            <EventList events={events} />
+            {loadFailed ? (
+              <p className="py-8 text-center text-sm text-text-muted">
+                Data tidak tersedia saat ini. Coba muat ulang halaman.
+              </p>
+            ) : (
+              <EventList events={events} />
+            )}
           </div>
         </Card>
 
