@@ -6,6 +6,7 @@ import { EventList } from "@/components/map/EventList";
 import { Card } from "@/components/ui/Card";
 import { Stat } from "@/components/ui/Stat";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { RegionSearch } from "@/components/discover/RegionSearch";
 
 export const revalidate = 300; // 5 min, matching BMKG cadence
 
@@ -47,6 +48,8 @@ export default async function HomePage() {
           Cek Risiko Saya →
         </Link>
       </section>
+
+      <RegionSearch />
 
       <Card title="Peta Gempa — 24 Jam Terakhir">
         <DynamicLiveMap events={events} />
