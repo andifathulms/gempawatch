@@ -80,7 +80,7 @@ class RegionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.G
     lookup_field = "slug"
 
     @action(detail=True, url_path="risk-profile")
-    def risk_profile(self, request, pk=None):
+    def risk_profile(self, request, slug=None):
         region = self.get_object()
         profile = RegionRiskProfile.objects.filter(region=region).first()
         if profile is None:
@@ -91,7 +91,7 @@ class RegionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.G
         return Response(RegionRiskProfileSerializer(profile).data)
 
     @action(detail=True)
-    def timeline(self, request, pk=None):
+    def timeline(self, request, slug=None):
         """All events within 100km of the region centroid, as scatter points."""
         from django.contrib.gis.measure import D
 

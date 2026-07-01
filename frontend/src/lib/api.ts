@@ -9,7 +9,14 @@ import type {
   TsunamiZone,
 } from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+// Browser calls the published host port (NEXT_PUBLIC_API_URL); server-side
+// rendering runs inside the container and must reach the backend service
+// directly (INTERNAL_API_URL, e.g. http://backend:8000).
+const PUBLIC_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_BASE =
+  typeof window === "undefined"
+    ? process.env.INTERNAL_API_URL ?? PUBLIC_BASE
+    : PUBLIC_BASE;
 
 interface Paginated<T> {
   count: number;
