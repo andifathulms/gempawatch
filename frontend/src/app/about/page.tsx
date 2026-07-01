@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { api } from "@/lib/api";
 
@@ -29,21 +30,21 @@ export default async function AboutPage() {
 
   return (
     <div className="max-w-3xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Tentang GempaWatch
-        </h1>
-        <p className="mt-2 text-sm leading-relaxed text-text-secondary">
-          GempaWatch membantu masyarakat memahami risiko gempa di lokasi mereka
-          sendiri — bukan sekadar menampilkan daftar gempa terbaru. Kami
-          menggabungkan data langsung BMKG dengan catatan seismik USGS untuk
-          menghitung profil risiko regional. Basis data saat ini memuat{" "}
-          <strong className="text-text-primary">
-            {coverage.count.toLocaleString("id-ID")} kejadian
-          </strong>{" "}
-          untuk periode <strong className="text-text-primary">{span}</strong>.
-        </p>
-      </div>
+      <PageHeader
+        title="Tentang GempaWatch"
+        subtitle={
+          <>
+            GempaWatch membantu masyarakat memahami risiko gempa di lokasi mereka
+            sendiri — bukan sekadar menampilkan daftar gempa terbaru. Kami
+            menggabungkan data langsung BMKG dengan catatan seismik USGS untuk
+            menghitung profil risiko regional. Basis data saat ini memuat{" "}
+            <strong className="text-text-primary">
+              {coverage.count.toLocaleString("id-ID")} kejadian
+            </strong>{" "}
+            untuk periode <strong className="text-text-primary">{span}</strong>.
+          </>
+        }
+      />
 
       <Card title="⚠️ Bukan Sistem Peringatan Dini">
         <p className="text-sm leading-relaxed text-text-secondary">

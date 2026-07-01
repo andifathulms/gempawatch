@@ -2,6 +2,7 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import type { LeaderboardRow } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { RegionSearch } from "@/components/discover/RegionSearch";
 import { Leaderboard } from "@/components/discover/Leaderboard";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -28,19 +29,12 @@ export default async function ExplorePage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Jelajahi Wilayah
-        </h1>
-        <p className="mt-1 max-w-2xl text-sm text-text-secondary">
-          Cari lokasimu, atau lihat wilayah paling aktif secara seismik. Skor
-          menimbang frekuensi, magnitudo, kedalaman, dan kedekatan sesar.
-        </p>
-      </div>
-
-      <Card>
+      <PageHeader
+        title="Jelajahi Wilayah"
+        subtitle="Cari lokasimu, atau lihat wilayah paling aktif secara seismik. Skor menimbang frekuensi, magnitudo, kedalaman, dan kedekatan sesar."
+      >
         <RegionSearch />
-      </Card>
+      </PageHeader>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card title="Wilayah Paling Aktif" className="lg:col-span-2">

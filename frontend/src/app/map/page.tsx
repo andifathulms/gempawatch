@@ -2,6 +2,7 @@ import { api } from "@/lib/api";
 import type { EarthquakeEvent, GeoFeatureCollection, TsunamiZone } from "@/lib/types";
 import { DynamicHazardMap } from "@/components/map/DynamicHazardMap";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 export const revalidate = 3600;
 
@@ -30,13 +31,10 @@ export default async function MapPage() {
 
   return (
     <div className="space-y-4">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Peta Bahaya & Sesar</h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          Sesar aktif, kepadatan gempa historis, dan zona risiko tsunami. Aktifkan
-          atau matikan lapisan sesuai kebutuhan.
-        </p>
-      </div>
+      <PageHeader
+        title="Peta Bahaya & Sesar"
+        subtitle="Sesar aktif, kepadatan gempa historis, dan zona risiko tsunami. Aktifkan atau matikan lapisan sesuai kebutuhan."
+      />
 
       <Card>
         <DynamicHazardMap faults={faults} events={events} zones={zones} />

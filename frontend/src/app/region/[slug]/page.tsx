@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { api } from "@/lib/api";
 import type { RegionRiskProfile, RegionTimeline } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
@@ -50,25 +51,19 @@ export default async function RegionPage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="text-xs uppercase tracking-wider text-text-muted">
-          {profile.region.type}
-        </p>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          {profile.region.name}
-        </h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          Profil risiko historis berdasarkan gempa dalam radius 100km.
-        </p>
-        <div className="mt-3">
+      <PageHeader
+        eyebrow={profile.region.type}
+        title={profile.region.name}
+        subtitle="Profil risiko historis berdasarkan gempa dalam radius 100km."
+        action={
           <ShareButton
             path={`/region/${profile.region.slug}`}
             caption={`Risiko gempa ${profile.region.name}: ${riskTierLabel(
               profile.activity_tier,
             )} (skor ${profile.composite_score?.toFixed(0) ?? "—"}/100) menurut GempaWatch:`}
           />
-        </div>
-      </div>
+        }
+      />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-1">

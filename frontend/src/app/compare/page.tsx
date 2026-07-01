@@ -2,6 +2,7 @@ import Link from "next/link";
 import { api } from "@/lib/api";
 import type { RegionRiskProfile } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
+import { PageHeader } from "@/components/ui/PageHeader";
 import { CompareSelector } from "@/components/discover/CompareSelector";
 import { RiskScoreGauge } from "@/components/risk/RiskScoreGauge";
 import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
@@ -46,15 +47,10 @@ export default async function ComparePage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          Bandingkan Wilayah
-        </h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          Lihat dua profil risiko berdampingan. Persentil memberi konteks relatif
-          nasional.
-        </p>
-      </div>
+      <PageHeader
+        title="Bandingkan Wilayah"
+        subtitle="Lihat dua profil risiko berdampingan. Persentil memberi konteks relatif nasional."
+      />
 
       <Card>
         <CompareSelector options={options} initialA={a} initialB={b} />
