@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { API_BASE } from "@/lib/api";
+import { Toast } from "@/components/ui/Toast";
 
 interface Props {
   lat: number;
@@ -16,6 +17,7 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
   const [label, setLabel] = useState(defaultLabel);
   const [minMag, setMinMag] = useState(5);
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [toastOpen, setToastOpen] = useState(false);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,17 +36,27 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
         }),
       });
       setState(res.ok ? "done" : "error");
+      setToastOpen(true);
     } catch {
       setState("error");
+      setToastOpen(true);
     }
   };
 
   if (state === "done") {
     return (
-      <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-sm text-text-secondary">
-        ✓ Berhasil! Kami akan mengirim email jika ada gempa M{minMag.toFixed(1)}+ di
-        dekat lokasi ini. Cek folder spam untuk email pertama.
-      </div>
+      <>
+        <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-sm text-text-secondary">
+          ✓ Berhasil! Kami akan mengirim email jika ada gempa M{minMag.toFixed(1)}+ di
+          dekat lokasi ini. Cek folder spam untuk email pertama.
+        </div>
+        <Toast
+          open={toastOpen}
+          variant="success"
+          message="Notifikasi lokasi berhasil diaktifkan."
+          onClose={() => setToastOpen(false)}
+        />
+      </>
     );
   }
 
@@ -90,9 +102,12 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
       >
         {state === "loading" ? "Menyimpan…" : "Aktifkan Notifikasi"}
       </button>
-      {state === "error" && (
-        <p className="text-sm text-risk-red">Gagal menyimpan. Coba lagi.</p>
-      )}
+      <Toast
+        open={toastOpen && state === "error"}
+        variant="error"
+        message="Gagal menyimpan langganan. Coba lagi."
+        onClose={() => setToastOpen(false)}
+      />
     </form>
   );
 }
