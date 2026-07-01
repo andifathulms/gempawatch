@@ -31,27 +31,64 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-6">
-      <section className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Seberapa rawan gempa lokasi kamu?
-          </h1>
-          <p className="mt-1 max-w-xl text-sm text-text-secondary">
-            Intelijen risiko gempa Indonesia — menggabungkan data langsung BMKG dan
-            catatan seismik historis USGS. Bukan prediksi, melainkan pola historis.
-          </p>
+      <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-gradient-to-br from-earth-surface to-earth-dark p-6 shadow-md sm:p-8">
+        {/* Subtle seismic-wave motif in the corner — decorative only. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-seismic-orange/10 blur-3xl"
+        />
+        <div className="relative flex flex-col gap-5">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/60 px-3 py-1 text-xs text-text-secondary">
+            <span className="relative inline-flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-risk-green" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-risk-green" />
+            </span>
+            {summary.total} gempa tercatat dalam 24 jam terakhir
+          </span>
+
+          <div className="max-w-2xl">
+            <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Seberapa rawan gempa{" "}
+              <span className="text-seismic-orange">lokasi kamu?</span>
+            </h1>
+            <p className="mt-2 max-w-xl text-sm text-text-secondary sm:text-base">
+              Intelijen risiko gempa Indonesia — menggabungkan data langsung BMKG dan
+              catatan seismik historis USGS. Bukan prediksi, melainkan pola historis.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Link
+              href="/risk-check"
+              className="inline-flex items-center justify-center rounded-lg bg-seismic-orange px-5 py-2.5 text-sm font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98]"
+            >
+              Cek Risiko Saya →
+            </Link>
+            <Link
+              href="/map"
+              className="inline-flex items-center justify-center rounded-lg border border-earth-border bg-earth-dark/40 px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors duration-200 hover:border-seismic-orange hover:text-text-primary"
+            >
+              Lihat Peta Bahaya
+            </Link>
+          </div>
+
+          <div className="max-w-xl">
+            <RegionSearch />
+          </div>
         </div>
-        <Link
-          href="/risk-check"
-          className="shrink-0 rounded-lg bg-seismic-orange px-4 py-2.5 text-sm font-semibold text-earth-dark hover:brightness-110"
-        >
-          Cek Risiko Saya →
-        </Link>
       </section>
 
-      <RegionSearch />
-
-      <Card title="Peta Gempa — 24 Jam Terakhir">
+      <Card
+        title="Peta Gempa — 24 Jam Terakhir"
+        action={
+          <Link
+            href="/map"
+            className="text-xs text-text-secondary transition-colors hover:text-seismic-orange"
+          >
+            Peta lengkap →
+          </Link>
+        }
+      >
         <DynamicLiveMap events={events} />
         <SourceAttribution className="mt-3" />
       </Card>
