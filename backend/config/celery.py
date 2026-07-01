@@ -20,6 +20,10 @@ app.conf.beat_schedule = {
         "task": "apps.earthquakes.tasks.bmkg.poll_bmkg_all",
         "schedule": crontab(minute="*/5"),
     },
+    "notify-location-watches-every-5-min": {
+        "task": "apps.alerts.tasks.notify.notify_significant_events",
+        "schedule": crontab(minute="*/5"),
+    },
     "sync-usgs-recent-daily": {
         "task": "apps.earthquakes.tasks.usgs.sync_usgs_recent",
         "schedule": crontab(hour=2, minute=0),  # 02:00 WIB (CELERY_TIMEZONE=Asia/Jakarta)

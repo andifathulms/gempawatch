@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.regions",
     "apps.faults",
     "apps.disasters",
+    "apps.alerts",
     "apps.api",
 ]
 
@@ -121,6 +122,15 @@ CORS_ALLOWED_ORIGINS = env(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:3000,http://127.0.0.1:3000",
 ).split(",")
+
+# Email — console backend in dev; override with SMTP settings in production.
+EMAIL_BACKEND = env(
+    "EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
+)
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="GempaWatch <alerts@gempawatch.id>")
+
+# Base URL of the public frontend — used in outbound email links (unsubscribe).
+FRONTEND_BASE_URL = env("FRONTEND_BASE_URL", default="http://localhost:3000")
 
 # Source attribution strings — BMKG credit is legally mandatory.
 SOURCE_ATTRIBUTION = {
