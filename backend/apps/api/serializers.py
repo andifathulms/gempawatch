@@ -115,6 +115,12 @@ class RegionRiskProfileSerializer(serializers.ModelSerializer):
             "nearest_fault_name",
             "nearest_fault_distance_km",
             "tsunami_risk_tier",
+            "composite_score",
+            "activity_tier",
+            "activity_percentile",
+            "shallow_ratio",
+            "earliest_event_year",
+            "latest_event_year",
             "last_updated",
         ]
 

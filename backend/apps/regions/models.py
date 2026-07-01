@@ -80,6 +80,23 @@ class RegionRiskProfile(BaseModel):
         max_length=10, choices=TSUNAMI_TIER_CHOICES, null=True, blank=True
     )
 
+    # Composite seismic-activity score (0–100) + national percentile rank.
+    # This is the single calibrated number surfaced to users, distinct from
+    # the tsunami tier. See apps/regions/scoring.py for the transparent formula.
+    composite_score = models.FloatField(null=True, blank=True)
+    activity_tier = models.CharField(
+        max_length=10, choices=TSUNAMI_TIER_CHOICES, null=True, blank=True
+    )
+    activity_percentile = models.IntegerField(null=True, blank=True)
+
+    # Fraction of nearby events shallower than 70km (more damaging).
+    shallow_ratio = models.FloatField(null=True, blank=True)
+
+    # Actual data coverage for this region — used to compute honest per-year
+    # frequency and to avoid overstating the historical window.
+    earliest_event_year = models.IntegerField(null=True, blank=True)
+    latest_event_year = models.IntegerField(null=True, blank=True)
+
     last_updated = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
