@@ -9,6 +9,7 @@ import { DepthHistogram } from "@/components/risk/DepthHistogram";
 import { EventScatterTimeline } from "@/components/risk/EventScatterTimeline";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { riskTierLabel } from "@/lib/seismic";
 
 export const revalidate = 3600;
@@ -90,6 +91,13 @@ export default async function RegionPage({
           {timeline.events.length} kejadian tercatat. Magnitudo pada sumbu Y, waktu
           pada sumbu X — warna menandakan kedalaman.
         </p>
+      </Card>
+
+      <Card title="Langkah Kesiapsiagaan">
+        <PreparednessChecklist
+          tier={profile.activity_tier}
+          coastal={profile.region.is_coastal}
+        />
       </Card>
 
       <SourceAttribution />

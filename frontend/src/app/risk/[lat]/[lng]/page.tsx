@@ -4,6 +4,9 @@ import { api } from "@/lib/api";
 import type { RiskCheckReport } from "@/lib/types";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
+import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
+import { Card } from "@/components/ui/Card";
 import { riskTierLabel } from "@/lib/seismic";
 
 // Server-rendered, shareable risk result. The interactive tool links here once
@@ -73,6 +76,21 @@ export default async function RiskResultPage({
       <ShareableRiskCard report={report} />
 
       <ShareButton path={`/risk/${lat}/${lng}`} caption={caption} />
+
+      <Card title="Langkah Kesiapsiagaan">
+        <PreparednessChecklist
+          tier={report.activity_tier}
+          coastal={report.tsunami_risk_tier != null}
+        />
+      </Card>
+
+      <Card title="Pantau Lokasi Ini">
+        <WatchSubscribeForm
+          lat={lat}
+          lng={lng}
+          defaultLabel={report.nearest_region?.name ?? ""}
+        />
+      </Card>
 
       <Link
         href="/risk-check"
