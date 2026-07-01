@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Gempa & Tsunami Aceh (Samudra Hindia)",
+    "slug": "aceh-tsunami-2004",
+    "event_date": "2004-12-26",
+    "magnitude": 9.1,
+    "longitude": 95.85,
+    "latitude": 3.30,
+    "casualties": 167000,
+    "displaced": 500000,
+    "description": "Gempa megathrust M9.1 di lepas pantai barat Aceh memicu tsunami Samudra Hindia, salah satu bencana alam paling mematikan dalam sejarah modern. Gelombang menerjang Aceh dan menyebar ke 14 negara.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/official20041226005853450_30",
+      "https://www.bmkg.go.id/"
+    ]
+  },
+  {
+    "name": "Gempa Yogyakarta",
+    "slug": "yogyakarta-2006",
+    "event_date": "2006-05-27",
+    "magnitude": 6.4,
+    "longitude": 110.45,
+    "latitude": -7.96,
+    "casualties": 5782,
+    "displaced": 1500000,
+    "description": "Gempa dangkal M6.4 di dekat Sesar Opak meruntuhkan puluhan ribu bangunan di Bantul dan sekitarnya. Kedalaman dangkal membuat kerusakan sangat parah meski magnitudonya menengah.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000eg6c"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Padang/Mentawai",
+    "slug": "padang-2009",
+    "event_date": "2009-09-30",
+    "magnitude": 7.6,
+    "longitude": 99.96,
+    "latitude": -0.72,
+    "casualties": 1115,
+    "displaced": 250000,
+    "description": "Gempa M7.6 di lepas pantai Sumatera Barat menyebabkan kerusakan luas di Kota Padang dan sekitarnya, dengan ribuan bangunan runtuh.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000h1ws"
+    ]
+  },
+  {
+    "name": "Gempa Lombok",
+    "slug": "lombok-2018",
+    "event_date": "2018-08-05",
+    "magnitude": 6.9,
+    "longitude": 116.45,
+    "latitude": -8.37,
+    "casualties": 563,
+    "displaced": 417000,
+    "description": "Rangkaian gempa kuat mengguncang Pulau Lombok pada Juli–Agustus 2018, dengan puncak M6.9 yang menimbulkan kerusakan besar di Lombok Utara dan Timur.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us2000gk5b"
+    ]
+  },
+  {
+    "name": "Gempa, Tsunami & Likuefaksi Palu",
+    "slug": "palu-2018",
+    "event_date": "2018-09-28",
+    "magnitude": 7.5,
+    "longitude": 119.84,
+    "latitude": -0.18,
+    "casualties": 4340,
+    "displaced": 206000,
+    "description": "Gempa M7.5 pada Sesar Palu-Koro memicu tsunami di Teluk Palu dan likuefaksi tanah masif di Petobo dan Balaroa, menelan ribuan korban jiwa.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us1000h3p4"
+    ]
+  },
+  {
+    "name": "Gempa Cianjur",
+    "slug": "cianjur-2022",
+    "event_date": "2022-11-21",
+    "magnitude": 5.6,
+    "longitude": 107.05,
+    "latitude": -6.84,
+    "casualties": 635,
+    "displaced": 114000,
+    "description": "Gempa dangkal M5.6 di Cianjur, Jawa Barat, menyebabkan kerusakan berat dan korban jiwa yang tinggi relatif terhadap magnitudonya akibat kedalaman dangkal dan kepadatan penduduk.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us7000iqgw"
+    ]
+  }
+]

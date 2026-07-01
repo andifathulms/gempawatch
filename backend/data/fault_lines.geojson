@@ -1,0 +1,97 @@
+{
+  "type": "FeatureCollection",
+  "name": "indonesia_major_faults",
+  "note": "Simplified representative geometries of major Indonesian fault systems for visualization. Not survey-grade. Sourced from published USGS/academic fault datasets.",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sumatran Fault (Great Sumatra Fault)",
+        "fault_type": "strike-slip",
+        "source_citation": "Sieh & Natawidjaja (2000), J. Geophys. Res."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [95.3, 5.6], [96.3, 4.6], [97.6, 3.4], [99.0, 2.2],
+          [100.4, 0.6], [101.4, -0.9], [102.5, -2.5], [103.5, -4.0],
+          [104.5, -5.4], [105.5, -6.2]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sunda Megathrust",
+        "fault_type": "megathrust",
+        "source_citation": "USGS Slab2 subduction interface model"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [93.5, 6.0], [95.0, 3.5], [97.5, 1.0], [100.0, -1.5],
+          [102.5, -4.0], [105.0, -6.5], [108.0, -8.0], [111.0, -9.0],
+          [114.0, -9.8], [117.0, -10.3], [120.0, -10.5]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Palu-Koro Fault",
+        "fault_type": "strike-slip",
+        "source_citation": "Bellier et al. (2001), Terra Nova"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [119.8, -0.9], [119.9, -1.4], [120.0, -2.0], [120.2, -2.7],
+          [120.5, -3.4], [120.9, -4.0]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Flores Back-Arc Thrust",
+        "fault_type": "thrust",
+        "source_citation": "Silver et al. (1983), back-arc thrust system"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [118.5, -8.0], [120.0, -8.1], [121.5, -8.2], [123.0, -8.3],
+          [124.5, -8.3]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lembang Fault",
+        "fault_type": "strike-slip",
+        "source_citation": "Daryono et al. (2019), West Java active fault study"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [107.5, -6.80], [107.6, -6.82], [107.72, -6.83], [107.84, -6.84]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Opak Fault (Yogyakarta)",
+        "fault_type": "strike-slip",
+        "source_citation": "Associated with 2006 Yogyakarta earthquake rupture"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.35, -7.78], [110.40, -7.90], [110.45, -8.02]
+        ]
+      }
+    }
+  ]
+}
