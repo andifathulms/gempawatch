@@ -3,6 +3,7 @@ import type {
   EarthquakeEvent,
   GeoFeatureCollection,
   HistoricalDisaster,
+  LeaderboardRow,
   RegionRiskProfile,
   RegionTimeline,
   RiskCheckReport,
@@ -54,6 +55,16 @@ export const api = {
     get<RegionTimeline>(`/regions/${slug}/timeline/`, 3600),
   searchRegions: (q: string) =>
     get<AdminRegion[]>(`/regions/search/?q=${encodeURIComponent(q)}`),
+  leaderboard: (limit = 10, order: "asc" | "desc" = "desc") =>
+    get<{ results: LeaderboardRow[]; count: number }>(
+      `/regions/leaderboard/?limit=${limit}&order=${order}`,
+      3600,
+    ),
+  compareRegions: (slugs: string[]) =>
+    get<RegionRiskProfile[]>(
+      `/regions/compare/?slugs=${slugs.map(encodeURIComponent).join(",")}`,
+      3600,
+    ),
   nearestRegion: (lat: number, lng: number) =>
     get<AdminRegion>(`/regions/nearest/?lat=${lat}&lng=${lng}`),
 

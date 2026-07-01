@@ -141,6 +141,58 @@ class RegionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.G
             return Response({"detail": "No regions loaded."}, status=status.HTTP_404_NOT_FOUND)
         return Response(AdminRegionSerializer(region).data)
 
+    @action(detail=False)
+    def leaderboard(self, request):
+        """
+        Regions ranked by composite seismic-activity score — shareable listicle
+        content ("10 kabupaten paling aktif"). ?limit= (default 10), ?order=asc
+        for the least-active tail.
+        """
+        try:
+            limit = min(int(request.query_params.get("limit", 10)), 50)
+        except ValueError:
+            limit = 10
+        order = "composite_score" if request.query_params.get("order") == "asc" else "-composite_score"
+
+        profiles = (
+            RegionRiskProfile.objects.filter(composite_score__isnull=False)
+            .select_related("region")
+            .order_by(order)[:limit]
+        )
+        rows = [
+            {
+                "rank": i + 1,
+                "region_name": p.region.name,
+                "slug": p.region.slug,
+                "type": p.region.type,
+                "composite_score": p.composite_score,
+                "activity_tier": p.activity_tier,
+                "activity_percentile": p.activity_percentile,
+                "event_count_m4": p.event_count_m4,
+                "largest_magnitude": p.largest_magnitude,
+                "tsunami_risk_tier": p.tsunami_risk_tier,
+            }
+            for i, p in enumerate(profiles)
+        ]
+        return Response({"results": rows, "count": len(rows)})
+
+    @action(detail=False)
+    def compare(self, request):
+        """Side-by-side risk profiles for 2–4 regions. ?slugs=a,b,c"""
+        slugs = [s for s in request.query_params.get("slugs", "").split(",") if s]
+        if not 2 <= len(slugs) <= 4:
+            return Response(
+                {"detail": "Provide 2 to 4 region slugs via ?slugs=a,b."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        profiles = RegionRiskProfile.objects.filter(
+            region__slug__in=slugs
+        ).select_related("region", "nearest_fault")
+        by_slug = {p.region.slug: p for p in profiles}
+        # Preserve requested order; skip unknown slugs silently.
+        ordered = [by_slug[s] for s in slugs if s in by_slug]
+        return Response(RegionRiskProfileSerializer(ordered, many=True).data)
+
 
 class FaultViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """

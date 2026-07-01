@@ -44,7 +44,26 @@ export interface RegionRiskProfile {
   nearest_fault_name: string | null;
   nearest_fault_distance_km: number | null;
   tsunami_risk_tier: RiskTier | null;
+  composite_score: number | null;
+  activity_tier: RiskTier | null;
+  activity_percentile: number | null;
+  shallow_ratio: number | null;
+  earliest_event_year: number | null;
+  latest_event_year: number | null;
   last_updated: string | null;
+}
+
+export interface LeaderboardRow {
+  rank: number;
+  region_name: string;
+  slug: string;
+  type: string;
+  composite_score: number;
+  activity_tier: RiskTier;
+  activity_percentile: number;
+  event_count_m4: number;
+  largest_magnitude: number | null;
+  tsunami_risk_tier: RiskTier | null;
 }
 
 export interface TimelineEvent {
@@ -82,9 +101,13 @@ export interface RiskCheckReport {
   event_count_m4_within_50km: number;
   largest_magnitude_within_50km: number | null;
   overall_risk_band: RiskTier;
+  composite_score: number;
+  activity_tier: RiskTier;
+  activity_percentile: number | null;
   nearest_fault: { id: number; name: string; distance_km: number | null } | null;
   tsunami_risk_tier: RiskTier | null;
   comparison: { reference_city: string; relation: string; text: string };
+  data_coverage: { earliest_year: number | null; latest_year: number | null; years: number };
   methodology_note: string;
   source_attribution: string[];
 }
