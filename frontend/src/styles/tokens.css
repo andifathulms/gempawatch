@@ -4,8 +4,10 @@
   --surface: #232323;
   --surface-raised: #2d2d2d;
   --border: #3a3a3a;
+  --border-strong: #4a4a4a;
 
   --seismic-orange: #e8743b;
+  --seismic-orange-soft: #f0946a;
   --depth-blue: #4a7c9e;
   --risk-red: #c0392b;
   --risk-amber: #d4a12b;
@@ -14,4 +16,15 @@
   --text-primary: #f2ede4;
   --text-secondary: #a8a39a;
   --text-muted: #6b6660;
+
+  /* Elevation — soft shadows tuned for the dark earth surface. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.35), 0 8px 28px rgba(232, 116, 59, 0.12);
+
+  /* Motion — calm, deliberate; never bouncy (this is a risk product, not a game). */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 130ms;
+  --dur-base: 200ms;
 }

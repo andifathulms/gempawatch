@@ -7,10 +7,55 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--earth-dark);
   color: var(--text-primary);
   font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Consistent, accessible keyboard focus across every interactive element.
+   Mouse users don't see it (focus-visible), keyboard users always do. */
+:focus-visible {
+  outline: 2px solid var(--seismic-orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbars — thin, on-theme, unobtrusive. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Leaflet renders its own panes; keep the dark theme consistent. */
