@@ -1,0 +1,17 @@
+/* "Fault Line" design tokens — raw CSS custom properties (see PRD design system). */
+:root {
+  --earth-dark: #1a1a1a;
+  --surface: #232323;
+  --surface-raised: #2d2d2d;
+  --border: #3a3a3a;
+
+  --seismic-orange: #e8743b;
+  --depth-blue: #4a7c9e;
+  --risk-red: #c0392b;
+  --risk-amber: #d4a12b;
+  --risk-green: #5b8c5a;
+
+  --text-primary: #f2ede4;
+  --text-secondary: #a8a39a;
+  --text-muted: #6b6660;
+}

@@ -1,0 +1,20 @@
+@import "../styles/tokens.css";
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap");
+
+body {
+  background-color: var(--earth-dark);
+  color: var(--text-primary);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Leaflet renders its own panes; keep the dark theme consistent. */
+.leaflet-container {
+  background: var(--earth-dark);
+  font-family: "Inter", sans-serif;
+}
