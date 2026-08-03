@@ -144,9 +144,13 @@ jobs:
 
       - name: Stage the export for the frontend
         run: |
+          # public/ holds nothing tracked, so it does not exist in a fresh
+          # checkout — create it before copying into it.
+          mkdir -p frontend/public
           rm -rf frontend/public/api frontend/public/data
           cp -r backend/out/api frontend/public/api
           cp -r backend/out/data frontend/public/data
+          du -sh frontend/public/api frontend/public/data
 
       - uses: actions/setup-node@v4
         with:
