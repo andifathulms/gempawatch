@@ -1,4 +1,4 @@
-import { riskTierColor, riskTierLabel } from "@/lib/seismic";
+import { riskTierColor, riskTierTextColor, riskTierLabel } from "@/lib/seismic";
 import type { RiskTier } from "@/lib/types";
 
 interface Props {
@@ -8,52 +8,108 @@ interface Props {
   size?: number;
 }
 
-// The single calibrated number, shown as a semicircular gauge so users get a
-// judgment at a glance instead of interpreting raw counts.
-export function RiskScoreGauge({ score, tier, percentile, size = 180 }: Props) {
-  const color = riskTierColor(tier);
+/**
+ * The single calibrated number, as a semicircular gauge.
+ *
+ * Three things make the reading legible that the flat arc did not:
+ *
+ * - Tick marks every 20 points. Without a scale, an arc filled to 60% is just
+ *   a shape; with one, the reader can see where the value sits on the range.
+ * - A rounded cap at the value end, so the arc terminates at a readable point
+ *   rather than fading into the track.
+ * - The percentile stated as its own line, because "more active than 94% of
+ *   regions" is the sentence people actually repeat — the raw score is not.
+ */
+export function RiskScoreGauge({ score, tier, percentile, size = 200 }: Props) {
+  const fill = riskTierColor(tier);
+  const text = riskTierTextColor(tier);
   const pct = Math.max(0, Math.min(100, score ?? 0)) / 100;
-  const r = size / 2 - 12;
+
+  const stroke = 13;
+  const cx = size / 2;
+  const cy = size / 2;
+  const r = size / 2 - stroke;
   const circumference = Math.PI * r; // semicircle
-  const dash = circumference * pct;
+  const arc = `M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`;
+
+  // Ticks at 0/20/40/60/80/100, drawn as short radial strokes just inside the
+  // track so they read as a scale rather than as extra data.
+  const ticks = [0, 20, 40, 60, 80, 100].map((t) => {
+    const angle = Math.PI * (1 - t / 100);
+    const inner = r - stroke / 2 - 4;
+    const outer = r - stroke / 2 - 1;
+    return {
+      t,
+      x1: cx + Math.cos(angle) * inner,
+      y1: cy - Math.sin(angle) * inner,
+      x2: cx + Math.cos(angle) * outer,
+      y2: cy - Math.sin(angle) * outer,
+    };
+  });
 
   return (
     <div className="flex flex-col items-center">
-      <svg width={size} height={size / 2 + 12} viewBox={`0 0 ${size} ${size / 2 + 12}`}>
-        {/* track */}
+      <svg
+        width={size}
+        height={size / 2 + 14}
+        viewBox={`0 0 ${size} ${size / 2 + 14}`}
+        role="img"
+        aria-label={`Skor aktivitas seismik ${score != null ? score.toFixed(0) : "tidak tersedia"} dari 100, tingkat ${riskTierLabel(tier)}`}
+      >
         <path
-          d={`M 12 ${size / 2} A ${r} ${r} 0 0 1 ${size - 12} ${size / 2}`}
+          d={arc}
           fill="none"
-          stroke="#3A3A3A"
-          strokeWidth={12}
+          stroke="var(--border)"
+          strokeWidth={stroke}
           strokeLinecap="round"
         />
-        {/* value arc */}
+        {ticks.map((t) => (
+          <line
+            key={t.t}
+            x1={t.x1}
+            y1={t.y1}
+            x2={t.x2}
+            y2={t.y2}
+            stroke="var(--border-strong)"
+            strokeWidth={1.5}
+            strokeLinecap="round"
+          />
+        ))}
         <path
-          d={`M 12 ${size / 2} A ${r} ${r} 0 0 1 ${size - 12} ${size / 2}`}
+          d={arc}
           fill="none"
-          stroke={color}
-          strokeWidth={12}
+          stroke={fill}
+          strokeWidth={stroke}
           strokeLinecap="round"
-          strokeDasharray={`${dash} ${circumference}`}
+          strokeDasharray={`${circumference * pct} ${circumference}`}
+          style={{ transition: "stroke-dasharray 700ms var(--ease-out)" }}
         />
       </svg>
-      <div className="-mt-8 flex flex-col items-center">
-        <span className="font-mono text-4xl font-bold" style={{ color }}>
+
+      <div className="-mt-9 flex flex-col items-center">
+        <span
+          className="font-mono text-[2.75rem] font-bold leading-none tabular-nums"
+          style={{ color: text }}
+        >
           {score != null ? score.toFixed(0) : "—"}
         </span>
-        <span className="text-xs text-text-muted">skor / 100</span>
-      </div>
-      <div className="mt-2 flex flex-col items-center">
-        <span className="text-sm font-semibold" style={{ color }}>
-          Aktivitas {riskTierLabel(tier)}
+        <span className="mt-1 text-[11px] uppercase tracking-[0.12em] text-text-muted">
+          skor / 100
         </span>
-        {percentile != null && (
-          <span className="text-xs text-text-secondary">
-            Lebih aktif dari {percentile}% wilayah
-          </span>
-        )}
       </div>
+
+      <p className="mt-3 font-display text-sm font-semibold" style={{ color: text }}>
+        Aktivitas {riskTierLabel(tier)}
+      </p>
+      {percentile != null && (
+        <p className="mt-0.5 text-center text-xs text-text-secondary">
+          Lebih aktif dari{" "}
+          <span className="font-mono font-medium tabular-nums text-text-primary">
+            {percentile}%
+          </span>{" "}
+          wilayah di Indonesia
+        </p>
+      )}
     </div>
   );
 }

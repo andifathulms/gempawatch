@@ -11,8 +11,20 @@ export default function RiskCheckPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Apakah Saya di Zona Risiko?"
-        subtitle="Pilih lokasi untuk laporan risiko instan — jarak ke sesar terdekat, jumlah gempa M4+ dalam radius 50km sepanjang catatan sejarah, dan tingkat risiko tsunami jika berada di pesisir. Ini adalah indikator pola historis, bukan prediksi atau peringatan dini."
+        eyebrow="Cek risiko"
+        title="Apakah saya di zona risiko?"
+        subtitle={
+          <>
+            Pilih satu titik dan dapatkan laporan instan: jarak ke sesar aktif
+            terdekat, jumlah gempa M4+ dalam radius 50 km sepanjang catatan
+            sejarah, dan tingkat risiko tsunami historis bila titik itu berada di
+            pesisir. Semuanya adalah{" "}
+            <strong className="font-semibold text-text-primary">
+              indikator pola historis
+            </strong>{" "}
+            — bukan prediksi, dan bukan peringatan dini.
+          </>
+        }
       />
       <RiskCheckTool />
     </div>

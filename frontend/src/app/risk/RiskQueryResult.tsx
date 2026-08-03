@@ -1,11 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { RiskReportView } from "@/components/risk/RiskReportView";
 import { Card } from "@/components/ui/Card";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { ButtonLink } from "@/components/ui/Button";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
 import type { RiskCheckReport } from "@/lib/types";
 
@@ -59,25 +61,48 @@ export function RiskQueryResult() {
     };
   }, [latParam, lngParam]);
 
+  // The report is computed in the browser on static deploys, so this state is
+  // real work rather than a flash — it gets a skeleton shaped like the result.
   if (state.status === "loading") {
     return (
-      <Card>
-        <p className="py-10 text-center text-text-muted">Menghitung laporan risiko…</p>
-      </Card>
+      <div className="mx-auto max-w-xl space-y-5">
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-9 w-56" />
+        <Card>
+          <div className="space-y-4">
+            <Skeleton className="mx-auto h-28 w-52" />
+            <Skeleton className="h-4 w-full" />
+            <div className="grid grid-cols-2 gap-3">
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+              <Skeleton className="h-16" />
+            </div>
+          </div>
+        </Card>
+      </div>
     );
   }
 
   if (state.status === "invalid" || state.status === "error") {
     return (
-      <div className="space-y-4">
-        <p className="text-text-secondary">
-          {state.status === "invalid"
-            ? "Koordinat tidak valid."
-            : "Gagal memuat laporan risiko untuk titik ini."}
-        </p>
-        <Link href="/risk-check" className="text-seismic-orange underline">
-          Pilih lokasi di peta →
-        </Link>
+      <div className="mx-auto max-w-xl">
+        <Card>
+          <EmptyState
+            tone="warning"
+            title={
+              state.status === "invalid"
+                ? "Koordinat pada tautan ini tidak valid."
+                : "Gagal memuat laporan risiko untuk titik ini."
+            }
+            description="Pilih titik langsung di peta untuk mendapatkan laporan baru."
+            action={
+              <ButtonLink href="/risk-check" size="sm">
+                Pilih lokasi di peta →
+              </ButtonLink>
+            }
+          />
+        </Card>
       </div>
     );
   }
