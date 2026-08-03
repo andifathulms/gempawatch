@@ -1,0 +1,899 @@
+[
+  {
+    "name": "jakarta",
+    "lat": -6.2,
+    "lng": 106.8,
+    "expected": {
+      "composite_score": 48.3,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 17,
+      "event_count_m4_within_50km": 32,
+      "largest_magnitude_within_50km": 6.0,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "jakarta-pusat",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 102.14,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "banda-aceh",
+    "lat": 5.548,
+    "lng": 95.324,
+    "expected": {
+      "composite_score": 71.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 71,
+      "event_count_m4_within_50km": 53,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "banda-aceh",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 2.2,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2025,
+        "years": 52
+      }
+    }
+  },
+  {
+    "name": "padang",
+    "lat": -0.947,
+    "lng": 100.417,
+    "expected": {
+      "composite_score": 74.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 75,
+      "event_count_m4_within_50km": 73,
+      "largest_magnitude_within_50km": 5.4,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "padang",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 76.26,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "palu",
+    "lat": -0.9,
+    "lng": 119.87,
+    "expected": {
+      "composite_score": 89.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 100,
+      "event_count_m4_within_50km": 117,
+      "largest_magnitude_within_50km": 6.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-palu",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 7.63,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1977,
+        "latest_year": 2026,
+        "years": 50
+      }
+    }
+  },
+  {
+    "name": "mentawai-offshore",
+    "lat": -2.5,
+    "lng": 99.5,
+    "expected": {
+      "composite_score": 74.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 75,
+      "event_count_m4_within_50km": 128,
+      "largest_magnitude_within_50km": 7.0,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kepulauan-mentawai",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 117.85,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "yogyakarta",
+    "lat": -7.797,
+    "lng": 110.371,
+    "expected": {
+      "composite_score": 50.9,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 21,
+      "event_count_m4_within_50km": 29,
+      "largest_magnitude_within_50km": 6.3,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-yogyakarta",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 1.42,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "lombok",
+    "lat": -8.65,
+    "lng": 116.324,
+    "expected": {
+      "composite_score": 68.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 50,
+      "event_count_m4_within_50km": 129,
+      "largest_magnitude_within_50km": 6.9,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-mataram",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 168.89,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "ambon",
+    "lat": -3.695,
+    "lng": 128.181,
+    "expected": {
+      "composite_score": 67.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 42,
+      "event_count_m4_within_50km": 155,
+      "largest_magnitude_within_50km": 6.7,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "kota-ambon",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 654.07,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "jayapura",
+    "lat": -2.533,
+    "lng": 140.717,
+    "expected": {
+      "composite_score": 67.6,
+      "activity_tier": "HIGH",
+      "activity_percentile": 46,
+      "event_count_m4_within_50km": 156,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "jayapura",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 1905.51,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      }
+    }
+  },
+  {
+    "name": "pontianak-quiet",
+    "lat": -0.026,
+    "lng": 109.342,
+    "expected": {
+      "composite_score": 23.6,
+      "activity_tier": "LOW",
+      "activity_percentile": 8,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "jakarta-pusat",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 775.79,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1996,
+        "latest_year": 1996,
+        "years": 1
+      }
+    }
+  },
+  {
+    "name": "bbox-nw",
+    "lat": 5.9,
+    "lng": 95.1,
+    "expected": {
+      "composite_score": 40.3,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 8,
+      "event_count_m4_within_50km": 27,
+      "largest_magnitude_within_50km": 5.4,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "banda-aceh",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 40.03,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1981,
+        "latest_year": 2025,
+        "years": 45
+      }
+    }
+  },
+  {
+    "name": "bbox-se",
+    "lat": -10.9,
+    "lng": 140.9,
+    "expected": {
+      "composite_score": 0.0,
+      "activity_tier": "LOW",
+      "activity_percentile": 0,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "jayapura",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 1820.82,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": null,
+        "latest_year": null,
+        "years": 0
+      }
+    }
+  },
+  {
+    "name": "open-ocean",
+    "lat": -5.0,
+    "lng": 105.0,
+    "expected": {
+      "composite_score": 48.0,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 17,
+      "event_count_m4_within_50km": 18,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "bandar-lampung",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 69.37,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1975,
+        "latest_year": 2026,
+        "years": 52
+      }
+    }
+  },
+  {
+    "name": "sumba",
+    "lat": -9.65,
+    "lng": 120.25,
+    "expected": {
+      "composite_score": 64.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 33,
+      "event_count_m4_within_50km": 69,
+      "largest_magnitude_within_50km": 5.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-kupang",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 98.4,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1972,
+        "latest_year": 2026,
+        "years": 55
+      }
+    }
+  },
+  {
+    "name": "manado",
+    "lat": 1.474,
+    "lng": 124.842,
+    "expected": {
+      "composite_score": 58.8,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 33,
+      "event_count_m4_within_50km": 101,
+      "largest_magnitude_within_50km": 5.3,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-manado",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 619.64,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-aceh-besar",
+    "lat": 5.38,
+    "lng": 95.45,
+    "expected": {
+      "composite_score": 80.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 88,
+      "event_count_m4_within_50km": 58,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "aceh-besar",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 5.52,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-banda-aceh",
+    "lat": 5.55,
+    "lng": 95.32,
+    "expected": {
+      "composite_score": 71.6,
+      "activity_tier": "HIGH",
+      "activity_percentile": 71,
+      "event_count_m4_within_50km": 52,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "banda-aceh",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 2.36,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2025,
+        "years": 52
+      }
+    }
+  },
+  {
+    "name": "region-bandar-lampung",
+    "lat": -5.43,
+    "lng": 105.27,
+    "expected": {
+      "composite_score": 70.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 62,
+      "event_count_m4_within_50km": 55,
+      "largest_magnitude_within_50km": 5.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "bandar-lampung",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 50.83,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "region-bantul",
+    "lat": -7.93,
+    "lng": 110.33,
+    "expected": {
+      "composite_score": 52.5,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 25,
+      "event_count_m4_within_50km": 31,
+      "largest_magnitude_within_50km": 6.3,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "bantul",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 8.4,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-bengkulu",
+    "lat": -3.8,
+    "lng": 102.27,
+    "expected": {
+      "composite_score": 83.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 92,
+      "event_count_m4_within_50km": 126,
+      "largest_magnitude_within_50km": 5.9,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "bengkulu",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 2.3,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-cianjur",
+    "lat": -6.82,
+    "lng": 107.14,
+    "expected": {
+      "composite_score": 71.1,
+      "activity_tier": "HIGH",
+      "activity_percentile": 67,
+      "event_count_m4_within_50km": 87,
+      "largest_magnitude_within_50km": 6.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "cianjur",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 39.81,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "region-denpasar",
+    "lat": -8.67,
+    "lng": 115.22,
+    "expected": {
+      "composite_score": 54.1,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 29,
+      "event_count_m4_within_50km": 52,
+      "largest_magnitude_within_50km": 5.6,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "denpasar",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 146.54,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      }
+    }
+  },
+  {
+    "name": "region-donggala",
+    "lat": -0.68,
+    "lng": 119.74,
+    "expected": {
+      "composite_score": 86.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 96,
+      "event_count_m4_within_50km": 88,
+      "largest_magnitude_within_50km": 7.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "donggala",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 25.36,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1977,
+        "latest_year": 2026,
+        "years": 50
+      }
+    }
+  },
+  {
+    "name": "region-jakarta-pusat",
+    "lat": -6.18,
+    "lng": 106.83,
+    "expected": {
+      "composite_score": 46.3,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 17,
+      "event_count_m4_within_50km": 33,
+      "largest_magnitude_within_50km": 6.0,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "jakarta-pusat",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 101.15,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "region-jayapura",
+    "lat": -2.53,
+    "lng": 140.72,
+    "expected": {
+      "composite_score": 67.6,
+      "activity_tier": "HIGH",
+      "activity_percentile": 46,
+      "event_count_m4_within_50km": 155,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "jayapura",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 1905.94,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      }
+    }
+  },
+  {
+    "name": "region-kepulauan-mentawai",
+    "lat": -1.95,
+    "lng": 99.62,
+    "expected": {
+      "composite_score": 79.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 83,
+      "event_count_m4_within_50km": 491,
+      "largest_magnitude_within_50km": 7.0,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "kepulauan-mentawai",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 65.24,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-kota-ambon",
+    "lat": -3.7,
+    "lng": 128.18,
+    "expected": {
+      "composite_score": 67.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 42,
+      "event_count_m4_within_50km": 157,
+      "largest_magnitude_within_50km": 6.7,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "kota-ambon",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 653.57,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-kota-bandung",
+    "lat": -6.91,
+    "lng": 107.61,
+    "expected": {
+      "composite_score": 73.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 75,
+      "event_count_m4_within_50km": 51,
+      "largest_magnitude_within_50km": 5.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-bandung",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 9.88,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  },
+  {
+    "name": "region-kota-kupang",
+    "lat": -10.17,
+    "lng": 123.61,
+    "expected": {
+      "composite_score": 65.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 38,
+      "event_count_m4_within_50km": 129,
+      "largest_magnitude_within_50km": 6.1,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-kupang",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 207.86,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-kota-makassar",
+    "lat": -5.15,
+    "lng": 119.42,
+    "expected": {
+      "composite_score": 23.4,
+      "activity_tier": "LOW",
+      "activity_percentile": 8,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-makassar",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 207.99,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1993,
+        "latest_year": 2015,
+        "years": 23
+      }
+    }
+  },
+  {
+    "name": "region-kota-manado",
+    "lat": 1.49,
+    "lng": 124.85,
+    "expected": {
+      "composite_score": 58.8,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 33,
+      "event_count_m4_within_50km": 100,
+      "largest_magnitude_within_50km": 5.3,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-manado",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 621.2,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-kota-mataram",
+    "lat": -8.58,
+    "lng": 116.12,
+    "expected": {
+      "composite_score": 68.4,
+      "activity_tier": "HIGH",
+      "activity_percentile": 50,
+      "event_count_m4_within_50km": 121,
+      "largest_magnitude_within_50km": 6.3,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-mataram",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 172.87,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-kota-palu",
+    "lat": -0.9,
+    "lng": 119.87,
+    "expected": {
+      "composite_score": 89.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 100,
+      "event_count_m4_within_50km": 117,
+      "largest_magnitude_within_50km": 6.7,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-palu",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 7.63,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1977,
+        "latest_year": 2026,
+        "years": 50
+      }
+    }
+  },
+  {
+    "name": "region-kota-surabaya",
+    "lat": -7.25,
+    "lng": 112.75,
+    "expected": {
+      "composite_score": 22.9,
+      "activity_tier": "LOW",
+      "activity_percentile": 4,
+      "event_count_m4_within_50km": 8,
+      "largest_magnitude_within_50km": 4.7,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-surabaya",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 238.36,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1975,
+        "latest_year": 2024,
+        "years": 50
+      }
+    }
+  },
+  {
+    "name": "region-kota-yogyakarta",
+    "lat": -7.8,
+    "lng": 110.37,
+    "expected": {
+      "composite_score": 50.9,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 21,
+      "event_count_m4_within_50km": 29,
+      "largest_magnitude_within_50km": 6.3,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-yogyakarta",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 1.19,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-lombok-timur",
+    "lat": -8.54,
+    "lng": 116.54,
+    "expected": {
+      "composite_score": 69.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 54,
+      "event_count_m4_within_50km": 197,
+      "largest_magnitude_within_50km": 6.9,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "lombok-timur",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 184.86,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-padang",
+    "lat": -0.95,
+    "lng": 100.36,
+    "expected": {
+      "composite_score": 75.6,
+      "activity_tier": "HIGH",
+      "activity_percentile": 79,
+      "event_count_m4_within_50km": 78,
+      "largest_magnitude_within_50km": 5.4,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "padang",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 71.55,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      }
+    }
+  },
+  {
+    "name": "region-sorong",
+    "lat": -0.88,
+    "lng": 131.25,
+    "expected": {
+      "composite_score": 44.9,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 12,
+      "event_count_m4_within_50km": 52,
+      "largest_magnitude_within_50km": 6.6,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "sorong",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 1113.41,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2025,
+        "years": 53
+      }
+    }
+  },
+  {
+    "name": "region-sukabumi",
+    "lat": -6.92,
+    "lng": 106.92,
+    "expected": {
+      "composite_score": 69.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 58,
+      "event_count_m4_within_50km": 135,
+      "largest_magnitude_within_50km": 6.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "sukabumi",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 53.99,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      }
+    }
+  }
+]

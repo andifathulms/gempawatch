@@ -179,8 +179,15 @@ class Command(BaseCommand):
         Dump the event set the client-side risk engine needs, plus the constants
         and stored scores it has to reproduce Django's answers exactly.
 
-        Coordinates are rounded to 2dp (~1.1 km) — far finer than the 50/100/150 km
-        radii the engine works with, and it roughly halves the payload.
+        Coordinates keep 6dp (~11 cm). That precision is not about map accuracy —
+        it is about agreeing with Django on *membership*. The engine counts events
+        inside 50/100/150 km radii, and Django's filter is a hard `<=` on
+        ST_DistanceSphere, so an event sitting within the rounding error of a
+        boundary gets counted by one implementation and not the other. At 3dp that
+        cost two fixtures a one-event discrepancy, which then flipped percentile
+        ranks; 6dp makes the boundary ambiguity vanishingly unlikely for a ~1 MB
+        gzip cost. The engine's haversine uses the same sphere radius as
+        ST_DistanceSphere, so with full precision the two agree exactly.
         """
         events_path = out / "data" / "events.csv"
         events_path.parent.mkdir(parents=True, exist_ok=True)
@@ -198,10 +205,16 @@ class Command(BaseCommand):
                     continue
                 writer.writerow(
                     [
-                        round(location.x, 2),
-                        round(location.y, 2),
-                        round(magnitude, 1),
-                        "" if depth_km is None else round(depth_km),
+                        round(location.x, 6),
+                        round(location.y, 6),
+                        # Magnitude and depth are NOT rounded down to display
+                        # precision: both are compared against hard thresholds
+                        # (mag >= 4.0 / >= 6.5, depth < 70) and rounding moves
+                        # events across them. Rounding depth to whole km alone
+                        # mis-classified ~2 events per region — enough to shift
+                        # the shallow ratio and flip a percentile rank.
+                        round(magnitude, 2),
+                        "" if depth_km is None else round(depth_km, 3),
                         event_time.year,
                     ]
                 )
