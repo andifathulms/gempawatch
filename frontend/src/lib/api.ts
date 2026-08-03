@@ -1,109 +1,22 @@
-import type {
-  AdminRegion,
-  EarthquakeEvent,
-  GeoFeatureCollection,
-  HistoricalDisaster,
-  LeaderboardRow,
-  RegionRiskProfile,
-  RegionTimeline,
-  RiskCheckReport,
-  TsunamiZone,
-} from "./types";
+/**
+ * API entry point. Every component imports `api` from here and never needs to
+ * know which deployment mode it is running in.
+ *
+ *   NEXT_PUBLIC_DATA_MODE=live    (default) → talks to Django/DRF
+ *   NEXT_PUBLIC_DATA_MODE=static           → reads the prebuilt export
+ *
+ * The mode is read from an inlined build-time constant, so the unused client is
+ * eliminated by the bundler rather than shipped to the browser.
+ */
+import { API_BASE, liveApi, type GempaApi } from "./api.live";
+import { staticApi } from "./api.static";
 
-// Browser calls the published host port (NEXT_PUBLIC_API_URL); server-side
-// rendering runs inside the container and must reach the backend service
-// directly (INTERNAL_API_URL, e.g. http://backend:8000).
-const PUBLIC_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-const API_BASE =
-  typeof window === "undefined"
-    ? process.env.INTERNAL_API_URL ?? PUBLIC_BASE
-    : PUBLIC_BASE;
+export const DATA_MODE = process.env.NEXT_PUBLIC_DATA_MODE === "static" ? "static" : "live";
 
-interface Paginated<T> {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: T[];
-}
+/** True when the deployment has no backend: no alerts, no live polling. */
+export const IS_STATIC = DATA_MODE === "static";
 
-async function get<T>(path: string, revalidate = 60): Promise<T> {
-  const res = await fetch(`${API_BASE}/api${path}`, {
-    next: { revalidate },
-    headers: { Accept: "application/json" },
-  });
-  if (!res.ok) {
-    throw new Error(`API ${path} failed: ${res.status}`);
-  }
-  return res.json() as Promise<T>;
-}
+export const api: GempaApi = IS_STATIC ? staticApi : liveApi;
 
-export const api = {
-  // Earthquakes
-  liveEvents: () =>
-    get<Paginated<EarthquakeEvent>>("/earthquakes/live/", 300),
-  liveEventsGeo: () =>
-    get<GeoFeatureCollection>("/earthquakes/live/?format_geo=geojson", 300),
-  feltEvents: () => get<Paginated<EarthquakeEvent>>("/earthquakes/felt/", 300),
-  event: (id: number) => get<EarthquakeEvent>(`/earthquakes/${id}/`),
-
-  // Regions (looked up by slug)
-  regions: () => get<Paginated<AdminRegion>>("/regions/"),
-  region: (slug: string) => get<AdminRegion>(`/regions/${slug}/`),
-  riskProfile: (slug: string) =>
-    get<RegionRiskProfile>(`/regions/${slug}/risk-profile/`, 3600),
-  regionTimeline: (slug: string) =>
-    get<RegionTimeline>(`/regions/${slug}/timeline/`, 3600),
-  searchRegions: (q: string) =>
-    get<AdminRegion[]>(`/regions/search/?q=${encodeURIComponent(q)}`),
-  leaderboard: (limit = 10, order: "asc" | "desc" = "desc") =>
-    get<{ results: LeaderboardRow[]; count: number }>(
-      `/regions/leaderboard/?limit=${limit}&order=${order}`,
-      3600,
-    ),
-  compareRegions: (slugs: string[]) =>
-    get<RegionRiskProfile[]>(
-      `/regions/compare/?slugs=${slugs.map(encodeURIComponent).join(",")}`,
-      3600,
-    ),
-  nearestRegion: (lat: number, lng: number) =>
-    get<AdminRegion>(`/regions/nearest/?lat=${lat}&lng=${lng}`),
-
-  // Faults
-  faults: () => get<GeoFeatureCollection>("/faults/", 86400),
-
-  // Tsunami
-  coastalZones: () =>
-    get<{ zones: TsunamiZone[]; methodology: string }>(
-      "/tsunami-risk/coastal-zones/",
-      3600,
-    ),
-
-  // Disasters
-  disasterTimeline: () =>
-    get<HistoricalDisaster[]>("/disasters/timeline/", 86400),
-  disaster: (id: number) => get<HistoricalDisaster>(`/disasters/${id}/`),
-
-  // Dataset meta (coverage)
-  meta: () =>
-    get<{
-      event_count: number;
-      earliest_year: number | null;
-      latest_year: number | null;
-      coverage_years: number;
-      region_count: number;
-      source_attribution: string[];
-    }>("/meta/", 3600),
-
-  // Risk check (live POST)
-  riskCheck: async (lat: number, lng: number): Promise<RiskCheckReport> => {
-    const res = await fetch(`${API_BASE}/api/risk-check/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lat, lng }),
-    });
-    if (!res.ok) throw new Error(`risk-check failed: ${res.status}`);
-    return res.json() as Promise<RiskCheckReport>;
-  },
-};
-
+export type { GempaApi };
 export { API_BASE };
