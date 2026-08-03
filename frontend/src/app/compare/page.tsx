@@ -26,13 +26,14 @@ export default async function ComparePage() {
     .sort((x, y) => x.name.localeCompare(y.name));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <PageHeader
-        title="Bandingkan Wilayah"
-        subtitle="Lihat dua profil risiko berdampingan. Persentil memberi konteks relatif nasional."
+        eyebrow="Bandingkan"
+        title="Dua wilayah, berdampingan"
+        subtitle="Satu skor sulit dinilai sendirian — 60 terasa berbeda di sebelah 30 dibanding di sebelah 90. Persentil memberi konteks nasional untuk keduanya."
       />
 
-      <Card>
+      <Card title="Pilih wilayah">
         <Suspense fallback={null}>
           <CompareSelector options={options} />
         </Suspense>

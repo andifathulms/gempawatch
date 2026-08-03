@@ -3,41 +3,48 @@ import type { Config } from "tailwindcss";
 /**
  * "Seismograph" design system — calm authority, not alarmism (see PRD).
  *
- * Colours mirror the CSS custom properties in src/styles/tokens.css rather than
- * hard-coding hexes, so retuning the palette is a one-file change and the two
- * can never drift.
+ * Colours read the channel triplets declared in src/styles/tokens.css, so
+ * retuning the palette is a one-file change and the two can never drift.
+ *
+ * The `rgb(var(--x) / <alpha-value>)` form is load-bearing, not stylistic: it
+ * is what lets `bg-earth-surface/60` and friends exist at all. Point these at a
+ * variable holding a hex string instead and Tailwind quietly emits *no rule*
+ * for every opacity modifier, so those elements silently lose their colour and
+ * fall back to a browser default.
  */
+const channel = (name: string) => `rgb(var(--${name}-c) / <alpha-value>)`;
+
 const config: Config = {
   content: ["./src/app/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
         earth: {
-          dark: "var(--earth-dark)",
-          surface: "var(--surface)",
-          raised: "var(--surface-raised)",
-          sunken: "var(--surface-sunken)",
-          border: "var(--border)",
-          "border-strong": "var(--border-strong)",
+          dark: channel("earth-dark"),
+          surface: channel("surface"),
+          raised: channel("surface-raised"),
+          sunken: channel("surface-sunken"),
+          border: channel("border"),
+          "border-strong": channel("border-strong"),
         },
         seismic: {
-          orange: "var(--seismic-orange)",
-          bright: "var(--seismic-bright)",
-          soft: "var(--seismic-orange-soft)",
+          orange: channel("seismic-orange"),
+          bright: channel("seismic-bright"),
+          soft: channel("seismic-soft"),
         },
-        depth: { blue: "var(--depth-blue)" },
+        depth: { blue: channel("depth-blue") },
         risk: {
-          red: "var(--risk-red)",
-          "red-fill": "var(--risk-red-fill)",
-          amber: "var(--risk-amber)",
-          "amber-fill": "var(--risk-amber-fill)",
-          green: "var(--risk-green)",
-          "green-fill": "var(--risk-green-fill)",
+          red: channel("risk-red"),
+          "red-fill": channel("risk-red-fill"),
+          amber: channel("risk-amber"),
+          "amber-fill": channel("risk-amber-fill"),
+          green: channel("risk-green"),
+          "green-fill": channel("risk-green-fill"),
         },
         text: {
-          primary: "var(--text-primary)",
-          secondary: "var(--text-secondary)",
-          muted: "var(--text-muted)",
+          primary: channel("text-primary"),
+          secondary: channel("text-secondary"),
+          muted: channel("text-muted"),
         },
       },
       fontFamily: {

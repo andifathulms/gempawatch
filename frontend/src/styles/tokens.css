@@ -11,39 +11,76 @@
    tone (#6B6660) sat at ~3.4:1 and failed.
    ========================================================================== */
 :root {
-  /* --- Neutral ramp -------------------------------------------------------
-     Warm charcoal. Page is darker than cards so elevation reads without
-     relying on shadow alone (shadows are nearly invisible on dark surfaces). */
-  --earth-dark: #121110; /* page background */
-  --surface: #1c1a18; /* card / panel */
-  --surface-raised: #24211e; /* popover, hover, nested panel */
-  --surface-sunken: #0d0c0b; /* wells: map frames, code, inset charts */
-  --border: #33302b;
-  --border-strong: #494339;
+  /* --- Colour channels -----------------------------------------------------
+     Every colour is declared once, as space-separated RGB channels.
+     Tailwind consumes these as `rgb(var(--x) / <alpha-value>)`, which is what
+     makes opacity modifiers work: `bg-earth-surface/60` cannot be built from a
+     variable holding a hex string, and Tailwind silently emits no rule at all
+     when it tries — so every `/40`, `/60`, `/[0.06]` utility on a token colour
+     produced nothing, and the elements relying on them fell back to their
+     browser defaults (a white input on a dark page, most visibly).
 
-  /* --- Accent -------------------------------------------------------------
-     Seismic orange is the brand and the "interactive" signal. The bright
-     variant is for text/icons on dark, where the base tone is too dim. */
-  --seismic-orange: #e8743b;
-  --seismic-bright: #ff8b53;
-  --seismic-orange-soft: #f0946a;
-  --seismic-dim: rgba(232, 116, 59, 0.14);
-  --depth-blue: #5b93b8;
+     The `-c` suffixed names below are the raw channels; the unsuffixed names
+     are ready-to-use colours for plain CSS and inline styles. Both are derived
+     from the same declaration, so they can never drift apart. */
 
-  /* --- Risk semantics -----------------------------------------------------
-     Two tones per tier: -fill for solid shapes (badges, markers, arcs) and the
-     base for text, which needs more luminance to stay legible on charcoal. */
-  --risk-red: #e8594a;
-  --risk-red-fill: #c0392b;
-  --risk-amber: #e6b23f;
-  --risk-amber-fill: #d4a12b;
-  --risk-green: #74b071;
-  --risk-green-fill: #5b8c5a;
+  /* Neutral ramp — warm charcoal. The page is darker than the cards so
+     elevation reads without relying on shadow alone (shadows are nearly
+     invisible on dark surfaces). */
+  --earth-dark-c: 18 17 16; /* page background */
+  --surface-c: 28 26 24; /* card / panel */
+  --surface-raised-c: 36 33 30; /* popover, hover, nested panel */
+  --surface-sunken-c: 13 12 11; /* wells: map frames, inset charts */
+  --border-c: 51 48 43;
+  --border-strong-c: 73 67 57;
 
-  /* --- Text --------------------------------------------------------------- */
-  --text-primary: #f5f1ea;
-  --text-secondary: #b8b1a6;
-  --text-muted: #948c81;
+  /* Accent — seismic orange is the brand and the "interactive" signal. The
+     bright variant is for text/icons on dark, where the base tone is too dim. */
+  --seismic-orange-c: 232 116 59;
+  --seismic-bright-c: 255 139 83;
+  --seismic-soft-c: 240 148 106;
+  --depth-blue-c: 91 147 184;
+
+  /* Risk semantics — two tones per tier: -fill for solid shapes (badges,
+     markers, arcs), and the base for text, which needs more luminance to stay
+     legible on charcoal. */
+  --risk-red-c: 232 89 74;
+  --risk-red-fill-c: 192 57 43;
+  --risk-amber-c: 230 178 63;
+  --risk-amber-fill-c: 212 161 43;
+  --risk-green-c: 116 176 113;
+  --risk-green-fill-c: 91 140 90;
+
+  /* Text */
+  --text-primary-c: 245 241 234;
+  --text-secondary-c: 184 177 166;
+  --text-muted-c: 148 140 129;
+
+  /* --- Ready-to-use colours ------------------------------------------------
+     For hand-written CSS, SVG attributes, and inline styles. */
+  --earth-dark: rgb(var(--earth-dark-c));
+  --surface: rgb(var(--surface-c));
+  --surface-raised: rgb(var(--surface-raised-c));
+  --surface-sunken: rgb(var(--surface-sunken-c));
+  --border: rgb(var(--border-c));
+  --border-strong: rgb(var(--border-strong-c));
+
+  --seismic-orange: rgb(var(--seismic-orange-c));
+  --seismic-bright: rgb(var(--seismic-bright-c));
+  --seismic-orange-soft: rgb(var(--seismic-soft-c));
+  --seismic-dim: rgb(var(--seismic-orange-c) / 0.14);
+  --depth-blue: rgb(var(--depth-blue-c));
+
+  --risk-red: rgb(var(--risk-red-c));
+  --risk-red-fill: rgb(var(--risk-red-fill-c));
+  --risk-amber: rgb(var(--risk-amber-c));
+  --risk-amber-fill: rgb(var(--risk-amber-fill-c));
+  --risk-green: rgb(var(--risk-green-c));
+  --risk-green-fill: rgb(var(--risk-green-fill-c));
+
+  --text-primary: rgb(var(--text-primary-c));
+  --text-secondary: rgb(var(--text-secondary-c));
+  --text-muted: rgb(var(--text-muted-c));
 
   /* --- Radii ---------------------------------------------------------------
      One scale, used everywhere. Nested corners step down by one. */

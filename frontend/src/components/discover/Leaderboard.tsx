@@ -14,10 +14,15 @@ interface Props {
  * Ranked region list — shareable listicle content and the main discovery path
  * for readers who don't have a specific place in mind.
  *
- * Each row draws its score as a bar behind the content, scaled against the
- * highest score in the set. A column of bare numbers makes the reader compare
- * digits; a bar makes the gap between rank 1 and rank 12 visible in one pass,
- * which is the entire reason a leaderboard is a leaderboard.
+ * Each row draws its score as a bar behind the content. A column of bare
+ * numbers makes the reader compare digits; a bar makes the gap between rank 1
+ * and rank 12 visible in one pass, which is the entire reason a leaderboard is
+ * a leaderboard.
+ *
+ * Bars are scaled against the fixed 0–100 range, never against the maximum in
+ * the current list. Rescaling per list would draw Surabaya's 23 as a full-width
+ * bar in the "least active" panel — the same visual language saying the
+ * opposite thing one card away.
  */
 export function Leaderboard({ rows, variant = "default" }: Props) {
   if (rows.length === 0) {
@@ -29,7 +34,6 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
     );
   }
 
-  const max = Math.max(...rows.map((r) => r.composite_score), 1);
   const compact = variant === "compact";
 
   return (
@@ -48,7 +52,7 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
                 aria-hidden="true"
                 className="absolute inset-y-0 left-0 origin-left animate-draw-in rounded-lg transition-opacity group-hover:opacity-90"
                 style={{
-                  width: `${(r.composite_score / max) * 100}%`,
+                  width: `${Math.max(2, Math.min(100, r.composite_score))}%`,
                   background: `linear-gradient(90deg, ${fill}26, ${fill}08)`,
                 }}
               />
