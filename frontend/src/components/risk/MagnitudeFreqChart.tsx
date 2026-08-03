@@ -4,42 +4,78 @@ import {
   Bar,
   BarChart,
   Cell,
+  LabelList,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { AXIS, MAGNITUDE_RAMP, TOOLTIP } from "./chartTheme";
+import { num } from "@/lib/format";
 import type { RegionRiskProfile } from "@/lib/types";
 
-// Gutenberg-Richter style magnitude-frequency bars for a region.
+/**
+ * Magnitude-frequency distribution (Gutenberg–Richter in shape).
+ *
+ * Horizontal, with the count printed at the end of each bar. Event counts fall
+ * off by roughly an order of magnitude per step — a region with 117 M4+ quakes
+ * might have one M7+ — so on a shared linear vertical axis the tiers that
+ * matter most collapsed to invisible slivers against the baseline. Direct
+ * labels mean every tier states its value whatever its bar does, and the row
+ * layout gives the tier names room to be read.
+ *
+ * Colour is a single-hue sequential ramp: these are four steps of one ordinal
+ * variable, not four categories, and the previous green→amber→orange→red
+ * scheme borrowed the risk-tier status colours for something that is not a
+ * risk tier.
+ */
 export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) {
   const data = [
-    { tier: "M4+", count: profile.event_count_m4, color: "#5B8C5A" },
-    { tier: "M5+", count: profile.event_count_m5, color: "#D4A12B" },
-    { tier: "M6+", count: profile.event_count_m6, color: "#E8743B" },
-    { tier: "M7+", count: profile.event_count_m7_plus, color: "#C0392B" },
+    { tier: "M4+", count: profile.event_count_m4 },
+    { tier: "M5+", count: profile.event_count_m5 },
+    { tier: "M6+", count: profile.event_count_m6 },
+    { tier: "M7+", count: profile.event_count_m7_plus },
   ];
 
   return (
-    <ResponsiveContainer width="100%" height={220}>
-      <BarChart data={data}>
-        <XAxis dataKey="tier" stroke="#A8A39A" fontSize={12} />
-        <YAxis stroke="#A8A39A" fontSize={12} allowDecimals={false} />
-        <Tooltip
-          contentStyle={{
-            background: "#2D2D2D",
-            border: "1px solid #3A3A3A",
-            borderRadius: 8,
-            color: "#F2EDE4",
-          }}
-          cursor={{ fill: "#ffffff08" }}
-        />
-        <Bar dataKey="count" radius={[4, 4, 0, 0]}>
-          {data.map((d) => (
-            <Cell key={d.tier} fill={d.color} />
-          ))}
-        </Bar>
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={data} layout="vertical" margin={{ left: 4, right: 44, top: 4 }}>
+          <XAxis type="number" hide />
+          <YAxis
+            type="category"
+            dataKey="tier"
+            axisLine={false}
+            tickLine={false}
+            width={42}
+            stroke={AXIS.stroke}
+            fontSize={12}
+          />
+          <Tooltip
+            {...TOOLTIP}
+            formatter={(v: number) => [`${num(v)} kejadian`, "Tercatat"]}
+          />
+          <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={22} isAnimationActive={false}>
+            {data.map((d, i) => (
+              <Cell key={d.tier} fill={MAGNITUDE_RAMP[i]} />
+            ))}
+            <LabelList
+              dataKey="count"
+              position="right"
+              formatter={(v: number) => num(v)}
+              style={{
+                fill: "#B8B1A6",
+                fontSize: 12,
+                fontFamily: "var(--font-mono)",
+              }}
+            />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+      <p className="mt-1 text-xs leading-relaxed text-text-muted">
+        Gempa besar jauh lebih jarang daripada gempa kecil — pola ini berlaku di
+        seluruh dunia. Jumlah dihitung dalam radius 100 km dari pusat wilayah.
+      </p>
+    </div>
   );
 }

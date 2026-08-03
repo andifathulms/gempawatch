@@ -3,11 +3,16 @@
 import {
   Bar,
   BarChart,
+  CartesianGrid,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { AXIS, GRID, TOOLTIP } from "./chartTheme";
+import { DEPTH_BANDS, depthColor } from "@/lib/seismic";
+import { num } from "@/lib/format";
 import type { TimelineEvent } from "@/lib/types";
 
 const BINS = [
@@ -18,30 +23,54 @@ const BINS = [
   { label: "300+", min: 300, max: Infinity },
 ];
 
-// Depth distribution — shallow quakes are more damaging, so this matters.
+/**
+ * Depth distribution. Shallow quakes do the damage, so the shape of this
+ * histogram is a real part of a region's risk picture, not a curiosity.
+ *
+ * Bars are coloured by the same depth encoding the maps and badges use rather
+ * than a single hue. Consistency across the product wins here: a reader who
+ * has learnt that red means shallow on the map should not have to relearn it
+ * on the chart, and the legend below states the mapping outright.
+ */
 export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
   const data = BINS.map((b) => ({
     label: b.label,
     count: events.filter((e) => e.depth_km >= b.min && e.depth_km < b.max).length,
+    // Colour from the midpoint of the bin, so each bar takes the band it sits in.
+    color: depthColor(b.max === Infinity ? 400 : (b.min + b.max) / 2),
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={220}>
-      <BarChart data={data}>
-        <XAxis dataKey="label" stroke="#A8A39A" fontSize={11} />
-        <YAxis stroke="#A8A39A" fontSize={12} allowDecimals={false} />
-        <Tooltip
-          contentStyle={{
-            background: "#2D2D2D",
-            border: "1px solid #3A3A3A",
-            borderRadius: 8,
-            color: "#F2EDE4",
-          }}
-          cursor={{ fill: "#ffffff08" }}
-          labelFormatter={(l) => `Kedalaman ${l} km`}
-        />
-        <Bar dataKey="count" fill="#4A7C9E" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
+    <div>
+      <ResponsiveContainer width="100%" height={200}>
+        <BarChart data={data} margin={{ top: 8, right: 4, left: -18 }}>
+          <CartesianGrid {...GRID} />
+          <XAxis dataKey="label" {...AXIS} axisLine={false} />
+          <YAxis {...AXIS} axisLine={false} allowDecimals={false} width={44} />
+          <Tooltip
+            {...TOOLTIP}
+            labelFormatter={(l) => `Kedalaman ${l} km`}
+            formatter={(v: number) => [`${num(v)} kejadian`, "Tercatat"]}
+          />
+          <Bar dataKey="count" radius={[4, 4, 0, 0]} isAnimationActive={false}>
+            {data.map((d) => (
+              <Cell key={d.label} fill={d.color} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
+        {DEPTH_BANDS.map((b) => (
+          <span key={b.label} className="flex items-center gap-1.5">
+            <span
+              aria-hidden="true"
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: b.color }}
+            />
+            {b.label} <span className="font-mono">{b.detail}</span>
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }

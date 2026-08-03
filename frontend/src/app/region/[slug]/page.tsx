@@ -4,6 +4,8 @@ import { api, IS_STATIC } from "@/lib/api";
 import type { RegionRiskProfile, RegionTimeline } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { StatTile } from "@/components/ui/Stat";
+import { ButtonLink } from "@/components/ui/Button";
 import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
@@ -12,6 +14,7 @@ import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { riskTierLabel } from "@/lib/seismic";
+import { magnitude, num, regionType } from "@/lib/format";
 
 export const revalidate = 3600;
 
@@ -60,12 +63,17 @@ export default async function RegionPage({
     notFound();
   }
 
+  const coverage =
+    profile.earliest_event_year && profile.latest_event_year
+      ? `${profile.earliest_event_year}–${profile.latest_event_year}`
+      : "catatan historis";
+
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow={profile.region.type}
+        eyebrow={regionType(profile.region.type)}
         title={profile.region.name}
-        subtitle="Profil risiko historis berdasarkan gempa dalam radius 100km."
+        subtitle={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage}.`}
         action={
           <ShareButton
             path={`/region/${profile.region.slug}`}
@@ -76,37 +84,80 @@ export default async function RegionPage({
         }
       />
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      {/* Headline figures, so the page states its findings before any chart. */}
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <StatTile
+          label="Skor aktivitas"
+          value={profile.composite_score?.toFixed(0) ?? "—"}
+          unit="/100"
+          tone="accent"
+        />
+        <StatTile
+          label="Persentil nasional"
+          value={
+            profile.activity_percentile != null ? profile.activity_percentile : "—"
+          }
+          unit={profile.activity_percentile != null ? "%" : undefined}
+          hint="Lebih aktif dari sekian persen wilayah lain di basis data."
+        />
+        <StatTile
+          label="Magnitudo terbesar tercatat"
+          value={magnitude(profile.largest_magnitude)}
+        />
+        <StatTile
+          label="Risiko tsunami historis"
+          value={riskTierLabel(profile.tsunami_risk_tier)}
+        />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-3">
         <div className="lg:col-span-1">
           <RiskProfileCard profile={profile} />
         </div>
 
-        <div className="space-y-6 lg:col-span-2">
-          <Card title="Frekuensi Magnitudo">
+        <div className="space-y-5 lg:col-span-2">
+          <Card
+            title="Frekuensi magnitudo"
+            subtitle="Berapa banyak gempa di tiap tingkat kekuatan, sepanjang catatan."
+          >
             <MagnitudeFreqChart profile={profile} />
           </Card>
-          <Card title="Distribusi Kedalaman">
+
+          <Card
+            title="Distribusi kedalaman"
+            subtitle="Kedalaman menentukan seberapa keras guncangan terasa di permukaan."
+          >
             <DepthHistogram events={timeline.events} />
           </Card>
         </div>
       </div>
 
-      <Card title="Linimasa Kegempaan">
+      <Card
+        title="Linimasa kegempaan"
+        subtitle={`${num(timeline.events.length)} kejadian tercatat. Magnitudo pada sumbu Y, waktu pada sumbu X — kelompok titik yang rapat biasanya menandai rentetan gempa susulan.`}
+        footer={<SourceAttribution />}
+      >
         <EventScatterTimeline events={timeline.events} />
-        <p className="mt-2 text-xs text-text-muted">
-          {timeline.events.length} kejadian tercatat. Magnitudo pada sumbu Y, waktu
-          pada sumbu X — warna menandakan kedalaman.
-        </p>
       </Card>
 
-      <Card title="Langkah Kesiapsiagaan">
+      <Card
+        title="Langkah kesiapsiagaan"
+        subtitle="Disesuaikan dengan tingkat aktivitas wilayah ini dan status pesisirnya."
+      >
         <PreparednessChecklist
           tier={profile.activity_tier}
           coastal={profile.region.is_coastal}
         />
       </Card>
 
-      <SourceAttribution />
+      <div className="flex flex-wrap gap-3">
+        <ButtonLink href="/risk-check" variant="secondary">
+          Cek titik persismu di peta →
+        </ButtonLink>
+        <ButtonLink href="/compare" variant="secondary">
+          Bandingkan dengan wilayah lain
+        </ButtonLink>
+      </div>
     </div>
   );
 }
