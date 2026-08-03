@@ -1,8 +1,19 @@
 import Link from "next/link";
-import { API_BASE } from "@/lib/api";
+import { API_BASE, IS_STATIC } from "@/lib/api";
 import { Card } from "@/components/ui/Card";
 
 export const metadata = { title: "Berhenti Berlangganan — GempaWatch" };
+
+/**
+ * Unsubscribe tokens are minted by the backend and cannot be enumerated, so
+ * there is nothing to prerender. Static deploys do not offer alerts at all —
+ * the route generates no pages there — but the code stays intact for live ones.
+ */
+export function generateStaticParams(): { token: string }[] {
+  return [];
+}
+
+export const dynamicParams = !IS_STATIC;
 
 // One-click unsubscribe target for notification emails (no login).
 export default async function UnsubscribePage({

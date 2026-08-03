@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { api } from "@/lib/api";
+import { riskResultPath } from "@/lib/routes";
 import type { RiskCheckReport } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { ShareableRiskCard } from "./ShareableRiskCard";
@@ -97,7 +98,7 @@ export function RiskCheckTool() {
           <div className="space-y-3">
             <ShareableRiskCard report={report} />
             <Link
-              href={`/risk/${position[0].toFixed(4)}/${position[1].toFixed(4)}`}
+              href={riskResultPath(position[0], position[1])}
               className="block rounded-lg bg-seismic-orange px-4 py-2.5 text-center text-sm font-semibold text-earth-dark hover:brightness-110"
             >
               Buka & bagikan hasil ini →

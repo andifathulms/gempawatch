@@ -34,8 +34,24 @@ import type {
 // /<repo> path GitHub Pages serves a project site from.
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+/**
+ * Static generation runs these same calls in Node, where a root-relative URL
+ * has nothing to resolve against. scripts/build-static.mjs serves the export
+ * tree over loopback for the duration of the build and passes its origin here.
+ * In the browser this is empty and the base path is used instead.
+ */
+const BUILD_ORIGIN = process.env.STATIC_DATA_ORIGIN ?? "";
+
+export function dataUrl(path: string): string {
+  if (typeof window === "undefined" && BUILD_ORIGIN) {
+    // The build server serves the export at its root, without the base path.
+    return `${BUILD_ORIGIN}${path}`;
+  }
+  return `${BASE_PATH}${path}`;
+}
+
 async function getJson<T>(path: string): Promise<T> {
-  const res = await fetch(`${BASE_PATH}/api${path}`, {
+  const res = await fetch(dataUrl(`/api${path}`), {
     headers: { Accept: "application/json" },
   });
   if (!res.ok) {
@@ -44,7 +60,7 @@ async function getJson<T>(path: string): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-const fetcher = createHttpFetcher(BASE_PATH);
+const fetcher = createHttpFetcher(dataUrl);
 const engine = () => getEngineData(fetcher);
 
 /**

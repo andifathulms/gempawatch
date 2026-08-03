@@ -125,10 +125,16 @@ export async function loadEngineData(fetcher: Fetcher): Promise<EngineData> {
   };
 }
 
-/** Browser fetcher rooted at the deployment's base path. */
-export function createHttpFetcher(basePath = ""): Fetcher {
+/**
+ * HTTP fetcher. Takes a resolver rather than a bare prefix so the caller can
+ * point at the deployment's base path in the browser and at the build-time
+ * loopback server during static generation.
+ */
+export function createHttpFetcher(resolve: ((path: string) => string) | string = ""): Fetcher {
+  const toUrl =
+    typeof resolve === "string" ? (path: string) => `${resolve}${path}` : resolve;
   return async (path: string) => {
-    const res = await fetch(`${basePath}${path}`);
+    const res = await fetch(toUrl(path));
     if (!res.ok) {
       throw new Error(`engine dataset ${path} failed: ${res.status}`);
     }

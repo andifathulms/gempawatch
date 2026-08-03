@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { api } from "@/lib/api";
+import { api, IS_STATIC } from "@/lib/api";
 import type { RegionRiskProfile, RegionTimeline } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -14,6 +14,17 @@ import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklis
 import { riskTierLabel } from "@/lib/seismic";
 
 export const revalidate = 3600;
+
+/**
+ * Static builds prerender every region up front, since a static host has no way
+ * to render one on demand. Live builds return nothing here and keep rendering
+ * on request, so a newly loaded region shows up without a rebuild.
+ */
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  if (!IS_STATIC) return [];
+  const { results } = await api.regions();
+  return results.map((region) => ({ slug: region.slug }));
+}
 
 export async function generateMetadata({
   params,

@@ -43,3 +43,6 @@ pgdata/
 /backend/out/
 /frontend/public/api/
 /frontend/public/data/
+
+# TypeScript incremental build cache
+*.tsbuildinfo

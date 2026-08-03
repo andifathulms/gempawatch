@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Option {
   slug: string;
@@ -10,17 +10,13 @@ interface Option {
 
 // Two dropdowns → navigate to /compare?a=&b=. Options are passed in from the
 // server (leaderboard covers every scored region) to avoid a client round-trip.
-export function CompareSelector({
-  options,
-  initialA,
-  initialB,
-}: {
-  options: Option[];
-  initialA?: string;
-  initialB?: string;
-}) {
-  const [a, setA] = useState(initialA ?? "");
-  const [b, setB] = useState(initialB ?? "");
+//
+// The current selection is read from the URL here rather than handed down as a
+// prop, because the page itself is a single static file that cannot know it.
+export function CompareSelector({ options }: { options: Option[] }) {
+  const searchParams = useSearchParams();
+  const [a, setA] = useState(searchParams.get("a") ?? "");
+  const [b, setB] = useState(searchParams.get("b") ?? "");
   const router = useRouter();
 
   const go = () => {

@@ -5,6 +5,12 @@ export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export const alt = "Laporan risiko gempa — GempaWatch";
 
+// Mirrors the page: no coordinate paths exist on static deploys, so no OG
+// images are generated for them either. Live deploys render these on demand.
+export function generateStaticParams(): { lat: string; lng: string }[] {
+  return [];
+}
+
 export default async function OgImage({
   params,
 }: {
