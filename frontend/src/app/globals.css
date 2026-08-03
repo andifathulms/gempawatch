@@ -5,26 +5,77 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap");
+/* Typefaces are loaded by next/font in layout.tsx — self-hosted, preloaded, and
+   swap-free. They used to arrive via an @import placed *after* the @tailwind
+   directives, which is invalid CSS ordering and cost a render-blocking
+   round-trip to fonts.googleapis.com on every page load. */
 
 html {
   scroll-behavior: smooth;
+  /* Anchored sections clear the sticky header instead of hiding under it. */
+  scroll-padding-top: 5rem;
 }
 
 body {
   background-color: var(--earth-dark);
   color: var(--text-primary);
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--step-0);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Headings speak in the display voice, tightened — large type needs less
+   tracking and leading than the body copy does. */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* Numbers are for comparing, so they get tabular figures everywhere — columns
+   of magnitudes and counts line up on the decimal instead of shimmering. */
+.font-mono,
+[class*="tabular"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+::selection {
+  background: rgba(232, 116, 59, 0.3);
+  color: var(--text-primary);
 }
 
 /* Consistent, accessible keyboard focus across every interactive element.
    Mouse users don't see it (focus-visible), keyboard users always do. */
 :focus-visible {
-  outline: 2px solid var(--seismic-orange);
+  outline: 2px solid var(--seismic-bright);
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* Keyboard and screen-reader users can jump past the nav on every page. */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0.5rem;
+  z-index: 2000;
+  translate: -50% -200%;
+  border-radius: var(--r-sm);
+  background: var(--seismic-orange);
+  color: var(--earth-dark);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: translate var(--dur-base) var(--ease-out);
+}
+.skip-link:focus {
+  translate: -50% 0;
 }
 
 /* Custom scrollbars — thin, on-theme, unobtrusive. */
@@ -58,8 +109,50 @@ body {
   }
 }
 
-/* Leaflet renders its own panes; keep the dark theme consistent. */
+/* ---------------------------------------------------------------------------
+   Leaflet — the base map is third-party chrome, so it needs explicit theming
+   to stop looking like a light-mode widget dropped into a dark page.
+   ------------------------------------------------------------------------- */
 .leaflet-container {
-  background: var(--earth-dark);
-  font-family: "Inter", sans-serif;
+  background: var(--surface-sunken);
+  font-family: var(--font-sans), sans-serif;
+}
+.leaflet-control-attribution {
+  background: rgba(18, 17, 16, 0.8) !important;
+  color: var(--text-muted) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a {
+  color: var(--text-secondary) !important;
+}
+.leaflet-control-zoom a {
+  background: var(--surface-raised) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+.leaflet-control-zoom a:hover {
+  background: var(--border) !important;
+}
+/* Popups ship with a white bubble and a white tail; both need overriding. */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--surface-raised) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: var(--r-md) !important;
+}
+.leaflet-popup-close-button {
+  color: var(--text-muted) !important;
+}
+.leaflet-tooltip {
+  background: var(--surface-raised) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+.leaflet-tooltip::before {
+  border-top-color: var(--border) !important;
 }

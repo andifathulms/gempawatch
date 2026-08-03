@@ -7,20 +7,27 @@ interface Props {
   size?: number;
 }
 
-// Signature element: circular badge, size scales with magnitude, color with depth.
-// Used everywhere an earthquake is referenced (list, map popup, timeline).
+/**
+ * Signature element: size encodes magnitude, colour encodes depth.
+ *
+ * The soft outer ring is drawn in the same hue at low alpha, which gives the
+ * badge a halo like a seismograph trace and — more usefully — separates it from
+ * whatever surface it sits on without needing a hard border.
+ */
 export function MagnitudeBadge({ magnitude, depthKm, size }: Props) {
   const px = size ?? magnitudeSize(magnitude);
+  const color = depthColor(depthKm);
   return (
     <span
-      className="inline-flex items-center justify-center rounded-full font-mono font-medium text-earth-dark shrink-0"
+      className="inline-flex shrink-0 items-center justify-center rounded-full font-mono font-bold tabular-nums text-earth-dark"
       style={{
         width: px,
         height: px,
-        backgroundColor: depthColor(depthKm),
-        fontSize: Math.max(11, px * 0.32),
+        backgroundColor: color,
+        fontSize: Math.max(11, px * 0.34),
+        boxShadow: `0 0 0 ${Math.max(2, px * 0.09)}px ${color}22`,
       }}
-      title={`M${magnitude.toFixed(1)} · ${depthKm.toFixed(0)} km`}
+      title={`M${magnitude.toFixed(1)} · kedalaman ${depthKm.toFixed(0)} km`}
     >
       {magnitude.toFixed(1)}
     </span>

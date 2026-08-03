@@ -1,30 +1,81 @@
-/* "Fault Line" design tokens — raw CSS custom properties (see PRD design system). */
+/* ============================================================================
+   "Seismograph" design tokens — GempaWatch
+   ----------------------------------------------------------------------------
+   The product reads risk data off an instrument. The palette is a warm charcoal
+   ramp (volcanic rock, not blue-grey UI chrome) with a single seismic accent,
+   and the type is a three-voice system: a display face for headlines, a UI face
+   for prose, and a tabular mono for every number the user might compare.
+
+   Contrast: every text token below clears WCAG AA (4.5:1) against --surface,
+   which is the lightest background any body copy sits on. The previous muted
+   tone (#6B6660) sat at ~3.4:1 and failed.
+   ========================================================================== */
 :root {
-  --earth-dark: #1a1a1a;
-  --surface: #232323;
-  --surface-raised: #2d2d2d;
-  --border: #3a3a3a;
-  --border-strong: #4a4a4a;
+  /* --- Neutral ramp -------------------------------------------------------
+     Warm charcoal. Page is darker than cards so elevation reads without
+     relying on shadow alone (shadows are nearly invisible on dark surfaces). */
+  --earth-dark: #121110; /* page background */
+  --surface: #1c1a18; /* card / panel */
+  --surface-raised: #24211e; /* popover, hover, nested panel */
+  --surface-sunken: #0d0c0b; /* wells: map frames, code, inset charts */
+  --border: #33302b;
+  --border-strong: #494339;
 
+  /* --- Accent -------------------------------------------------------------
+     Seismic orange is the brand and the "interactive" signal. The bright
+     variant is for text/icons on dark, where the base tone is too dim. */
   --seismic-orange: #e8743b;
+  --seismic-bright: #ff8b53;
   --seismic-orange-soft: #f0946a;
-  --depth-blue: #4a7c9e;
-  --risk-red: #c0392b;
-  --risk-amber: #d4a12b;
-  --risk-green: #5b8c5a;
+  --seismic-dim: rgba(232, 116, 59, 0.14);
+  --depth-blue: #5b93b8;
 
-  --text-primary: #f2ede4;
-  --text-secondary: #a8a39a;
-  --text-muted: #6b6660;
+  /* --- Risk semantics -----------------------------------------------------
+     Two tones per tier: -fill for solid shapes (badges, markers, arcs) and the
+     base for text, which needs more luminance to stay legible on charcoal. */
+  --risk-red: #e8594a;
+  --risk-red-fill: #c0392b;
+  --risk-amber: #e6b23f;
+  --risk-amber-fill: #d4a12b;
+  --risk-green: #74b071;
+  --risk-green-fill: #5b8c5a;
 
-  /* Elevation — soft shadows tuned for the dark earth surface. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
-  --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.35), 0 8px 28px rgba(232, 116, 59, 0.12);
+  /* --- Text --------------------------------------------------------------- */
+  --text-primary: #f5f1ea;
+  --text-secondary: #b8b1a6;
+  --text-muted: #948c81;
 
-  /* Motion — calm, deliberate; never bouncy (this is a risk product, not a game). */
+  /* --- Radii ---------------------------------------------------------------
+     One scale, used everywhere. Nested corners step down by one. */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 28px;
+
+  /* --- Elevation -----------------------------------------------------------
+     Each level pairs a shadow with a 1px inner top highlight, which is what
+     actually makes a surface read as raised on a dark background. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.4), 0 10px 32px rgba(232, 116, 59, 0.18);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+  /* --- Fluid type scale ----------------------------------------------------
+     Ratio ~1.2 at mobile widening to ~1.25 at desktop, so headlines gain
+     presence on large screens without the body copy ballooning with them. */
+  --step-0: 0.9375rem; /* 15px body */
+  --step-1: clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem);
+  --step-2: clamp(1.25rem, 0.7vw + 1.1rem, 1.5rem);
+  --step-3: clamp(1.5rem, 1.3vw + 1.2rem, 1.95rem);
+  --step-4: clamp(1.85rem, 2.4vw + 1.3rem, 2.6rem);
+  --step-5: clamp(2.2rem, 4vw + 1.3rem, 3.6rem);
+
+  /* --- Motion --------------------------------------------------------------
+     Calm and deliberate; never bouncy — this is a risk product, not a game. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 130ms;
   --dur-base: 200ms;
+  --dur-slow: 400ms;
 }

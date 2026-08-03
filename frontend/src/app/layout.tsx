@@ -1,8 +1,37 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
+import { SiteFooter } from "@/components/ui/SiteFooter";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+
+/**
+ * Three voices, self-hosted by next/font so they are preloaded, subset, and
+ * free of the layout shift a webfont @import causes.
+ *
+ * Space Grotesk carries headlines — its slightly technical, drafting-table
+ * letterforms suit an instrument readout better than another neutral grotesk.
+ * Inter runs the prose and UI. JetBrains Mono handles every figure on the site,
+ * because its tabular numerals keep magnitudes and counts aligned in columns.
+ */
+const sans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -19,52 +48,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
+    <html
+      lang="id"
+      className={`${sans.variable} ${display.variable} ${mono.variable}`}
+    >
       <body className="min-h-screen bg-earth-dark text-text-primary antialiased">
         <ToastProvider>
+          <a href="#main" className="skip-link">
+            Lompat ke konten utama
+          </a>
           <NavHeader />
-          <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
-        <footer className="mt-16 border-t border-earth-border">
-          <div className="mx-auto max-w-6xl px-4 py-8">
-            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div className="flex items-center gap-2">
-                <span className="inline-block h-2.5 w-2.5 rounded-full bg-seismic-orange" />
-                <span className="text-sm font-semibold tracking-tight text-text-primary">
-                  GEMPA<span className="text-seismic-orange">WATCH</span>
-                </span>
-              </div>
-              <p className="text-xs text-text-muted">
-                Data: BMKG (Badan Meteorologi, Klimatologi, dan Geofisika) &middot;
-                USGS (United States Geological Survey)
-              </p>
-            </div>
-            <div className="mt-4 rounded-lg border border-earth-border bg-earth-surface px-4 py-3 text-xs leading-relaxed text-text-secondary">
-              <strong className="font-semibold text-text-primary">Penting:</strong>{" "}
-              GempaWatch menampilkan pola risiko historis, bukan prediksi, dan{" "}
-              <strong className="font-semibold text-text-primary">
-                bukan pengganti
-              </strong>{" "}
-              peringatan dini resmi BMKG. Untuk peringatan tsunami resmi, selalu rujuk{" "}
-              <a
-                href="https://www.bmkg.go.id/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-seismic-orange underline underline-offset-2 hover:brightness-110"
-              >
-                bmkg.go.id
-              </a>
-              .
-            </div>
-            {/*
-              Personal byline. No divider of its own — the footer already has
-              one seam, and this must not read as part of the data attribution
-              or the disclaimer above it.
-            */}
-            <div className="mt-6">
-              <MakerSignature />
-            </div>
-          </div>
-        </footer>
+          <main id="main" className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+            {children}
+          </main>
+          <SiteFooter>
+            <MakerSignature />
+          </SiteFooter>
         </ToastProvider>
       </body>
     </html>
