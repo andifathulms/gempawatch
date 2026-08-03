@@ -1,0 +1,198 @@
+
+# Publishes GempaWatch to GitHub Pages as a fully static site.
+#
+# There is no server in this deployment, so the work Celery beat would do on a
+# live VM happens here instead: spin up PostGIS, restore the accumulated event
+# history, poll BMKG, re-sync recent USGS, recompute risk profiles, then freeze
+# the whole read-only API into JSON files that ship alongside the frontend.
+#
+# The event history has to survive between runs because BMKG only exposes its
+# last 15 events — anything older is only in our own database. Runners are
+# ephemeral, so the database is carried across runs as a cached pg_dump. A cache
+# miss is not fatal: the job falls back to a full USGS bootstrap and rebuilds
+# from scratch, which makes the pipeline self-healing but slow (~10 min), so the
+# cache is what keeps the normal run fast.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Every 30 minutes. GitHub's scheduler is best-effort and routinely fires
+    # late under load, so treat this as "roughly half-hourly", not a guarantee.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never publish two builds at once, but let a running publish finish rather
+# than cancelling it — a half-deployed site is worse than a slightly stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  PGHOST: localhost
+  PGPORT: "5432"
+  PGUSER: gempawatch
+  PGPASSWORD: gempawatch
+  PGDATABASE: gempawatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      db:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_DB: gempawatch
+          POSTGRES_USER: gempawatch
+          POSTGRES_PASSWORD: gempawatch
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gempawatch"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings.local
+      # base.py reads these with no default, and evaluates before local.py can
+      # override them, so they must be present even though nothing is served.
+      DEBUG: "False"
+      ALLOWED_HOSTS: "*"
+      SECRET_KEY: build-only-not-a-secret
+      DATABASE_URL: postgis://gempawatch:gempawatch@localhost:5432/gempawatch
+      REDIS_URL: redis://localhost:6379/0
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GeoDjango system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            binutils libproj-dev gdal-bin libgdal-dev postgresql-client
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r backend/requirements.txt
+
+      - name: Restore accumulated event history
+        id: db-cache
+        uses: actions/cache@v4
+        with:
+          path: db-snapshot
+          # Cache keys are immutable, so each run writes a new entry and picks
+          # up the newest previous one via the prefix.
+          key: gempawatch-db-${{ github.run_id }}
+          restore-keys: |
+            gempawatch-db-
+
+      # Restore before migrating, into a database dropped and recreated first.
+      # A data-only restore on top of a migrated database would collide on
+      # Django's own tables (django_migrations, content types, permissions),
+      # so the snapshot is treated as the whole database and migrate runs
+      # afterwards to apply anything added since the snapshot was taken.
+      - name: Restore cached database
+        if: hashFiles('db-snapshot/snapshot.dump') != ''
+        run: |
+          echo "▸ restoring cached snapshot"
+          psql -d postgres -v ON_ERROR_STOP=1 \
+            -c "DROP DATABASE IF EXISTS $PGDATABASE WITH (FORCE);" \
+            -c "CREATE DATABASE $PGDATABASE OWNER $PGUSER;"
+          pg_restore --no-owner --no-privileges -d "$PGDATABASE" \
+            db-snapshot/snapshot.dump
+
+      - name: Apply migrations
+        working-directory: backend
+        run: python manage.py migrate --noinput
+
+      - name: Bootstrap history on a cache miss
+        if: hashFiles('db-snapshot/snapshot.dump') == ''
+        working-directory: backend
+        run: |
+          echo "▸ no cached snapshot — running full USGS bootstrap"
+          python manage.py earthquake_bootstrap
+
+      - name: Report dataset size
+        working-directory: backend
+        run: |
+          python manage.py shell -c "from apps.earthquakes.models import EarthquakeEvent; print('events in DB:', EarthquakeEvent.objects.count())"
+
+      - name: Refresh from BMKG and USGS
+        working-directory: backend
+        run: python manage.py refresh_for_export
+
+      - name: Export the static API
+        working-directory: backend
+        run: |
+          python manage.py export_static --out ./out
+          python manage.py export_risk_fixtures --out ../frontend/src/lib/engine/__fixtures__
+
+      - name: Stage the export for the frontend
+        run: |
+          rm -rf frontend/public/api frontend/public/data
+          cp -r backend/out/api frontend/public/api
+          cp -r backend/out/data frontend/public/data
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      # The gate. Fixtures are regenerated from this run's data above, so this
+      # asserts the TypeScript risk engine still reproduces Django's numbers on
+      # the data actually about to be published — not on a stale snapshot. If it
+      # fails, the site does not deploy, because the alternative is publishing
+      # risk figures that disagree with our own stated methodology.
+      - name: Verify the risk engine matches Django
+        working-directory: frontend
+        run: npm test
+
+      - name: Build the static site
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+        run: npm run build:static
+
+      - name: Save event history for the next run
+        run: |
+          mkdir -p db-snapshot
+          # Full dump (schema included) so the next run can restore it wholesale.
+          pg_dump -Fc -Z9 --no-owner --no-privileges \
+            -d "$PGDATABASE" -f db-snapshot/snapshot.dump
+          ls -lh db-snapshot/snapshot.dump
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
