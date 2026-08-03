@@ -1,4 +1,4 @@
-import { magnitudeSize, depthColor } from "@/lib/seismic";
+import { magnitudeSize, depthColor, onFillTextColor } from "@/lib/seismic";
 
 interface Props {
   magnitude: number;
@@ -19,11 +19,14 @@ export function MagnitudeBadge({ magnitude, depthKm, size }: Props) {
   const color = depthColor(depthKm);
   return (
     <span
-      className="inline-flex shrink-0 items-center justify-center rounded-full font-mono font-bold tabular-nums text-earth-dark"
+      className="inline-flex shrink-0 items-center justify-center rounded-full font-mono font-bold tabular-nums"
       style={{
         width: px,
         height: px,
         backgroundColor: color,
+        // Shallow-quake red is dark enough that the usual near-black ink fails
+        // WCAG AA at this size; the foreground is chosen per fill.
+        color: onFillTextColor(color),
         fontSize: Math.max(11, px * 0.34),
         boxShadow: `0 0 0 ${Math.max(2, px * 0.09)}px ${color}22`,
       }}

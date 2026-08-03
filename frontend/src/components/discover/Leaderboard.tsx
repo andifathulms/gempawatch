@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { riskTierColor, riskTierTextColor, riskTierLabel } from "@/lib/seismic";
+import {
+  riskTierColor,
+  riskTierTextColor,
+  riskTierLabel,
+  onFillTextColor,
+} from "@/lib/seismic";
 import { magnitude, num } from "@/lib/format";
 import { EmptyState } from "@/components/ui/EmptyState";
 import type { LeaderboardRow } from "@/lib/types";
@@ -62,8 +67,8 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
               </span>
 
               <span
-                className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-bold tabular-nums text-earth-dark"
-                style={{ backgroundColor: fill }}
+                className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-bold tabular-nums"
+                style={{ backgroundColor: fill, color: onFillTextColor(fill) }}
                 title={`Skor aktivitas ${r.composite_score.toFixed(0)} dari 100`}
               >
                 {r.composite_score.toFixed(0)}

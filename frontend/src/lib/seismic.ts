@@ -25,6 +25,37 @@ export const DEPTH_BANDS = [
   { color: "#5B93B8", label: "Dalam", detail: "> 100 km" },
 ] as const;
 
+/**
+ * Readable foreground for text sitting *on* one of the solid fills above.
+ *
+ * The fills span a wide luminance range — the HIGH red is dark enough that the
+ * near-black ink used everywhere else only reaches 3.5:1 on it (a WCAG AA
+ * failure for the 14px figures in magnitude badges and leaderboard chips),
+ * while the amber is light enough that white would fail just as badly. Rather
+ * than hand-pick per swatch and re-check every time the palette moves, this
+ * computes the relative luminance and returns whichever of ink or paper wins.
+ */
+const INK = "#121110";
+const PAPER = "#F5F1EA";
+
+function relativeLuminance(hex: string): number {
+  const n = parseInt(hex.replace("#", ""), 16);
+  const channels = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrast(a: string, b: string): number {
+  const [x, y] = [relativeLuminance(a), relativeLuminance(b)];
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+}
+
+export function onFillTextColor(fill: string): string {
+  return contrast(fill, INK) >= contrast(fill, PAPER) ? INK : PAPER;
+}
+
 /** Solid tier colour — badge fills, markers, gauge arcs. */
 export function riskTierColor(tier: string | null): string {
   switch (tier) {
