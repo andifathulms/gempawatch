@@ -2,8 +2,10 @@
 
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 import { depthColor, magnitudeSize } from "@/lib/seismic";
+import { absolute, depth, timeAgo } from "@/lib/format";
 import type { EarthquakeEvent } from "@/lib/types";
 import { MagnitudeBadge } from "@/components/ui/MagnitudeBadge";
+import { FeltBadge } from "@/components/ui/FeltBadge";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 
 interface Props {
@@ -13,14 +15,25 @@ interface Props {
   zoom?: number;
 }
 
-// Homepage live map. Circle size = magnitude, color = depth (CLAUDE.md encoding).
-// Warm-toned CartoDB Voyager base per the "Fault Line" map style.
+/**
+ * Homepage live map. Circle size = magnitude, colour = depth (CLAUDE.md).
+ *
+ * The base layer is CartoDB's dark matter rather than Voyager: a light basemap
+ * under a dark UI turned the map into the brightest object on the page, which
+ * pulled attention away from the markers that carry the actual information.
+ * Markers are drawn newest-last so the most recent event sits on top of any
+ * cluster.
+ */
 export function LiveMap({
   events,
-  height = 460,
+  height = 440,
   center = [-2.5, 118],
   zoom = 5,
 }: Props) {
+  const ordered = [...events].sort(
+    (a, b) => new Date(a.event_time).getTime() - new Date(b.event_time).getTime(),
+  );
+
   return (
     <MapContainer
       center={center}
@@ -29,10 +42,10 @@ export function LiveMap({
       scrollWheelZoom={false}
     >
       <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-        attribution='&copy; OpenStreetMap &copy; CARTO'
+        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        attribution="&copy; OpenStreetMap &copy; CARTO"
       />
-      {events.map((e) => (
+      {ordered.map((e) => (
         <CircleMarker
           key={e.id}
           center={[e.latitude, e.longitude]}
@@ -40,24 +53,34 @@ export function LiveMap({
           pathOptions={{
             color: depthColor(e.depth_km),
             fillColor: depthColor(e.depth_km),
-            fillOpacity: 0.55,
+            fillOpacity: 0.45,
             weight: 1.5,
           }}
         >
           <Popup>
-            <div className="min-w-[180px] space-y-2 text-earth-dark">
-              <div className="flex items-center gap-2">
-                <MagnitudeBadge magnitude={e.magnitude} depthKm={e.depth_km} size={36} />
+            <div className="min-w-[200px] space-y-2">
+              <div className="flex items-center gap-2.5">
+                <MagnitudeBadge magnitude={e.magnitude} depthKm={e.depth_km} size={38} />
                 <div>
-                  <p className="text-sm font-semibold">M{e.magnitude.toFixed(1)}</p>
-                  <p className="text-xs">{e.depth_km.toFixed(0)} km</p>
+                  <p className="font-mono text-sm font-bold text-text-primary">
+                    M{e.magnitude.toFixed(1)}
+                  </p>
+                  <p className="text-xs text-text-muted">
+                    kedalaman {depth(e.depth_km)}
+                  </p>
                 </div>
               </div>
-              <p className="text-xs">{e.location_description}</p>
-              <p className="text-[11px] text-gray-500">
-                {new Date(e.event_time).toLocaleString("id-ID")}
+              <p className="text-xs leading-relaxed text-text-secondary">
+                {e.location_description}
               </p>
-              <SourceAttribution sources={[e.source]} className="!text-[10px]" />
+              <p
+                className="text-[11px] text-text-muted"
+                title={absolute(e.event_time)}
+              >
+                {timeAgo(e.event_time)} · {e.source}
+              </p>
+              {e.felt_reports && <FeltBadge />}
+              <SourceAttribution sources={[e.source]} variant="inline" />
             </div>
           </Popup>
         </CircleMarker>

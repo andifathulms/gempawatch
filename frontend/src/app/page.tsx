@@ -1,45 +1,75 @@
 import Link from "next/link";
 import { api } from "@/lib/api";
-import type { EarthquakeEvent } from "@/lib/types";
+import type { EarthquakeEvent, HistoricalDisaster, LeaderboardRow } from "@/lib/types";
 import { DynamicLiveMap } from "@/components/map/DynamicLiveMap";
+import { DepthLegend } from "@/components/map/DepthLegend";
 import { EventList } from "@/components/map/EventList";
 import { Card } from "@/components/ui/Card";
-import { Stat } from "@/components/ui/Stat";
+import { StatTile } from "@/components/ui/Stat";
+import { ButtonLink } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { RegionSearch } from "@/components/discover/RegionSearch";
+import { Leaderboard } from "@/components/discover/Leaderboard";
+import { magnitude, num, shortDate } from "@/lib/format";
 
 export const revalidate = 300; // 5 min, matching BMKG cadence
 
-function weekSummary(events: EarthquakeEvent[]) {
+function daySummary(events: EarthquakeEvent[]) {
   if (events.length === 0) {
-    return { total: 0, largest: null as EarthquakeEvent | null, felt: 0 };
+    return { total: 0, largest: null as EarthquakeEvent | null, felt: 0, shallow: 0 };
   }
-  const largest = events.reduce((a, b) => (b.magnitude > a.magnitude ? b : a));
-  const felt = events.filter((e) => e.felt_reports).length;
-  return { total: events.length, largest, felt };
+  return {
+    total: events.length,
+    largest: events.reduce((a, b) => (b.magnitude > a.magnitude ? b : a)),
+    felt: events.filter((e) => e.felt_reports).length,
+    shallow: events.filter((e) => e.depth_km < 30).length,
+  };
 }
 
 export default async function HomePage() {
-  let events: EarthquakeEvent[] = [];
-  let loadFailed = false;
-  try {
-    const data = await api.liveEvents();
-    events = data.results;
-  } catch {
-    loadFailed = true;
-  }
-  const summary = weekSummary(events);
+  // Each block degrades on its own — a leaderboard outage should not cost the
+  // reader the live map, and vice versa.
+  const [events, top, disasters] = await Promise.all([
+    api
+      .liveEvents()
+      .then((d) => d.results)
+      .catch(() => null),
+    api
+      .leaderboard(5, "desc")
+      .then((r) => r.results)
+      .catch(() => [] as LeaderboardRow[]),
+    api.disasterTimeline().catch(() => [] as HistoricalDisaster[]),
+  ]);
+
+  const loadFailed = events === null;
+  const list = events ?? [];
+  const summary = daySummary(list);
 
   return (
-    <div className="space-y-6">
-      <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-gradient-to-br from-earth-surface to-earth-dark p-6 shadow-md sm:p-8">
-        {/* Subtle seismic-wave motif in the corner — decorative only. */}
+    <div className="space-y-8">
+      {/* ------------------------------------------------------------------
+          Hero. The product answers "how exposed is my area?", so the search
+          field *is* the hero — not a banner with a button underneath it.
+         ------------------------------------------------------------------ */}
+      <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 shadow-raised sm:px-8 sm:py-12">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-seismic-orange/10 blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full bg-seismic-orange/[0.07] blur-3xl"
         />
-        <div className="relative flex flex-col gap-5">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/60 px-3 py-1 text-xs text-text-secondary">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(115deg, transparent 0 26px, rgba(232,116,59,0.045) 26px 27px)",
+            maskImage: "linear-gradient(to left, black, transparent 55%)",
+            WebkitMaskImage: "linear-gradient(to left, black, transparent 55%)",
+          }}
+        />
+
+        <div className="relative flex flex-col gap-6">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/70 px-3 py-1.5 text-xs text-text-secondary">
             <span className="relative inline-flex h-2 w-2">
               <span
                 className={`absolute inline-flex h-full w-full animate-pulse-ring rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
@@ -50,105 +80,175 @@ export default async function HomePage() {
             </span>
             {loadFailed
               ? "Data langsung sementara tidak tersedia"
-              : `${summary.total} gempa tercatat dalam 24 jam terakhir`}
+              : `${num(summary.total)} gempa tercatat dalam 24 jam terakhir`}
           </span>
 
-          <div className="max-w-2xl">
-            <h1 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+          <div className="max-w-3xl">
+            <h1 className="text-fluid-5 font-bold tracking-tight">
               Seberapa rawan gempa{" "}
               <span className="text-seismic-orange">lokasi kamu?</span>
             </h1>
-            <p className="mt-2 max-w-xl text-sm text-text-secondary sm:text-base">
-              Intelijen risiko gempa Indonesia — menggabungkan data langsung BMKG dan
-              catatan seismik historis USGS. Bukan prediksi, melainkan pola historis.
+            <p className="mt-4 max-w-xl text-base leading-relaxed text-text-secondary">
+              Lebih dari 50 tahun catatan seismik BMKG dan USGS, dibaca sebagai
+              pola untuk wilayahmu sendiri — bukan sekadar daftar gempa terbaru,
+              dan bukan ramalan.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Link
-              href="/risk-check"
-              className="inline-flex items-center justify-center rounded-lg bg-seismic-orange px-5 py-2.5 text-sm font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98]"
-            >
-              Cek Risiko Saya →
-            </Link>
-            <Link
-              href="/map"
-              className="inline-flex items-center justify-center rounded-lg border border-earth-border bg-earth-dark/40 px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors duration-200 hover:border-seismic-orange hover:text-text-primary"
-            >
-              Lihat Peta Bahaya
-            </Link>
+          <div className="max-w-xl">
+            <RegionSearch size="lg" />
+            <p className="mt-2.5 text-xs text-text-muted">
+              Ketik nama kabupaten/kota, atau{" "}
+              <Link
+                href="/risk-check"
+                className="font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
+              >
+                pakai lokasi GPS-mu
+              </Link>{" "}
+              untuk laporan titik yang presisi.
+            </p>
           </div>
 
-          <div className="max-w-xl">
-            <RegionSearch />
+          <div className="flex flex-wrap gap-3">
+            <ButtonLink href="/risk-check" size="lg">
+              Cek Risiko Saya →
+            </ButtonLink>
+            <ButtonLink href="/explore" variant="secondary" size="lg">
+              Peringkat wilayah
+            </ButtonLink>
           </div>
         </div>
       </section>
 
-      <Card
-        title="Peta Gempa — 24 Jam Terakhir"
-        action={
-          <Link
-            href="/map"
-            className="text-xs text-text-secondary transition-colors hover:text-seismic-orange"
-          >
-            Peta lengkap →
-          </Link>
-        }
-      >
-        {loadFailed && (
-          <div className="mb-3 flex items-start gap-2 rounded-lg border border-risk-amber/40 bg-risk-amber/10 px-3 py-2 text-sm text-text-secondary">
-            <span aria-hidden="true">⚠️</span>
-            <span>
-              Gagal memuat data gempa langsung. Menampilkan peta tanpa kejadian
-              terbaru — muat ulang halaman untuk mencoba lagi.
-            </span>
-          </div>
-        )}
-        <DynamicLiveMap events={events} />
-        <SourceAttribution className="mt-3" />
-      </Card>
+      {/* Headline figures for the last 24 hours. */}
+      <section aria-label="Ringkasan 24 jam terakhir">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <StatTile
+            label="Gempa tercatat (24 jam)"
+            value={loadFailed ? "—" : num(summary.total)}
+            tone="accent"
+          />
+          <StatTile
+            label="Magnitudo terbesar"
+            value={summary.largest ? magnitude(summary.largest.magnitude) : "—"}
+          />
+          <StatTile
+            label="Gempa dangkal (<30 km)"
+            value={loadFailed ? "—" : num(summary.shallow)}
+            hint="Gempa dangkal umumnya paling terasa dan paling merusak di permukaan."
+          />
+          <StatTile
+            label="Dilaporkan dirasakan"
+            value={loadFailed ? "—" : num(summary.felt)}
+          />
+        </div>
+      </section>
 
-      <div className="grid gap-6 md:grid-cols-3">
-        <Card title="Gempa Terkini" className="md:col-span-2">
-          <div className="max-h-[380px] overflow-y-auto pr-1">
+      {/* ------------------------------------------------------------------
+          Map and feed side by side. They answer the same question in two
+          registers — where, and what/when — so splitting them across sections
+          made the reader scroll between halves of one thought.
+         ------------------------------------------------------------------ */}
+      <section className="grid gap-5 lg:grid-cols-5">
+        <Card
+          title="Peta gempa — 24 jam terakhir"
+          className="lg:col-span-3"
+          action={
+            <Link
+              href="/map"
+              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+            >
+              Peta bahaya lengkap →
+            </Link>
+          }
+          footer={
+            <div className="space-y-2">
+              <DepthLegend />
+              <SourceAttribution variant="inline" />
+            </div>
+          }
+        >
+          {loadFailed && (
+            <div className="mb-3">
+              <EmptyState
+                tone="warning"
+                title="Gagal memuat data gempa langsung."
+                description="Peta ditampilkan tanpa kejadian terbaru. Muat ulang halaman untuk mencoba lagi."
+              />
+            </div>
+          )}
+          <DynamicLiveMap events={list} />
+        </Card>
+
+        <Card
+          title="Gempa terkini"
+          className="lg:col-span-2"
+          subtitle="Diperbarui mengikuti kadensi BMKG (±5 menit)."
+        >
+          <div className="max-h-[420px] overflow-y-auto pr-1">
             {loadFailed ? (
-              <p className="py-8 text-center text-sm text-text-muted">
-                Data tidak tersedia saat ini. Coba muat ulang halaman.
-              </p>
+              <EmptyState
+                tone="warning"
+                title="Data tidak tersedia saat ini."
+                description="Coba muat ulang halaman dalam beberapa saat."
+              />
             ) : (
-              <EventList events={events} />
+              <EventList events={list} />
             )}
           </div>
         </Card>
+      </section>
 
-        <Card title="Pekan Ini dalam Angka">
-          <Stat label="Total gempa (24 jam)" value={summary.total} accent />
-          <Stat
-            label="Terbesar"
-            value={
-              summary.largest
-                ? `M${summary.largest.magnitude.toFixed(1)}`
-                : "—"
-            }
-          />
-          <Stat
-            label="Lokasi terbesar"
-            value={
-              summary.largest
-                ? summary.largest.location_description.slice(0, 22)
-                : "—"
-            }
-          />
-          <Stat label="Laporan dirasakan" value={summary.felt} />
-          <Link
-            href="/timeline"
-            className="mt-4 block rounded-lg border border-earth-border px-3 py-2 text-center text-sm text-text-secondary hover:border-seismic-orange hover:text-seismic-orange"
-          >
-            Lihat Sejarah Bencana →
-          </Link>
+      {/* Discovery + history: two ways to leave the homepage with something. */}
+      <section className="grid gap-5 lg:grid-cols-2">
+        <Card
+          title="Wilayah paling aktif"
+          subtitle="Skor 0–100 menimbang frekuensi, magnitudo, kedalaman, dan kedekatan sesar."
+          action={
+            <Link
+              href="/explore"
+              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+            >
+              Lihat semua →
+            </Link>
+          }
+        >
+          <Leaderboard rows={top} variant="compact" />
         </Card>
-      </div>
+
+        <Card
+          title="Memori bencana"
+          subtitle="Kejadian yang membentuk kesadaran kebencanaan Indonesia."
+          action={
+            <Link
+              href="/timeline"
+              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+            >
+              Linimasa lengkap →
+            </Link>
+          }
+        >
+          {disasters.length === 0 ? (
+            <EmptyState title="Arsip bencana belum tersedia." />
+          ) : (
+            <ul className="divide-y divide-earth-border/70">
+              {disasters.slice(0, 4).map((d) => (
+                <li key={d.id} className="flex items-baseline gap-3 py-2.5">
+                  <span className="w-24 shrink-0 font-mono text-xs tabular-nums text-text-muted">
+                    {shortDate(d.event_date)}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-sm text-text-primary">
+                    {d.name}
+                  </span>
+                  <span className="shrink-0 font-mono text-xs tabular-nums text-seismic-bright">
+                    {magnitude(d.magnitude)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      </section>
     </div>
   );
 }

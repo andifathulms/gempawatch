@@ -1,31 +1,60 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
+import { regionType } from "@/lib/format";
 import type { AdminRegion } from "@/lib/types";
 
-// Debounced region search — the only discovery path today besides pin-drop.
-export function RegionSearch() {
+interface Props {
+  /** `lg` is the homepage hero field; `md` fits inside a page header or card. */
+  size?: "md" | "lg";
+  placeholder?: string;
+  autoFocus?: boolean;
+}
+
+/**
+ * Debounced region search — the primary discovery path into the product.
+ *
+ * Implemented as a combobox rather than an input with a floating list: arrow
+ * keys move a highlight, Enter opens the highlighted region, Escape dismisses,
+ * and the aria-activedescendant wiring means a screen reader announces the
+ * option under the cursor. Previously the only way in was a mouse click, which
+ * made the site's main entry point keyboard-inaccessible.
+ */
+export function RegionSearch({
+  size = "md",
+  placeholder = "Cari kabupaten/kota… (mis. Palu, Bandung, Bantul)",
+  autoFocus,
+}: Props) {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<AdminRegion[]>([]);
   const [open, setOpen] = useState(false);
+  const [cursor, setCursor] = useState(0);
+  const [searching, setSearching] = useState(false);
   const router = useRouter();
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const listId = useId();
 
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current);
     if (q.trim().length < 2) {
       setResults([]);
+      setSearching(false);
       return;
     }
+    setSearching(true);
     timer.current = setTimeout(async () => {
       try {
         const r = await api.searchRegions(q.trim());
         setResults(r);
+        setCursor(0);
         setOpen(true);
       } catch {
         setResults([]);
+      } finally {
+        setSearching(false);
       }
     }, 250);
     return () => {
@@ -33,12 +62,49 @@ export function RegionSearch() {
     };
   }, [q]);
 
+  // Clicking anywhere else dismisses the list — without this it survives until
+  // the next keystroke and covers whatever the reader clicked towards.
+  useEffect(() => {
+    const onDown = (e: MouseEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, []);
+
+  const go = useCallback(
+    (region: AdminRegion) => {
+      setOpen(false);
+      router.push(`/region/${region.slug}`);
+    },
+    [router],
+  );
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!open || results.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setCursor((c) => (c + 1) % results.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setCursor((c) => (c - 1 + results.length) % results.length);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      go(results[cursor]);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  const lg = size === "lg";
+  const noMatches = open && !searching && q.trim().length >= 2 && results.length === 0;
+
   return (
-    <div className="relative">
+    <div ref={rootRef} className="relative">
       <svg
-        className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted"
-        width="16"
-        height="16"
+        className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-text-muted ${lg ? "left-4" : "left-3.5"}`}
+        width={lg ? 18 : 16}
+        height={lg ? 18 : 16}
         viewBox="0 0 16 16"
         fill="none"
         stroke="currentColor"
@@ -48,30 +114,67 @@ export function RegionSearch() {
         <circle cx="7" cy="7" r="4.5" />
         <path d="M10.5 10.5L14 14" strokeLinecap="round" />
       </svg>
+
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        onFocus={() => results.length && setOpen(true)}
-        placeholder="Cari kabupaten/kota… (mis. Palu, Bandung)"
+        onFocus={() => (results.length || noMatches) && setOpen(true)}
+        onKeyDown={onKeyDown}
+        placeholder={placeholder}
         aria-label="Cari kabupaten atau kota"
-        className="w-full rounded-lg border border-earth-border bg-earth-surface py-2.5 pl-10 pr-4 text-sm text-text-primary shadow-sm transition-colors placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
+        autoFocus={autoFocus}
+        role="combobox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-autocomplete="list"
+        aria-activedescendant={
+          open && results.length ? `${listId}-opt-${cursor}` : undefined
+        }
+        className={`w-full rounded-lg border border-earth-border bg-earth-dark/60 text-text-primary shadow-sm transition-colors placeholder:text-text-muted focus:border-seismic-orange focus:outline-none ${
+          lg
+            ? "py-3.5 pl-12 pr-4 text-base sm:text-[1.0625rem]"
+            : "py-2.5 pl-10 pr-4 text-sm"
+        }`}
       />
-      {open && results.length > 0 && (
-        <ul className="absolute z-[1200] mt-1 max-h-72 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised shadow-xl">
-          {results.map((r) => (
-            <li key={r.id}>
-              <button
-                onClick={() => {
-                  setOpen(false);
-                  router.push(`/region/${r.slug}`);
-                }}
-                className="flex w-full items-center justify-between px-4 py-2 text-left text-sm hover:bg-earth-surface"
-              >
-                <span className="text-text-primary">{r.name}</span>
-                <span className="text-xs text-text-muted">{r.type}</span>
-              </button>
+
+      {searching && (
+        <span
+          aria-hidden="true"
+          className={`absolute top-1/2 -translate-y-1/2 text-xs text-text-muted ${lg ? "right-4" : "right-3.5"}`}
+        >
+          …
+        </span>
+      )}
+
+      {open && (results.length > 0 || noMatches) && (
+        <ul
+          id={listId}
+          role="listbox"
+          className="absolute z-[1200] mt-2 max-h-80 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised py-1 shadow-lg"
+        >
+          {noMatches ? (
+            <li className="px-4 py-3 text-sm text-text-muted">
+              Tidak ada wilayah cocok dengan “{q.trim()}”.
             </li>
-          ))}
+          ) : (
+            results.map((r, i) => (
+              <li key={r.id} id={`${listId}-opt-${i}`} role="option" aria-selected={i === cursor}>
+                <button
+                  onMouseEnter={() => setCursor(i)}
+                  onClick={() => go(r)}
+                  className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+                    i === cursor ? "bg-earth-surface text-text-primary" : "text-text-secondary"
+                  }`}
+                >
+                  <span className="truncate">{r.name}</span>
+                  <span className="shrink-0 text-xs text-text-muted">
+                    {regionType(r.type)}
+                    {r.is_coastal ? " · pesisir" : ""}
+                  </span>
+                </button>
+              </li>
+            ))
+          )}
         </ul>
       )}
     </div>
