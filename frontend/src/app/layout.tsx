@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
 import { ToastProvider } from "@/components/ui/ToastProvider";
 
@@ -53,6 +54,14 @@ export default function RootLayout({
                 bmkg.go.id
               </a>
               .
+            </div>
+            {/*
+              Personal byline. No divider of its own — the footer already has
+              one seam, and this must not read as part of the data attribution
+              or the disclaimer above it.
+            */}
+            <div className="mt-6">
+              <MakerSignature />
             </div>
           </div>
         </footer>
