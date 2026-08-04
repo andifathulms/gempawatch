@@ -24,10 +24,10 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 
+# Scoped per job below rather than granted wholesale: only the build needs to
+# write releases, and only the deploy needs to touch Pages.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Never publish two builds at once, but let a running publish finish rather
 # than cancelling it — a half-deployed site is worse than a slightly stale one.
@@ -46,6 +46,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+
+    permissions:
+      contents: write # publish monthly snapshot releases
+      actions: read # list artifacts, to keep the daily backup to one per day
+      pages: write
+      id-token: write
 
     services:
       db:
@@ -197,6 +203,97 @@ jobs:
             -d "$PGDATABASE" -f db-snapshot/snapshot.dump
           ls -lh db-snapshot/snapshot.dump
 
+      # ---------------------------------------------------------------------
+      # Backups.
+      #
+      # The Actions cache above is the working copy, not a backup: it holds the
+      # only record of BMKG events older than the last 15 the feed exposes, and
+      # a cache eviction or a manual cache purge would take it with no warning.
+      # The fallback bootstrap rebuilds from USGS, which never recorded the
+      # smaller felt quakes BMKG reports — so those would be gone for good.
+      #
+      # Two independent restore paths, on different storage with different
+      # failure modes: a rolling daily artifact for recent recovery, and a
+      # permanent monthly release for the long tail.
+      #
+      # Both are continue-on-error. A failed backup must never block a publish;
+      # it is a problem for the next run to fix, not a reason to stop shipping
+      # earthquake data.
+      # ---------------------------------------------------------------------
+      - name: Decide whether today's backup is already archived
+        id: backup-gate
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Runs fire every ~30-90 minutes; one durable copy a day is plenty,
+          # and uploading on every run would bury the Actions tab in artifacts.
+          latest=$(gh api "repos/${{ github.repository }}/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[] | select(.name | startswith("db-backup-")) | select(.expired == false) | .created_at] | max // ""' \
+            || echo "")
+          echo "date=$(date -u +%Y-%m-%d)" >> "$GITHUB_OUTPUT"
+          if [ -z "$latest" ]; then
+            echo "▸ no unexpired backup found — archiving"
+            echo "archive=true" >> "$GITHUB_OUTPUT"
+          else
+            age=$(( $(date -u +%s) - $(date -u -d "$latest" +%s) ))
+            # 20h rather than 24h so a day is never skipped by scheduler drift.
+            if [ "$age" -ge 72000 ]; then
+              echo "▸ newest backup is $((age / 3600))h old — archiving"
+              echo "archive=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "▸ newest backup is $((age / 3600))h old — skipping"
+              echo "archive=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Archive the daily backup
+        if: steps.backup-gate.outputs.archive == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: db-backup-${{ steps.backup-gate.outputs.date }}
+          path: db-snapshot/snapshot.dump
+          retention-days: 90
+          compression-level: 0 # pg_dump -Z9 already compressed it
+
+      - name: Archive a monthly snapshot as a release
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          month=$(date -u +%Y-%m)
+          tag="db-snapshot-$month"
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "▸ $tag already archived"
+            exit 0
+          fi
+
+          # Named by month so a downloaded file is self-describing once it is
+          # sitting in someone's Downloads folder detached from its release.
+          cp db-snapshot/snapshot.dump "gempawatch-db-$month.dump"
+
+          # Releases, not a data-snapshots branch: git never forgets a blob, so
+          # committing 8 MB a month would grow the clone by ~100 MB a year for
+          # everyone, forever. Release assets live outside the object database
+          # and cost cloners nothing.
+          # --latest=false keeps a data dump from taking the "Latest release"
+          # badge on the repository homepage.
+          gh release create "$tag" "gempawatch-db-$month.dump" \
+            --title "Database snapshot — $month" \
+            --latest=false \
+            --notes "Full \`pg_dump -Fc\` of the GempaWatch database, taken $(date -u +%Y-%m-%dT%H:%M:%SZ) from run ${{ github.run_id }}.
+
+          Restore with:
+
+          \`\`\`
+          createdb gempawatch
+          psql -d gempawatch -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+          pg_restore --no-owner --no-privileges -d gempawatch gempawatch-db-$month.dump
+          \`\`\`
+
+          See README → Data durability for the full recovery procedure."
 
       - uses: actions/upload-pages-artifact@v3
         with:
@@ -205,6 +302,11 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
+    permissions:
+      pages: write
+      id-token: write
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

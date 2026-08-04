@@ -77,14 +77,74 @@ cd frontend && npm run build:static
 `.github/workflows/deploy-pages.yml` runs this on a schedule and publishes to
 GitHub Pages.
 
+## Data Durability
+
+The static deployment has no server, so the scheduled workflow *is* the data
+pipeline: it boots a PostGIS container, restores the previous run's database,
+polls BMKG, re-syncs recent USGS, recomputes risk profiles, and freezes the API
+to JSON. **No data is committed to this repository** — `frontend/public/api/`
+and `frontend/public/data/` are generated per run and shipped straight to Pages.
+
+That makes the database between runs the only copy of anything BMKG-sourced.
+BMKG exposes just its last 15 events, so every older BMKG record exists solely
+because a previous run saved it. It is carried across runs in the GitHub Actions
+cache — which is a **working copy, not a backup**: caches are evicted after 7
+days unused, can be purged manually, and are dropped when the repository hits
+its cache limit. On a miss the job self-heals with a full USGS bootstrap, but
+USGS never recorded the smaller felt quakes BMKG reports, so those are gone.
+
+Two independent restore paths therefore run on every publish:
+
+| | Where | Cadence | Retention |
+|---|---|---|---|
+| **Daily backup** | workflow artifact `db-backup-YYYY-MM-DD` | first run each day | 90 days |
+| **Monthly snapshot** | release `db-snapshot-YYYY-MM` | first run each month | permanent |
+
+Both are `continue-on-error`: a failed backup must never block publishing
+earthquake data.
+
+Release assets rather than a `data-snapshots` branch, deliberately — git never
+forgets a blob, so committing ~8 MB a month would grow every clone by ~100 MB a
+year, forever. Release assets live outside the object database.
+
+### Restoring
+
+Fetch the newest snapshot (a release for the long tail, an artifact for the last
+90 days):
+
+```bash
+# Monthly release — pick the newest tag from the Releases page
+gh release download db-snapshot-2026-08 --pattern '*.dump'
+
+# …or a daily artifact, listed newest-first
+gh run download --name db-backup-2026-08-04
+```
+
+Load it into a PostGIS database:
+
+```bash
+createdb gempawatch
+psql -d gempawatch -c 'CREATE EXTENSION IF NOT EXISTS postgis;'
+pg_restore --no-owner --no-privileges -d gempawatch gempawatch-db-2026-08.dump
+
+# Apply anything added to the schema since the snapshot was taken
+cd backend && python manage.py migrate
+```
+
+To push a restored database back into the pipeline, run the workflow manually
+(`workflow_dispatch`) after seeding the cache, or simply let the next scheduled
+run rebuild forward from it — `refresh_for_export` is idempotent and dedupes
+against existing events.
+
 ### What differs in static mode
 
 | | live | static |
 |---|---|---|
-| Data freshness | 5 min (Celery beat) | ~30 min, best-effort (GitHub cron) |
+| Data freshness | 5 min (Celery beat) | cron says 30 min; observed 70–90 min, as GitHub's scheduler defers under load |
 | Email watch alerts | yes | no — needs a server to store and send |
 | Shareable risk URL | `/risk/{lat}/{lng}` | `/risk?lat=&lng=` |
-| Per-region OG unfurl images | yes | no — Next 14 cannot prerender metadata image routes under `output: export` |
+| Site-wide OG unfurl card | yes | yes |
+| Per-region OG unfurl images | yes | no — Next 14 cannot prerender metadata image routes under `output: export`, so these fall back to the site-wide card |
 
 Nothing is deleted for static builds. Routes that need a backend are named
 `*.live.tsx`, and the extension is only registered for live builds.
