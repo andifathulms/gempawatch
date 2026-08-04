@@ -278,11 +278,16 @@ jobs:
           # committing 8 MB a month would grow the clone by ~100 MB a year for
           # everyone, forever. Release assets live outside the object database
           # and cost cloners nothing.
-          # --latest=false keeps a data dump from taking the "Latest release"
-          # badge on the repository homepage.
+          # Marked prerelease so a data dump never claims the "Latest release"
+          # badge on the repository homepage. --latest=false alone is not
+          # enough: GitHub resolves /releases/latest to the newest release that
+          # is neither draft nor prerelease, so while these snapshots are the
+          # only releases in the repo one of them takes the badge regardless.
+          # Prereleases are excluded from that lookup unconditionally.
           gh release create "$tag" "gempawatch-db-$month.dump" \
             --title "Database snapshot — $month" \
             --latest=false \
+            --prerelease \
             --notes "Full \`pg_dump -Fc\` of the GempaWatch database, taken $(date -u +%Y-%m-%dT%H:%M:%SZ) from run ${{ github.run_id }}.
 
           Restore with:
