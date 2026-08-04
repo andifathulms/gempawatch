@@ -152,6 +152,12 @@ jobs:
           cp -r backend/out/data frontend/public/data
           du -sh frontend/public/api frontend/public/data
 
+      # Moved ahead of the build: it publishes the deployed site's base_url,
+      # which the build needs to resolve absolute metadata URLs.
+      - name: Resolve the Pages URL
+        id: pages
+        uses: actions/configure-pages@v5
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -175,6 +181,12 @@ jobs:
         working-directory: frontend
         env:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          # metadataBase falls back to http://localhost:3000 when this is unset,
+          # which silently emits localhost URLs for every Open Graph image — so
+          # shared links unfurl with an unreachable picture. This must be the
+          # bare origin, not base_url: Next adds basePath to metadata assets
+          # itself, and passing origin+path produces /gempawatch/gempawatch/...
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.origin }}
         run: npm run build:static
 
       - name: Save event history for the next run
@@ -185,7 +197,6 @@ jobs:
             -d "$PGDATABASE" -f db-snapshot/snapshot.dump
           ls -lh db-snapshot/snapshot.dump
 
-      - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
         with:

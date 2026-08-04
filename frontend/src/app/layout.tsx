@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { MakerSignature } from "@/components/ui/MakerSignature";
@@ -33,13 +33,65 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
+const TITLE = "GempaWatch — Intelijen Risiko Gempa Indonesia";
+const DESCRIPTION =
+  "Pahami risiko gempa di lokasi Anda berdasarkan data BMKG dan catatan seismik historis USGS. Bukan sistem peringatan dini — indikator pola historis.";
+
+/**
+ * NEXT_PUBLIC_SITE_URL must be the bare origin, with no path.
+ *
+ * Next already prefixes file-based metadata (icons, OG images) with basePath,
+ * so folding the base path in here too yields /gempawatch/gempawatch/... and
+ * every unfurl requests an image that does not exist.
+ */
+const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
-  title: "GempaWatch — Intelijen Risiko Gempa Indonesia",
-  description:
-    "Pahami risiko gempa di lokasi Anda berdasarkan data BMKG dan catatan seismik historis USGS. Bukan sistem peringatan dini — indikator pola historis.",
+  metadataBase: new URL(SITE_ORIGIN),
+  // See app/site.webmanifest/route.ts for why the manifest is not the
+  // `app/manifest.ts` file convention.
+  manifest: `${BASE_PATH}/site.webmanifest`,
+  title: {
+    default: TITLE,
+    // Interior pages set their own full title; this covers any that don't.
+    template: "%s — GempaWatch",
+  },
+  description: DESCRIPTION,
+  applicationName: "GempaWatch",
+  // Sharing is the product's main distribution channel — every WhatsApp
+  // forward of a risk report is an unfurl — yet the site shipped no Open Graph
+  // tags at all, so links arrived as bare URLs. Region and risk-result pages
+  // override the image with their own generated card; this is the fallback.
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    siteName: "GempaWatch",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  appleWebApp: {
+    capable: true,
+    title: "GempaWatch",
+    // Matches --earth-dark, so the iOS status bar blends into the page instead
+    // of drawing a light strip above a dark app.
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    // Coordinates like "-0.9000, 119.8700" get auto-linked as phone numbers by
+    // iOS Safari, which turns the readout on every risk report blue.
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#121110",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

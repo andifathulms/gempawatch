@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Logo } from "@/components/ui/Logo";
 
 /**
  * Primary navigation.
@@ -64,16 +65,10 @@ export function NavHeader() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5"
+          className="flex shrink-0 items-center"
           aria-label="GempaWatch beranda"
         >
-          <span className="relative inline-flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-seismic-orange" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-seismic-orange" />
-          </span>
-          <span className="font-display text-[0.9375rem] font-bold tracking-tight text-text-primary">
-            GEMPA<span className="text-seismic-orange">WATCH</span>
-          </span>
+          <Logo size={28} className="text-[0.9375rem]" />
         </Link>
 
         {/* Desktop links */}

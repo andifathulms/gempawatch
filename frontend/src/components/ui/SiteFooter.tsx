@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/ui/Logo";
 
 /**
  * Site footer.
@@ -42,12 +43,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-seismic-orange" />
-              <span className="font-display text-sm font-bold tracking-tight text-text-primary">
-                GEMPA<span className="text-seismic-orange">WATCH</span>
-              </span>
-            </div>
+            <Logo size={26} className="text-sm" />
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-text-secondary">
               Intelijen risiko gempa untuk Indonesia. Data resmi BMKG dan arsip
               historis USGS, dibaca sebagai pola — bukan ramalan.

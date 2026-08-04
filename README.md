@@ -1,4 +1,10 @@
-# GempaWatch
+<p align="center">
+  <img src="frontend/public/brand/lockup-horizontal-1280.png" alt="GempaWatch" width="420">
+</p>
+
+<p align="center">
+  <a href="https://andifathulms.github.io/gempawatch/"><strong>Lihat situs →</strong></a>
+</p>
 
 A public **earthquake risk intelligence platform for Indonesia**. GempaWatch merges
 real-time [BMKG](https://www.bmkg.go.id/) (official Indonesian) and historical

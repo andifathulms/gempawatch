@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!--
+    Browser-tab icon. The brand mark, retuned to the site palette: the tile is
+    --earth-dark (#121110) rather than the export's #1a1a1a, and the accent is
+    --seismic-orange (#e8743b).
+
+    Ring opacities are raised well above the export's (0.25/0.4/0.55 → 0.5/0.7/0.9)
+    because this is rendered at 16-32px in a tab strip, where 2px strokes at a
+    quarter opacity vanish into the background and leave only the trace.
+  -->
+  <rect width="512" height="512" rx="115" fill="#121110"/>
+  <g transform="translate(50.36,50.36) scale(4.1967)">
+    <circle cx="49" cy="49" r="44" fill="none" stroke="#e8743b" stroke-width="2.5" opacity="0.5"/>
+    <circle cx="49" cy="49" r="32" fill="none" stroke="#e8743b" stroke-width="2.5" opacity="0.7"/>
+    <circle cx="49" cy="49" r="20" fill="none" stroke="#e8743b" stroke-width="2.5" opacity="0.9"/>
+    <polyline points="8,49 24,49 30,32 38,66 46,20 54,78 62,49 90,49" fill="none"
+      stroke="#f5f1ea" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="49" cy="49" r="5.5" fill="#e8743b"/>
+  </g>
+</svg>
