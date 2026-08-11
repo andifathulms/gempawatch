@@ -47,6 +47,13 @@ export interface RegionRiskProfile {
   composite_score: number | null;
   activity_tier: RiskTier | null;
   activity_percentile: number | null;
+  /**
+   * How many regions the percentile ranks against. Optional because profiles
+   * exported before this field existed do not carry it — consumers fall back to
+   * naming the comparison set without a count rather than implying a national
+   * ranking.
+   */
+  activity_percentile_basis?: { region_count: number } | null;
   shallow_ratio: number | null;
   earliest_event_year: number | null;
   latest_event_year: number | null;
@@ -120,7 +127,14 @@ export interface RiskCheckReport {
   activity_percentile: number | null;
   nearest_fault: { id: number; name: string; distance_km: number | null } | null;
   tsunami_risk_tier: RiskTier | null;
+  activity_percentile_basis: { region_count: number };
   comparison: { reference_city: string; relation: string; text: string };
+  /** The same comparison against every reference anchor, not just Jakarta. */
+  comparison_set: Array<{
+    reference_city: string;
+    reference_m4_count: number;
+    relation: string;
+  }>;
   data_coverage: { earliest_year: number | null; latest_year: number | null; years: number };
   methodology_note: string;
   source_attribution: string[];

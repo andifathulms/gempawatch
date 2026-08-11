@@ -173,6 +173,7 @@ export function CompareResult() {
               score={p.composite_score}
               tier={p.activity_tier}
               percentile={p.activity_percentile}
+              percentileRegionCount={p.activity_percentile_basis?.region_count}
               size={150}
             />
             <RiskTierBadge tier={p.tsunami_risk_tier} label="Tsunami" size="sm" />

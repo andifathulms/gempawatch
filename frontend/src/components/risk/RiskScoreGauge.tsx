@@ -5,6 +5,11 @@ interface Props {
   score: number | null;
   tier: RiskTier | null;
   percentile?: number | null;
+  /**
+   * How many regions the percentile was ranked against. Required to state the
+   * percentile at all — see the note below on why.
+   */
+  percentileRegionCount?: number | null;
   size?: number;
 }
 
@@ -19,8 +24,22 @@ interface Props {
  *   rather than fading into the track.
  * - The percentile stated as its own line, because "more active than 94% of
  *   regions" is the sentence people actually repeat — the raw score is not.
+ *
+ * Because it is the sentence people repeat, it has to be true. This line used
+ * to read "lebih aktif dari X% wilayah di Indonesia", which is a national claim
+ * the number cannot support: the rank is against the regions this deployment
+ * has actually scored — two dozen of them, themselves skewed towards already
+ * seismic places. The count now travels with the percentile, and the percentile
+ * is not shown at all without it, so the honest denominator cannot be dropped
+ * by a caller that forgets to pass it.
  */
-export function RiskScoreGauge({ score, tier, percentile, size = 200 }: Props) {
+export function RiskScoreGauge({
+  score,
+  tier,
+  percentile,
+  percentileRegionCount,
+  size = 200,
+}: Props) {
   const fill = riskTierColor(tier);
   const text = riskTierTextColor(tier);
   const pct = Math.max(0, Math.min(100, score ?? 0)) / 100;
@@ -102,12 +121,24 @@ export function RiskScoreGauge({ score, tier, percentile, size = 200 }: Props) {
         Aktivitas {riskTierLabel(tier)}
       </p>
       {percentile != null && (
-        <p className="mt-0.5 text-center text-fluid-000 text-text-secondary">
+        <p className="mt-0.5 max-w-[20rem] text-center text-fluid-000 text-text-secondary">
           Lebih aktif dari{" "}
           <span className="font-mono font-medium tabular-nums text-text-primary">
             {percentile}%
           </span>{" "}
-          wilayah di Indonesia
+          {percentileRegionCount ? (
+            <>
+              dari{" "}
+              <span className="font-mono font-medium tabular-nums text-text-primary">
+                {percentileRegionCount}
+              </span>{" "}
+              wilayah
+            </>
+          ) : (
+            "wilayah"
+          )}{" "}
+          yang sudah diskor di sini —{" "}
+          <span className="text-text-muted">bukan seluruh Indonesia</span>
         </p>
       )}
     </div>

@@ -27,6 +27,7 @@ export function RiskProfileCard({ profile }: { profile: RegionRiskProfile }) {
           score={p.composite_score}
           tier={p.activity_tier}
           percentile={p.activity_percentile}
+          percentileRegionCount={p.activity_percentile_basis?.region_count}
         />
       </div>
 

@@ -19,6 +19,14 @@ import {
   scoreToTier,
 } from "./scoring";
 
+/**
+ * Jakarta stays first because `comparison` (singular) anchors on it: it is the
+ * city most readers have a feel for, and a low-activity anchor. Padang and Palu
+ * were declared here and never read — every comparison sentence on the site
+ * said "dibanding Jakarta" while the code implied a richer set. They are now
+ * used, in `comparison_set`, because one anchor cannot tell you whether you are
+ * near the quiet end or the active end of Indonesia's range.
+ */
 export const REFERENCE_CITIES = [
   { name: "Jakarta", m4Count: 25 },
   { name: "Padang", m4Count: 220 },
@@ -44,22 +52,38 @@ const SOURCE_ATTRIBUTION = [
   "Data: United States Geological Survey (USGS)",
 ];
 
+/**
+ * Density band from the RAW M4+ count within 50km.
+ *
+ * Deliberately not the same question as scoreToTier(), which runs the weighted
+ * composite over 100km. Different input, different radius, different thresholds
+ * — so the two can and do disagree, and anything rendering both must say which
+ * is which rather than showing two bare risk words.
+ */
 function riskBand(m4Count: number): string {
   if (m4Count >= 150) return "HIGH";
   if (m4Count >= 40) return "MODERATE";
   return "LOW";
 }
 
+function relationTo(m4Count: number, referenceCount: number): string {
+  if (m4Count > referenceCount * 1.25) return "higher";
+  if (m4Count < referenceCount * 0.75) return "lower";
+  return "similar";
+}
+
+/** The same comparison against every reference anchor, not just Jakarta. */
+function comparisonSet(m4Count: number) {
+  return REFERENCE_CITIES.map((ref) => ({
+    reference_city: ref.name,
+    reference_m4_count: ref.m4Count,
+    relation: relationTo(m4Count, ref.m4Count),
+  }));
+}
+
 function compareToReference(m4Count: number) {
   const reference = REFERENCE_CITIES[0];
-  let relation: string;
-  if (m4Count > reference.m4Count * 1.25) {
-    relation = "higher";
-  } else if (m4Count < reference.m4Count * 0.75) {
-    relation = "lower";
-  } else {
-    relation = "similar";
-  }
+  const relation = relationTo(m4Count, reference.m4Count);
   return {
     reference_city: reference.name,
     relation,
@@ -244,12 +268,18 @@ export function buildPointRiskReport(
   const activityPercentile = data.storedScores.length
     ? percentileRank(compositeScore, data.storedScores)
     : null;
+  // The percentile ranks against the regions this deployment has scored — NOT
+  // against Indonesia, and not against a random sample of it. Reported as a
+  // bare "82nd percentile" it reads as national, which is a claim the number
+  // cannot support, so the size of the comparison set travels with it.
+  const activityPercentileBasis = { region_count: data.storedScores.length };
 
   return {
     composite_score: compositeScore,
     score_breakdown: scoreBreakdown(scoreInputs),
     activity_tier: scoreToTier(compositeScore),
     activity_percentile: activityPercentile,
+    activity_percentile_basis: activityPercentileBasis,
     query: { latitude, longitude },
     nearest_region: region
       ? { id: region.id, name: region.name, slug: region.slug, type: region.type }
@@ -262,6 +292,7 @@ export function buildPointRiskReport(
       : null,
     tsunami_risk_tier: tsunamiTier,
     comparison: compareToReference(inner.m4Count),
+    comparison_set: comparisonSet(inner.m4Count),
     data_coverage: {
       earliest_year: outer.earliestYear,
       latest_year: outer.latestYear,

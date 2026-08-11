@@ -97,3 +97,48 @@ describe("risk report matches Django golden fixtures", () => {
     },
   );
 });
+
+describe("a number never travels without the set it was ranked against", () => {
+  // "82nd percentile" reads as a claim about Indonesia. It is a rank against
+  // the regions this deployment scored, so the size of that set has to ship
+  // with it or the sentence overstates its own reach.
+  it("reports the percentile basis alongside the percentile", () => {
+    const r = buildPointRiskReport(data, -6.2, 106.8);
+    expect(r.activity_percentile_basis.region_count).toBe(data.storedScores.length);
+    expect(r.activity_percentile_basis.region_count).toBeGreaterThan(0);
+  });
+
+  it("compares against every reference anchor, not only the first", () => {
+    const r = buildPointRiskReport(data, -6.2, 106.8);
+    expect(r.comparison_set.map((c) => c.reference_city)).toEqual([
+      "Jakarta",
+      "Padang",
+      "Palu",
+    ]);
+    // The singular `comparison` still anchors on Jakarta, unchanged.
+    expect(r.comparison.reference_city).toBe("Jakarta");
+    expect(r.comparison_set[0].relation).toBe(r.comparison.relation);
+  });
+
+  it("ranks a busy point above an anchor that a quiet point falls below", () => {
+    const palu = buildPointRiskReport(data, -0.9, 119.87); // high-activity
+    const surabaya = buildPointRiskReport(data, -7.25, 112.75); // low-activity
+    expect(palu.event_count_m4_within_50km).toBeGreaterThan(
+      surabaya.event_count_m4_within_50km,
+    );
+
+    const against = (r: typeof palu, city: string) =>
+      r.comparison_set.find((c) => c.reference_city === city)!.relation;
+
+    // Palu clears Jakarta's anchor; Surabaya sits under Padang's.
+    expect(against(palu, "Jakarta")).toBe("higher");
+    expect(against(surabaya, "Padang")).toBe("lower");
+  });
+
+  it("itemises the score for the same point the total describes", () => {
+    const r = buildPointRiskReport(data, -0.9, 119.87);
+    const sum = r.score_breakdown.reduce((a, c) => a + c.points, 0);
+    expect(Math.abs(sum - r.composite_score)).toBeLessThanOrEqual(0.2);
+    expect(r.score_breakdown).toHaveLength(4);
+  });
+});

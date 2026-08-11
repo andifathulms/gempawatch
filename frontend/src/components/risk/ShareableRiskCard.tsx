@@ -51,6 +51,7 @@ export function ShareableRiskCard({ report }: { report: RiskCheckReport }) {
             score={report.composite_score}
             tier={tier}
             percentile={report.activity_percentile}
+            percentileRegionCount={report.activity_percentile_basis?.region_count}
           />
         </div>
 

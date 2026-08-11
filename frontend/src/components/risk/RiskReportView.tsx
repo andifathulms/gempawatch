@@ -19,6 +19,12 @@ interface Props {
   lng: number;
 }
 
+const RELATION_LABEL: Record<string, string> = {
+  higher: "lebih tinggi",
+  lower: "lebih rendah",
+  similar: "serupa",
+};
+
 /**
  * The body of a risk result, shared by both route shapes: the server-rendered
  * /risk/[lat]/[lng] used on live deploys and the client-rendered /risk?lat=&lng=
@@ -71,6 +77,45 @@ export function RiskReportView({ report, lat, lng }: Props) {
           years={report.data_coverage.years}
           scope="point"
         />
+      </Card>
+
+      {/* One anchor cannot place you on a range. Jakarta alone says "more
+          active than Jakarta" without revealing whether that means slightly, or
+          nowhere near Padang. */}
+      <Card
+        title="Dibanding kota acuan"
+        subtitle="Jumlah gempa M4+ dalam radius 50 km, dibanding tiga kota yang polanya sudah dikenal."
+      >
+        <ul className="divide-y divide-earth-border/70">
+          {report.comparison_set.map((c) => (
+            <li
+              key={c.reference_city}
+              className="flex items-baseline justify-between gap-3 py-2.5"
+            >
+              <span className="text-fluid-00 text-text-primary">
+                {c.reference_city}
+                <span className="ml-2 font-mono text-fluid-000 tabular-nums text-text-muted">
+                  ±{c.reference_m4_count} M4+
+                </span>
+              </span>
+              <span
+                className={`shrink-0 text-fluid-00 font-medium ${
+                  c.relation === "higher"
+                    ? "text-risk-amber"
+                    : c.relation === "lower"
+                      ? "text-risk-green"
+                      : "text-text-secondary"
+                }`}
+              >
+                {RELATION_LABEL[c.relation] ?? c.relation}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-fluid-000 leading-relaxed text-text-muted">
+          Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan
+          lokasi ini pada rentang — bukan skor resmi kota tersebut.
+        </p>
       </Card>
 
       <Card

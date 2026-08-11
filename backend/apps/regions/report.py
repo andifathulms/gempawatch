@@ -27,6 +27,13 @@ SCORE_RADIUS_KM = 100  # matches region-profile radius so scores are comparable
 
 # Reference cities for the "higher/similar/lower risk than X" comparison.
 # Values are approximate M4+ counts within 50km, used only for relative framing.
+#
+# Jakarta stays first because `comparison` (singular) anchors on it: it is the
+# city most readers have a feel for, and a low-activity anchor. Padang and Palu
+# were declared here and never read — every comparison sentence on the site said
+# "dibanding Jakarta" while the code implied a richer set. They are now used, in
+# `comparison_set`, because one anchor cannot tell you whether you are near the
+# quiet end or the active end of Indonesia's range.
 REFERENCE_CITIES = [
     {"name": "Jakarta", "m4_count": 25},
     {"name": "Padang", "m4_count": 220},
@@ -35,6 +42,14 @@ REFERENCE_CITIES = [
 
 
 def _risk_band(m4_count: int) -> str:
+    """
+    Density band from the RAW M4+ count within 50km.
+
+    Deliberately not the same question as score_to_tier(), which runs the
+    weighted composite over 100km. Different input, different radius, different
+    thresholds — so the two can and do disagree, and anything rendering both
+    must say which is which rather than showing two bare risk words.
+    """
     if m4_count >= 150:
         return "HIGH"
     if m4_count >= 40:
@@ -42,21 +57,36 @@ def _risk_band(m4_count: int) -> str:
     return "LOW"
 
 
+def _relation_to(m4_count: int, reference: dict) -> str:
+    if m4_count > reference["m4_count"] * 1.25:
+        return "higher"
+    if m4_count < reference["m4_count"] * 0.75:
+        return "lower"
+    return "similar"
+
+
 def _compare_to_reference(m4_count: int) -> dict:
     """Compare this location's M4+ count to a mid reference city (Jakarta)."""
     reference = REFERENCE_CITIES[0]
-    if m4_count > reference["m4_count"] * 1.25:
-        relation = "higher"
-    elif m4_count < reference["m4_count"] * 0.75:
-        relation = "lower"
-    else:
-        relation = "similar"
+    relation = _relation_to(m4_count, reference)
     return {
         "reference_city": reference["name"],
         "relation": relation,
         "text": f"Risiko historis lokasi ini {_relation_id(relation)} "
         f"dibanding {reference['name']}.",
     }
+
+
+def _comparison_set(m4_count: int) -> list[dict]:
+    """The same comparison against every reference anchor, not just Jakarta."""
+    return [
+        {
+            "reference_city": ref["name"],
+            "reference_m4_count": ref["m4_count"],
+            "relation": _relation_to(m4_count, ref),
+        }
+        for ref in REFERENCE_CITIES
+    ]
 
 
 def _relation_id(relation: str) -> str:
@@ -115,12 +145,18 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
     activity_percentile = (
         percentile_rank(composite_score, stored_scores) if stored_scores else None
     )
+    # The percentile ranks against the regions this deployment has scored — NOT
+    # against Indonesia, and not against a random sample of it. Reported as a
+    # bare "82nd percentile" it reads as national, which is a claim the number
+    # cannot support, so the size of the comparison set travels with it.
+    activity_percentile_basis = {"region_count": len(stored_scores)}
 
     return {
         "composite_score": composite_score,
         "score_breakdown": score_breakdown(score_inputs),
         "activity_tier": score_to_tier(composite_score),
         "activity_percentile": activity_percentile,
+        "activity_percentile_basis": activity_percentile_basis,
         "query": {"latitude": latitude, "longitude": longitude},
         "nearest_region": (
             {"id": region.id, "name": region.name, "slug": region.slug, "type": region.type}
@@ -141,6 +177,7 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
         ),
         "tsunami_risk_tier": tsunami_tier,
         "comparison": _compare_to_reference(m4_count),
+        "comparison_set": _comparison_set(m4_count),
         "data_coverage": {
             "earliest_year": score_agg["earliest"],
             "latest_year": score_agg["latest"],

@@ -99,6 +99,26 @@ class RegionRiskProfileSerializer(serializers.ModelSerializer):
         source="nearest_fault.name", read_only=True, default=None
     )
     largest_event = EarthquakeEventSerializer(read_only=True)
+    activity_percentile_basis = serializers.SerializerMethodField()
+
+    def get_activity_percentile_basis(self, obj) -> dict:
+        """
+        How many regions the percentile was ranked against.
+
+        Without it, "82nd percentile" reads as a claim about Indonesia, when it
+        is a rank against the regions this deployment has scored — currently two
+        dozen, themselves skewed towards already-seismic places. The frontend
+        refuses to render the percentile without this, so the denominator cannot
+        be quietly dropped.
+
+        Counted once per serializer instance rather than per row, so a
+        leaderboard of N regions does not issue N identical counts.
+        """
+        if not hasattr(self, "_scored_region_count"):
+            self._scored_region_count = RegionRiskProfile.objects.filter(
+                composite_score__isnull=False
+            ).count()
+        return {"region_count": self._scored_region_count}
 
     class Meta:
         model = RegionRiskProfile
@@ -118,6 +138,7 @@ class RegionRiskProfileSerializer(serializers.ModelSerializer):
             "composite_score",
             "activity_tier",
             "activity_percentile",
+            "activity_percentile_basis",
             "shallow_ratio",
             "earliest_event_year",
             "latest_event_year",
