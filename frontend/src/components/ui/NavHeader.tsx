@@ -13,6 +13,13 @@ import { Logo } from "@/components/ui/Logo";
  * to deliver — everything else is browsing. The active link is marked with an
  * underline rule rather than a filled chip, so the orange fill stays unique to
  * that call to action.
+ *
+ * On the homepage it is suppressed. /risk-check was linked three times in the
+ * first viewport — this button, the hero's primary button, and the hero's GPS
+ * hint — with two of them rendered as solid orange, so the page had two things
+ * claiming to be the single most important action while being the same action.
+ * There, the search field is the primary action and the hero's own hint line
+ * carries this destination, so a second copy in the header only competes.
  */
 
 const LINKS = [
@@ -99,13 +106,15 @@ export function NavHeader() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href={CTA.href}
-            aria-current={isActive(pathname, CTA.href) ? "page" : undefined}
-            className="hidden rounded-lg bg-seismic-orange px-4 py-2 text-fluid-00 font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
-          >
-            {CTA.label}
-          </Link>
+          {pathname !== "/" && (
+            <Link
+              href={CTA.href}
+              aria-current={isActive(pathname, CTA.href) ? "page" : undefined}
+              className="hidden rounded-lg bg-seismic-orange px-4 py-2 text-fluid-00 font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
+            >
+              {CTA.label}
+            </Link>
+          )}
 
           {/* Mobile toggle */}
           <button

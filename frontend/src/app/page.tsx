@@ -15,6 +15,18 @@ import { magnitude, num, shortDate } from "@/lib/format";
 
 export const revalidate = 300; // 5 min, matching BMKG cadence
 
+/**
+ * The four blocks a risk report returns, named in the hero so a first-time
+ * reader can see the payoff before deciding whether to type anything. Kept in
+ * the order RiskReportView renders them, so the promise and the page agree.
+ */
+const OUTPUTS = [
+  "Skor paparan 0–100",
+  "Riwayat gempa terdekat",
+  "Sesar aktif terdekat",
+  "Risiko tsunami historis",
+];
+
 function daySummary(events: EarthquakeEvent[]) {
   if (events.length === 0) {
     return { total: 0, largest: null as EarthquakeEvent | null, felt: 0, shallow: 0 };
@@ -51,6 +63,24 @@ export default async function HomePage() {
       {/* ------------------------------------------------------------------
           Hero. The product answers "how exposed is my area?", so the search
           field *is* the hero — not a banner with a button underneath it.
+
+          Two things this section has to do in the first five seconds, which it
+          previously did not:
+
+          1. Show the payoff, not just the question. It asked "how at-risk is
+             your location?" and handed over an empty text field. The word
+             "skor" — the actual output — first appeared ~700px down the page,
+             so a stranger had to trust that something good was on the other
+             side of a search box. The OUTPUTS list below names the four things
+             you get back, in the order the report presents them.
+
+          2. Say what this is not. The pulsing dot, the live count and "gempa
+             terkini" together read exactly like a real-time alerting product,
+             and the one hedge ("bukan ramalan") was the tail of a sentence.
+             The disclaimer was correct but lived in the footer, below every
+             section. It is a PRD hard requirement, and burying it is also a
+             comprehension bug: a reader who miscategorises this might wait on
+             it for a tsunami warning.
          ------------------------------------------------------------------ */}
       <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 shadow-raised sm:px-8 sm:py-12">
         <div
@@ -80,7 +110,7 @@ export default async function HomePage() {
             </span>
             {loadFailed
               ? "Data langsung sementara tidak tersedia"
-              : `${num(summary.total)} gempa tercatat dalam 24 jam terakhir`}
+              : `Data langsung · ${num(summary.total)} gempa tercatat dalam 24 jam terakhir`}
           </span>
 
           <div className="max-w-3xl">
@@ -88,35 +118,75 @@ export default async function HomePage() {
               Seberapa rawan gempa{" "}
               <span className="text-seismic-orange">lokasi kamu?</span>
             </h1>
-            <p className="mt-4 max-w-xl text-fluid-0 leading-relaxed text-text-secondary">
-              Lebih dari 50 tahun catatan seismik BMKG dan USGS, dibaca sebagai
-              pola untuk wilayahmu sendiri — bukan sekadar daftar gempa terbaru,
-              dan bukan ramalan.
+            <p className="mt-4 max-w-2xl text-fluid-1 leading-relaxed text-text-secondary">
+              Ketik nama kabupaten atau kotamu, dan dapatkan{" "}
+              <strong className="font-semibold text-text-primary">
+                skor paparan 0–100
+              </strong>{" "}
+              yang dihitung dari lebih dari 50 tahun catatan gempa BMKG dan
+              USGS — pola historis wilayahmu sendiri, bukan sekadar daftar gempa
+              terbaru, dan bukan ramalan.
             </p>
           </div>
 
           <div className="max-w-xl">
             <RegionSearch size="lg" />
-            <p className="mt-2.5 text-fluid-000 text-text-muted">
-              Ketik nama kabupaten/kota, atau{" "}
+            <p className="mt-2.5 text-fluid-00 text-text-secondary">
+              Tidak yakin nama wilayahnya?{" "}
               <Link
                 href="/risk-check"
                 className="font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
               >
-                pakai lokasi GPS-mu
-              </Link>{" "}
-              untuk laporan titik yang presisi.
+                Pakai lokasi GPS-mu →
+              </Link>
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <ButtonLink href="/risk-check" size="lg">
-              Cek Risiko Saya →
-            </ButtonLink>
+          {/* What the reader actually gets back, named before they commit to a
+              search. Presentation only — these are the four blocks the risk
+              report already renders, in the order it renders them. */}
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-fluid-00 text-text-secondary">
+            {OUTPUTS.map((o) => (
+              <li key={o} className="flex items-center gap-2">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 shrink-0 rounded-full bg-seismic-orange"
+                />
+                {o}
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
             <ButtonLink href="/explore" variant="secondary" size="lg">
-              Peringkat wilayah
+              Lihat peringkat wilayah
             </ButtonLink>
+            <Link
+              href="/timeline"
+              className="text-fluid-00 text-text-secondary underline underline-offset-4 transition-colors hover:text-seismic-bright"
+            >
+              Telusuri bencana besar Indonesia
+            </Link>
           </div>
+
+          <p className="max-w-2xl border-t border-earth-border pt-4 text-fluid-00 leading-relaxed text-text-muted">
+            <strong className="font-semibold text-risk-amber">Penting —</strong>{" "}
+            GempaWatch membaca pola gempa masa lalu. Ini{" "}
+            <strong className="font-semibold text-text-secondary">
+              bukan sistem peringatan dini
+            </strong>{" "}
+            dan bukan prediksi. Untuk peringatan gempa dan tsunami resmi, selalu
+            rujuk{" "}
+            <a
+              href="https://www.bmkg.go.id/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
+            >
+              bmkg.go.id
+            </a>
+            .
+          </p>
         </div>
       </section>
 
