@@ -110,8 +110,8 @@ export default async function RegionPage({
           unit={profile.activity_percentile != null ? "%" : undefined}
           hint={
             scoredRegionCount
-              ? `Lebih aktif dari sekian persen dari ${scoredRegionCount} wilayah yang sudah diskor di sini — bukan seluruh Indonesia.`
-              : "Lebih aktif dari sekian persen wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
+              ? `Dari ${scoredRegionCount} wilayah yang sudah diskor di sini — bukan seluruh Indonesia.`
+              : "Dari wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
           }
         />
         <StatTile

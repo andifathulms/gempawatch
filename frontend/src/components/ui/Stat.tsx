@@ -19,11 +19,15 @@ interface Props {
 export function Stat({ label, value, unit, accent, hint }: Props) {
   return (
     <div className="flex items-baseline justify-between gap-3 border-b border-earth-border/60 py-2.5 last:border-b-0">
-      <span
-        className={`text-fluid-00 text-text-secondary ${hint ? "cursor-help decoration-dotted underline-offset-4 hover:underline" : ""}`}
-        title={hint}
-      >
-        {label}
+      {/* Same reasoning as StatTile: a `title` tooltip is invisible on touch,
+          so a caveat parked in one reaches nobody who needs it. */}
+      <span className="min-w-0">
+        <span className="text-fluid-00 text-text-secondary">{label}</span>
+        {hint && (
+          <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
+            {hint}
+          </span>
+        )}
       </span>
       <span className="flex shrink-0 items-baseline gap-1">
         <span
@@ -57,6 +61,13 @@ interface TileProps {
  * the homepage into big numbers nobody could name. It now sits at --step-00 in
  * the secondary tone: still clearly subordinate to the figure, but readable at
  * a glance, which is the only way a headline number means anything.
+ *
+ * `hint` renders as visible text rather than a `title` tooltip. A native
+ * tooltip never appears on touch, which is most of this audience, and it is not
+ * reliably announced by screen readers — so the caveat was invisible to exactly
+ * the people it protects. These hints are not decoration: on the timeline one
+ * of them is the difference between "Indonesia's earthquake death toll" and
+ * "the sum of the rows in this archive".
  */
 export function StatTile({ label, value, unit, tone = "default", hint }: TileProps) {
   const color =
@@ -66,10 +77,7 @@ export function StatTile({ label, value, unit, tone = "default", hint }: TilePro
         ? "text-risk-red"
         : "text-text-primary";
   return (
-    <div
-      className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3"
-      title={hint}
-    >
+    <div className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3">
       <div className="flex items-baseline gap-1">
         <span className={`font-mono text-fluid-2 font-bold tabular-nums ${color}`}>
           {value}
@@ -77,6 +85,9 @@ export function StatTile({ label, value, unit, tone = "default", hint }: TilePro
         {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
       </div>
       <p className="mt-1.5 text-fluid-00 leading-snug text-text-secondary">{label}</p>
+      {hint && (
+        <p className="mt-1.5 text-fluid-000 leading-snug text-text-muted">{hint}</p>
+      )}
     </div>
   );
 }
