@@ -17,22 +17,66 @@ export function ShareButton({ path, caption }: Props) {
   const url = () =>
     typeof window === "undefined" ? path : new URL(path, window.location.origin).toString();
 
+  /**
+   * Copy, with a path for when the async clipboard is refused.
+   *
+   * navigator.clipboard.writeText rejects while the document is unfocused, and
+   * a share sheet that has just opened or closed leaves it in exactly that
+   * state. execCommand("copy") is deprecated but is not subject to that rule,
+   * needs no dependency, and is the only fallback available here — so it gets
+   * a try before anyone is told the copy failed.
+   */
+  const copyLink = async (text: string) => {
+    try {
+      if (!document.hasFocus()) window.focus();
+      await navigator.clipboard.writeText(text);
+      showToast("Tautan disalin ke papan klip.", { variant: "success" });
+      return;
+    } catch {
+      /* fall through to the legacy path */
+    }
+
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.top = "0";
+    field.style.opacity = "0";
+    document.body.appendChild(field);
+    field.select();
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch {
+      copied = false;
+    }
+    document.body.removeChild(field);
+
+    showToast(
+      copied ? "Tautan disalin ke papan klip." : "Gagal menyalin tautan.",
+      { variant: copied ? "success" : "error" },
+    );
+  };
+
   const nativeShare = async () => {
     const shareUrl = url();
     if (navigator.share) {
       try {
         await navigator.share({ title: "GempaWatch", text: caption, url: shareUrl });
         return;
-      } catch {
-        /* user cancelled — fall through to copy */
+      } catch (err) {
+        /*
+          Dismissing the share sheet is a decision, not a failure. It rejects
+          with AbortError, and this used to be a bare catch that fell through to
+          the clipboard — which then threw because the sheet still held focus,
+          and told someone who had simply changed their mind that copying had
+          failed. Cancelling now ends quietly, and only a genuine share error
+          falls back to copying.
+        */
+        if (err instanceof DOMException && err.name === "AbortError") return;
       }
     }
-    try {
-      await navigator.clipboard.writeText(`${caption} ${shareUrl}`);
-      showToast("Tautan disalin ke papan klip.", { variant: "success" });
-    } catch {
-      showToast("Gagal menyalin tautan.", { variant: "error" });
-    }
+    await copyLink(`${caption} ${shareUrl}`);
   };
 
   const whatsappHref = () =>
