@@ -95,6 +95,77 @@ def _relation_id(relation: str) -> str:
     ]
 
 
+def _largest_event_counterfactual(
+    score_area,
+    largest_magnitude: float | None,
+    fault_distance_km: float | None,
+    base_score: float,
+) -> dict | None:
+    """
+    Recompute the score with the single largest nearby event removed.
+
+    The magnitude term is driven by an extremum, not an average, so exactly one
+    row can move up to 30 of the 100 points — and it never decays, so a single
+    afternoon in 1976 can still be most of what a place's score says today.
+    Whether a score rests on a sustained pattern or on one bad day is a
+    genuinely different risk story, and the composite flattens both into the
+    same number.
+
+    Removal is honest rather than convenient: dropping the event changes the M4
+    count, the shallow ratio and possibly the observed year span too, so all
+    four inputs are recomputed instead of holding three fixed and moving
+    magnitude alone. That distinction matters most exactly where the
+    counterfactual is most interesting — a sparse area where the big one is also
+    a large share of the whole record.
+
+    Returns None when there is nothing to remove, or when removing it would
+    leave no events at all: there is no meaningful "without it" for a record
+    of one.
+    """
+    if largest_magnitude is None:
+        return None
+
+    biggest = score_area.filter(magnitude=largest_magnitude).order_by("id").first()
+    if biggest is None:
+        return None
+
+    remaining = score_area.exclude(pk=biggest.pk)
+    total = remaining.count()
+    if total == 0:
+        return None
+
+    agg = remaining.aggregate(
+        largest=Max("magnitude"),
+        earliest=Min(ExtractYear("event_time")),
+        latest=Max(ExtractYear("event_time")),
+    )
+    coverage_years = (
+        (agg["latest"] - agg["earliest"] + 1)
+        if agg["earliest"] and agg["latest"]
+        else 0
+    )
+    without_score = compute_composite_score(
+        ScoreInputs(
+            m4_count=remaining.filter(magnitude__gte=4.0).count(),
+            coverage_years=coverage_years,
+            largest_magnitude=agg["largest"],
+            shallow_ratio=remaining.filter(depth_km__lt=70).count() / total,
+            nearest_fault_distance_km=fault_distance_km,
+        )
+    )
+    return {
+        "removed": {
+            "magnitude": biggest.magnitude,
+            "year": biggest.event_time.year,
+            "depth_km": biggest.depth_km,
+        },
+        "next_largest_magnitude": agg["largest"],
+        "score_without": without_score,
+        "score_delta": round(base_score - without_score, 1),
+        "tier_without": score_to_tier(without_score),
+    }
+
+
 def build_point_risk_report(latitude: float, longitude: float) -> dict:
     """Compute a full live risk report for arbitrary coordinates."""
     point = Point(longitude, latitude, srid=4326)
@@ -178,6 +249,9 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
         "tsunami_risk_tier": tsunami_tier,
         "comparison": _compare_to_reference(m4_count),
         "comparison_set": _comparison_set(m4_count),
+        "largest_event_sensitivity": _largest_event_counterfactual(
+            score_area, score_agg["largest"], fault_distance_km, composite_score
+        ),
         "data_coverage": {
             "earliest_year": score_agg["earliest"],
             "latest_year": score_agg["latest"],

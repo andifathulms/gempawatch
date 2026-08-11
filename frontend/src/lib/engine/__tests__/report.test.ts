@@ -142,3 +142,59 @@ describe("a number never travels without the set it was ranked against", () => {
     expect(r.score_breakdown).toHaveLength(4);
   });
 });
+
+describe("largest-event sensitivity", () => {
+  // Palu: high activity, and a 2018 M7.5 that dominates the magnitude term.
+  const palu = () => buildPointRiskReport(data, -0.9, 119.87);
+
+  it("removes the largest event and reports a lower score", () => {
+    const s = palu().largest_event_sensitivity!;
+    expect(s).not.toBeNull();
+    expect(s.score_without).toBeLessThan(palu().composite_score);
+    expect(s.score_delta).toBeGreaterThan(0);
+  });
+
+  it("removes exactly one event, so the next largest is at most the removed one", () => {
+    const s = palu().largest_event_sensitivity!;
+    expect(s.next_largest_magnitude).not.toBeNull();
+    expect(s.next_largest_magnitude!).toBeLessThanOrEqual(s.removed.magnitude);
+  });
+
+  it("names the event it removed, matching the largest in the scoring radius", () => {
+    const r = palu();
+    const s = r.largest_event_sensitivity!;
+    // The 50km inner radius can hold a smaller max than the 100km scoring
+    // radius, so compare against what the score actually used.
+    const magnitudeTerm = r.score_breakdown.find((c) => c.key === "magnitude")!;
+    expect(s.removed.magnitude).toBe(magnitudeTerm.basis.largest_magnitude);
+    expect(s.removed.year).toBeGreaterThanOrEqual(1970);
+  });
+
+  it("agrees with the delta it reports", () => {
+    const r = palu();
+    const s = r.largest_event_sensitivity!;
+    expect(Math.abs(r.composite_score - s.score_without - s.score_delta)).toBeLessThan(
+      0.05,
+    );
+  });
+
+  it("recomputes every input, not just magnitude", () => {
+    // Holding the other three fixed would make the delta exactly the magnitude
+    // term's drop. Removing an event also moves the M4 count and shallow ratio,
+    // so the two must not coincide — this is what makes the counterfactual
+    // honest rather than convenient.
+    const r = palu();
+    const s = r.largest_event_sensitivity!;
+    const magTerm = r.score_breakdown.find((c) => c.key === "magnitude")!;
+    const magnitudeOnlyDelta =
+      magTerm.points -
+      ((s.next_largest_magnitude! - 4.0) / 5.0) * magTerm.max_points;
+    expect(Math.abs(s.score_delta - magnitudeOnlyDelta)).toBeGreaterThan(0);
+  });
+
+  it("declines to speculate where there is no record to remove", () => {
+    // Deep Indian Ocean, far outside the Indonesian catalogue.
+    const empty = buildPointRiskReport(data, -30, 80);
+    expect(empty.largest_event_sensitivity).toBeNull();
+  });
+});

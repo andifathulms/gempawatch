@@ -115,6 +115,18 @@ export interface ScoreComponent {
   saturated: boolean;
 }
 
+/**
+ * The score recomputed with the single largest nearby event removed. Null when
+ * there is nothing to remove, or when removing it would leave no record at all.
+ */
+export interface LargestEventSensitivity {
+  removed: { magnitude: number; year: number | null; depth_km: number | null };
+  next_largest_magnitude: number | null;
+  score_without: number;
+  score_delta: number;
+  tier_without: RiskTier | null;
+}
+
 export interface RiskCheckReport {
   query: { latitude: number; longitude: number };
   nearest_region: { id: number; name: string; slug: string; type: string } | null;
@@ -128,6 +140,7 @@ export interface RiskCheckReport {
   nearest_fault: { id: number; name: string; distance_km: number | null } | null;
   tsunami_risk_tier: RiskTier | null;
   activity_percentile_basis: { region_count: number };
+  largest_event_sensitivity: LargestEventSensitivity | null;
   comparison: { reference_city: string; relation: string; text: string };
   /** The same comparison against every reference anchor, not just Jakarta. */
   comparison_set: Array<{

@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/Card";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { CoverageNote } from "@/components/risk/CoverageNote";
+import { LargestEventSensitivity } from "@/components/risk/LargestEventSensitivity";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
 import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
@@ -66,6 +67,18 @@ export function RiskReportView({ report, lat, lng }: Props) {
           total={report.composite_score}
         />
       </Card>
+
+      {report.largest_event_sensitivity && (
+        <Card
+          title="Seberapa besar peran satu gempa"
+          subtitle="Komponen magnitudo memakai kejadian terbesar, bukan rata-rata, dan tidak melemah seiring waktu."
+        >
+          <LargestEventSensitivity
+            sensitivity={report.largest_event_sensitivity}
+            score={report.composite_score}
+          />
+        </Card>
+      )}
 
       <Card
         title="Cakupan data di balik angka ini"
