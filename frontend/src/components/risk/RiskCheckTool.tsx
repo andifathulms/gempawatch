@@ -96,7 +96,7 @@ export function RiskCheckTool() {
       <div className="space-y-4 lg:sticky lg:top-20">
         <Card
           title="Pilih titik"
-          subtitle="Ketuk peta, seret pin, atau pakai lokasi GPS-mu."
+          subtitle="Ketuk peta, seret pin, pakai lokasi GPS-mu, atau pilih salah satu kota pintasan di bawah peta."
           action={
             <Button
               onClick={useGeolocation}
