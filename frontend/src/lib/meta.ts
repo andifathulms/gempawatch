@@ -44,18 +44,27 @@ export function pageMetadata({
   title,
   description,
   path,
+  image,
 }: {
   title: string;
   description: string;
   /** Site-root-relative, with a leading slash. "/" for the homepage. */
   path: string;
+  /**
+   * Site-root-relative path to a card of this page's own, for routes that
+   * generate one. Falls back to the shared card.
+   */
+  image?: string;
 }): Metadata {
   const url = `${BASE_PATH}${path === "/" ? "/" : path}`;
+  const card = image
+    ? { url: `${BASE_PATH}${image}`, width: 1200, height: 630 }
+    : SHARE_IMAGE;
   return {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url, images: [SHARE_IMAGE] },
-    twitter: { title, description, images: [SHARE_IMAGE] },
+    openGraph: { title, description, url, images: [card] },
+    twitter: { title, description, images: [card] },
   };
 }

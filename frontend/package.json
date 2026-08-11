@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build:static": "node scripts/build-static.mjs"
+    "build:static": "npm run og:generate && node scripts/build-static.mjs",
+    "og:generate": "vite-node --config scripts/og.vite.config.ts scripts/generate-og.tsx"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

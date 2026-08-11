@@ -3,6 +3,24 @@ import { riskTierColor, riskTierTextColor, riskTierLabel } from "@/lib/seismic";
 import type { RiskTier } from "@/lib/types";
 
 export const OG_SIZE = { width: 1200, height: 630 };
+
+/**
+ * The percentile line for a share card.
+ *
+ * "Lebih aktif dari 100% wilayah" reads as a claim about Indonesia. It is a
+ * rank against the regions this deployment has scored, and the on-page gauge
+ * was corrected to say so — but the card, which is the surface that actually
+ * travels, still made the bare claim. Returns undefined when there is nothing
+ * honest to say rather than falling back to the shorter, bigger claim.
+ */
+export function ogPercentileText(
+  percentile: number | null | undefined,
+  regionCount: number | null | undefined,
+): string | undefined {
+  if (percentile == null) return undefined;
+  if (!regionCount) return `Lebih aktif dari ${percentile}% wilayah terskor`;
+  return `Lebih aktif dari ${percentile}% dari ${regionCount} wilayah terskor`;
+}
 export const OG_CONTENT_TYPE = "image/png";
 
 /**

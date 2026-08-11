@@ -61,6 +61,11 @@ export async function generateMetadata({
       title,
       description,
       path: `/region/${p.region.slug}`,
+      // Rendered by scripts/generate-og.tsx during the static publish. Next's
+      // opengraph-image convention cannot do this on an export — it rejects
+      // generateStaticParams in metadata image routes — so the card is built
+      // alongside and pointed at here.
+      image: `/og/region-${p.region.slug}.png`,
     });
     return { ...base, openGraph: { ...base.openGraph, type: "article" } };
   } catch {

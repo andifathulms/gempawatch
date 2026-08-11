@@ -1,9 +1,10 @@
 import { api } from "@/lib/api";
-import { renderOgCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
+import { ogPercentileText, renderOgCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 export const alt = "Profil risiko gempa wilayah — GempaWatch";
+
 
 // Dynamic OG image so a pasted region link unfurls into the risk card in
 // WhatsApp / X / Telegram — the core distribution loop.
@@ -16,8 +17,7 @@ export default async function OgImage({ params }: { params: { slug: string } }) 
       title: p.region.name,
       scoreLabel: p.composite_score != null ? p.composite_score.toFixed(0) : "—",
       tier: p.activity_tier,
-      percentileText:
-        pct != null ? `Lebih aktif dari ${pct}% wilayah` : undefined,
+      percentileText: ogPercentileText(pct, p.activity_percentile_basis?.region_count),
       stats: [
         { label: "Gempa M4+", value: String(p.event_count_m4) },
         {
