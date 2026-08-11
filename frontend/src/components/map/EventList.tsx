@@ -63,6 +63,22 @@ export function EventList({ events }: Props) {
           </div>
         </li>
       ))}
+      {/*
+        The source label on each row is the only sign that this feed is two
+        catalogues merged, and the merge rule lived only on /about. Stating it
+        under the list is what turns "BMKG" and "USGS" from decoration into
+        something a reader can interpret.
+      */}
+      <li className="pt-3 text-fluid-000 leading-relaxed text-text-muted">
+        Daftar ini menggabungkan dua katalog. Kalau BMKG dan USGS sama-sama
+        mencatat gempa yang sama — selisih di bawah 5 menit dan 50 km — keduanya
+        dianggap satu kejadian dan{" "}
+        <strong className="font-semibold text-text-secondary">
+          catatan BMKG yang dipakai
+        </strong>
+        , karena lebih akurat untuk wilayah Indonesia. Label sumber di tiap baris
+        menunjukkan catatan mana yang akhirnya ditampilkan.
+      </li>
     </ul>
   );
 }
