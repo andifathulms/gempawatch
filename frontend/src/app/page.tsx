@@ -11,6 +11,8 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { RegionSearch } from "@/components/discover/RegionSearch";
 import { Leaderboard } from "@/components/discover/Leaderboard";
+import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
+import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { magnitude, num, shortDate } from "@/lib/format";
 
 export const revalidate = 300; // 5 min, matching BMKG cadence
@@ -42,7 +44,7 @@ function daySummary(events: EarthquakeEvent[]) {
 export default async function HomePage() {
   // Each block degrades on its own — a leaderboard outage should not cost the
   // reader the live map, and vice versa.
-  const [events, top, disasters] = await Promise.all([
+  const [events, top, disasters, example] = await Promise.all([
     api
       .liveEvents()
       .then((d) => d.results)
@@ -52,11 +54,15 @@ export default async function HomePage() {
       .then((r) => r.results)
       .catch(() => [] as LeaderboardRow[]),
     api.disasterTimeline().catch(() => [] as HistoricalDisaster[]),
+    // A real region, so the homepage can SHOW how a score is built instead of
+    // only naming what one contains.
+    api.riskProfile("kota-yogyakarta").catch(() => null),
   ]);
 
   const loadFailed = events === null;
   const list = events ?? [];
   const summary = daySummary(list);
+  const exampleInputs = example ? scoreInputsFromProfile(example) : null;
 
   return (
     <div className="space-y-8">
@@ -213,6 +219,37 @@ export default async function HomePage() {
           />
         </div>
       </section>
+
+      {/* ------------------------------------------------------------------
+          A worked example, before the reader has typed anything.
+
+          Everything above this either awaits input (the search field) or
+          reports today's activity (the tiles). Neither shows what the product
+          actually does with fifty years of records, so a visitor who was not
+          already sold had no way to see the process — only to be told about it.
+          One real region, its four terms, its published total.
+         ------------------------------------------------------------------ */}
+      {exampleInputs && example?.composite_score != null && (
+        <section>
+          <Card
+            title={`Contoh: bagaimana skor ${example.region.name} tersusun`}
+            subtitle="Satu wilayah nyata, dari catatan gempa mentah sampai satu angka. Aturan yang sama dipakai untuk lokasi mana pun."
+            action={
+              <Link
+                href="/about#skor-lab"
+                className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
+              >
+                Coba ubah angkanya →
+              </Link>
+            }
+          >
+            <ScoreBreakdown
+              components={scoreBreakdown(exampleInputs)}
+              total={example.composite_score}
+            />
+          </Card>
+        </section>
+      )}
 
       {/* ------------------------------------------------------------------
           Map and feed side by side. They answer the same question in two

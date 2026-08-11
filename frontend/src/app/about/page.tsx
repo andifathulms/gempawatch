@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { StatTile } from "@/components/ui/Stat";
 import { ButtonLink } from "@/components/ui/Button";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { ScoreLab, type ScoreLabSeed } from "@/components/risk/ScoreLab";
 import { num } from "@/lib/format";
 import { api } from "@/lib/api";
 import {
@@ -10,6 +11,7 @@ import {
   MAGNITUDE_WEIGHT,
   PROXIMITY_WEIGHT,
   SHALLOW_WEIGHT,
+  scoreInputsFromProfile,
 } from "@/lib/engine/scoring";
 
 export const metadata = {
@@ -78,6 +80,35 @@ export default async function AboutPage() {
   } catch {
     /* meta optional */
   }
+  /*
+    The worked example is seeded from a real published profile rather than
+    hardcoded, so it can never quote a total the region page disagrees with.
+    Kota Yogyakarta is the chosen subject because none of its four terms is
+    saturated or near zero — every rule visibly does some work — and its fault
+    is unusually close, which makes the proximity term legible.
+  */
+  let labSeed: ScoreLabSeed | null = null;
+  try {
+    const p = await api.riskProfile("kota-yogyakarta");
+    const inputs = scoreInputsFromProfile(p);
+    if (inputs && p.composite_score != null && inputs.largestMagnitude != null) {
+      labSeed = {
+        regionName: p.region.name,
+        slug: p.region.slug,
+        faultName: p.nearest_fault_name,
+        coverageYears: inputs.coverageYears,
+        eventsPerYear:
+          Math.round((inputs.m4Count / inputs.coverageYears) * 100) / 100,
+        largestMagnitude: inputs.largestMagnitude,
+        shallowRatio: inputs.shallowRatio ?? 0,
+        faultDistanceKm: inputs.nearestFaultDistanceKm ?? 0,
+        publishedScore: p.composite_score,
+      };
+    }
+  } catch {
+    /* the example is a bonus; the rules below stand without it */
+  }
+
   const span =
     coverage.earliest && coverage.latest
       ? `${coverage.earliest}–${coverage.latest}`
@@ -227,6 +258,22 @@ export default async function AboutPage() {
                 </li>
               ))}
             </ul>
+            {labSeed && (
+              <div className="mt-5 border-t border-earth-border pt-5">
+                <h3 className="font-display text-fluid-1 font-semibold tracking-tight text-text-primary">
+                  Contoh lengkap, dengan angka sungguhan
+                </h3>
+                <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
+                  Aturan di atas baru berarti kalau dijalankan sampai selesai.
+                  Berikut satu wilayah nyata, dari data mentah hingga skor —
+                  dan bisa kamu ubah sendiri.
+                </p>
+                <div className="mt-4">
+                  <ScoreLab seed={labSeed} />
+                </div>
+              </div>
+            )}
+
             <p className="mt-4 border-t border-earth-border pt-3.5 text-fluid-00 leading-relaxed text-text-secondary">
               <strong className="font-semibold text-text-primary">Persentil</strong>{" "}
               memeringkat skor itu terhadap wilayah lain yang{" "}
