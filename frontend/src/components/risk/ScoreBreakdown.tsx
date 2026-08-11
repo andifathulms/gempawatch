@@ -1,3 +1,7 @@
+import {
+  FAULT_PROXIMITY_RANGE_KM,
+  FREQUENCY_SATURATION_PER_YEAR,
+} from "@/lib/engine/scoring";
 import { magnitude } from "@/lib/format";
 import type { ScoreComponent } from "@/lib/types";
 
@@ -26,7 +30,7 @@ const LABELS: Record<
 > = {
   frequency: {
     title: "Frekuensi",
-    rule: "Gempa M4+ per tahun dalam radius 100 km, penuh pada 5/tahun.",
+    rule: `Gempa M4+ per tahun dalam radius 100 km, penuh pada ${FREQUENCY_SATURATION_PER_YEAR.toLocaleString("id-ID")}/tahun.`,
     basis: (b) =>
       b.events_per_year === null
         ? null
@@ -50,7 +54,7 @@ const LABELS: Record<
   },
   proximity: {
     title: "Kedekatan sesar",
-    rule: "Jarak ke sesar aktif terdekat, penuh di bawah ~10 km, nol pada 100 km.",
+    rule: `Jarak ke sesar aktif terdekat, penuh di bawah ~10 km, nol pada ${FAULT_PROXIMITY_RANGE_KM.toLocaleString("id-ID")} km.`,
     basis: (b) =>
       b.nearest_fault_distance_km === null
         ? null

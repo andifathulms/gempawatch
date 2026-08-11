@@ -6,6 +6,12 @@ import { ButtonLink } from "@/components/ui/Button";
 import { RegionSearch } from "@/components/discover/RegionSearch";
 import { Leaderboard } from "@/components/discover/Leaderboard";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import {
+  FREQUENCY_WEIGHT,
+  MAGNITUDE_WEIGHT,
+  PROXIMITY_WEIGHT,
+  SHALLOW_WEIGHT,
+} from "@/lib/engine/scoring";
 
 export const revalidate = 3600;
 
@@ -15,12 +21,15 @@ export const metadata = {
     "Cari kota/kabupaten dan lihat peringkat wilayah paling aktif secara seismik di Indonesia.",
 };
 
-/** The four weights behind the score, stated where people meet the ranking. */
+/**
+ * The four weights behind the score, stated where people meet the ranking.
+ * Figures come from the engine so this list cannot drift from the formula.
+ */
 const WEIGHTS = [
-  { label: "Frekuensi gempa M4+ per tahun", max: 40 },
-  { label: "Magnitudo terbesar tercatat", max: 30 },
-  { label: "Proporsi gempa dangkal (<70 km)", max: 15 },
-  { label: "Kedekatan sesar aktif", max: 15 },
+  { label: "Frekuensi gempa M4+ per tahun", max: FREQUENCY_WEIGHT },
+  { label: "Magnitudo terbesar tercatat", max: MAGNITUDE_WEIGHT },
+  { label: "Proporsi gempa dangkal (<70 km)", max: SHALLOW_WEIGHT },
+  { label: "Kedekatan sesar aktif", max: PROXIMITY_WEIGHT },
 ];
 
 export default async function ExplorePage() {

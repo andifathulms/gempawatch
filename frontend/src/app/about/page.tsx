@@ -5,6 +5,12 @@ import { ButtonLink } from "@/components/ui/Button";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { num } from "@/lib/format";
 import { api } from "@/lib/api";
+import {
+  FREQUENCY_WEIGHT,
+  MAGNITUDE_WEIGHT,
+  PROXIMITY_WEIGHT,
+  SHALLOW_WEIGHT,
+} from "@/lib/engine/scoring";
 
 export const metadata = {
   title: "Tentang & Metodologi — GempaWatch",
@@ -24,25 +30,34 @@ const SECTIONS = [
   { id: "atribusi", label: "Atribusi" },
 ];
 
+/**
+ * Weights come from the engine, not from a number typed here.
+ *
+ * This page, /explore and ScoreBreakdown each used to carry their own literal
+ * 40/30/15/15. Three hand-copies of a rule can silently disagree with the rule
+ * after any change to it, and a site whose whole claim is that its numbers
+ * trace to a documented formula cannot afford a methodology page quoting a
+ * stale one. The prose stays local; only the figures are imported.
+ */
 const WEIGHTS = [
   {
     label: "Frekuensi gempa M4+ per tahun",
-    max: 40,
+    max: FREQUENCY_WEIGHT,
     note: "Seberapa sering wilayah ini berguncang.",
   },
   {
     label: "Magnitudo terbesar tercatat",
-    max: 30,
+    max: MAGNITUDE_WEIGHT,
     note: "Sekuat apa kejadian terburuk yang pernah tercatat.",
   },
   {
     label: "Proporsi gempa dangkal (<70 km)",
-    max: 15,
+    max: SHALLOW_WEIGHT,
     note: "Gempa dangkal lebih terasa dan lebih merusak di permukaan.",
   },
   {
     label: "Kedekatan sesar aktif",
-    max: 15,
+    max: PROXIMITY_WEIGHT,
     note: "Dekat sesar berarti guncangan cenderung lebih kuat.",
   },
 ];
