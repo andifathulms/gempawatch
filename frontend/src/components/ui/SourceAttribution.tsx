@@ -12,8 +12,10 @@ interface Props {
  * MANDATORY component — must appear on every page/card showing earthquake data.
  * BMKG attribution is a legal requirement, never strip or hide it (see CLAUDE.md).
  *
- * Legibility is part of that obligation: the muted tone here clears WCAG AA, so
- * the credit is genuinely readable rather than technically present.
+ * Legibility is part of that obligation, and colour alone was not discharging
+ * it: the muted tone clears WCAG AA, but the inline variant was rendering at
+ * 11px, which is technically present and practically fine print. Both variants
+ * now sit at --step-000, the floor for the whole site.
  */
 const LABELS: Record<Source, { short: string; text: string; href: string }> = {
   BMKG: {

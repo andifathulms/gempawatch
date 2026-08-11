@@ -8,6 +8,15 @@ interface Props {
   footer?: React.ReactNode;
   /** `flush` removes body padding so maps and tables can reach the card edge. */
   variant?: "default" | "flush";
+  /**
+   * How the title carries.
+   *
+   * `section` (default) is a real heading — the page's second level. `eyebrow`
+   * is the old 12.5px uppercase label, kept for panels that are genuinely
+   * subordinate to a heading already above them, so it has to be asked for
+   * rather than being what every panel silently gets.
+   */
+  titleAs?: "section" | "eyebrow";
   /** Anchor target, so a page's contents list can link to this panel. */
   id?: string;
   children: React.ReactNode;
@@ -17,9 +26,17 @@ interface Props {
 /**
  * The workhorse panel.
  *
- * The title is set in the display face with wide tracking so it reads as a
- * label on an instrument rather than a heading in a document — which keeps a
- * page full of cards from competing with its own h1.
+ * The title used to be 12px uppercase in the secondary tone, on the theory that
+ * a panel label should read as an instrument marking rather than a document
+ * heading. The cost was that it rendered *smaller and dimmer than the body copy
+ * it introduced*, and since every h2 on the site comes from this component, the
+ * whole page went from a ~58px h1 straight to 12px with nothing in between.
+ * There was no second level to scan, so a reader landing cold had no way to
+ * build a map of the page.
+ *
+ * So the default is now a real section heading at --step-1. The orange tick
+ * stays, because that was doing the "instrument" work all along; the size was
+ * never what carried it.
  */
 export function Card({
   title,
@@ -27,10 +44,15 @@ export function Card({
   action,
   footer,
   variant = "default",
+  titleAs = "section",
   id,
   children,
   className,
 }: Props) {
+  const titleClass =
+    titleAs === "eyebrow"
+      ? "font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-secondary"
+      : "font-display text-fluid-1 font-semibold tracking-tight text-text-primary";
   const hasHeader = Boolean(title || action || subtitle);
   const body =
     variant === "flush"
@@ -50,16 +72,18 @@ export function Card({
         <div className="flex items-start justify-between gap-3 px-4 pb-3 pt-4 sm:px-5 sm:pt-5">
           <div className="min-w-0">
             {title && (
-              <h2 className="flex items-center gap-2 font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-secondary">
+              <h2 className={`flex items-center gap-2.5 ${titleClass}`}>
                 <span
                   aria-hidden="true"
-                  className="h-3.5 w-0.5 shrink-0 rounded-full bg-seismic-orange"
+                  className={`w-0.5 shrink-0 rounded-full bg-seismic-orange ${
+                    titleAs === "eyebrow" ? "h-3.5" : "h-[1.1em] self-stretch"
+                  }`}
                 />
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="mt-1.5 text-fluid-00 leading-relaxed text-text-muted">
+              <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
                 {subtitle}
               </p>
             )}

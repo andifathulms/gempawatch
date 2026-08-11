@@ -51,6 +51,12 @@ interface TileProps {
  *
  * Inverts the row: the figure leads at display size and the label explains it
  * underneath. Use four or fewer per row — past that they stop being headlines.
+ *
+ * The label is the tile's *whole point* and used to be set in the smallest,
+ * dimmest combination on the site (12px muted), which made the four figures on
+ * the homepage into big numbers nobody could name. It now sits at --step-00 in
+ * the secondary tone: still clearly subordinate to the figure, but readable at
+ * a glance, which is the only way a headline number means anything.
  */
 export function StatTile({ label, value, unit, tone = "default", hint }: TileProps) {
   const color =
@@ -70,7 +76,7 @@ export function StatTile({ label, value, unit, tone = "default", hint }: TilePro
         </span>
         {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
       </div>
-      <p className="mt-1 text-fluid-000 leading-snug text-text-muted">{label}</p>
+      <p className="mt-1.5 text-fluid-00 leading-snug text-text-secondary">{label}</p>
     </div>
   );
 }
