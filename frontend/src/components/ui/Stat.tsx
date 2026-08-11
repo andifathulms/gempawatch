@@ -77,7 +77,10 @@ export function StatTile({ label, value, unit, tone = "default", hint }: TilePro
         ? "text-risk-red"
         : "text-text-primary";
   return (
-    <div className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3">
+    /* h-full + centred: grid rows stretch every tile to the tallest, and a
+       tile carrying a hint is taller than one without, which left its
+       neighbours with their figures floating at the top of an empty box. */
+    <div className="flex h-full flex-col justify-center rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3">
       <div className="flex items-baseline gap-1">
         <span className={`font-mono text-fluid-2 font-bold tabular-nums ${color}`}>
           {value}

@@ -101,14 +101,14 @@ export default async function HomePage() {
              comprehension bug: a reader who miscategorises this might wait on
              it for a tsunami warning.
          ------------------------------------------------------------------ */}
-      <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 shadow-raised sm:px-8 sm:py-12">
+      <section className="animate-fade-in-up relative rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 shadow-raised sm:px-8 sm:py-12">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full bg-seismic-orange/[0.07] blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-32 -z-10 h-[28rem] w-[28rem] rounded-full bg-seismic-orange/[0.07] blur-3xl"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-60"
+          className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-60"
           style={{
             backgroundImage:
               "repeating-linear-gradient(115deg, transparent 0 26px, rgba(232,116,59,0.045) 26px 27px)",

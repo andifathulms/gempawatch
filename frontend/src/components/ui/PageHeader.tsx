@@ -17,11 +17,14 @@ interface Props {
  * nothing because it is a repeating gradient rather than an image.
  */
 export function PageHeader({ eyebrow, title, subtitle, action, children }: Props) {
+  // No overflow-hidden on the section: this header hosts the region search, and
+  // clipping the container also clipped its dropdown. The decorative layer
+  // below carries its own rounding instead, which is all the clipping was for.
   return (
-    <section className="animate-fade-in-up relative overflow-hidden rounded-2xl border border-earth-border bg-earth-surface px-5 py-6 shadow-raised sm:px-7 sm:py-7">
+    <section className="animate-fade-in-up relative rounded-2xl border border-earth-border bg-earth-surface px-5 py-6 shadow-raised sm:px-7 sm:py-7">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.5]"
+        className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-[0.5]"
         style={{
           backgroundImage:
             "repeating-linear-gradient(115deg, transparent 0 22px, rgba(232,116,59,0.05) 22px 23px)",
