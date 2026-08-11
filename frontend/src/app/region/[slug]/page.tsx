@@ -13,6 +13,8 @@ import { EventScatterTimeline } from "@/components/risk/EventScatterTimeline";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
+import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
+import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { riskTierLabel } from "@/lib/seismic";
 import { magnitude, num, regionType } from "@/lib/format";
 
@@ -68,6 +70,8 @@ export default async function RegionPage({
       ? `${profile.earliest_event_year}–${profile.latest_event_year}`
       : "catatan historis";
 
+  const scoreInputs = scoreInputsFromProfile(profile);
+
   return (
     <div className="space-y-6">
       <PageHeader
@@ -116,6 +120,21 @@ export default async function RegionPage({
         </div>
 
         <div className="space-y-5 lg:col-span-2">
+          {/* The score is the page's headline figure, so its arithmetic belongs
+              directly under it rather than on a methodology page. Rebuilt from
+              the stored inputs, so it reproduces composite_score exactly. */}
+          {scoreInputs && (
+            <Card
+              title="Dari mana skor ini datang"
+              subtitle="Empat komponen berbobot, dihitung dari catatan gempa dalam radius 100 km."
+            >
+              <ScoreBreakdown
+                components={scoreBreakdown(scoreInputs)}
+                total={profile.composite_score ?? 0}
+              />
+            </Card>
+          )}
+
           <Card
             title="Frekuensi magnitudo"
             subtitle="Berapa banyak gempa di tiap tingkat kekuatan, sepanjang catatan."

@@ -81,6 +81,79 @@ def compute_composite_score(inputs: ScoreInputs) -> float:
     return round(score, 1)
 
 
+def score_breakdown(inputs: ScoreInputs) -> list[dict]:
+    """
+    The same four terms compute_composite_score() sums, itemised.
+
+    The composite is a weighted sum whose parts were computed and thrown away,
+    which meant two regions could share a score for completely different
+    reasons and the product had no way to say so. Frequency saturates at
+    5 events/yr, so every genuinely active area pins that term at 40/40 and
+    stops differentiating — above that line the score is moved entirely by the
+    other three. That is worth showing rather than hiding.
+
+    Each component is rounded to 1dp INDEPENDENTLY, so the printed parts can
+    differ from the printed total by up to 0.2. The total is the authority: it
+    is rounded once from the unrounded sum. Callers displaying both must say so
+    rather than letting a reader assume the column adds up.
+
+    `basis` is the input that drove the term, so a reader can check the
+    arithmetic against the documented rule rather than trusting the number.
+    """
+    per_year = (
+        inputs.m4_count / inputs.coverage_years if inputs.coverage_years > 0 else None
+    )
+    return [
+        {
+            "key": "frequency",
+            "points": round(
+                _frequency_component(inputs.m4_count, inputs.coverage_years), 1
+            ),
+            "max_points": FREQUENCY_WEIGHT,
+            "basis": {"events_per_year": round(per_year, 2) if per_year else None},
+            "saturated": bool(
+                per_year is not None and per_year >= FREQUENCY_SATURATION_PER_YEAR
+            ),
+        },
+        {
+            "key": "magnitude",
+            "points": round(_magnitude_component(inputs.largest_magnitude), 1),
+            "max_points": MAGNITUDE_WEIGHT,
+            "basis": {"largest_magnitude": inputs.largest_magnitude},
+            "saturated": bool(
+                inputs.largest_magnitude is not None and inputs.largest_magnitude >= 9.0
+            ),
+        },
+        {
+            "key": "shallow",
+            "points": round(_shallow_component(inputs.shallow_ratio), 1),
+            "max_points": SHALLOW_WEIGHT,
+            "basis": {
+                "shallow_ratio": (
+                    round(inputs.shallow_ratio, 3)
+                    if inputs.shallow_ratio is not None
+                    else None
+                )
+            },
+            "saturated": bool(
+                inputs.shallow_ratio is not None and inputs.shallow_ratio >= 1.0
+            ),
+        },
+        {
+            "key": "proximity",
+            "points": round(
+                _proximity_component(inputs.nearest_fault_distance_km), 1
+            ),
+            "max_points": PROXIMITY_WEIGHT,
+            "basis": {"nearest_fault_distance_km": inputs.nearest_fault_distance_km},
+            "saturated": bool(
+                inputs.nearest_fault_distance_km is not None
+                and inputs.nearest_fault_distance_km <= 0.0
+            ),
+        },
+    ]
+
+
 def score_to_tier(score: float | None) -> str | None:
     if score is None:
         return None

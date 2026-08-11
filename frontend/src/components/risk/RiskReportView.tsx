@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
 import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -48,6 +49,16 @@ export function RiskReportView({ report, lat, lng }: Props) {
       </header>
 
       <ShareableRiskCard report={report} />
+
+      <Card
+        title="Dari mana skor ini datang"
+        subtitle="Empat komponen berbobot, dihitung dari catatan gempa di sekitar titik ini."
+      >
+        <ScoreBreakdown
+          components={report.score_breakdown}
+          total={report.composite_score}
+        />
+      </Card>
 
       <Card
         title="Bagikan hasil ini"

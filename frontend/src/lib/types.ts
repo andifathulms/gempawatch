@@ -95,6 +95,19 @@ export interface HistoricalDisaster {
   source_links: string[];
 }
 
+/**
+ * One term of the composite score, as the engine resolved it for this point.
+ * `points` is rounded to 1dp independently of the others, so the four can miss
+ * the reported total by up to 0.2 — composite_score is the authority.
+ */
+export interface ScoreComponent {
+  key: "frequency" | "magnitude" | "shallow" | "proximity";
+  points: number;
+  max_points: number;
+  basis: Record<string, number | null>;
+  saturated: boolean;
+}
+
 export interface RiskCheckReport {
   query: { latitude: number; longitude: number };
   nearest_region: { id: number; name: string; slug: string; type: string } | null;
@@ -102,6 +115,7 @@ export interface RiskCheckReport {
   largest_magnitude_within_50km: number | null;
   overall_risk_band: RiskTier;
   composite_score: number;
+  score_breakdown: ScoreComponent[];
   activity_tier: RiskTier;
   activity_percentile: number | null;
   nearest_fault: { id: number; name: string; distance_km: number | null } | null;

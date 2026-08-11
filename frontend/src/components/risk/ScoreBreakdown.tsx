@@ -1,0 +1,117 @@
+import type { ScoreComponent } from "@/lib/types";
+
+interface Props {
+  components: ScoreComponent[];
+  total: number;
+}
+
+/**
+ * The composite score, itemised.
+ *
+ * The product's whole claim is that its number is traceable to a rule, and
+ * until now the rule was only described in prose while the number arrived
+ * whole. Showing the four terms is what makes the claim checkable: a reader can
+ * see that two places sharing a score got there differently, and — more
+ * usefully — that an active area has pinned the frequency term at its ceiling,
+ * so everything separating it from its neighbours lives in the other three.
+ *
+ * Each row states its own input ("0,8 gempa/tahun"), because a bar that cannot
+ * be checked against the documented rule is decoration.
+ */
+
+const LABELS: Record<
+  ScoreComponent["key"],
+  { title: string; rule: string; basis: (b: Record<string, number | null>) => string | null }
+> = {
+  frequency: {
+    title: "Frekuensi",
+    rule: "Gempa M4+ per tahun dalam radius 100 km, penuh pada 5/tahun.",
+    basis: (b) =>
+      b.events_per_year === null
+        ? null
+        : `${b.events_per_year!.toLocaleString("id-ID")} gempa M4+ per tahun`,
+  },
+  magnitude: {
+    title: "Magnitudo terbesar",
+    rule: "Magnitudo terbesar yang pernah tercatat, M4 → 0 poin, M9 → poin penuh.",
+    basis: (b) =>
+      b.largest_magnitude === null ? null : `M${b.largest_magnitude!.toFixed(1)} tercatat`,
+  },
+  shallow: {
+    title: "Proporsi gempa dangkal",
+    rule: "Bagian kejadian dengan kedalaman di bawah 70 km, yang umumnya paling merusak.",
+    basis: (b) =>
+      b.shallow_ratio === null
+        ? null
+        : `${Math.round(b.shallow_ratio! * 100)}% kejadian lebih dangkal dari 70 km`,
+  },
+  proximity: {
+    title: "Kedekatan sesar",
+    rule: "Jarak ke sesar aktif terdekat, penuh di bawah ~10 km, nol pada 100 km.",
+    basis: (b) =>
+      b.nearest_fault_distance_km === null
+        ? null
+        : `${b.nearest_fault_distance_km!.toLocaleString("id-ID")} km ke sesar terdekat`,
+  },
+};
+
+export function ScoreBreakdown({ components, total }: Props) {
+  return (
+    <div className="space-y-4">
+      <ul className="space-y-3.5">
+        {components.map((c) => {
+          const meta = LABELS[c.key];
+          const basis = meta.basis(c.basis);
+          const pct = c.max_points ? (c.points / c.max_points) * 100 : 0;
+          return (
+            <li key={c.key}>
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-fluid-00 font-medium text-text-primary">
+                  {meta.title}
+                </span>
+                <span className="shrink-0 font-mono text-fluid-00 tabular-nums text-text-secondary">
+                  <span className="font-bold text-text-primary">
+                    {c.points.toLocaleString("id-ID")}
+                  </span>
+                  <span className="text-text-muted"> / {c.max_points}</span>
+                </span>
+              </div>
+
+              <div
+                className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-earth-dark"
+                role="img"
+                aria-label={`${meta.title}: ${c.points} dari ${c.max_points} poin`}
+              >
+                <div
+                  className="h-full origin-left rounded-full bg-seismic-orange motion-safe:animate-draw-in"
+                  style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
+                />
+              </div>
+
+              <p className="mt-1.5 text-fluid-000 leading-relaxed text-text-muted">
+                {basis ? <span className="text-text-secondary">{basis}</span> : null}
+                {basis ? " · " : null}
+                {meta.rule}
+                {/* The ceiling is the most load-bearing thing this panel can
+                    say: past it, this term stops telling two places apart. */}
+                {c.saturated && (
+                  <span className="text-risk-amber"> Komponen ini sudah mentok.</span>
+                )}
+              </p>
+            </li>
+          );
+        })}
+      </ul>
+
+      <p className="border-t border-earth-border pt-3 text-fluid-000 leading-relaxed text-text-muted">
+        Skor total{" "}
+        <span className="font-mono font-bold tabular-nums text-text-primary">
+          {total.toLocaleString("id-ID")}
+        </span>{" "}
+        dari 100. Tiap komponen dibulatkan satu desimal sendiri-sendiri, jadi
+        penjumlahannya bisa meleset 0,1–0,2 dari skor total — skor total yang
+        jadi acuan.
+      </p>
+    </div>
+  );
+}

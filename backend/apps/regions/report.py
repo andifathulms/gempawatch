@@ -18,6 +18,7 @@ from apps.regions.scoring import (
     ScoreInputs,
     compute_composite_score,
     percentile_rank,
+    score_breakdown,
     score_to_tier,
 )
 
@@ -98,15 +99,14 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
         if score_agg["earliest"] and score_agg["latest"]
         else 0
     )
-    composite_score = compute_composite_score(
-        ScoreInputs(
-            m4_count=score_area.filter(magnitude__gte=4.0).count(),
-            coverage_years=coverage_years,
-            largest_magnitude=score_agg["largest"],
-            shallow_ratio=shallow_ratio,
-            nearest_fault_distance_km=fault_distance_km,
-        )
+    score_inputs = ScoreInputs(
+        m4_count=score_area.filter(magnitude__gte=4.0).count(),
+        coverage_years=coverage_years,
+        largest_magnitude=score_agg["largest"],
+        shallow_ratio=shallow_ratio,
+        nearest_fault_distance_km=fault_distance_km,
     )
+    composite_score = compute_composite_score(score_inputs)
     stored_scores = list(
         RegionRiskProfile.objects.filter(composite_score__isnull=False).values_list(
             "composite_score", flat=True
@@ -118,6 +118,7 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
 
     return {
         "composite_score": composite_score,
+        "score_breakdown": score_breakdown(score_inputs),
         "activity_tier": score_to_tier(composite_score),
         "activity_percentile": activity_percentile,
         "query": {"latitude": latitude, "longitude": longitude},

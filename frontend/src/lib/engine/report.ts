@@ -11,7 +11,13 @@
  */
 import type { EngineData } from "./dataset";
 import { haversineKm, pointToGeometryKm } from "./geo";
-import { computeCompositeScore, percentileRank, pyRound, scoreToTier } from "./scoring";
+import {
+  computeCompositeScore,
+  percentileRank,
+  pyRound,
+  scoreBreakdown,
+  scoreToTier,
+} from "./scoring";
 
 export const REFERENCE_CITIES = [
   { name: "Jakarta", m4Count: 25 },
@@ -226,13 +232,14 @@ export function buildPointRiskReport(
       ? outer.latestYear - outer.earliestYear + 1
       : 0;
 
-  const compositeScore = computeCompositeScore({
+  const scoreInputs = {
     m4Count: outer.m4Count,
     coverageYears,
     largestMagnitude: outer.largest,
     shallowRatio,
     nearestFaultDistanceKm: distanceKm,
-  });
+  };
+  const compositeScore = computeCompositeScore(scoreInputs);
 
   const activityPercentile = data.storedScores.length
     ? percentileRank(compositeScore, data.storedScores)
@@ -240,6 +247,7 @@ export function buildPointRiskReport(
 
   return {
     composite_score: compositeScore,
+    score_breakdown: scoreBreakdown(scoreInputs),
     activity_tier: scoreToTier(compositeScore),
     activity_percentile: activityPercentile,
     query: { latitude, longitude },
