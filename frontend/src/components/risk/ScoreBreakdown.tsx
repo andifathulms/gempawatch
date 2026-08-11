@@ -38,7 +38,11 @@ const LABELS: Record<
   },
   magnitude: {
     title: "Magnitudo terbesar",
-    rule: "Magnitudo terbesar yang pernah tercatat, M4 → 0 poin, M9 → poin penuh.",
+    rule:
+      "Magnitudo terbesar yang pernah tercatat, M4 → 0 poin, M9 → poin penuh. " +
+      "Pemetaannya lurus meski skala magnitudo logaritmik — penyederhanaan yang " +
+      "kami pilih supaya aturannya bisa diperiksa, dan yang membuat selisih di " +
+      "ujung atas skala tampak lebih kecil daripada selisih energinya.",
     basis: (b) =>
       b.largest_magnitude === null
         ? null

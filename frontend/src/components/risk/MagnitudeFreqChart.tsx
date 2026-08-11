@@ -44,10 +44,36 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
       columns={["Tingkat magnitudo", "Jumlah kejadian"]}
       rows={data.map((d) => [d.tier, num(d.count)])}
       note={
-        <p className="mt-1 text-fluid-000 leading-relaxed text-text-muted">
-          Gempa besar jauh lebih jarang daripada gempa kecil — pola ini berlaku di
-          seluruh dunia. Jumlah dihitung dalam radius 100 km dari pusat wilayah.
-        </p>
+        <div className="mt-2 space-y-2.5">
+          {/*
+            The app's core vocabulary was never defined anywhere. A reader who
+            takes M7 for "a bit worse than M6" misreads this chart, the
+            magnitude component of the score, and every badge on the site — so
+            the scale is explained where magnitudes are first set against each
+            other, not on a methodology page.
+          */}
+          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            <strong className="font-semibold text-text-primary">
+              Tiap satu angka magnitudo adalah lompatan besar.
+            </strong>{" "}
+            Skala magnitudo bersifat logaritmik: naik 1 angka berarti guncangan
+            di seismograf ±10 kali lebih besar, dan energi yang dilepaskan ±32
+            kali lebih besar. Jadi M7 bukan &ldquo;sedikit di atas&rdquo; M6 —
+            energinya sekitar 32 kali lipat, dan M7 dibanding M5 sekitar 1.000
+            kali lipat.
+          </p>
+          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            Itu juga sebabnya batangnya memendek drastis: gempa besar melepas
+            energi jauh lebih banyak, dan kejadian sebesar itu jauh lebih
+            jarang. Pola menurun seperti ini berlaku di seluruh dunia, bukan
+            khas wilayah ini.
+          </p>
+          <p className="text-fluid-000 leading-relaxed text-text-muted">
+            Jumlah dihitung dalam radius 100 km dari pusat wilayah. Angka
+            perbandingan energi di atas adalah pembulatan yang lazim dipakai
+            untuk penjelasan, bukan hasil hitungan per kejadian.
+          </p>
+        </div>
       }
     >
       <ResponsiveContainer width="100%" height={200}>
