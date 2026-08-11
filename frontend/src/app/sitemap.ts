@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { api } from "@/lib/api";
+import type { RegionRiskProfile } from "@/lib/types";
 
 /**
  * The 24 region pages are fully prerendered and linked from /explore, so a
@@ -29,24 +30,50 @@ export const dynamic = "force-static";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = (path: string) => `${ORIGIN}${BASE_PATH}${path}`;
 
+  /*
+    lastModified comes from the profiles' own last_updated, not from a build
+    clock. Every publish rewrites every file, so a build timestamp would tell a
+    crawler that all 59 URLs changed on every run — which is both untrue and the
+    fastest way to have lastmod ignored. The profile timestamp moves when the
+    data behind the page actually moves.
+  */
+  let profiles: RegionRiskProfile[] = [];
+  try {
+    const { results } = await api.regions();
+    profiles = (
+      await Promise.all(
+        results.map((r) => api.riskProfile(r.slug).catch(() => null)),
+      )
+    ).filter((p): p is RegionRiskProfile => p !== null);
+  } catch {
+    // A region-listing outage should cost the sitemap its long tail, not the
+    // whole file.
+  }
+
+  const stamps = profiles
+    .map((p) => p.last_updated)
+    .filter((d): d is string => Boolean(d))
+    .sort();
+  // The freshest region stands in for the site as a whole: the static pages are
+  // rebuilt from exactly the same export.
+  const siteModified = stamps.length ? new Date(stamps[stamps.length - 1]) : undefined;
+
   const entries: MetadataRoute.Sitemap = STATIC_PATHS.map((p) => ({
     url: url(p.path),
     priority: p.priority,
     changeFrequency: "daily" as const,
+    ...(siteModified ? { lastModified: siteModified } : {}),
   }));
 
-  try {
-    const { results } = await api.regions();
-    for (const region of results) {
-      entries.push({
-        url: url(`/region/${region.slug}`),
-        priority: 0.8,
-        changeFrequency: "daily" as const,
-      });
-    }
-  } catch {
-    // A region-listing outage should cost the sitemap its long tail, not the
-    // whole file.
+  for (const profile of profiles) {
+    entries.push({
+      url: url(`/region/${profile.region.slug}`),
+      priority: 0.8,
+      changeFrequency: "daily" as const,
+      ...(profile.last_updated
+        ? { lastModified: new Date(profile.last_updated) }
+        : {}),
+    });
   }
 
   return entries;
