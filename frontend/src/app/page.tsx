@@ -14,8 +14,21 @@ import { Leaderboard } from "@/components/discover/Leaderboard";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { magnitude, num, shortDate } from "@/lib/format";
+import { pageMetadata } from "@/lib/meta";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
 export const revalidate = 300; // 5 min, matching BMKG cadence
+
+/*
+  The homepage inherits the layout's title and description — they are the site's
+  own — but it had no canonical and no og:url, so nothing declared which URL is
+  the real one. Reusing the layout constants keeps a single source.
+*/
+export const metadata = pageMetadata({
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  path: "/",
+});
 
 /**
  * The four blocks a risk report returns, named in the hero so a first-time

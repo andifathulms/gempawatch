@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { pageMetadata } from "@/lib/meta";
 import type { EarthquakeEvent, GeoFeatureCollection, TsunamiZone } from "@/lib/types";
 import { DynamicHazardMap } from "@/components/map/DynamicHazardMap";
 import { Card } from "@/components/ui/Card";
@@ -7,11 +8,11 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Peta Bahaya & Sesar Indonesia — GempaWatch",
-  description:
-    "Peta interaktif sesar aktif, gempa terkini, dan zona risiko tsunami historis di seluruh Indonesia.",
-};
+export const metadata = pageMetadata({
+  title: "Peta Bahaya & Sesar Indonesia",
+  description: "Peta interaktif sesar aktif, gempa terkini, dan zona risiko tsunami historis di seluruh Indonesia.",
+  path: "/map",
+});
 
 const EMPTY_FC: GeoFeatureCollection = { type: "FeatureCollection", features: [] };
 

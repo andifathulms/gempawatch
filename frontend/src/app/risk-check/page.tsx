@@ -1,11 +1,12 @@
 import { RiskCheckTool } from "@/components/risk/RiskCheckTool";
+import { pageMetadata } from "@/lib/meta";
 import { PageHeader } from "@/components/ui/PageHeader";
 
-export const metadata = {
-  title: "Cek Risiko Gempa Saya — GempaWatch",
-  description:
-    "Apakah lokasi saya berada di zona rawan gempa? Cek jarak ke sesar, jumlah gempa historis, dan tingkat risiko tsunami.",
-};
+export const metadata = pageMetadata({
+  title: "Cek Risiko Gempa Saya",
+  description: "Apakah lokasi saya berada di zona rawan gempa? Cek jarak ke sesar, jumlah gempa historis, dan tingkat risiko tsunami.",
+  path: "/risk-check",
+});
 
 export default function RiskCheckPage() {
   return (

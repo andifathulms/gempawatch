@@ -5,6 +5,7 @@ import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
 /**
  * Three voices, self-hosted by next/font so they are preloaded, subset, and
@@ -33,9 +34,8 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const TITLE = "GempaWatch — Intelijen Risiko Gempa Indonesia";
-const DESCRIPTION =
-  "Pahami risiko gempa di lokasi Anda berdasarkan data BMKG dan catatan seismik historis USGS. Bukan sistem peringatan dini — indikator pola historis.";
+const TITLE = SITE_TITLE;
+const DESCRIPTION = SITE_DESCRIPTION;
 
 /**
  * NEXT_PUBLIC_SITE_URL must be the bare origin, with no path.

@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { pageMetadata } from "@/lib/meta";
 import type { LeaderboardRow } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -15,11 +16,11 @@ import {
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Jelajahi Wilayah — Peringkat Risiko Gempa | GempaWatch",
-  description:
-    "Cari kota/kabupaten dan lihat peringkat wilayah paling aktif secara seismik di Indonesia.",
-};
+export const metadata = pageMetadata({
+  title: "Jelajahi Wilayah — Peringkat Risiko Gempa",
+  description: "Cari kota/kabupaten dan lihat peringkat wilayah paling aktif secara seismik di Indonesia.",
+  path: "/explore",
+});
 
 /**
  * The four weights behind the score, stated where people meet the ranking.

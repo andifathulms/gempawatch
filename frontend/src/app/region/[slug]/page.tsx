@@ -39,14 +39,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const p = await api.riskProfile(params.slug);
+    /*
+      One string, used for the tab, the search result and the unfurl.
+
+      Previously only `title` and `description` were set here, so every region
+      fell through to the layout's static openGraph block — all 24 unfurled as
+      "GempaWatch — Intelijen Risiko Gempa Indonesia" with the generic blurb.
+      Worse, that generic og:description sat next to a page-specific
+      <meta name="description">, so the two contradicted each other on the same
+      page. Deriving both from `p` is what stops them drifting again.
+    */
+    const title = `Risiko gempa ${p.region.name}: ${riskTierLabel(p.activity_tier)}`;
+    const description = `Skor ${p.composite_score?.toFixed(0) ?? "—"}/100 · ${p.event_count_m4} gempa M4+ dalam 100km · terbesar ${
+      p.largest_magnitude ? `M${p.largest_magnitude.toFixed(1)}` : "—"
+    }. Profil risiko historis berbasis data BMKG & USGS.`;
+    const path = `/region/${p.region.slug}`;
     return {
-      title: `Risiko gempa ${p.region.name}: ${riskTierLabel(p.activity_tier)} — GempaWatch`,
-      description: `Skor ${p.composite_score?.toFixed(0) ?? "—"}/100 · ${p.event_count_m4} gempa M4+ dalam 100km · terbesar ${
-        p.largest_magnitude ? `M${p.largest_magnitude.toFixed(1)}` : "—"
-      }. Profil risiko historis berbasis data BMKG & USGS.`,
+      title,
+      description,
+      alternates: { canonical: path },
+      openGraph: { title, description, url: path, type: "article" },
+      twitter: { title, description },
     };
   } catch {
-    return { title: "Profil Risiko Wilayah — GempaWatch" };
+    return { title: "Profil Risiko Wilayah" };
   }
 }
 

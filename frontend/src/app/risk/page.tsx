@@ -3,15 +3,17 @@ import { Suspense } from "react";
 
 import { RiskQueryResult } from "./RiskQueryResult";
 import { Card } from "@/components/ui/Card";
+import { pageMetadata } from "@/lib/meta";
 
 // Coordinates arrive as ?lat=&lng=, so the metadata cannot describe a specific
 // location — a static host serves one HTML file for every point. Live deploys
 // keep the per-location OG card on /risk/[lat]/[lng].
-export const metadata: Metadata = {
-  title: "Laporan Risiko — GempaWatch",
+export const metadata: Metadata = pageMetadata({
+  title: "Laporan Risiko",
   description:
     "Laporan risiko gempa historis untuk titik koordinat pilihanmu, berdasarkan data BMKG dan USGS.",
-};
+  path: "/risk",
+});
 
 export default function RiskQueryPage() {
   return (

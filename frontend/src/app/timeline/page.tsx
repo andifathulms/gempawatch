@@ -1,4 +1,5 @@
 import { api } from "@/lib/api";
+import { pageMetadata } from "@/lib/meta";
 import type { HistoricalDisaster } from "@/lib/types";
 import { DisasterTimeline } from "@/components/timeline/DisasterTimeline";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -9,11 +10,11 @@ import { magnitude, num } from "@/lib/format";
 
 export const revalidate = 86400;
 
-export const metadata = {
-  title: "Sejarah Bencana Gempa Indonesia — GempaWatch",
-  description:
-    "Arsip gempa dan tsunami besar Indonesia: Aceh 2004, Yogyakarta 2006, Palu 2018, dan lainnya.",
-};
+export const metadata = pageMetadata({
+  title: "Sejarah Bencana Gempa Indonesia",
+  description: "Arsip gempa dan tsunami besar Indonesia: Aceh 2004, Yogyakarta 2006, Palu 2018, dan lainnya.",
+  path: "/timeline",
+});
 
 export default async function TimelinePage() {
   let disasters: HistoricalDisaster[] = [];

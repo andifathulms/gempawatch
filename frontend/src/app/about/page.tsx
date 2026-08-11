@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { pageMetadata } from "@/lib/meta";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatTile } from "@/components/ui/Stat";
 import { ButtonLink } from "@/components/ui/Button";
@@ -14,11 +15,11 @@ import {
   scoreInputsFromProfile,
 } from "@/lib/engine/scoring";
 
-export const metadata = {
-  title: "Tentang & Metodologi — GempaWatch",
-  description:
-    "Sumber data, metodologi risiko, dan atribusi BMKG & USGS untuk GempaWatch.",
-};
+export const metadata = pageMetadata({
+  title: "Tentang & Metodologi",
+  description: "Sumber data, metodologi risiko, dan atribusi BMKG & USGS untuk GempaWatch.",
+  path: "/about",
+});
 
 export const revalidate = 3600;
 

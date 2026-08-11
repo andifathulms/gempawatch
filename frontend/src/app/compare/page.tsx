@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { pageMetadata } from "@/lib/meta";
 
 import { CompareResult } from "./CompareResult";
 import { api } from "@/lib/api";
@@ -9,10 +10,11 @@ import { SourceAttribution } from "@/components/ui/SourceAttribution";
 
 export const revalidate = 3600;
 
-export const metadata = {
-  title: "Bandingkan Wilayah — GempaWatch",
+export const metadata = pageMetadata({
+  title: "Bandingkan Wilayah",
   description: "Bandingkan profil risiko gempa dua kota/kabupaten berdampingan.",
-};
+  path: "/compare",
+});
 
 // The region list is the same for everyone, so it is fetched once at render.
 // The chosen pair lives in ?a=&b= and is resolved in the browser — see
