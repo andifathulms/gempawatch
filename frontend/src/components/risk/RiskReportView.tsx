@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
 import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
@@ -57,6 +58,18 @@ export function RiskReportView({ report, lat, lng }: Props) {
         <ScoreBreakdown
           components={report.score_breakdown}
           total={report.composite_score}
+        />
+      </Card>
+
+      <Card
+        title="Cakupan data di balik angka ini"
+        subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
+      >
+        <CoverageNote
+          earliestYear={report.data_coverage.earliest_year}
+          latestYear={report.data_coverage.latest_year}
+          years={report.data_coverage.years}
+          scope="point"
         />
       </Card>
 

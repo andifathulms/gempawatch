@@ -1,3 +1,4 @@
+import { magnitude } from "@/lib/format";
 import type { ScoreComponent } from "@/lib/types";
 
 interface Props {
@@ -35,7 +36,9 @@ const LABELS: Record<
     title: "Magnitudo terbesar",
     rule: "Magnitudo terbesar yang pernah tercatat, M4 → 0 poin, M9 → poin penuh.",
     basis: (b) =>
-      b.largest_magnitude === null ? null : `M${b.largest_magnitude!.toFixed(1)} tercatat`,
+      b.largest_magnitude === null
+        ? null
+        : `${magnitude(b.largest_magnitude)} tercatat`,
   },
   shallow: {
     title: "Proporsi gempa dangkal",

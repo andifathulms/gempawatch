@@ -13,6 +13,7 @@ import { EventScatterTimeline } from "@/components/risk/EventScatterTimeline";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
+import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { riskTierLabel } from "@/lib/seismic";
@@ -134,6 +135,19 @@ export default async function RegionPage({
               />
             </Card>
           )}
+
+          <Card
+            title="Cakupan data di balik angka ini"
+            subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
+          >
+            <CoverageNote
+              earliestYear={profile.earliest_event_year}
+              latestYear={profile.latest_event_year}
+              years={scoreInputs?.coverageYears ?? 0}
+              m4Count={profile.event_count_m4}
+              scope="region"
+            />
+          </Card>
 
           <Card
             title="Frekuensi magnitudo"
