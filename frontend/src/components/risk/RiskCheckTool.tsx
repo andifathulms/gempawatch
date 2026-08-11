@@ -131,7 +131,7 @@ export function RiskCheckTool() {
               <button
                 key={s.label}
                 onClick={() => handlePick(s.at[0], s.at[1])}
-                className="rounded-full border border-earth-border px-2.5 py-1 text-fluid-000 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+                className="inline-flex min-h-tap items-center rounded-full border border-earth-border px-3 py-1 text-fluid-000 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
               >
                 {s.label}
               </button>

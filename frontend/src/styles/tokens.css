@@ -139,6 +139,22 @@
   --step-4: clamp(1.85rem, 2.4vw + 1.3rem, 2.6rem);
   --step-5: clamp(2.2rem, 4vw + 1.3rem, 3.6rem);
 
+  /* --- Target size ---------------------------------------------------------
+     The smallest a pointer target may be, as one number rather than a padding
+     value guessed per component.
+
+     --tap-min is WCAG 2.5.8 Target Size (Minimum, AA): 24x24 CSS px. Small
+     chips and icon buttons were falling under it — the toast close button was a
+     bare glyph with no padding at all — which on a touch screen means a control
+     that is technically present and practically unhittable.
+
+     --tap-comfortable is the 44px figure from the platform guidelines, for
+     anything that is a primary action rather than an inline affordance. It is
+     deliberately NOT the default: applying 44px to every chip would wreck the
+     dense layouts this app relies on, and 2.5.8 does not ask for it. */
+  --tap-min: 24px;
+  --tap-comfortable: 44px;
+
   /* --- Motion --------------------------------------------------------------
      Calm and deliberate; never bouncy — this is a risk product, not a game. */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

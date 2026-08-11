@@ -127,7 +127,7 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
         type="button"
         onClick={onClose}
         aria-label="Tutup notifikasi"
-        className="ml-1 shrink-0 text-text-muted transition-colors hover:text-text-primary"
+        className="ml-1 inline-flex min-h-tap min-w-tap shrink-0 items-center justify-center rounded text-text-muted transition-colors hover:text-text-primary"
       >
         ✕
       </button>

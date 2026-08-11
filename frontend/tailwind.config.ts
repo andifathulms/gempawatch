@@ -72,6 +72,16 @@ const config: Config = {
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
+      // Exposed as min-h-tap / min-w-tap so a target floor is applied by naming
+      // the rule, not by hand-tuning padding until a control looks big enough.
+      minHeight: {
+        tap: "var(--tap-min)",
+        "tap-comfortable": "var(--tap-comfortable)",
+      },
+      minWidth: {
+        tap: "var(--tap-min)",
+        "tap-comfortable": "var(--tap-comfortable)",
+      },
       borderRadius: {
         sm: "var(--r-sm)",
         md: "var(--r-md)",
