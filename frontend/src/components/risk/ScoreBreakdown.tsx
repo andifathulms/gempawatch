@@ -91,8 +91,10 @@ export function ScoreBreakdown({ components, total }: Props) {
                 />
               </div>
 
-              <p className="mt-1.5 text-fluid-000 leading-relaxed text-text-muted">
-                {basis ? <span className="text-text-secondary">{basis}</span> : null}
+              <p className="mt-1.5 text-fluid-00 leading-relaxed text-text-secondary">
+                {basis ? (
+                  <span className="font-medium text-text-primary">{basis}</span>
+                ) : null}
                 {basis ? " · " : null}
                 {meta.rule}
                 {/* The ceiling is the most load-bearing thing this panel can
@@ -106,7 +108,7 @@ export function ScoreBreakdown({ components, total }: Props) {
         })}
       </ul>
 
-      <p className="border-t border-earth-border pt-3 text-fluid-000 leading-relaxed text-text-muted">
+      <p className="border-t border-earth-border pt-3 text-fluid-00 leading-relaxed text-text-muted">
         Skor total{" "}
         <span className="font-mono font-bold tabular-nums text-text-primary">
           {total.toLocaleString("id-ID")}

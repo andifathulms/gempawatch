@@ -67,7 +67,7 @@ export function CoverageNote({
         </p>
       )}
 
-      <ul className="space-y-2 text-fluid-000 text-text-muted">
+      <ul className="space-y-2.5">
         <li className="flex gap-2.5">
           <span aria-hidden="true" className="shrink-0 text-text-secondary">
             ·

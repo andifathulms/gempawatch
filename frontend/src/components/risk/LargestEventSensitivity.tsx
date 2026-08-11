@@ -59,7 +59,7 @@ export function LargestEventSensitivity({ sensitivity, score }: Props) {
           <p className="font-mono text-fluid-2 font-bold tabular-nums text-text-primary">
             {score.toLocaleString("id-ID")}
           </p>
-          <p className="mt-1 text-fluid-000 leading-snug text-text-secondary">
+          <p className="mt-1 text-fluid-00 leading-snug text-text-secondary">
             Skor sebenarnya, dengan seluruh catatan
           </p>
         </div>
@@ -67,7 +67,7 @@ export function LargestEventSensitivity({ sensitivity, score }: Props) {
           <p className="font-mono text-fluid-2 font-bold tabular-nums text-text-muted">
             {score_without.toLocaleString("id-ID")}
           </p>
-          <p className="mt-1 text-fluid-000 leading-snug text-text-muted">
+          <p className="mt-1 text-fluid-00 leading-snug text-text-muted">
             Andai kejadian terbesar itu tidak pernah tercatat
             {next_largest_magnitude !== null ? (
               <>
@@ -80,7 +80,7 @@ export function LargestEventSensitivity({ sensitivity, score }: Props) {
       </div>
 
       {/* The one reading this panel must not invite. */}
-      <p className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-3.5 py-3 text-fluid-000 leading-relaxed text-text-secondary">
+      <p className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
         <strong className="font-semibold text-risk-amber">Bukan berarti</strong>{" "}
         angka yang lebih rendah itu yang benar. Kejadian besar yang sudah pernah
         terjadi adalah bukti tentang wilayah ini, bukan pengecualian yang bisa
