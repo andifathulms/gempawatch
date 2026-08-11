@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ChartFigure } from "./ChartFigure";
 import { AXIS, GRID, TOOLTIP } from "./chartTheme";
 import { DEPTH_BANDS, depthColor } from "@/lib/seismic";
 import { num } from "@/lib/format";
@@ -40,8 +41,28 @@ export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
     color: depthColor(b.max === Infinity ? 400 : (b.min + b.max) / 2),
   }));
 
+  const legend = (
+    <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
+      {DEPTH_BANDS.map((b) => (
+        <span key={b.label} className="flex items-center gap-1.5">
+          <span
+            aria-hidden="true"
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: b.color }}
+          />
+          {b.label} <span className="font-mono">{b.detail}</span>
+        </span>
+      ))}
+    </div>
+  );
+
   return (
-    <div>
+    <ChartFigure
+      caption="Jumlah gempa tercatat per rentang kedalaman"
+      columns={["Rentang kedalaman (km)", "Jumlah kejadian"]}
+      rows={data.map((d) => [d.label, num(d.count)])}
+      note={legend}
+    >
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 8, right: 4, left: -18 }}>
           <CartesianGrid {...GRID} />
@@ -59,18 +80,6 @@ export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
-        {DEPTH_BANDS.map((b) => (
-          <span key={b.label} className="flex items-center gap-1.5">
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: b.color }}
-            />
-            {b.label} <span className="font-mono">{b.detail}</span>
-          </span>
-        ))}
-      </div>
-    </div>
+    </ChartFigure>
   );
 }

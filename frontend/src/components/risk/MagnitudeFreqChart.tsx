@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ChartFigure } from "./ChartFigure";
 import { AXIS, MAGNITUDE_RAMP, TOOLTIP } from "./chartTheme";
 import { num } from "@/lib/format";
 import type { RegionRiskProfile } from "@/lib/types";
@@ -38,7 +39,17 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
   ];
 
   return (
-    <div>
+    <ChartFigure
+      caption="Jumlah gempa tercatat per tingkat magnitudo, dalam radius 100 km"
+      columns={["Tingkat magnitudo", "Jumlah kejadian"]}
+      rows={data.map((d) => [d.tier, num(d.count)])}
+      note={
+        <p className="mt-1 text-fluid-000 leading-relaxed text-text-muted">
+          Gempa besar jauh lebih jarang daripada gempa kecil — pola ini berlaku di
+          seluruh dunia. Jumlah dihitung dalam radius 100 km dari pusat wilayah.
+        </p>
+      }
+    >
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} layout="vertical" margin={{ left: 4, right: 44, top: 4 }}>
           <XAxis type="number" hide />
@@ -72,10 +83,6 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p className="mt-1 text-fluid-000 leading-relaxed text-text-muted">
-        Gempa besar jauh lebih jarang daripada gempa kecil — pola ini berlaku di
-        seluruh dunia. Jumlah dihitung dalam radius 100 km dari pusat wilayah.
-      </p>
-    </div>
+    </ChartFigure>
   );
 }
