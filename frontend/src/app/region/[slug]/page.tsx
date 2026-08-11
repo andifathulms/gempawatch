@@ -72,6 +72,7 @@ export default async function RegionPage({
       : "catatan historis";
 
   const scoreInputs = scoreInputsFromProfile(profile);
+  const scoredRegionCount = profile.activity_percentile_basis?.region_count;
 
   return (
     <div className="space-y-6">
@@ -97,13 +98,21 @@ export default async function RegionPage({
           unit="/100"
           tone="accent"
         />
+        {/* Not "nasional". The rank is against the regions this deployment has
+            scored, and the gauge immediately below already says so — the two
+            were contradicting each other a few hundred pixels apart, with the
+            wrong claim set in the bigger type. */}
         <StatTile
-          label="Persentil nasional"
+          label="Persentil antar-wilayah terskor"
           value={
             profile.activity_percentile != null ? profile.activity_percentile : "—"
           }
           unit={profile.activity_percentile != null ? "%" : undefined}
-          hint="Lebih aktif dari sekian persen wilayah lain di basis data."
+          hint={
+            scoredRegionCount
+              ? `Lebih aktif dari sekian persen dari ${scoredRegionCount} wilayah yang sudah diskor di sini — bukan seluruh Indonesia.`
+              : "Lebih aktif dari sekian persen wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
+          }
         />
         <StatTile
           label="Magnitudo terbesar tercatat"

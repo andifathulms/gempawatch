@@ -202,10 +202,15 @@ export default async function AboutPage() {
             </ul>
             <p className="mt-4 border-t border-earth-border pt-3.5 text-fluid-00 leading-relaxed text-text-secondary">
               <strong className="font-semibold text-text-primary">Persentil</strong>{" "}
-              memeringkat skor itu terhadap seluruh wilayah lain di basis data,
-              sehingga memberi konteks relatif — &ldquo;lebih aktif dari X%
-              wilayah&rdquo;. Untuk cek risiko satu titik, radiusnya 50 km, bukan
-              100 km.
+              memeringkat skor itu terhadap wilayah lain yang{" "}
+              <strong className="font-semibold text-text-primary">
+                sudah kami skor
+              </strong>
+              , bukan terhadap seluruh Indonesia — jumlahnya masih puluhan, dan
+              condong ke daerah yang memang aktif secara seismik. Jadi
+              &ldquo;lebih aktif dari X% wilayah&rdquo; berarti X% dari himpunan
+              itu, bukan X% dari negeri ini. Untuk cek risiko satu titik,
+              radiusnya 50 km, bukan 100 km.
             </p>
           </Card>
 
