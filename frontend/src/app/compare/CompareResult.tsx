@@ -189,9 +189,9 @@ export function CompareResult() {
         </caption>
         <thead className="sr-only">
           <tr>
-            <th>{left.region.name}</th>
-            <th>Metrik</th>
-            <th>{right.region.name}</th>
+            <th scope="col">{left.region.name}</th>
+            <th scope="col">Metrik</th>
+            <th scope="col">{right.region.name}</th>
           </tr>
         </thead>
         <tbody>
@@ -214,12 +214,15 @@ export function CompareResult() {
                   )}
                   {row.value(left)}
                 </td>
-                <td
-                  className="w-2/5 px-2 py-2.5 text-center text-fluid-000 leading-snug text-text-muted"
-                  title={row.hint}
+                <th
+                  scope="row"
+                  className="w-2/5 px-2 py-2.5 text-center text-fluid-000 font-normal leading-snug text-text-muted"
                 >
                   {row.label}
-                </td>
+                  {row.hint && (
+                    <span className="mt-0.5 block text-text-muted/80">{row.hint}</span>
+                  )}
+                </th>
                 <td className={`${cell(rightHigher)} pl-3`}>
                   {rightHigher && (
                     <span className="sr-only">Nilai lebih tinggi: </span>
