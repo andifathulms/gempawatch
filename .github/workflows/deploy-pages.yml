@@ -138,6 +138,14 @@ jobs:
         run: |
           python manage.py shell -c "from apps.earthquakes.models import EarthquakeEvent; print('events in DB:', EarthquakeEvent.objects.count())"
 
+      # Ahead of the refresh, so a region added to the GeoJSON gets its risk
+      # profile computed in the same run rather than one publish later. The
+      # restored snapshot only knows the regions that existed when it was taken,
+      # so without this, editing admin_regions.geojson has no effect at all.
+      - name: Load admin regions from GeoJSON
+        working-directory: backend
+        run: python manage.py load_regions
+
       - name: Refresh from BMKG and USGS
         working-directory: backend
         run: python manage.py refresh_for_export
