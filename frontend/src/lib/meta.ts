@@ -21,6 +21,25 @@ import type { Metadata } from "next";
  */
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
+/**
+ * The share image, stated explicitly.
+ *
+ * app/opengraph-image.png is a file convention, and Next only merges it into a
+ * route's metadata when that route does not declare `openGraph` itself. Setting
+ * openGraph here to fix the titles therefore silently dropped og:image from
+ * every route except the homepage — which shares the app segment the file sits
+ * in. The result was worse than the bug being fixed: unfurls with a title and
+ * no picture at all.
+ *
+ * Referenced by path rather than by importing the file convention, because the
+ * convention is what stops applying the moment openGraph is declared.
+ */
+const SHARE_IMAGE = {
+  url: `${BASE_PATH}/opengraph-image.png`,
+  width: 1200,
+  height: 630,
+};
+
 export function pageMetadata({
   title,
   description,
@@ -36,7 +55,7 @@ export function pageMetadata({
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { title, description, url },
-    twitter: { title, description },
+    openGraph: { title, description, url, images: [SHARE_IMAGE] },
+    twitter: { title, description, images: [SHARE_IMAGE] },
   };
 }
