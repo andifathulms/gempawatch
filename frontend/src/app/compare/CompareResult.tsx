@@ -131,7 +131,7 @@ export function CompareResult() {
   if (loading) {
     return (
       <Card>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <Skeleton className="h-40" />
           <Skeleton className="h-40" />
         </div>
@@ -160,7 +160,9 @@ export function CompareResult() {
 
   return (
     <Card title="Perbandingan berdampingan">
-      <div className="grid grid-cols-2 gap-4 border-b border-earth-border pb-5">
+      {/* Stacked below sm:. Two columns of a fixed 150px gauge left ~120px per
+          column at 320px, so the graphic overflowed its track (WCAG 1.4.10). */}
+      <div className="grid gap-4 border-b border-earth-border pb-5 sm:grid-cols-2">
         {profiles.map((p) => (
           <div key={p.region.slug} className="flex flex-col items-center gap-2">
             <Link
