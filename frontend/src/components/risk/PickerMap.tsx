@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { prefersReducedMotion } from "@/lib/motion";
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import { Icon } from "leaflet";
 
@@ -52,8 +53,15 @@ function FollowPin({ position }: { position: [number, number] }) {
 }
 
 export function PickerMap({ position, onPick, height = 440 }: Props) {
+  const reduceMotion = prefersReducedMotion();
+
   return (
     <MapContainer
+      // Leaflet animates zoom/pan itself, out of reach of the CSS
+      // reduced-motion rule that covers the rest of the site.
+      zoomAnimation={!reduceMotion}
+      markerZoomAnimation={!reduceMotion}
+      fadeAnimation={!reduceMotion}
       center={position}
       zoom={5}
       style={{ height, width: "100%", borderRadius: 12 }}

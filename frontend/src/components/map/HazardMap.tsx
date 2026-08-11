@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "react-leaflet";
 import type { GeoFeatureCollection, EarthquakeEvent, TsunamiZone } from "@/lib/types";
+import { prefersReducedMotion } from "@/lib/motion";
 import { DEPTH_BANDS, depthColor, riskTierColor, riskTierLabel } from "@/lib/seismic";
 import { absolute, num, timeAgo } from "@/lib/format";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -75,6 +76,9 @@ export function HazardMap({ faults, events, zones }: Props) {
 
   const toggle = (l: LayerKey) => setActive((prev) => ({ ...prev, [l]: !prev[l] }));
 
+  const reduceMotion = prefersReducedMotion();
+
+
   return (
     <div className="space-y-4">
       <fieldset className="grid gap-2 sm:grid-cols-3">
@@ -120,6 +124,11 @@ export function HazardMap({ faults, events, zones }: Props) {
       </fieldset>
 
       <MapContainer
+        // Leaflet animates zoom/pan itself, out of reach of the CSS
+        // reduced-motion rule that covers the rest of the site.
+        zoomAnimation={!reduceMotion}
+        markerZoomAnimation={!reduceMotion}
+        fadeAnimation={!reduceMotion}
         center={[-2.5, 118]}
         zoom={5}
         style={{ height: 600, width: "100%", borderRadius: 12 }}

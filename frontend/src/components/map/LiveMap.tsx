@@ -2,6 +2,7 @@
 
 import { CircleMarker, MapContainer, Popup, TileLayer } from "react-leaflet";
 import { depthColor, magnitudeSize } from "@/lib/seismic";
+import { prefersReducedMotion } from "@/lib/motion";
 import { absolute, depth, timeAgo } from "@/lib/format";
 import type { EarthquakeEvent } from "@/lib/types";
 import { MagnitudeBadge } from "@/components/ui/MagnitudeBadge";
@@ -34,8 +35,16 @@ export function LiveMap({
     (a, b) => new Date(a.event_time).getTime() - new Date(b.event_time).getTime(),
   );
 
+  const reduceMotion = prefersReducedMotion();
+
+
   return (
     <MapContainer
+      // Leaflet animates zoom/pan itself, out of reach of the CSS
+      // reduced-motion rule that covers the rest of the site.
+      zoomAnimation={!reduceMotion}
+      markerZoomAnimation={!reduceMotion}
+      fadeAnimation={!reduceMotion}
       center={center}
       zoom={zoom}
       style={{ height, width: "100%", borderRadius: 12 }}
