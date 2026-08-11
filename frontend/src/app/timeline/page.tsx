@@ -52,10 +52,13 @@ export default async function TimelinePage() {
           <StatTile label="Kejadian terdokumentasi" value={num(disasters.length)} />
           <StatTile label="Rentang tahun" value={span} />
           <StatTile label="Magnitudo terbesar" value={magnitude(largest)} tone="accent" />
+          {/* Default tone, not `danger`. Red is the site's high-risk signal;
+              a memorial figure is not a risk indicator, and the PRD asks for
+              calm authority rather than a doom-scrolling disaster app. The
+              number is grave enough without being coloured like an alert. */}
           <StatTile
             label="Total korban jiwa tercatat"
             value={num(casualties)}
-            tone="danger"
             hint="Penjumlahan angka korban dari kejadian yang terdokumentasi di arsip ini — bukan total nasional."
           />
         </div>
