@@ -3,29 +3,837 @@
   "name": "indonesia_admin_regions_centroids",
   "note": "Representative kabupaten/kota centroids across Indonesia's seismic zones. Centroid points only; boundary polygons are a future enhancement (see PRD).",
   "features": [
-    { "type": "Feature", "properties": { "name": "Banda Aceh", "type": "kota", "parent": "Aceh", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [95.32, 5.55] } },
-    { "type": "Feature", "properties": { "name": "Aceh Besar", "type": "kabupaten", "parent": "Aceh", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [95.45, 5.38] } },
-    { "type": "Feature", "properties": { "name": "Padang", "type": "kota", "parent": "Sumatera Barat", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [100.36, -0.95] } },
-    { "type": "Feature", "properties": { "name": "Kepulauan Mentawai", "type": "kabupaten", "parent": "Sumatera Barat", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [99.62, -1.95] } },
-    { "type": "Feature", "properties": { "name": "Bengkulu", "type": "kota", "parent": "Bengkulu", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [102.27, -3.80] } },
-    { "type": "Feature", "properties": { "name": "Bandar Lampung", "type": "kota", "parent": "Lampung", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [105.27, -5.43] } },
-    { "type": "Feature", "properties": { "name": "Jakarta Pusat", "type": "kota", "parent": "DKI Jakarta", "is_coastal": false }, "geometry": { "type": "Point", "coordinates": [106.83, -6.18] } },
-    { "type": "Feature", "properties": { "name": "Kota Bandung", "type": "kota", "parent": "Jawa Barat", "is_coastal": false }, "geometry": { "type": "Point", "coordinates": [107.61, -6.91] } },
-    { "type": "Feature", "properties": { "name": "Cianjur", "type": "kabupaten", "parent": "Jawa Barat", "is_coastal": false }, "geometry": { "type": "Point", "coordinates": [107.14, -6.82] } },
-    { "type": "Feature", "properties": { "name": "Sukabumi", "type": "kabupaten", "parent": "Jawa Barat", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [106.92, -6.92] } },
-    { "type": "Feature", "properties": { "name": "Kota Yogyakarta", "type": "kota", "parent": "DI Yogyakarta", "is_coastal": false }, "geometry": { "type": "Point", "coordinates": [110.37, -7.80] } },
-    { "type": "Feature", "properties": { "name": "Bantul", "type": "kabupaten", "parent": "DI Yogyakarta", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [110.33, -7.93] } },
-    { "type": "Feature", "properties": { "name": "Kota Surabaya", "type": "kota", "parent": "Jawa Timur", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [112.75, -7.25] } },
-    { "type": "Feature", "properties": { "name": "Denpasar", "type": "kota", "parent": "Bali", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [115.22, -8.67] } },
-    { "type": "Feature", "properties": { "name": "Lombok Timur", "type": "kabupaten", "parent": "Nusa Tenggara Barat", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [116.54, -8.54] } },
-    { "type": "Feature", "properties": { "name": "Kota Mataram", "type": "kota", "parent": "Nusa Tenggara Barat", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [116.12, -8.58] } },
-    { "type": "Feature", "properties": { "name": "Kota Palu", "type": "kota", "parent": "Sulawesi Tengah", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [119.87, -0.90] } },
-    { "type": "Feature", "properties": { "name": "Donggala", "type": "kabupaten", "parent": "Sulawesi Tengah", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [119.74, -0.68] } },
-    { "type": "Feature", "properties": { "name": "Kota Makassar", "type": "kota", "parent": "Sulawesi Selatan", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [119.42, -5.15] } },
-    { "type": "Feature", "properties": { "name": "Kota Manado", "type": "kota", "parent": "Sulawesi Utara", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [124.85, 1.49] } },
-    { "type": "Feature", "properties": { "name": "Kota Ambon", "type": "kota", "parent": "Maluku", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [128.18, -3.70] } },
-    { "type": "Feature", "properties": { "name": "Jayapura", "type": "kota", "parent": "Papua", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [140.72, -2.53] } },
-    { "type": "Feature", "properties": { "name": "Sorong", "type": "kota", "parent": "Papua Barat Daya", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [131.25, -0.88] } },
-    { "type": "Feature", "properties": { "name": "Kota Kupang", "type": "kota", "parent": "Nusa Tenggara Timur", "is_coastal": true }, "geometry": { "type": "Point", "coordinates": [123.61, -10.17] } }
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Banda Aceh",
+        "type": "kota",
+        "parent": "Aceh",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.32,
+          5.55
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Aceh Besar",
+        "type": "kabupaten",
+        "parent": "Aceh",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          95.45,
+          5.38
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Padang",
+        "type": "kota",
+        "parent": "Sumatera Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.36,
+          -0.95
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kepulauan Mentawai",
+        "type": "kabupaten",
+        "parent": "Sumatera Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          99.62,
+          -1.95
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bengkulu",
+        "type": "kota",
+        "parent": "Bengkulu",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.27,
+          -3.8
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bandar Lampung",
+        "type": "kota",
+        "parent": "Lampung",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.27,
+          -5.43
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jakarta Pusat",
+        "type": "kota",
+        "parent": "DKI Jakarta",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.83,
+          -6.18
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Bandung",
+        "type": "kota",
+        "parent": "Jawa Barat",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.61,
+          -6.91
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cianjur",
+        "type": "kabupaten",
+        "parent": "Jawa Barat",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.14,
+          -6.82
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sukabumi",
+        "type": "kabupaten",
+        "parent": "Jawa Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.92,
+          -6.92
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Yogyakarta",
+        "type": "kota",
+        "parent": "DI Yogyakarta",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.37,
+          -7.8
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bantul",
+        "type": "kabupaten",
+        "parent": "DI Yogyakarta",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.33,
+          -7.93
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Surabaya",
+        "type": "kota",
+        "parent": "Jawa Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.75,
+          -7.25
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Denpasar",
+        "type": "kota",
+        "parent": "Bali",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.22,
+          -8.67
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Lombok Timur",
+        "type": "kabupaten",
+        "parent": "Nusa Tenggara Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.54,
+          -8.54
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Mataram",
+        "type": "kota",
+        "parent": "Nusa Tenggara Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.12,
+          -8.58
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Palu",
+        "type": "kota",
+        "parent": "Sulawesi Tengah",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.87,
+          -0.9
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Donggala",
+        "type": "kabupaten",
+        "parent": "Sulawesi Tengah",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.74,
+          -0.68
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Makassar",
+        "type": "kota",
+        "parent": "Sulawesi Selatan",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          119.42,
+          -5.15
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Manado",
+        "type": "kota",
+        "parent": "Sulawesi Utara",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          124.85,
+          1.49
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Ambon",
+        "type": "kota",
+        "parent": "Maluku",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.18,
+          -3.7
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Jayapura",
+        "type": "kota",
+        "parent": "Papua",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          140.72,
+          -2.53
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sorong",
+        "type": "kota",
+        "parent": "Papua Barat Daya",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          131.25,
+          -0.88
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Kupang",
+        "type": "kota",
+        "parent": "Nusa Tenggara Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.61,
+          -10.17
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Gunungsitoli",
+        "type": "kota",
+        "parent": "Sumatera Utara",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.615,
+          1.288
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Simeulue",
+        "type": "kabupaten",
+        "parent": "Aceh",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.38,
+          2.48
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Lhokseumawe",
+        "type": "kota",
+        "parent": "Aceh",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.1507,
+          5.1801
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Pariaman",
+        "type": "kota",
+        "parent": "Sumatera Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.12,
+          -0.627
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cilacap",
+        "type": "kabupaten",
+        "parent": "Jawa Tengah",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.009,
+          -7.7269
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pangandaran",
+        "type": "kabupaten",
+        "parent": "Jawa Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          108.65,
+          -7.6833
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Pacitan",
+        "type": "kabupaten",
+        "parent": "Jawa Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          111.1,
+          -8.1947
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Banyuwangi",
+        "type": "kabupaten",
+        "parent": "Jawa Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          114.3691,
+          -8.2192
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Buleleng",
+        "type": "kabupaten",
+        "parent": "Bali",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.088,
+          -8.112
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sikka",
+        "type": "kabupaten",
+        "parent": "Nusa Tenggara Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.21,
+          -8.62
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Majene",
+        "type": "kabupaten",
+        "parent": "Sulawesi Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.9707,
+          -3.5403
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Biak Numfor",
+        "type": "kabupaten",
+        "parent": "Papua",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          136.09,
+          -1.19
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Ternate",
+        "type": "kota",
+        "parent": "Maluku Utara",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.38,
+          0.79
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Garut",
+        "type": "kabupaten",
+        "parent": "Jawa Barat",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          107.8,
+          -7.45
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Medan",
+        "type": "kota",
+        "parent": "Sumatera Utara",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          98.6722,
+          3.5952
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Semarang",
+        "type": "kota",
+        "parent": "Jawa Tengah",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.4167,
+          -6.9667
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Surakarta",
+        "type": "kota",
+        "parent": "Jawa Tengah",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.8243,
+          -7.5755
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Malang",
+        "type": "kota",
+        "parent": "Jawa Timur",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.6304,
+          -7.9797
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Bogor",
+        "type": "kota",
+        "parent": "Jawa Barat",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.806,
+          -6.5971
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Bekasi",
+        "type": "kota",
+        "parent": "Jawa Barat",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.9756,
+          -6.2383
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Balikpapan",
+        "type": "kota",
+        "parent": "Kalimantan Timur",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.8529,
+          -1.2379
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Kendari",
+        "type": "kota",
+        "parent": "Sulawesi Tenggara",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          122.515,
+          -3.9985
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Gorontalo",
+        "type": "kota",
+        "parent": "Gorontalo",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          123.0568,
+          0.5435
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Palembang",
+        "type": "kota",
+        "parent": "Sumatera Selatan",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7754,
+          -2.9761
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Pekanbaru",
+        "type": "kota",
+        "parent": "Riau",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.4478,
+          0.5071
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Batam",
+        "type": "kota",
+        "parent": "Kepulauan Riau",
+        "is_coastal": true
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.0305,
+          1.0456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Pontianak",
+        "type": "kota",
+        "parent": "Kalimantan Barat",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.3425,
+          -0.0263
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kota Jambi",
+        "type": "kota",
+        "parent": "Jambi",
+        "is_coastal": false
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.6131,
+          -1.6101
+        ]
+      }
+    }
   ]
 }

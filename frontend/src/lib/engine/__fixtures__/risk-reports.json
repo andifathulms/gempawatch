@@ -6,7 +6,7 @@
     "expected": {
       "composite_score": 48.5,
       "activity_tier": "MODERATE",
-      "activity_percentile": 17,
+      "activity_percentile": 37,
       "event_count_m4_within_50km": 32,
       "largest_magnitude_within_50km": 6.0,
       "overall_risk_band": "LOW",
@@ -59,7 +59,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -111,7 +111,7 @@
     "expected": {
       "composite_score": 71.9,
       "activity_tier": "HIGH",
-      "activity_percentile": 71,
+      "activity_percentile": 77,
       "event_count_m4_within_50km": 53,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "MODERATE",
@@ -164,7 +164,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -216,7 +216,7 @@
     "expected": {
       "composite_score": 74.5,
       "activity_tier": "HIGH",
-      "activity_percentile": 75,
+      "activity_percentile": 79,
       "event_count_m4_within_50km": 73,
       "largest_magnitude_within_50km": 5.4,
       "overall_risk_band": "MODERATE",
@@ -269,7 +269,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -321,7 +321,7 @@
     "expected": {
       "composite_score": 89.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 100,
+      "activity_percentile": 98,
       "event_count_m4_within_50km": 116,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "MODERATE",
@@ -374,7 +374,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -426,7 +426,7 @@
     "expected": {
       "composite_score": 74.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 75,
+      "activity_percentile": 79,
       "event_count_m4_within_50km": 128,
       "largest_magnitude_within_50km": 7.0,
       "overall_risk_band": "MODERATE",
@@ -479,7 +479,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -531,7 +531,7 @@
     "expected": {
       "composite_score": 50.9,
       "activity_tier": "MODERATE",
-      "activity_percentile": 21,
+      "activity_percentile": 40,
       "event_count_m4_within_50km": 29,
       "largest_magnitude_within_50km": 6.3,
       "overall_risk_band": "LOW",
@@ -584,7 +584,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -636,7 +636,7 @@
     "expected": {
       "composite_score": 68.9,
       "activity_tier": "HIGH",
-      "activity_percentile": 50,
+      "activity_percentile": 65,
       "event_count_m4_within_50km": 129,
       "largest_magnitude_within_50km": 6.9,
       "overall_risk_band": "MODERATE",
@@ -689,7 +689,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -741,7 +741,7 @@
     "expected": {
       "composite_score": 67.5,
       "activity_tier": "HIGH",
-      "activity_percentile": 42,
+      "activity_percentile": 62,
       "event_count_m4_within_50km": 155,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "HIGH",
@@ -794,7 +794,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -846,7 +846,7 @@
     "expected": {
       "composite_score": 67.6,
       "activity_tier": "HIGH",
-      "activity_percentile": 46,
+      "activity_percentile": 63,
       "event_count_m4_within_50km": 157,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "HIGH",
@@ -899,7 +899,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -951,11 +951,11 @@
     "expected": {
       "composite_score": 23.6,
       "activity_tier": "LOW",
-      "activity_percentile": 8,
+      "activity_percentile": 15,
       "event_count_m4_within_50km": 0,
       "largest_magnitude_within_50km": null,
       "overall_risk_band": "LOW",
-      "nearest_region_slug": "jakarta-pusat",
+      "nearest_region_slug": "kota-pontianak",
       "nearest_fault_name": "Lembang Fault",
       "nearest_fault_distance_km": 775.79,
       "tsunami_risk_tier": null,
@@ -1004,7 +1004,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1046,7 +1046,7 @@
     "expected": {
       "composite_score": 40.3,
       "activity_tier": "MODERATE",
-      "activity_percentile": 8,
+      "activity_percentile": 25,
       "event_count_m4_within_50km": 27,
       "largest_magnitude_within_50km": 5.4,
       "overall_risk_band": "LOW",
@@ -1099,7 +1099,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1151,7 +1151,7 @@
     "expected": {
       "composite_score": 0.0,
       "activity_tier": "LOW",
-      "activity_percentile": 0,
+      "activity_percentile": 2,
       "event_count_m4_within_50km": 0,
       "largest_magnitude_within_50km": null,
       "overall_risk_band": "LOW",
@@ -1204,7 +1204,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1246,7 +1246,7 @@
     "expected": {
       "composite_score": 48.0,
       "activity_tier": "MODERATE",
-      "activity_percentile": 17,
+      "activity_percentile": 37,
       "event_count_m4_within_50km": 18,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "LOW",
@@ -1299,7 +1299,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1351,11 +1351,11 @@
     "expected": {
       "composite_score": 64.9,
       "activity_tier": "HIGH",
-      "activity_percentile": 33,
+      "activity_percentile": 52,
       "event_count_m4_within_50km": 69,
       "largest_magnitude_within_50km": 5.5,
       "overall_risk_band": "MODERATE",
-      "nearest_region_slug": "kota-kupang",
+      "nearest_region_slug": "sikka",
       "nearest_fault_name": "Sunda Megathrust",
       "nearest_fault_distance_km": 98.4,
       "tsunami_risk_tier": "MODERATE",
@@ -1404,7 +1404,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1456,7 +1456,7 @@
     "expected": {
       "composite_score": 58.8,
       "activity_tier": "MODERATE",
-      "activity_percentile": 33,
+      "activity_percentile": 46,
       "event_count_m4_within_50km": 102,
       "largest_magnitude_within_50km": 5.3,
       "overall_risk_band": "MODERATE",
@@ -1509,7 +1509,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1561,7 +1561,7 @@
     "expected": {
       "composite_score": 80.5,
       "activity_tier": "HIGH",
-      "activity_percentile": 88,
+      "activity_percentile": 90,
       "event_count_m4_within_50km": 58,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "MODERATE",
@@ -1614,7 +1614,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1666,7 +1666,7 @@
     "expected": {
       "composite_score": 71.6,
       "activity_tier": "HIGH",
-      "activity_percentile": 71,
+      "activity_percentile": 77,
       "event_count_m4_within_50km": 52,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "MODERATE",
@@ -1719,7 +1719,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1771,7 +1771,7 @@
     "expected": {
       "composite_score": 70.5,
       "activity_tier": "HIGH",
-      "activity_percentile": 62,
+      "activity_percentile": 73,
       "event_count_m4_within_50km": 55,
       "largest_magnitude_within_50km": 5.5,
       "overall_risk_band": "MODERATE",
@@ -1824,7 +1824,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1876,7 +1876,7 @@
     "expected": {
       "composite_score": 52.5,
       "activity_tier": "MODERATE",
-      "activity_percentile": 25,
+      "activity_percentile": 42,
       "event_count_m4_within_50km": 31,
       "largest_magnitude_within_50km": 6.3,
       "overall_risk_band": "LOW",
@@ -1929,7 +1929,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -1975,13 +1975,118 @@
     }
   },
   {
+    "name": "region-banyuwangi",
+    "lat": -8.2192,
+    "lng": 114.3691,
+    "expected": {
+      "composite_score": 38.1,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 21,
+      "event_count_m4_within_50km": 31,
+      "largest_magnitude_within_50km": 5.2,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "banyuwangi",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 180.12,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 16.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 2.09
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.427
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 180.12
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1976,
+          "depth_km": 40.0
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 34.9,
+        "score_delta": 3.2,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-bengkulu",
     "lat": -3.8,
     "lng": 102.27,
     "expected": {
       "composite_score": 83.9,
       "activity_tier": "HIGH",
-      "activity_percentile": 92,
+      "activity_percentile": 94,
       "event_count_m4_within_50km": 126,
       "largest_magnitude_within_50km": 5.9,
       "overall_risk_band": "MODERATE",
@@ -2034,7 +2139,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2080,13 +2185,223 @@
     }
   },
   {
+    "name": "region-biak-numfor",
+    "lat": -1.19,
+    "lng": 136.09,
+    "expected": {
+      "composite_score": 78.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 87,
+      "event_count_m4_within_50km": 88,
+      "largest_magnitude_within_50km": 6.4,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "biak-numfor",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 1507.43,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1972,
+        "latest_year": 2025,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 9.02
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 23.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.9
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.992
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1507.43
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.9,
+          "year": 1979,
+          "depth_km": 5.0
+        },
+        "next_largest_magnitude": 6.5,
+        "score_without": 69.9,
+        "score_delta": 8.4,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 6,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-buleleng",
+    "lat": -8.112,
+    "lng": 115.088,
+    "expected": {
+      "composite_score": 44.3,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 31,
+      "event_count_m4_within_50km": 45,
+      "largest_magnitude_within_50km": 6.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "buleleng",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 205.26,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 22.6,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 2.82
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.449
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 205.26
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1976,
+          "depth_km": 40.0
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 42.9,
+        "score_delta": 1.4,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-cianjur",
     "lat": -6.82,
     "lng": 107.14,
     "expected": {
       "composite_score": 71.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 67,
+      "activity_percentile": 75,
       "event_count_m4_within_50km": 87,
       "largest_magnitude_within_50km": 6.5,
       "overall_risk_band": "MODERATE",
@@ -2139,7 +2454,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2185,13 +2500,118 @@
     }
   },
   {
+    "name": "region-cilacap",
+    "lat": -7.7269,
+    "lng": 109.009,
+    "expected": {
+      "composite_score": 60.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 48,
+      "event_count_m4_within_50km": 73,
+      "largest_magnitude_within_50km": 6.1,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "cilacap",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 64.52,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 36.5,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 4.57
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 4.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.269
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 5.3,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 64.52
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2017,
+          "depth_km": 90.0
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 58.3,
+        "score_delta": 2.6,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-denpasar",
     "lat": -8.67,
     "lng": 115.22,
     "expected": {
       "composite_score": 54.2,
       "activity_tier": "MODERATE",
-      "activity_percentile": 29,
+      "activity_percentile": 44,
       "event_count_m4_within_50km": 52,
       "largest_magnitude_within_50km": 5.6,
       "overall_risk_band": "MODERATE",
@@ -2244,7 +2664,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2349,7 +2769,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2395,13 +2815,118 @@
     }
   },
   {
+    "name": "region-garut",
+    "lat": -7.45,
+    "lng": 107.8,
+    "expected": {
+      "composite_score": 75.4,
+      "activity_tier": "HIGH",
+      "activity_percentile": 81,
+      "event_count_m4_within_50km": 127,
+      "largest_magnitude_within_50km": 6.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "garut",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 44.84,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 9.09
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 18.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 9.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.609
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 8.3,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 44.84
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.0,
+          "year": 2009,
+          "depth_km": 46.0
+        },
+        "next_largest_magnitude": 6.5,
+        "score_without": 72.4,
+        "score_delta": 3.0,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-jakarta-pusat",
     "lat": -6.18,
     "lng": 106.83,
     "expected": {
       "composite_score": 46.5,
       "activity_tier": "MODERATE",
-      "activity_percentile": 17,
+      "activity_percentile": 37,
       "event_count_m4_within_50km": 33,
       "largest_magnitude_within_50km": 6.0,
       "overall_risk_band": "LOW",
@@ -2454,7 +2979,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2506,7 +3031,7 @@
     "expected": {
       "composite_score": 67.6,
       "activity_tier": "HIGH",
-      "activity_percentile": 46,
+      "activity_percentile": 63,
       "event_count_m4_within_50km": 156,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "HIGH",
@@ -2559,7 +3084,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2611,7 +3136,7 @@
     "expected": {
       "composite_score": 79.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 83,
+      "activity_percentile": 88,
       "event_count_m4_within_50km": 492,
       "largest_magnitude_within_50km": 7.0,
       "overall_risk_band": "HIGH",
@@ -2664,7 +3189,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2716,7 +3241,7 @@
     "expected": {
       "composite_score": 67.5,
       "activity_tier": "HIGH",
-      "activity_percentile": 42,
+      "activity_percentile": 62,
       "event_count_m4_within_50km": 157,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "HIGH",
@@ -2769,7 +3294,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2815,13 +3340,118 @@
     }
   },
   {
+    "name": "region-kota-balikpapan",
+    "lat": -1.2379,
+    "lng": 116.8529,
+    "expected": {
+      "composite_score": 22.0,
+      "activity_tier": "LOW",
+      "activity_percentile": 10,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-balikpapan",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 329.79,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1998,
+        "latest_year": 2015,
+        "years": 18
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 2.2,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.28
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 4.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 4.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 1.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 329.79
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 4.8,
+          "year": 1998,
+          "depth_km": 33.0
+        },
+        "next_largest_magnitude": 4.6,
+        "score_without": 20.4,
+        "score_delta": 1.6,
+        "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-bandung",
     "lat": -6.91,
     "lng": 107.61,
     "expected": {
       "composite_score": 74.0,
       "activity_tier": "HIGH",
-      "activity_percentile": 75,
+      "activity_percentile": 79,
       "event_count_m4_within_50km": 51,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "MODERATE",
@@ -2874,7 +3504,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -2920,13 +3550,738 @@
     }
   },
   {
+    "name": "region-kota-batam",
+    "lat": 1.0456,
+    "lng": 104.0305,
+    "expected": {
+      "composite_score": 0.0,
+      "activity_tier": "LOW",
+      "activity_percentile": 2,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-batam",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 363.37,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": null,
+        "latest_year": null,
+        "years": 0
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 0.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 0.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 363.37
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": null,
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-bekasi",
+    "lat": -6.2383,
+    "lng": 106.9756,
+    "expected": {
+      "composite_score": 49.6,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 38,
+      "event_count_m4_within_50km": 38,
+      "largest_magnitude_within_50km": 6.0,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-bekasi",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 85.19,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 28.6,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.57
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 3.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.251
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 2.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 85.19
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 47.0,
+        "score_delta": 2.6,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-bogor",
+    "lat": -6.5971,
+    "lng": 106.806,
+    "expected": {
+      "composite_score": 63.9,
+      "activity_tier": "HIGH",
+      "activity_percentile": 52,
+      "event_count_m4_within_50km": 90,
+      "largest_magnitude_within_50km": 6.5,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-bogor",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 79.89,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.32
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.395
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 3.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 79.89
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 61.0,
+        "score_delta": 2.9,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-gorontalo",
+    "lat": 0.5435,
+    "lng": 123.0568,
+    "expected": {
+      "composite_score": 66.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 58,
+      "event_count_m4_within_50km": 97,
+      "largest_magnitude_within_50km": 5.6,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-gorontalo",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 396.11,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 22.63
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 22.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 3.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.229
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 396.11
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.8,
+          "year": 1990,
+          "depth_km": 25.7
+        },
+        "next_largest_magnitude": 7.5,
+        "score_without": 64.4,
+        "score_delta": 1.8,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 8,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-gunungsitoli",
+    "lat": 1.288,
+    "lng": 97.615,
+    "expected": {
+      "composite_score": 81.2,
+      "activity_tier": "HIGH",
+      "activity_percentile": 92,
+      "event_count_m4_within_50km": 466,
+      "largest_magnitude_within_50km": 6.1,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "kota-gunungsitoli",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 31.67,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 30.94
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 16.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.7
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.985
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 10.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 31.67
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "higher"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.7,
+          "year": 2005,
+          "depth_km": 21.0
+        },
+        "next_largest_magnitude": 6.4,
+        "score_without": 79.4,
+        "score_delta": 1.8,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 8,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-jambi",
+    "lat": -1.6101,
+    "lng": 103.6131,
+    "expected": {
+      "composite_score": 32.2,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 17,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-jambi",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 157.99,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1995,
+        "latest_year": 2021,
+        "years": 27
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 1.2,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.15
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 19.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.2,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.75
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 157.99
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.3,
+          "year": 2004,
+          "depth_km": 582.1
+        },
+        "next_largest_magnitude": 4.4,
+        "score_without": 18.3,
+        "score_delta": 13.9,
+        "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-kendari",
+    "lat": -3.9985,
+    "lng": 122.515,
+    "expected": {
+      "composite_score": 42.6,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 29,
+      "event_count_m4_within_50km": 19,
+      "largest_magnitude_within_50km": 5.2,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-kendari",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 179.14,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1976,
+        "latest_year": 2026,
+        "years": 51
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 14.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.84
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.937
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 179.14
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2000,
+          "depth_km": 33.0
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 41.2,
+        "score_delta": 1.4,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-kupang",
     "lat": -10.17,
     "lng": 123.61,
     "expected": {
       "composite_score": 65.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 38,
+      "activity_percentile": 54,
       "event_count_m4_within_50km": 130,
       "largest_magnitude_within_50km": 6.1,
       "overall_risk_band": "MODERATE",
@@ -2979,7 +4334,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3025,13 +4380,118 @@
     }
   },
   {
+    "name": "region-kota-lhokseumawe",
+    "lat": 5.1801,
+    "lng": 97.1507,
+    "expected": {
+      "composite_score": 38.3,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 23,
+      "event_count_m4_within_50km": 11,
+      "largest_magnitude_within_50km": 5.5,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-lhokseumawe",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 111.35,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 14.3,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.79
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 12.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.1
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.757
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 111.35
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.1,
+          "year": 2013,
+          "depth_km": 13.0
+        },
+        "next_largest_magnitude": 5.8,
+        "score_without": 36.3,
+        "score_delta": 2.0,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-makassar",
     "lat": -5.15,
     "lng": 119.42,
     "expected": {
       "composite_score": 23.4,
       "activity_tier": "LOW",
-      "activity_percentile": 8,
+      "activity_percentile": 13,
       "event_count_m4_within_50km": 0,
       "largest_magnitude_within_50km": null,
       "overall_risk_band": "LOW",
@@ -3084,7 +4544,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3130,13 +4590,118 @@
     }
   },
   {
+    "name": "region-kota-malang",
+    "lat": -7.9797,
+    "lng": 112.6304,
+    "expected": {
+      "composite_score": 41.9,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 27,
+      "event_count_m4_within_50km": 35,
+      "largest_magnitude_within_50km": 6.6,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-malang",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 156.59,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1972,
+        "latest_year": 2025,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 23.3,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 2.91
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 3.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.204
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 156.59
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.6,
+          "year": 1998,
+          "depth_km": 151.6
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 38.2,
+        "score_delta": 3.7,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-manado",
     "lat": 1.49,
     "lng": 124.85,
     "expected": {
       "composite_score": 58.8,
       "activity_tier": "MODERATE",
-      "activity_percentile": 33,
+      "activity_percentile": 46,
       "event_count_m4_within_50km": 101,
       "largest_magnitude_within_50km": 5.3,
       "overall_risk_band": "MODERATE",
@@ -3189,7 +4754,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3241,7 +4806,7 @@
     "expected": {
       "composite_score": 68.3,
       "activity_tier": "HIGH",
-      "activity_percentile": 50,
+      "activity_percentile": 65,
       "event_count_m4_within_50km": 121,
       "largest_magnitude_within_50km": 6.3,
       "overall_risk_band": "MODERATE",
@@ -3294,7 +4859,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3340,13 +4905,223 @@
     }
   },
   {
+    "name": "region-kota-medan",
+    "lat": 3.5952,
+    "lng": 98.6722,
+    "expected": {
+      "composite_score": 32.9,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 19,
+      "event_count_m4_within_50km": 22,
+      "largest_magnitude_within_50km": 5.6,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-medan",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 93.96,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "similar",
+      "data_coverage": {
+        "earliest_year": 1972,
+        "latest_year": 2026,
+        "years": 55
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 12.9,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.62
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.2,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.348
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.9,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 93.96
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 1996,
+          "depth_km": 33.0
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 32.6,
+        "score_delta": 0.3,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-palembang",
+    "lat": -2.9761,
+    "lng": 104.7754,
+    "expected": {
+      "composite_score": 12.3,
+      "activity_tier": "LOW",
+      "activity_percentile": 4,
+      "event_count_m4_within_50km": 2,
+      "largest_magnitude_within_50km": 4.6,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-palembang",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 180.94,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2018,
+        "years": 45
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 1.8,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.22
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 6.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 5.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 4.5,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 180.94
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 5.0,
+          "year": 1978,
+          "depth_km": 294.0
+        },
+        "next_largest_magnitude": 4.9,
+        "score_without": 12.0,
+        "score_delta": 0.3,
+        "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-palu",
     "lat": -0.9,
     "lng": 119.87,
     "expected": {
       "composite_score": 89.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 100,
+      "activity_percentile": 98,
       "event_count_m4_within_50km": 116,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "MODERATE",
@@ -3399,7 +5174,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3445,13 +5220,423 @@
     }
   },
   {
+    "name": "region-kota-pariaman",
+    "lat": -0.627,
+    "lng": 100.12,
+    "expected": {
+      "composite_score": 70.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 71,
+      "event_count_m4_within_50km": 69,
+      "largest_magnitude_within_50km": 7.6,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "kota-pariaman",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 78.09,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 36.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 4.59
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 21.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 8.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.581
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 3.3,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 78.09
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.6,
+          "year": 2009,
+          "depth_km": 81.0
+        },
+        "next_largest_magnitude": 7.0,
+        "score_without": 66.6,
+        "score_delta": 3.7,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 5,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-pekanbaru",
+    "lat": 0.5071,
+    "lng": 101.4478,
+    "expected": {
+      "composite_score": 18.1,
+      "activity_tier": "LOW",
+      "activity_percentile": 6,
+      "event_count_m4_within_50km": 2,
+      "largest_magnitude_within_50km": 4.5,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-pekanbaru",
+      "nearest_fault_name": "Sumatran Fault (Great Sumatra Fault)",
+      "nearest_fault_distance_km": 91.21,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1993,
+        "latest_year": 2012,
+        "years": 20
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 3.6,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.45
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 4.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 4.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 8.3,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.556
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 1.3,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 91.21
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 4.8,
+          "year": 2004,
+          "depth_km": 273.8
+        },
+        "next_largest_magnitude": 4.7,
+        "score_without": 18.1,
+        "score_delta": 0.0,
+        "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-pontianak",
+    "lat": -0.0263,
+    "lng": 109.3425,
+    "expected": {
+      "composite_score": 23.6,
+      "activity_tier": "LOW",
+      "activity_percentile": 15,
+      "event_count_m4_within_50km": 0,
+      "largest_magnitude_within_50km": null,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-pontianak",
+      "nearest_fault_name": "Lembang Fault",
+      "nearest_fault_distance_km": 775.77,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1996,
+        "latest_year": 1996,
+        "years": 1
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 8.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 0.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 4.1
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 1.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 775.77
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": null,
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-semarang",
+    "lat": -6.9667,
+    "lng": 110.4167,
+    "expected": {
+      "composite_score": 20.8,
+      "activity_tier": "LOW",
+      "activity_percentile": 8,
+      "event_count_m4_within_50km": 8,
+      "largest_magnitude_within_50km": 4.8,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-semarang",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 90.73,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1979,
+        "latest_year": 2026,
+        "years": 48
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 4.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.58
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 7.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 5.2
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.5,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 1.4,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 90.73
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 5.2,
+          "year": 1979,
+          "depth_km": 180.0
+        },
+        "next_largest_magnitude": 4.8,
+        "score_without": 19.2,
+        "score_delta": 1.6,
+        "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-surabaya",
     "lat": -7.25,
     "lng": 112.75,
     "expected": {
       "composite_score": 22.7,
       "activity_tier": "LOW",
-      "activity_percentile": 4,
+      "activity_percentile": 12,
       "event_count_m4_within_50km": 8,
       "largest_magnitude_within_50km": 4.7,
       "overall_risk_band": "LOW",
@@ -3504,7 +5689,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3550,13 +5735,223 @@
     }
   },
   {
+    "name": "region-kota-surakarta",
+    "lat": -7.5755,
+    "lng": 110.8243,
+    "expected": {
+      "composite_score": 38.5,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 25,
+      "event_count_m4_within_50km": 10,
+      "largest_magnitude_within_50km": 5.2,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "kota-surakarta",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 57.0,
+      "tsunami_risk_tier": null,
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 12.4,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.55
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.39
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 6.5,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 57.0
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2006,
+          "depth_km": 12.5
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 38.2,
+        "score_delta": 0.3,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-kota-ternate",
+    "lat": 0.79,
+    "lng": 127.38,
+    "expected": {
+      "composite_score": 65.4,
+      "activity_tier": "HIGH",
+      "activity_percentile": 56,
+      "event_count_m4_within_50km": 197,
+      "largest_magnitude_within_50km": 7.0,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "kota-ternate",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 863.52,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1970,
+        "latest_year": 2026,
+        "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 20.77
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 18.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.494
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 863.52
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.0,
+          "year": 1994,
+          "depth_km": 19.9
+        },
+        "next_largest_magnitude": 6.4,
+        "score_without": 61.8,
+        "score_delta": 3.6,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 10,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-kota-yogyakarta",
     "lat": -7.8,
     "lng": 110.37,
     "expected": {
       "composite_score": 50.9,
       "activity_tier": "MODERATE",
-      "activity_percentile": 21,
+      "activity_percentile": 40,
       "event_count_m4_within_50km": 29,
       "largest_magnitude_within_50km": 6.3,
       "overall_risk_band": "LOW",
@@ -3609,7 +6004,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3661,7 +6056,7 @@
     "expected": {
       "composite_score": 69.2,
       "activity_tier": "HIGH",
-      "activity_percentile": 54,
+      "activity_percentile": 67,
       "event_count_m4_within_50km": 197,
       "largest_magnitude_within_50km": 6.9,
       "overall_risk_band": "HIGH",
@@ -3714,7 +6109,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3760,13 +6155,223 @@
     }
   },
   {
+    "name": "region-majene",
+    "lat": -3.5403,
+    "lng": 118.9707,
+    "expected": {
+      "composite_score": 44.7,
+      "activity_tier": "MODERATE",
+      "activity_percentile": 33,
+      "event_count_m4_within_50km": 9,
+      "largest_magnitude_within_50km": 5.1,
+      "overall_risk_band": "LOW",
+      "nearest_region_slug": "majene",
+      "nearest_fault_name": "Palu-Koro Fault",
+      "nearest_fault_distance_km": 162.22,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "lower",
+      "data_coverage": {
+        "earliest_year": 1973,
+        "latest_year": 2026,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 11.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.46
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 18.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 1.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 162.22
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.0,
+          "year": 1984,
+          "depth_km": 33.0
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 39.8,
+        "score_delta": 4.9,
+        "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-pacitan",
+    "lat": -8.1947,
+    "lng": 111.1,
+    "expected": {
+      "composite_score": 62.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 50,
+      "event_count_m4_within_50km": 59,
+      "largest_magnitude_within_50km": 6.1,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "pacitan",
+      "nearest_fault_name": "Opak Fault (Yogyakarta)",
+      "nearest_fault_distance_km": 74.14,
+      "tsunami_risk_tier": "LOW",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 37.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 4.71
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.462
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 3.9,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 74.14
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2006,
+          "depth_km": 12.5
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 61.0,
+        "score_delta": 1.3,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-padang",
     "lat": -0.95,
     "lng": 100.36,
     "expected": {
       "composite_score": 75.6,
       "activity_tier": "HIGH",
-      "activity_percentile": 79,
+      "activity_percentile": 83,
       "event_count_m4_within_50km": 78,
       "largest_magnitude_within_50km": 5.4,
       "overall_risk_band": "MODERATE",
@@ -3819,7 +6424,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3865,13 +6470,328 @@
     }
   },
   {
+    "name": "region-pangandaran",
+    "lat": -7.6833,
+    "lng": 108.65,
+    "expected": {
+      "composite_score": 67.5,
+      "activity_tier": "HIGH",
+      "activity_percentile": 62,
+      "event_count_m4_within_50km": 60,
+      "largest_magnitude_within_50km": 6.1,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "pangandaran",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 56.41,
+      "tsunami_risk_tier": "MODERATE",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1974,
+        "latest_year": 2026,
+        "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.98
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.397
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 6.5,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 56.41
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2017,
+          "depth_km": 90.0
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 65.1,
+        "score_delta": 2.4,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-sikka",
+    "lat": -8.62,
+    "lng": 122.21,
+    "expected": {
+      "composite_score": 78.3,
+      "activity_tier": "HIGH",
+      "activity_percentile": 87,
+      "event_count_m4_within_50km": 121,
+      "largest_magnitude_within_50km": 7.8,
+      "overall_risk_band": "MODERATE",
+      "nearest_region_slug": "sikka",
+      "nearest_fault_name": "Flores Back-Arc Thrust",
+      "nearest_fault_distance_km": 41.27,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1971,
+        "latest_year": 2026,
+        "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.71
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 22.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.447
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 8.8,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 41.27
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.8,
+          "year": 1992,
+          "depth_km": 27.7
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 68.1,
+        "score_delta": 10.2,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 4,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
+    "name": "region-simeulue",
+    "lat": 2.48,
+    "lng": 96.38,
+    "expected": {
+      "composite_score": 93.1,
+      "activity_tier": "HIGH",
+      "activity_percentile": 100,
+      "event_count_m4_within_50km": 514,
+      "largest_magnitude_within_50km": 6.4,
+      "overall_risk_band": "HIGH",
+      "nearest_region_slug": "simeulue",
+      "nearest_fault_name": "Sunda Megathrust",
+      "nearest_fault_distance_km": 28.17,
+      "tsunami_risk_tier": "HIGH",
+      "comparison_relation": "higher",
+      "data_coverage": {
+        "earliest_year": 1972,
+        "latest_year": 2026,
+        "years": 55
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 25.33
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 27.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 8.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.984
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 10.8,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 28.17
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 52
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "higher"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 8.6,
+          "year": 2005,
+          "depth_km": 30.0
+        },
+        "next_largest_magnitude": 7.8,
+        "score_without": 88.3,
+        "score_delta": 4.8,
+        "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 9,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
+    }
+  },
+  {
     "name": "region-sorong",
     "lat": -0.88,
     "lng": 131.25,
     "expected": {
       "composite_score": 44.8,
       "activity_tier": "MODERATE",
-      "activity_percentile": 12,
+      "activity_percentile": 35,
       "event_count_m4_within_50km": 53,
       "largest_magnitude_within_50km": 6.6,
       "overall_risk_band": "MODERATE",
@@ -3924,7 +6844,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
@@ -3976,7 +6896,7 @@
     "expected": {
       "composite_score": 69.4,
       "activity_tier": "HIGH",
-      "activity_percentile": 58,
+      "activity_percentile": 69,
       "event_count_m4_within_50km": 135,
       "largest_magnitude_within_50km": 6.5,
       "overall_risk_band": "MODERATE",
@@ -4029,7 +6949,7 @@
         }
       ],
       "activity_percentile_basis": {
-        "region_count": 24
+        "region_count": 52
       },
       "comparison_set": [
         {
