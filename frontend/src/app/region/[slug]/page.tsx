@@ -16,6 +16,7 @@ import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklis
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
+import { pageMetadata } from "@/lib/meta";
 import { binByDepth, riskTierLabel } from "@/lib/seismic";
 import { magnitude, num, regionType } from "@/lib/format";
 
@@ -53,14 +54,15 @@ export async function generateMetadata({
     const description = `Skor ${p.composite_score?.toFixed(0) ?? "—"}/100 · ${p.event_count_m4} gempa M4+ dalam 100km · terbesar ${
       p.largest_magnitude ? `M${p.largest_magnitude.toFixed(1)}` : "—"
     }. Profil risiko historis berbasis data BMKG & USGS.`;
-    const path = `/region/${p.region.slug}`;
-    return {
+    // Through pageMetadata, not by hand: it is what applies the base path, and
+    // building the URL locally here is precisely how this route ended up with a
+    // canonical pointing at the origin root instead of the deployed subpath.
+    const base = pageMetadata({
       title,
       description,
-      alternates: { canonical: path },
-      openGraph: { title, description, url: path, type: "article" },
-      twitter: { title, description },
-    };
+      path: `/region/${p.region.slug}`,
+    });
+    return { ...base, openGraph: { ...base.openGraph, type: "article" } };
   } catch {
     return { title: "Profil Risiko Wilayah" };
   }
