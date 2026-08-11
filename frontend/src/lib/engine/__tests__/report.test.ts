@@ -118,6 +118,12 @@ describe("risk report matches Django golden fixtures", () => {
         );
       });
 
+      // The tsunami tier is a verdict; the count and thresholds behind it have
+      // to match too, or the two engines could agree on "SEDANG" while
+      // disagreeing about how many events said so.
+      expect(actual.tsunami_evidence).toEqual(want.tsunami_evidence);
+      expect(actual.tsunami_evidence.tier).toBe(actual.tsunami_risk_tier);
+
       // The identity of the removed event is exact — that is the whole point.
       if (want.largest_event_sensitivity === null) {
         expect(actual.largest_event_sensitivity).toBeNull();

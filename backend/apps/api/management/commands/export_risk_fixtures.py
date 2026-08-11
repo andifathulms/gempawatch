@@ -117,6 +117,7 @@ class Command(BaseCommand):
                         "largest_event_sensitivity": report[
                             "largest_event_sensitivity"
                         ],
+                        "tsunami_evidence": report["tsunami_evidence"],
                     },
                 }
             )

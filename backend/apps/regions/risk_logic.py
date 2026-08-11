@@ -45,13 +45,61 @@ def classify_tsunami_risk(is_coastal: bool, point: Point) -> str | None:
     """
     if not is_coastal:
         return None
+    return _tier_for(count_qualifying_tsunami_events(point))
 
-    qualifying = count_qualifying_tsunami_events(point)
+
+def _tier_for(qualifying: int) -> str:
     if qualifying >= TSUNAMI_HIGH_THRESHOLD:
         return "HIGH"
     if qualifying >= TSUNAMI_MODERATE_THRESHOLD:
         return "MODERATE"
     return "LOW"
+
+
+def tsunami_evidence(is_coastal: bool, point: Point) -> dict:
+    """
+    The tier AND the count that produced it, plus the thresholds it was tested
+    against.
+
+    The tier was previously the only thing that left this module: the qualifying
+    count was computed, compared, and discarded. So the product's second
+    headline output arrived as a bare verdict — "SEDANG" — with no way for a
+    reader to see that it rests on, say, two events, or to check that against
+    the rule. That is the same defect the composite score's breakdown fixed, on
+    the output with the higher stakes.
+
+    `coastal_is_approximate` travels with it because the whole classification
+    hangs on a precomputed is_coastal flag that stands in for "offshore
+    epicentre". That is a simplification, and it should be admitted next to the
+    verdict rather than on a methodology page the reader never opens.
+    """
+    if not is_coastal:
+        return {
+            "tier": None,
+            "qualifying_events": 0,
+            "is_coastal": False,
+            "coastal_is_approximate": True,
+            "criteria": _criteria(),
+        }
+    qualifying = count_qualifying_tsunami_events(point)
+    return {
+        "tier": _tier_for(qualifying),
+        "qualifying_events": qualifying,
+        "is_coastal": True,
+        "coastal_is_approximate": True,
+        "criteria": _criteria(),
+    }
+
+
+def _criteria() -> dict:
+    """The thresholds, shipped so the UI states the rule where it applies."""
+    return {
+        "search_radius_km": TSUNAMI_SEARCH_RADIUS_KM,
+        "max_depth_km": TSUNAMI_MAX_DEPTH_KM,
+        "min_magnitude": TSUNAMI_MIN_MAGNITUDE,
+        "high_threshold": TSUNAMI_HIGH_THRESHOLD,
+        "moderate_threshold": TSUNAMI_MODERATE_THRESHOLD,
+    }
 
 
 def find_nearest_fault(point: Point) -> tuple[FaultLine | None, float | None]:

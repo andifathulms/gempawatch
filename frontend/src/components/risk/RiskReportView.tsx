@@ -6,6 +6,7 @@ import { ShareButton } from "@/components/ui/ShareButton";
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { LargestEventSensitivity } from "@/components/risk/LargestEventSensitivity";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
+import { TsunamiEvidencePanel } from "@/components/risk/TsunamiEvidencePanel";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
 import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -92,7 +93,7 @@ export function RiskReportView({ report, lat, lng }: Props) {
           docblock calls the point of the page, had sunk below roughly four
           screens of explanation.
 
-          Grouping the four under one heading gives the page two tiers instead
+          Grouping them under one heading gives the page two tiers instead
           of one flat stack: what your risk is, then how the number was made.
           Nothing is hidden — collapsing these would be a behaviour change and
           would need to survive a refresh — they are just marked as the second
@@ -107,8 +108,8 @@ export function RiskReportView({ report, lat, lng }: Props) {
             Bagaimana angka ini dibaca
           </h2>
           <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
-            Setiap angka di atas bisa ditelusuri ke aturannya. Empat panel
-            berikut menunjukkan perhitungannya, cakupan datanya, dan batasnya.
+            Setiap angka di atas bisa ditelusuri ke aturannya. Panel berikut
+            menunjukkan perhitungannya, cakupan datanya, dan batasnya.
           </p>
         </div>
 
@@ -135,6 +136,14 @@ export function RiskReportView({ report, lat, lng }: Props) {
             />
           </Card>
         )}
+
+        <Card
+          titleAs="eyebrow"
+          title="Dari mana tingkat tsunami ini datang"
+          subtitle="Tiga syarat yang harus dipenuhi sekaligus, lalu dihitung berapa kejadian yang memenuhinya."
+        >
+          <TsunamiEvidencePanel evidence={report.tsunami_evidence} />
+        </Card>
 
         <Card
           titleAs="eyebrow"

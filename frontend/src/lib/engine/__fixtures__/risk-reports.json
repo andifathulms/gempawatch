@@ -88,6 +88,19 @@
         "score_without": 45.3,
         "score_delta": 3.2,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -180,6 +193,19 @@
         "score_without": 69.9,
         "score_delta": 2.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -272,6 +298,19 @@
         "score_without": 67.3,
         "score_delta": 7.2,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 8,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -364,6 +403,19 @@
         "score_without": 84.4,
         "score_delta": 4.8,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 6,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -456,6 +508,19 @@
         "score_without": 73.0,
         "score_delta": 1.2,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 15,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -548,6 +613,19 @@
         "score_without": 50.6,
         "score_delta": 0.3,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -640,6 +718,19 @@
         "score_without": 68.9,
         "score_delta": 0.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -732,6 +823,19 @@
         "score_without": 66.9,
         "score_delta": 0.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 7,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -824,6 +928,19 @@
         "score_without": 67.0,
         "score_delta": 0.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 3,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -906,7 +1023,20 @@
           "relation": "lower"
         }
       ],
-      "largest_event_sensitivity": null
+      "largest_event_sensitivity": null,
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
     }
   },
   {
@@ -998,6 +1128,19 @@
         "score_without": 38.3,
         "score_delta": 2.0,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1080,7 +1223,20 @@
           "relation": "lower"
         }
       ],
-      "largest_event_sensitivity": null
+      "largest_event_sensitivity": null,
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
+      }
     }
   },
   {
@@ -1172,6 +1328,19 @@
         "score_without": 40.5,
         "score_delta": 7.5,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1264,6 +1433,19 @@
         "score_without": 63.1,
         "score_delta": 1.8,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1356,6 +1538,19 @@
         "score_without": 58.2,
         "score_delta": 0.6,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1448,6 +1643,19 @@
         "score_without": 78.7,
         "score_delta": 1.8,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1540,6 +1748,19 @@
         "score_without": 69.6,
         "score_delta": 2.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1632,6 +1853,19 @@
         "score_without": 66.3,
         "score_delta": 4.2,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 3,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1724,6 +1958,19 @@
         "score_without": 52.3,
         "score_delta": 0.2,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1816,6 +2063,19 @@
         "score_without": 82.3,
         "score_delta": 1.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 12,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -1908,6 +2168,19 @@
         "score_without": 68.2,
         "score_delta": 3.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2000,6 +2273,19 @@
         "score_without": 52.9,
         "score_delta": 1.3,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2092,6 +2378,19 @@
         "score_without": 81.5,
         "score_delta": 4.9,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 6,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2184,6 +2483,19 @@
         "score_without": 44.0,
         "score_delta": 2.5,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2276,6 +2588,19 @@
         "score_without": 67.0,
         "score_delta": 0.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 3,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2368,6 +2693,19 @@
         "score_without": 78.0,
         "score_delta": 1.2,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 13,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2460,6 +2798,19 @@
         "score_without": 66.9,
         "score_delta": 0.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 7,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2552,6 +2903,19 @@
         "score_without": 73.9,
         "score_delta": 0.1,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2644,6 +3008,19 @@
         "score_without": 64.6,
         "score_delta": 0.6,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2736,6 +3113,19 @@
         "score_without": 20.7,
         "score_delta": 2.7,
         "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2828,6 +3218,19 @@
         "score_without": 58.2,
         "score_delta": 0.6,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -2920,6 +3323,19 @@
         "score_without": 68.3,
         "score_delta": 0.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 3,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3012,6 +3428,19 @@
         "score_without": 84.4,
         "score_delta": 4.8,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 6,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3104,6 +3533,19 @@
         "score_without": 21.7,
         "score_delta": 1.0,
         "tier_without": "LOW"
+      },
+      "tsunami_evidence": {
+        "tier": "LOW",
+        "qualifying_events": 0,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3196,6 +3638,19 @@
         "score_without": 50.7,
         "score_delta": 0.2,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": null,
+        "qualifying_events": 0,
+        "is_coastal": false,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3288,6 +3743,19 @@
         "score_without": 69.2,
         "score_delta": 0.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3380,6 +3848,19 @@
         "score_without": 68.4,
         "score_delta": 7.2,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "HIGH",
+        "qualifying_events": 8,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3472,6 +3953,19 @@
         "score_without": 41.7,
         "score_delta": 3.1,
         "tier_without": "MODERATE"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 1,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   },
@@ -3564,6 +4058,19 @@
         "score_without": 66.4,
         "score_delta": 3.0,
         "tier_without": "HIGH"
+      },
+      "tsunami_evidence": {
+        "tier": "MODERATE",
+        "qualifying_events": 2,
+        "is_coastal": true,
+        "coastal_is_approximate": true,
+        "criteria": {
+          "search_radius_km": 150,
+          "max_depth_km": 70,
+          "min_magnitude": 6.5,
+          "high_threshold": 3,
+          "moderate_threshold": 1
+        }
       }
     }
   }

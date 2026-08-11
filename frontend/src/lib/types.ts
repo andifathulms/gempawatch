@@ -127,6 +127,22 @@ export interface LargestEventSensitivity {
   tier_without: RiskTier | null;
 }
 
+/** The tier AND the count and thresholds that produced it. */
+export interface TsunamiEvidence {
+  tier: RiskTier | null;
+  qualifying_events: number;
+  is_coastal: boolean;
+  /** "Coastal" is a precomputed proxy for an offshore epicentre, not coastline geometry. */
+  coastal_is_approximate: boolean;
+  criteria: {
+    search_radius_km: number;
+    max_depth_km: number;
+    min_magnitude: number;
+    high_threshold: number;
+    moderate_threshold: number;
+  };
+}
+
 export interface RiskCheckReport {
   query: { latitude: number; longitude: number };
   nearest_region: { id: number; name: string; slug: string; type: string } | null;
@@ -139,6 +155,7 @@ export interface RiskCheckReport {
   activity_percentile: number | null;
   nearest_fault: { id: number; name: string; distance_km: number | null } | null;
   tsunami_risk_tier: RiskTier | null;
+  tsunami_evidence: TsunamiEvidence;
   activity_percentile_basis: { region_count: number };
   largest_event_sensitivity: LargestEventSensitivity | null;
   comparison: { reference_city: string; relation: string; text: string };

@@ -13,7 +13,7 @@ from django.db.models.functions import ExtractYear
 from apps.earthquakes.models import EarthquakeEvent
 from apps.regions.geocode import nearest_region
 from apps.regions.models import RegionRiskProfile
-from apps.regions.risk_logic import classify_tsunami_risk, find_nearest_fault
+from apps.regions.risk_logic import find_nearest_fault, tsunami_evidence
 from apps.regions.scoring import (
     ScoreInputs,
     compute_composite_score,
@@ -205,7 +205,7 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
     nearest_fault, fault_distance_km = find_nearest_fault(point)
 
     is_coastal = bool(region and region.is_coastal)
-    tsunami_tier = classify_tsunami_risk(is_coastal, point)
+    tsunami = tsunami_evidence(is_coastal, point)
 
     # Composite score computed over the 100km radius so it is directly
     # comparable to stored region scores; percentile ranks against those.
@@ -271,7 +271,8 @@ def build_point_risk_report(latitude: float, longitude: float) -> dict:
             if nearest_fault
             else None
         ),
-        "tsunami_risk_tier": tsunami_tier,
+        "tsunami_risk_tier": tsunami["tier"],
+        "tsunami_evidence": tsunami,
         "comparison": _compare_to_reference(m4_count),
         "comparison_set": _comparison_set(m4_count),
         "largest_event_sensitivity": _largest_event_counterfactual(

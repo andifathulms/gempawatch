@@ -372,17 +372,38 @@ export function buildPointRiskReport(
   const region = nearestRegion(data, latitude, longitude);
   const { fault, distanceKm } = nearestFault(data, latitude, longitude);
 
+  /*
+    Port of risk_logic.tsunami_evidence.
+
+    The qualifying count used to be computed here, compared against the
+    thresholds, and thrown away — so the product's second headline output
+    arrived as a bare verdict with no way to check it against the rule. It
+    travels with the tier now, along with the thresholds it was tested against
+    and the admission that "coastal" is a precomputed proxy for "offshore
+    epicentre" rather than real coastline geometry.
+  */
   const isCoastal = Boolean(region && region.is_coastal);
-  let tsunamiTier: string | null = null;
-  if (isCoastal) {
-    if (outer.tsunamiQualifying >= c.tsunami_high_threshold) {
-      tsunamiTier = "HIGH";
-    } else if (outer.tsunamiQualifying >= c.tsunami_moderate_threshold) {
-      tsunamiTier = "MODERATE";
-    } else {
-      tsunamiTier = "LOW";
-    }
-  }
+  const qualifying = isCoastal ? outer.tsunamiQualifying : 0;
+  const tsunamiTier: string | null = !isCoastal
+    ? null
+    : qualifying >= c.tsunami_high_threshold
+      ? "HIGH"
+      : qualifying >= c.tsunami_moderate_threshold
+        ? "MODERATE"
+        : "LOW";
+  const tsunami = {
+    tier: tsunamiTier,
+    qualifying_events: qualifying,
+    is_coastal: isCoastal,
+    coastal_is_approximate: true,
+    criteria: {
+      search_radius_km: c.tsunami_search_radius_km,
+      max_depth_km: c.tsunami_max_depth_km,
+      min_magnitude: c.tsunami_min_magnitude,
+      high_threshold: c.tsunami_high_threshold,
+      moderate_threshold: c.tsunami_moderate_threshold,
+    },
+  };
 
   const shallowRatio = outer.total ? outer.shallowCount / outer.total : null;
   const coverageYears =
@@ -425,6 +446,7 @@ export function buildPointRiskReport(
       ? { id: fault.id, name: fault.name, distance_km: distanceKm }
       : null,
     tsunami_risk_tier: tsunamiTier,
+    tsunami_evidence: tsunami,
     comparison: compareToReference(inner.m4Count),
     comparison_set: comparisonSet(inner.m4Count),
     largest_event_sensitivity: largestEventCounterfactual(
