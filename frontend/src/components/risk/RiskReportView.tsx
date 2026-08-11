@@ -35,6 +35,14 @@ const RELATION_LABEL: Record<string, string> = {
  * Sharing is the point of this page — it is the URL people send each other — so
  * the share row sits directly under the card rather than at the end of the
  * page, where it was previously below a checklist and a subscribe form.
+ *
+ * The page reads in two tiers. First the answer and what to do with it: the
+ * result card, sharing, preparedness. Then the audit trail — the four panels
+ * explaining how the number was reached — under their own heading, so they
+ * stop competing with the answer for a first-time reader's attention. The
+ * methodology panels had drifted between the card and the share row, which
+ * pushed sharing below about four screens of dense explanation and left every
+ * panel claiming equal importance.
  */
 export function RiskReportView({ report, lat, lng }: Props) {
   const place = report.nearest_region?.name ?? "lokasi ini";
@@ -59,79 +67,6 @@ export function RiskReportView({ report, lat, lng }: Props) {
       <ShareableRiskCard report={report} />
 
       <Card
-        title="Dari mana skor ini datang"
-        subtitle="Empat komponen berbobot, dihitung dari catatan gempa di sekitar titik ini."
-      >
-        <ScoreBreakdown
-          components={report.score_breakdown}
-          total={report.composite_score}
-        />
-      </Card>
-
-      {report.largest_event_sensitivity && (
-        <Card
-          title="Seberapa besar peran satu gempa"
-          subtitle="Komponen magnitudo memakai kejadian terbesar, bukan rata-rata, dan tidak melemah seiring waktu."
-        >
-          <LargestEventSensitivity
-            sensitivity={report.largest_event_sensitivity}
-            score={report.composite_score}
-          />
-        </Card>
-      )}
-
-      <Card
-        title="Cakupan data di balik angka ini"
-        subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
-      >
-        <CoverageNote
-          earliestYear={report.data_coverage.earliest_year}
-          latestYear={report.data_coverage.latest_year}
-          years={report.data_coverage.years}
-          scope="point"
-        />
-      </Card>
-
-      {/* One anchor cannot place you on a range. Jakarta alone says "more
-          active than Jakarta" without revealing whether that means slightly, or
-          nowhere near Padang. */}
-      <Card
-        title="Dibanding kota acuan"
-        subtitle="Jumlah gempa M4+ dalam radius 50 km, dibanding tiga kota yang polanya sudah dikenal."
-      >
-        <ul className="divide-y divide-earth-border/70">
-          {report.comparison_set.map((c) => (
-            <li
-              key={c.reference_city}
-              className="flex items-baseline justify-between gap-3 py-2.5"
-            >
-              <span className="text-fluid-00 text-text-primary">
-                {c.reference_city}
-                <span className="ml-2 font-mono text-fluid-000 tabular-nums text-text-muted">
-                  ±{c.reference_m4_count} M4+
-                </span>
-              </span>
-              <span
-                className={`shrink-0 text-fluid-00 font-medium ${
-                  c.relation === "higher"
-                    ? "text-risk-amber"
-                    : c.relation === "lower"
-                      ? "text-risk-green"
-                      : "text-text-secondary"
-                }`}
-              >
-                {RELATION_LABEL[c.relation] ?? c.relation}
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-3 text-fluid-000 leading-relaxed text-text-muted">
-          Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan
-          lokasi ini pada rentang — bukan skor resmi kota tersebut.
-        </p>
-      </Card>
-
-      <Card
         title="Bagikan hasil ini"
         subtitle="WhatsApp adalah kanal berbagi utama di Indonesia — tautannya membuka laporan yang sama persis."
       >
@@ -147,6 +82,113 @@ export function RiskReportView({ report, lat, lng }: Props) {
           coastal={report.tsunami_risk_tier != null}
         />
       </Card>
+
+      {/* ------------------------------------------------------------------
+          The audit trail.
+
+          Every panel on this page was a Card of identical weight, so the
+          answer, the way to share it, and four dense methodology panels all
+          read as equally important — and the share row, which this file's own
+          docblock calls the point of the page, had sunk below roughly four
+          screens of explanation.
+
+          Grouping the four under one heading gives the page two tiers instead
+          of one flat stack: what your risk is, then how the number was made.
+          Nothing is hidden — collapsing these would be a behaviour change and
+          would need to survive a refresh — they are just marked as the second
+          tier, with eyebrow titles so they stop competing with the answer.
+         ------------------------------------------------------------------ */}
+      <section aria-labelledby="audit-trail" className="space-y-4 pt-2">
+        <div className="border-t border-earth-border pt-5">
+          <h2
+            id="audit-trail"
+            className="font-display text-fluid-1 font-semibold tracking-tight text-text-primary"
+          >
+            Bagaimana angka ini dibaca
+          </h2>
+          <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
+            Setiap angka di atas bisa ditelusuri ke aturannya. Empat panel
+            berikut menunjukkan perhitungannya, cakupan datanya, dan batasnya.
+          </p>
+        </div>
+
+        <Card
+          titleAs="eyebrow"
+          title="Dari mana skor ini datang"
+          subtitle="Empat komponen berbobot, dihitung dari catatan gempa di sekitar titik ini."
+        >
+          <ScoreBreakdown
+            components={report.score_breakdown}
+            total={report.composite_score}
+          />
+        </Card>
+
+        {report.largest_event_sensitivity && (
+          <Card
+            titleAs="eyebrow"
+            title="Seberapa besar peran satu gempa"
+            subtitle="Komponen magnitudo memakai kejadian terbesar, bukan rata-rata, dan tidak melemah seiring waktu."
+          >
+            <LargestEventSensitivity
+              sensitivity={report.largest_event_sensitivity}
+              score={report.composite_score}
+            />
+          </Card>
+        )}
+
+        <Card
+          titleAs="eyebrow"
+          title="Cakupan data di balik angka ini"
+          subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
+        >
+          <CoverageNote
+            earliestYear={report.data_coverage.earliest_year}
+            latestYear={report.data_coverage.latest_year}
+            years={report.data_coverage.years}
+            scope="point"
+          />
+        </Card>
+
+        {/* One anchor cannot place you on a range. Jakarta alone says "more
+            active than Jakarta" without revealing whether that means slightly,
+            or nowhere near Padang. */}
+        <Card
+          titleAs="eyebrow"
+          title="Dibanding kota acuan"
+          subtitle="Jumlah gempa M4+ dalam radius 50 km, dibanding tiga kota yang polanya sudah dikenal."
+        >
+          <ul className="divide-y divide-earth-border/70">
+            {report.comparison_set.map((c) => (
+              <li
+                key={c.reference_city}
+                className="flex items-baseline justify-between gap-3 py-2.5"
+              >
+                <span className="text-fluid-00 text-text-primary">
+                  {c.reference_city}
+                  <span className="ml-2 font-mono text-fluid-000 tabular-nums text-text-muted">
+                    ±{c.reference_m4_count} M4+
+                  </span>
+                </span>
+                <span
+                  className={`shrink-0 text-fluid-00 font-medium ${
+                    c.relation === "higher"
+                      ? "text-risk-amber"
+                      : c.relation === "lower"
+                        ? "text-risk-green"
+                        : "text-text-secondary"
+                  }`}
+                >
+                  {RELATION_LABEL[c.relation] ?? c.relation}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-3 text-fluid-00 leading-relaxed text-text-muted">
+            Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan
+            lokasi ini pada rentang — bukan skor resmi kota tersebut.
+          </p>
+        </Card>
+      </section>
 
       {/*
         Watch alerts need a backend to store the subscription and send mail.
