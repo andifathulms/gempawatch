@@ -146,6 +146,26 @@ export function RegionSearch({
         </span>
       )}
 
+      {/*
+        The list appearing is a silent event: the busy "…" is aria-hidden, and
+        options arriving in a listbox the user is not focused inside are not
+        announced on their own. Without this a screen-reader user types and has
+        no idea whether anything matched (WCAG 4.1.3).
+
+        role="status" rather than a native element because none exists for this;
+        the polite live region waits for a pause in typing rather than
+        interrupting every keystroke.
+      */}
+      <p role="status" className="sr-only">
+        {searching
+          ? "Mencari wilayah…"
+          : noMatches
+            ? `Tidak ada wilayah cocok dengan ${q.trim()}.`
+            : open && results.length > 0
+              ? `${results.length} wilayah ditemukan. Gunakan panah atas dan bawah untuk memilih, Enter untuk membuka.`
+              : ""}
+      </p>
+
       {/* A listbox may only contain options, so the empty-state message is a
           sibling of the list rather than a childless li pretending to be one. */}
       {open && noMatches && (
