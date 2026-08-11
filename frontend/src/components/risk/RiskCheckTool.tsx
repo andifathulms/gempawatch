@@ -11,6 +11,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { MapSkeleton, Skeleton } from "@/components/ui/Skeleton";
 import { ShareableRiskCard } from "./ShareableRiskCard";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { riskTierLabel } from "@/lib/seismic";
 
 const PickerMap = dynamic(() => import("./PickerMap").then((m) => m.PickerMap), {
   ssr: false,
@@ -43,17 +44,19 @@ export function RiskCheckTool() {
     try {
       const result = await api.riskCheck(lat, lng);
       setReport(result);
-      // On a phone the result sits below a 440px map, so a successful check
-      // otherwise appears to do nothing at all.
-      if (window.matchMedia("(max-width: 1023px)").matches) {
-        requestAnimationFrame(() =>
-          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
-        );
-      }
     } catch {
       setError("Gagal menghitung risiko untuk titik ini. Coba lagi.");
     } finally {
       setLoading(false);
+      // The result renders in a different subtree from the control that
+      // triggered it, so without this a keyboard user is left on the shortcut
+      // button with no idea anything happened, and a sighted phone user sees
+      // nothing because the result sits below a 440px map. Focusing the result
+      // solves both — the browser scrolls it into view as a side effect, and
+      // it does so without the smooth behaviour that ignored
+      // prefers-reduced-motion. The container takes tabIndex={-1} so it can
+      // receive focus programmatically without entering the tab order.
+      requestAnimationFrame(() => resultRef.current?.focus());
     }
   }, []);
 
@@ -133,7 +136,33 @@ export function RiskCheckTool() {
       </div>
 
       {/* ---- Result ------------------------------------------------------- */}
-      <div ref={resultRef} className="scroll-mt-20 space-y-4">
+      {/*
+        Status messages. Loading, failure and the finished report all swapped in
+        silently before this: the skeleton is aria-hidden, "menghitung…" was
+        plain text, and the report simply appeared. A blind user activated
+        "Lokasi Saya" and the page seemed inert (WCAG 4.1.3).
+
+        role="status" is the ARIA exception this pass allows: there is no native
+        element that announces a region changing in place, and it carries an
+        implicit aria-live="polite" so the announcement waits its turn.
+      */}
+      <p role="status" className="sr-only">
+        {loading
+          ? "Menghitung risiko untuk titik ini…"
+          : error
+            ? error
+            : report
+              ? `Laporan siap untuk ${report.nearest_region?.name ?? "titik terpilih"}. Skor aktivitas ${report.composite_score.toFixed(0)} dari 100, tingkat ${riskTierLabel(report.activity_tier)}.`
+              : ""}
+      </p>
+
+      {/* No aria-label here: the status message above already names the
+          outcome, and the card inside carries its own heading. */}
+      <div
+        ref={resultRef}
+        tabIndex={-1}
+        className="scroll-mt-20 space-y-4 focus:outline-none"
+      >
         {loading && (
           <Card>
             <div className="space-y-4">
