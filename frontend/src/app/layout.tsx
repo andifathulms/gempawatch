@@ -5,6 +5,7 @@ import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { ToastProvider } from "@/components/ui/ToastProvider";
+import { SiteJsonLd } from "@/components/seo/JsonLd";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
 /**
@@ -109,7 +110,8 @@ export default function RootLayout({
           <a href="#main" className="skip-link">
             Lompat ke konten utama
           </a>
-          <NavHeader />
+          <SiteJsonLd />
+        <NavHeader />
           <main id="main" className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
             {children}
           </main>

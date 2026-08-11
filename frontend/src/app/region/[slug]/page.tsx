@@ -13,6 +13,7 @@ import { EventScatterTimeline } from "@/components/risk/EventScatterTimeline";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
+import { RegionJsonLd } from "@/components/seo/JsonLd";
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
@@ -116,6 +117,7 @@ export default async function RegionPage({
 
   return (
     <div className="space-y-6">
+      <RegionJsonLd profile={profile} />
       <PageHeader
         eyebrow={regionType(profile.region.type)}
         title={profile.region.name}
