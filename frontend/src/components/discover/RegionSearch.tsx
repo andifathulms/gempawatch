@@ -146,35 +146,54 @@ export function RegionSearch({
         </span>
       )}
 
-      {open && (results.length > 0 || noMatches) && (
+      {/* A listbox may only contain options, so the empty-state message is a
+          sibling of the list rather than a childless li pretending to be one. */}
+      {open && noMatches && (
+        <div className="absolute z-[1200] mt-2 w-full rounded-lg border border-earth-border bg-earth-raised px-4 py-3 text-fluid-00 text-text-muted shadow-lg">
+          Tidak ada wilayah cocok dengan “{q.trim()}”.
+        </div>
+      )}
+
+      {open && results.length > 0 && (
         <ul
           id={listId}
           role="listbox"
           className="absolute z-[1200] mt-2 max-h-80 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised py-1 shadow-lg"
         >
-          {noMatches ? (
-            <li className="px-4 py-3 text-fluid-00 text-text-muted">
-              Tidak ada wilayah cocok dengan “{q.trim()}”.
-            </li>
-          ) : (
+          {
+            /*
+              The option is the whole row, and it is deliberately NOT a button.
+              A combobox driven by aria-activedescendant requires focus to stay
+              on the input; a focusable child inside an option meant Tab landed
+              inside the listbox, and the roving highlight and the real focus
+              point at different rows (WCAG 4.1.2). Mouse activation works the
+              same as before via onMouseDown — before the input's blur — while
+              keyboard activation goes through the input's Enter handler, which
+              is where the combobox pattern expects it.
+            */
             results.map((r, i) => (
-              <li key={r.id} id={`${listId}-opt-${i}`} role="option" aria-selected={i === cursor}>
-                <button
-                  onMouseEnter={() => setCursor(i)}
-                  onClick={() => go(r)}
-                  className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-fluid-00 transition-colors ${
-                    i === cursor ? "bg-earth-surface text-text-primary" : "text-text-secondary"
-                  }`}
-                >
-                  <span className="truncate">{r.name}</span>
-                  <span className="shrink-0 text-fluid-000 text-text-muted">
-                    {regionType(r.type)}
-                    {r.is_coastal ? " · pesisir" : ""}
-                  </span>
-                </button>
+              <li
+                key={r.id}
+                id={`${listId}-opt-${i}`}
+                role="option"
+                aria-selected={i === cursor}
+                onMouseEnter={() => setCursor(i)}
+                onMouseDown={(e) => {
+                  e.preventDefault(); // keep focus on the input
+                  go(r);
+                }}
+                className={`flex cursor-pointer items-center justify-between gap-3 px-4 py-2.5 text-left text-fluid-00 transition-colors ${
+                  i === cursor ? "bg-earth-surface text-text-primary" : "text-text-secondary"
+                }`}
+              >
+                <span className="truncate">{r.name}</span>
+                <span className="shrink-0 text-fluid-000 text-text-muted">
+                  {regionType(r.type)}
+                  {r.is_coastal ? " · pesisir" : ""}
+                </span>
               </li>
             ))
-          )}
+          }
         </ul>
       )}
     </div>
