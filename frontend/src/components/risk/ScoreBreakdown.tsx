@@ -117,6 +117,27 @@ export function ScoreBreakdown({ components, total }: Props) {
         })}
       </ul>
 
+      {/*
+        Two radii appear together on the risk report — "M4+ dalam 50 km" on the
+        result card, a score computed over 100 km here — and the only place that
+        reconciled them was a sentence on /about. Saying which is which belongs
+        where both numbers are visible.
+      */}
+      <p className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
+        <strong className="font-semibold text-text-primary">
+          Kenapa ada dua radius?
+        </strong>{" "}
+        Skor di atas dihitung dalam radius{" "}
+        <span className="font-mono tabular-nums text-text-primary">100 km</span>{" "}
+        supaya bisa dibandingkan langsung dengan wilayah lain, yang semuanya
+        diukur dengan radius sama. Sementara hitungan &ldquo;gempa M4+ di
+        dekatku&rdquo; pada kartu hasil memakai radius{" "}
+        <span className="font-mono tabular-nums text-text-primary">50 km</span>,
+        karena itu jarak yang lebih masuk akal disebut &ldquo;sekitar sini&rdquo;.
+        Angkanya beda bukan karena salah satu keliru, tapi karena keduanya
+        menjawab pertanyaan berbeda.
+      </p>
+
       <p className="border-t border-earth-border pt-3 text-fluid-00 leading-relaxed text-text-muted">
         Skor total{" "}
         <span className="font-mono font-bold tabular-nums text-text-primary">
