@@ -16,7 +16,7 @@ import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklis
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
-import { riskTierLabel } from "@/lib/seismic";
+import { binByDepth, riskTierLabel } from "@/lib/seismic";
 import { magnitude, num, regionType } from "@/lib/format";
 
 export const revalidate = 3600;
@@ -86,6 +86,23 @@ export default async function RegionPage({
     profile.earliest_event_year && profile.latest_event_year
       ? `${profile.earliest_event_year}–${profile.latest_event_year}`
       : "catatan historis";
+
+  /*
+    Binned here, at build time, rather than in the browser.
+
+    DepthHistogram and EventScatterTimeline are sibling client components, so
+    passing the event array to both made React serialise all 903 events into the
+    HTML twice — 93.9 kB of the 350 kB Kepulauan Mentawai page, duplicated. The
+    histogram only ever needed five integers.
+  */
+  const depthBins = binByDepth(timeline.events);
+  // `id` and `source` are read by neither chart, but every field on a client
+  // component's props ends up in the HTML. Project to what is actually plotted.
+  const scatterPoints = timeline.events.map((e) => ({
+    event_time: e.event_time,
+    magnitude: e.magnitude,
+    depth_km: e.depth_km,
+  }));
 
   const scoreInputs = scoreInputsFromProfile(profile);
   const scoredRegionCount = profile.activity_percentile_basis?.region_count;
@@ -165,7 +182,7 @@ export default async function RegionPage({
             title="Distribusi kedalaman"
             subtitle="Kedalaman menentukan seberapa keras guncangan terasa di permukaan."
           >
-            <DepthHistogram events={timeline.events} />
+            <DepthHistogram bins={depthBins} />
           </Card>
 
           {scoreInputs && (
@@ -202,7 +219,7 @@ export default async function RegionPage({
         subtitle={`${num(timeline.events.length)} kejadian tercatat. Magnitudo pada sumbu Y, waktu pada sumbu X — kelompok titik yang rapat biasanya menandai rentetan gempa susulan.`}
         footer={<SourceAttribution />}
       >
-        <EventScatterTimeline events={timeline.events} />
+        <EventScatterTimeline events={scatterPoints} />
       </Card>
 
       <Card

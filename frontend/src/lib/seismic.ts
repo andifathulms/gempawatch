@@ -114,3 +114,41 @@ export function activityTierMeaning(tier: string | null): string {
       return "Data historis belum cukup untuk menilai aktivitas di titik ini.";
   }
 }
+
+
+/**
+ * Depth bins for the region histogram.
+ *
+ * These live here rather than in DepthHistogram because that module is
+ * "use client": a server component importing a helper from a client module
+ * gets a client-reference proxy instead of the function, which fails at
+ * prerender rather than at type-check. Shared modules are where code that both
+ * sides run belongs.
+ */
+export const DEPTH_BINS = [
+  { label: "0–30", min: 0, max: 30 },
+  { label: "30–70", min: 30, max: 70 },
+  { label: "70–150", min: 70, max: 150 },
+  { label: "150–300", min: 150, max: 300 },
+  { label: "300+", min: 300, max: Infinity },
+];
+
+export interface DepthBin {
+  label: string;
+  count: number;
+}
+
+/**
+ * Bin an event list by depth, at build time.
+ *
+ * The histogram used to receive the whole event array and filter it in the
+ * browser to produce five integers that never change between builds — and
+ * because a sibling chart needed that array too, React serialised the same
+ * events into the page HTML twice.
+ */
+export function binByDepth(events: Array<{ depth_km: number }>): DepthBin[] {
+  return DEPTH_BINS.map((b) => ({
+    label: b.label,
+    count: events.filter((e) => e.depth_km >= b.min && e.depth_km < b.max).length,
+  }));
+}

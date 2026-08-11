@@ -17,6 +17,16 @@ import { magnitude, num, shortDate } from "@/lib/format";
 import type { TimelineEvent } from "@/lib/types";
 
 /**
+ * Only the three fields this chart plots.
+ *
+ * The full TimelineEvent also carries `id` and `source`, which nothing here
+ * reads — but every field on the prop is serialised into the page HTML, so
+ * they cost bytes on every region page for nothing. Narrowing the prop makes
+ * that visible in the type rather than leaving it to inspection.
+ */
+export type ScatterPoint = Pick<TimelineEvent, "event_time" | "magnitude" | "depth_km">;
+
+/**
  * Every recorded event: magnitude on Y, time on X, depth as colour. Reveals
  * clustering, aftershock sequences, and quiet decades at a glance.
  *
@@ -24,7 +34,7 @@ import type { TimelineEvent } from "@/lib/types";
  * them — at full opacity the cluster becomes a solid block and the shape of the
  * sequence disappears into it.
  */
-export function EventScatterTimeline({ events }: { events: TimelineEvent[] }) {
+export function EventScatterTimeline({ events }: { events: ScatterPoint[] }) {
   const data = events.map((e) => ({
     x: new Date(e.event_time).getTime(),
     y: e.magnitude,

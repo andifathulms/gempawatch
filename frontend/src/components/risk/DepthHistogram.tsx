@@ -12,17 +12,9 @@ import {
 } from "recharts";
 import { ChartFigure } from "./ChartFigure";
 import { AXIS, GRID, TOOLTIP } from "./chartTheme";
-import { DEPTH_BANDS, depthColor } from "@/lib/seismic";
+import { DEPTH_BINS, DEPTH_BANDS, depthColor, type DepthBin } from "@/lib/seismic";
 import { num } from "@/lib/format";
-import type { TimelineEvent } from "@/lib/types";
 
-const BINS = [
-  { label: "0–30", min: 0, max: 30 },
-  { label: "30–70", min: 30, max: 70 },
-  { label: "70–150", min: 70, max: 150 },
-  { label: "150–300", min: 150, max: 300 },
-  { label: "300+", min: 300, max: Infinity },
-];
 
 /**
  * Depth distribution. Shallow quakes do the damage, so the shape of this
@@ -33,12 +25,15 @@ const BINS = [
  * has learnt that red means shallow on the map should not have to relearn it
  * on the chart, and the legend below states the mapping outright.
  */
-export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
-  const data = BINS.map((b) => ({
-    label: b.label,
-    count: events.filter((e) => e.depth_km >= b.min && e.depth_km < b.max).length,
+export function DepthHistogram({ bins }: { bins: DepthBin[] }) {
+  const data = bins.map((bin, i) => ({
+    ...bin,
     // Colour from the midpoint of the bin, so each bar takes the band it sits in.
-    color: depthColor(b.max === Infinity ? 400 : (b.min + b.max) / 2),
+    color: depthColor(
+      DEPTH_BINS[i].max === Infinity
+        ? 400
+        : (DEPTH_BINS[i].min + DEPTH_BINS[i].max) / 2,
+    ),
   }));
 
   const legend = (
