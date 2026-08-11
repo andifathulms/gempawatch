@@ -129,35 +129,15 @@ export default async function RegionPage({
           <RiskProfileCard profile={profile} />
         </div>
 
+        {/* Data first, then how the number was made.
+
+            The two methodology panels were inserted at the top of this column
+            last pass, which pushed both charts below roughly a screen of prose.
+            A reader arriving at a region page has already been given the
+            headline figures above; what they want next is the shape of the
+            data, not the derivation. The derivation follows, under eyebrow
+            titles so it reads as the second tier — matching the risk report. */}
         <div className="space-y-5 lg:col-span-2">
-          {/* The score is the page's headline figure, so its arithmetic belongs
-              directly under it rather than on a methodology page. Rebuilt from
-              the stored inputs, so it reproduces composite_score exactly. */}
-          {scoreInputs && (
-            <Card
-              title="Dari mana skor ini datang"
-              subtitle="Empat komponen berbobot, dihitung dari catatan gempa dalam radius 100 km."
-            >
-              <ScoreBreakdown
-                components={scoreBreakdown(scoreInputs)}
-                total={profile.composite_score ?? 0}
-              />
-            </Card>
-          )}
-
-          <Card
-            title="Cakupan data di balik angka ini"
-            subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
-          >
-            <CoverageNote
-              earliestYear={profile.earliest_event_year}
-              latestYear={profile.latest_event_year}
-              years={scoreInputs?.coverageYears ?? 0}
-              m4Count={profile.event_count_m4}
-              scope="region"
-            />
-          </Card>
-
           <Card
             title="Frekuensi magnitudo"
             subtitle="Berapa banyak gempa di tiap tingkat kekuatan, sepanjang catatan."
@@ -170,6 +150,33 @@ export default async function RegionPage({
             subtitle="Kedalaman menentukan seberapa keras guncangan terasa di permukaan."
           >
             <DepthHistogram events={timeline.events} />
+          </Card>
+
+          {scoreInputs && (
+            <Card
+              titleAs="eyebrow"
+              title="Dari mana skor ini datang"
+              subtitle="Empat komponen berbobot, dihitung dari catatan gempa dalam radius 100 km."
+            >
+              <ScoreBreakdown
+                components={scoreBreakdown(scoreInputs)}
+                total={profile.composite_score ?? 0}
+              />
+            </Card>
+          )}
+
+          <Card
+            titleAs="eyebrow"
+            title="Cakupan data di balik angka ini"
+            subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
+          >
+            <CoverageNote
+              earliestYear={profile.earliest_event_year}
+              latestYear={profile.latest_event_year}
+              years={scoreInputs?.coverageYears ?? 0}
+              m4Count={profile.event_count_m4}
+              scope="region"
+            />
           </Card>
         </div>
       </div>
