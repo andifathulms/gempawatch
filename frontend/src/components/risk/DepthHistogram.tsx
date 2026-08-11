@@ -61,7 +61,35 @@ export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
       caption="Jumlah gempa tercatat per rentang kedalaman"
       columns={["Rentang kedalaman (km)", "Jumlah kejadian"]}
       rows={data.map((d) => [d.label, num(d.count)])}
-      note={legend}
+      note={
+        <div className="mt-2 space-y-2.5">
+          {legend}
+          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            <strong className="font-semibold text-text-primary">
+              Kenapa kedalaman dihitung terpisah dari kekuatan.
+            </strong>{" "}
+            Gempa M6 pada kedalaman 10 km dan M6 pada kedalaman 200 km punya
+            magnitudo sama, tetapi yang dangkal melepaskan energinya jauh lebih
+            dekat ke permukaan, sehingga guncangan yang sampai ke bangunan jauh
+            lebih keras dan wilayah rusaknya lebih sempit tapi lebih parah.
+            Gempa dalam menyebar energinya lewat jarak yang lebih panjang, jadi
+            terasa lebih luas tetapi lebih lemah.
+          </p>
+          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            Yogyakarta 2006 adalah contohnya: M6,3 — tidak termasuk gempa
+            terbesar di arsip ini — tetapi kedalamannya hanya sekitar 12 km, dan
+            menjadi salah satu bencana paling mematikan dalam catatan modern
+            Indonesia. Itulah sebabnya batang di sebelah kiri grafik ini lebih
+            penting daripada tingginya saja.
+          </p>
+          <p className="text-fluid-000 leading-relaxed text-text-muted">
+            Batas 70 km yang dipakai skor adalah garis yang kami tetapkan untuk
+            memisahkan &ldquo;dangkal&rdquo; dari &ldquo;dalam&rdquo;. Alam
+            tidak punya batas setegas itu — kedalaman 69 km dan 71 km hampir
+            sama saja.
+          </p>
+        </div>
+      }
     >
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data} margin={{ top: 8, right: 4, left: -18 }}>
