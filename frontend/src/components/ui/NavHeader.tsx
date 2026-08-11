@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
 
 /**
@@ -40,6 +40,7 @@ export function NavHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -61,6 +62,26 @@ export function NavHeader() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [open]);
+
+  /**
+   * Escape closes the menu and hands focus back to the toggle.
+   *
+   * Without this the only way out was to Tab through every link — and because
+   * the menu locks body scroll while open, a keyboard user who tabbed past the
+   * last item landed on page content that could no longer scroll into view. Not
+   * a focus trap in the 2.1.2 sense, since Shift+Tab always worked, but a
+   * dead end with no exit anyone would think to look for.
+   */
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   return (
@@ -118,6 +139,7 @@ export function NavHeader() {
 
           {/* Mobile toggle */}
           <button
+            ref={toggleRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
