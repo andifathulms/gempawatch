@@ -73,11 +73,11 @@ export function LiveMap({
               <p className="text-fluid-000 leading-relaxed text-text-secondary">
                 {e.location_description}
               </p>
-              <p
-                className="text-fluid-000 text-text-muted"
-                title={absolute(e.event_time)}
-              >
-                {timeAgo(e.event_time)} · {e.source}
+              <p className="text-fluid-000 text-text-muted">
+                <span aria-hidden="true">{timeAgo(e.event_time)}</span>
+                <span className="sr-only">{absolute(e.event_time)}</span>
+                {" · "}
+                {e.source}
               </p>
               {e.felt_reports && <FeltBadge />}
               <SourceAttribution sources={[e.source]} variant="inline" />

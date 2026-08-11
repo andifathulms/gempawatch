@@ -42,13 +42,10 @@ export function EventList({ events }: Props) {
               <p className="min-w-0 flex-1 truncate text-fluid-00 font-medium text-text-primary">
                 {e.location_description || "Lokasi tidak tersedia"}
               </p>
-              <time
-                dateTime={e.event_time}
-                title={absolute(e.event_time)}
-                className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted"
-              >
-                {timeAgo(e.event_time)}
-              </time>
+              <time dateTime={e.event_time}                className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
+  <span aria-hidden="true">{timeAgo(e.event_time)}</span>
+  <span className="sr-only">{absolute(e.event_time)}</span>
+</time>
             </div>
 
             <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-fluid-000 text-text-muted">

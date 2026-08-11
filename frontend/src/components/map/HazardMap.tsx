@@ -162,11 +162,11 @@ export function HazardMap({ faults, events, zones }: Props) {
                   <p className="text-fluid-000 text-text-secondary">
                     {e.location_description}
                   </p>
-                  <p
-                    className="text-fluid-000 text-text-muted"
-                    title={absolute(e.event_time)}
-                  >
-                    {timeAgo(e.event_time)} · {e.source}
+                  <p className="text-fluid-000 text-text-muted">
+                    <span aria-hidden="true">{timeAgo(e.event_time)}</span>
+                    <span className="sr-only">{absolute(e.event_time)}</span>
+                    {" · "}
+                    {e.source}
                   </p>
                 </div>
               </Popup>

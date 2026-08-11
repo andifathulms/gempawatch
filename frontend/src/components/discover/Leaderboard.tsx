@@ -69,9 +69,11 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
               <span
                 className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-fluid-00 font-bold tabular-nums"
                 style={{ backgroundColor: fill, color: onFillTextColor(fill) }}
-                title={`Skor aktivitas ${r.composite_score.toFixed(0)} dari 100`}
               >
-                {r.composite_score.toFixed(0)}
+                <span aria-hidden="true">{r.composite_score.toFixed(0)}</span>
+                <span className="sr-only">
+                  Skor aktivitas {r.composite_score.toFixed(0)} dari 100
+                </span>
               </span>
 
               <span className="relative min-w-0 flex-1">
