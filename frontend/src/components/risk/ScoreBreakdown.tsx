@@ -122,6 +122,49 @@ export function ScoreBreakdown({ components, total }: Props) {
         penjumlahannya bisa meleset 0,1–0,2 dari skor total — skor total yang
         jadi acuan.
       </p>
+
+      {/*
+        Where the rule comes from, said where the rule is applied.
+
+        A 0–100 figure with fixed tier thresholds, sitting beside BMKG and USGS
+        credits, reads as an official index. It is not one: the inputs are
+        theirs, the weighting is ours. A reader who mistakes what KIND of number
+        this is has misunderstood the app at the root, and every other
+        explanation on the site is downstream of that mistake — so this belongs
+        next to the arithmetic, not in a methodology footnote.
+      */}
+      <p className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
+        <strong className="font-semibold text-text-primary">
+          Skor ini buatan GempaWatch.
+        </strong>{" "}
+        Datanya resmi — kejadian gempa dari{" "}
+        <a
+          href="https://www.bmkg.go.id/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-seismic-bright"
+        >
+          BMKG
+        </a>{" "}
+        dan{" "}
+        <a
+          href="https://earthquake.usgs.gov/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-seismic-bright"
+        >
+          USGS
+        </a>{" "}
+        — tetapi{" "}
+        <strong className="font-semibold text-text-primary">
+          pembagian bobotnya kami yang menentukan
+        </strong>
+        : angka 40/30/15/15 di atas adalah pilihan editorial kami, bukan ukuran
+        baku seismologi dan bukan indeks resmi lembaga mana pun. Orang lain bisa
+        membobot hal yang sama dengan cara berbeda dan sampai pada angka
+        berbeda. Yang kami janjikan bukan bahwa angka ini benar secara mutlak,
+        melainkan bahwa aturannya terbuka dan bisa kamu periksa sendiri.
+      </p>
     </div>
   );
 }

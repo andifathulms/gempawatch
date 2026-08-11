@@ -194,6 +194,18 @@ export default async function AboutPage() {
             title="Cara skor dihitung"
             subtitle="Satu angka 0–100, dari empat komponen berbobot tetap, dalam radius 100 km dari titik pusat wilayah."
           >
+            <p className="mb-4 rounded-lg border border-seismic-orange/25 bg-seismic-orange/[0.06] px-4 py-3 text-fluid-00 leading-relaxed text-text-secondary">
+              <strong className="font-semibold text-text-primary">
+                Sebelum angkanya:
+              </strong>{" "}
+              skor ini kami susun sendiri. Kejadian gempanya resmi dari BMKG dan
+              USGS, tetapi keputusan bahwa frekuensi bernilai 40 sementara
+              kedekatan sesar bernilai 15 adalah pilihan kami — bukan standar
+              seismologi, bukan indeks resmi BMKG, BNPB, atau lembaga lain.
+              Lembaga berbeda bisa membobot bahan yang sama secara berbeda dan
+              mendapat angka berbeda. Karena itu seluruh aturannya kami buka di
+              halaman ini dan di setiap laporan.
+            </p>
             <ul className="space-y-3">
               {WEIGHTS.map((w) => (
                 <li key={w.label}>
