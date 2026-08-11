@@ -39,26 +39,26 @@ export function EventList({ events }: Props) {
 
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <p className="min-w-0 flex-1 truncate text-sm font-medium text-text-primary">
+              <p className="min-w-0 flex-1 truncate text-fluid-00 font-medium text-text-primary">
                 {e.location_description || "Lokasi tidak tersedia"}
               </p>
               <time
                 dateTime={e.event_time}
                 title={absolute(e.event_time)}
-                className="shrink-0 font-mono text-[11px] tabular-nums text-text-muted"
+                className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted"
               >
                 {timeAgo(e.event_time)}
               </time>
             </div>
 
-            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-text-muted">
+            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-fluid-000 text-text-muted">
               <span className="font-mono tabular-nums">{depth(e.depth_km)}</span>
               <span aria-hidden="true">·</span>
               <span>{e.source}</span>
               {e.is_preliminary && <PreliminaryTag />}
               {e.felt_reports && <FeltBadge />}
               {e.potensi_tsunami && (
-                <span className="rounded border border-risk-red/40 bg-risk-red/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-risk-red">
+                <span className="rounded border border-risk-red/40 bg-risk-red/10 px-1.5 py-0.5 text-fluid-000 font-semibold uppercase tracking-wide text-risk-red">
                   Potensi tsunami
                 </span>
               )}

@@ -72,7 +72,7 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <p className="mt-1 text-xs leading-relaxed text-text-muted">
+      <p className="mt-1 text-fluid-000 leading-relaxed text-text-muted">
         Gempa besar jauh lebih jarang daripada gempa kecil — pola ini berlaku di
         seluruh dunia. Jumlah dihitung dalam radius 100 km dari pusat wilayah.
       </p>

@@ -65,7 +65,7 @@ export function MapSkeleton({ height = 460 }: { height?: number }) {
           <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-seismic-orange" />
           <span className="relative inline-flex h-3 w-3 rounded-full bg-seismic-orange" />
         </span>
-        <span className="text-sm text-text-muted">Memuat peta…</span>
+        <span className="text-fluid-00 text-text-muted">Memuat peta…</span>
       </div>
     </div>
   );

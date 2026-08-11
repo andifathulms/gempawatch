@@ -35,7 +35,7 @@ export function SourceAttribution({
 }: Props) {
   if (variant === "inline") {
     return (
-      <p className={`text-[11px] leading-relaxed text-text-muted ${className ?? ""}`}>
+      <p className={`text-fluid-000 leading-relaxed text-text-muted ${className ?? ""}`}>
         Sumber data:{" "}
         {sources.map((s, i) => (
           <span key={s}>
@@ -56,7 +56,7 @@ export function SourceAttribution({
 
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted ${className ?? ""}`}
+      className={`flex flex-wrap items-center gap-x-4 gap-y-1 text-fluid-000 text-text-muted ${className ?? ""}`}
     >
       {sources.map((s) => (
         <a

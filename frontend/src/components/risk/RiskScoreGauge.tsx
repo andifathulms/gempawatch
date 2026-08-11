@@ -88,21 +88,21 @@ export function RiskScoreGauge({ score, tier, percentile, size = 200 }: Props) {
 
       <div className="-mt-9 flex flex-col items-center">
         <span
-          className="font-mono text-[2.75rem] font-bold leading-none tabular-nums"
+          className="font-mono text-fluid-4 font-bold leading-none tabular-nums"
           style={{ color: text }}
         >
           {score != null ? score.toFixed(0) : "—"}
         </span>
-        <span className="mt-1 text-[11px] uppercase tracking-[0.12em] text-text-muted">
+        <span className="mt-1 text-fluid-000 uppercase tracking-[0.12em] text-text-muted">
           skor / 100
         </span>
       </div>
 
-      <p className="mt-3 font-display text-sm font-semibold" style={{ color: text }}>
+      <p className="mt-3 font-display text-fluid-00 font-semibold" style={{ color: text }}>
         Aktivitas {riskTierLabel(tier)}
       </p>
       {percentile != null && (
-        <p className="mt-0.5 text-center text-xs text-text-secondary">
+        <p className="mt-0.5 text-center text-fluid-000 text-text-secondary">
           Lebih aktif dari{" "}
           <span className="font-mono font-medium tabular-nums text-text-primary">
             {percentile}%

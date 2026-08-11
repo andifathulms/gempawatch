@@ -11,7 +11,7 @@ import { DEPTH_BANDS } from "@/lib/seismic";
 export function DepthLegend({ className }: { className?: string }) {
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-text-muted ${className ?? ""}`}
+      className={`flex flex-wrap items-center gap-x-5 gap-y-2 text-fluid-000 text-text-muted ${className ?? ""}`}
     >
       <span className="flex items-center gap-2">
         <span aria-hidden="true" className="flex items-end gap-1">
@@ -31,7 +31,7 @@ export function DepthLegend({ className }: { className?: string }) {
               style={{ backgroundColor: b.color }}
             />
             <span className="text-text-secondary">{b.label}</span>
-            <span className="font-mono text-[11px]">{b.detail}</span>
+            <span className="font-mono text-fluid-000">{b.detail}</span>
           </span>
         ))}
       </span>

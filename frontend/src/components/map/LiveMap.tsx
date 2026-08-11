@@ -62,19 +62,19 @@ export function LiveMap({
               <div className="flex items-center gap-2.5">
                 <MagnitudeBadge magnitude={e.magnitude} depthKm={e.depth_km} size={38} />
                 <div>
-                  <p className="font-mono text-sm font-bold text-text-primary">
+                  <p className="font-mono text-fluid-00 font-bold text-text-primary">
                     M{e.magnitude.toFixed(1)}
                   </p>
-                  <p className="text-xs text-text-muted">
+                  <p className="text-fluid-000 text-text-muted">
                     kedalaman {depth(e.depth_km)}
                   </p>
                 </div>
               </div>
-              <p className="text-xs leading-relaxed text-text-secondary">
+              <p className="text-fluid-000 leading-relaxed text-text-secondary">
                 {e.location_description}
               </p>
               <p
-                className="text-[11px] text-text-muted"
+                className="text-fluid-000 text-text-muted"
                 title={absolute(e.event_time)}
               >
                 {timeAgo(e.event_time)} · {e.source}

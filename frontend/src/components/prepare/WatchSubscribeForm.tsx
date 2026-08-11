@@ -50,7 +50,7 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
 
   if (state === "done") {
     return (
-      <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-sm text-text-secondary">
+      <div className="rounded-lg border border-risk-green/40 bg-risk-green/10 p-4 text-fluid-00 text-text-secondary">
         ✓ Berhasil! Kami akan mengirim email jika ada gempa M{minMag.toFixed(1)}+ di
         dekat lokasi ini. Cek folder spam untuk email pertama.
       </div>
@@ -59,7 +59,7 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
 
   return (
     <form onSubmit={submit} className="space-y-3">
-      <p className="text-sm text-text-secondary">
+      <p className="text-fluid-00 text-text-secondary">
         Dapat email jika ada gempa signifikan dekat lokasi ini. Bukan peringatan
         dini — laporan kejadian yang sudah terjadi.
       </p>
@@ -69,16 +69,16 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
         placeholder="email@contoh.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-lg border border-earth-border bg-earth-dark px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
+        className="w-full rounded-lg border border-earth-border bg-earth-dark px-3 py-2 text-fluid-00 text-text-primary placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
       />
       <input
         type="text"
         placeholder="Label (opsional), mis. Rumah Palu"
         value={label}
         onChange={(e) => setLabel(e.target.value)}
-        className="w-full rounded-lg border border-earth-border bg-earth-dark px-3 py-2 text-sm text-text-primary placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
+        className="w-full rounded-lg border border-earth-border bg-earth-dark px-3 py-2 text-fluid-00 text-text-primary placeholder:text-text-muted focus:border-seismic-orange focus:outline-none"
       />
-      <label className="flex items-center justify-between text-sm text-text-secondary">
+      <label className="flex items-center justify-between text-fluid-00 text-text-secondary">
         <span>Beri tahu untuk magnitudo ≥</span>
         <select
           value={minMag}
@@ -95,7 +95,7 @@ export function WatchSubscribeForm({ lat, lng, defaultLabel = "" }: Props) {
       <button
         type="submit"
         disabled={state === "loading"}
-        className="w-full rounded-lg bg-seismic-orange px-4 py-2.5 text-sm font-semibold text-earth-dark hover:brightness-110 disabled:opacity-60"
+        className="w-full rounded-lg bg-seismic-orange px-4 py-2.5 text-fluid-00 font-semibold text-earth-dark hover:brightness-110 disabled:opacity-60"
       >
         {state === "loading" ? "Menyimpan…" : "Aktifkan Notifikasi"}
       </button>

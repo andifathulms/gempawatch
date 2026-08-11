@@ -43,8 +43,8 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Logo size={26} className="text-sm" />
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-text-secondary">
+            <Logo size={26} className="text-fluid-00" />
+            <p className="mt-3 max-w-xs text-fluid-00 leading-relaxed text-text-secondary">
               Intelijen risiko gempa untuk Indonesia. Data resmi BMKG dan arsip
               historis USGS, dibaca sebagai pola — bukan ramalan.
             </p>
@@ -52,7 +52,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
 
           {SECTIONS.map((section) => (
             <nav key={section.title} aria-label={section.title}>
-              <h2 className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+              <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
                 {section.title}
               </h2>
               <ul className="mt-3 space-y-2">
@@ -60,7 +60,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-sm text-text-secondary transition-colors hover:text-seismic-bright"
+                      className="text-fluid-00 text-text-secondary transition-colors hover:text-seismic-bright"
                     >
                       {l.label}
                     </Link>
@@ -71,7 +71,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           ))}
 
           <nav aria-label="Sumber resmi">
-            <h2 className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+            <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
               Sumber resmi
             </h2>
             <ul className="mt-3 space-y-2">
@@ -81,7 +81,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-text-secondary transition-colors hover:text-seismic-bright"
+                    className="text-fluid-00 text-text-secondary transition-colors hover:text-seismic-bright"
                   >
                     {l.label} ↗
                   </a>
@@ -92,7 +92,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
         </div>
 
         <div className="mt-10 rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-4 py-3.5">
-          <p className="text-sm leading-relaxed text-text-secondary">
+          <p className="text-fluid-00 leading-relaxed text-text-secondary">
             <strong className="font-semibold text-risk-amber">Penting —</strong>{" "}
             GempaWatch menampilkan pola risiko historis, bukan prediksi, dan{" "}
             <strong className="font-semibold text-text-primary">bukan pengganti</strong>{" "}
@@ -109,7 +109,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           </p>
         </div>
 
-        <p className="mt-5 border-t border-earth-border pt-5 text-xs leading-relaxed text-text-muted">
+        <p className="mt-5 border-t border-earth-border pt-5 text-fluid-000 leading-relaxed text-text-muted">
           Data: BMKG (Badan Meteorologi, Klimatologi, dan Geofisika) &middot; USGS
           (United States Geological Survey). Atribusi BMKG bersifat wajib pada setiap
           tampilan datanya.

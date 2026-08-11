@@ -48,7 +48,7 @@ export default async function MapPage() {
       </Card>
 
       <Card title="Cara membaca peta ini">
-        <div className="grid gap-4 text-sm leading-relaxed text-text-secondary sm:grid-cols-3">
+        <div className="grid gap-4 text-fluid-00 leading-relaxed text-text-secondary sm:grid-cols-3">
           <p>
             <strong className="text-text-primary">Sesar aktif</strong> adalah
             retakan kerak bumi tempat energi gempa dilepaskan. Dekat dengan sesar

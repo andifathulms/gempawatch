@@ -58,12 +58,12 @@ export function EmptyState({ title, description, action, tone = "neutral" }: Pro
         </svg>
       </span>
       <p
-        className={`text-sm font-medium ${warning ? "text-risk-amber" : "text-text-secondary"}`}
+        className={`text-fluid-00 font-medium ${warning ? "text-risk-amber" : "text-text-secondary"}`}
       >
         {title}
       </p>
       {description && (
-        <p className="max-w-sm text-sm leading-relaxed text-text-muted">
+        <p className="max-w-sm text-fluid-00 leading-relaxed text-text-muted">
           {description}
         </p>
       )}

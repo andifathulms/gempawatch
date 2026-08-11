@@ -11,7 +11,7 @@ export default function NotFound() {
         <h1 className="text-fluid-2 font-bold tracking-tight text-text-primary">
           Halaman tidak ditemukan
         </h1>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-secondary">
+        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-text-secondary">
           Wilayah atau halaman yang kamu cari tidak tersedia. Coba cari wilayah lain,
           atau langsung cek risiko untuk titik koordinat pilihanmu.
         </p>

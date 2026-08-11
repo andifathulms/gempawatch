@@ -42,7 +42,7 @@ export function DisasterTimeline({ disasters }: { disasters: HistoricalDisaster[
     <div className="space-y-8">
       {groups.map((g) => (
         <section key={g.decade}>
-          <h2 className="sticky top-16 z-10 -mx-1 mb-4 w-fit rounded-full border border-earth-border bg-earth-dark/90 px-3.5 py-1 font-mono text-sm font-bold tabular-nums text-seismic-orange backdrop-blur">
+          <h2 className="sticky top-16 z-10 -mx-1 mb-4 w-fit rounded-full border border-earth-border bg-earth-dark/90 px-3.5 py-1 font-mono text-fluid-00 font-bold tabular-nums text-seismic-orange backdrop-blur">
             {g.decade}s
           </h2>
           <div className="relative space-y-5 border-l border-earth-border pl-1">

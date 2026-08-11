@@ -62,12 +62,12 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
                 }}
               />
 
-              <span className="relative w-5 shrink-0 text-center font-mono text-xs tabular-nums text-text-muted">
+              <span className="relative w-5 shrink-0 text-center font-mono text-fluid-000 tabular-nums text-text-muted">
                 {r.rank}
               </span>
 
               <span
-                className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-sm font-bold tabular-nums"
+                className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full font-mono text-fluid-00 font-bold tabular-nums"
                 style={{ backgroundColor: fill, color: onFillTextColor(fill) }}
                 title={`Skor aktivitas ${r.composite_score.toFixed(0)} dari 100`}
               >
@@ -75,11 +75,11 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
               </span>
 
               <span className="relative min-w-0 flex-1">
-                <span className="block truncate text-sm font-medium text-text-primary">
+                <span className="block truncate text-fluid-00 font-medium text-text-primary">
                   {r.region_name}
                 </span>
                 {!compact && (
-                  <span className="block truncate text-xs text-text-muted">
+                  <span className="block truncate text-fluid-000 text-text-muted">
                     {num(r.event_count_m4)} gempa M4+ · terbesar{" "}
                     {magnitude(r.largest_magnitude)}
                   </span>
@@ -87,7 +87,7 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
               </span>
 
               <span
-                className="relative shrink-0 text-xs font-medium"
+                className="relative shrink-0 text-fluid-000 font-medium"
                 style={{ color: text }}
               >
                 {riskTierLabel(r.activity_tier)}

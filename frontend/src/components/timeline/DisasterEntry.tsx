@@ -33,7 +33,7 @@ export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="font-mono text-xs tabular-nums text-text-muted">
+            <p className="font-mono text-fluid-000 tabular-nums text-text-muted">
               <time dateTime={disaster.event_date}>
                 {date.toLocaleDateString("id-ID", {
                   day: "numeric",
@@ -60,7 +60,7 @@ export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
           )}
         </div>
 
-        <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+        <p className="mt-3 text-fluid-00 leading-relaxed text-text-secondary">
           {disaster.description}
         </p>
 
@@ -68,16 +68,16 @@ export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
           <dl className="mt-4 flex flex-wrap gap-3">
             {disaster.casualties != null && (
               <div className="rounded-lg border border-risk-red/25 bg-risk-red/[0.06] px-3.5 py-2">
-                <dt className="text-xs text-text-muted">Korban jiwa</dt>
-                <dd className="font-mono text-lg font-bold tabular-nums text-risk-red">
+                <dt className="text-fluid-000 text-text-muted">Korban jiwa</dt>
+                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-risk-red">
                   {num(disaster.casualties)}
                 </dd>
               </div>
             )}
             {disaster.displaced != null && (
               <div className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-2">
-                <dt className="text-xs text-text-muted">Mengungsi</dt>
-                <dd className="font-mono text-lg font-bold tabular-nums text-text-primary">
+                <dt className="text-fluid-000 text-text-muted">Mengungsi</dt>
+                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-text-primary">
                   {num(disaster.displaced)}
                 </dd>
               </div>
@@ -86,7 +86,7 @@ export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
         )}
 
         {disaster.source_links.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3 border-t border-earth-border pt-3 text-xs">
+          <div className="mt-4 flex flex-wrap gap-3 border-t border-earth-border pt-3 text-fluid-000">
             <span className="text-text-muted">Rujukan:</span>
             {disaster.source_links.map((link, i) => (
               <a

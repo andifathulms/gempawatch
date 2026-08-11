@@ -93,7 +93,7 @@ export function MakerSignature() {
 
   return (
     <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
-      <p className="text-xs text-text-muted">
+      <p className="text-fluid-000 text-text-muted">
         Designed &amp; built by{" "}
         <a
           href={portfolio}

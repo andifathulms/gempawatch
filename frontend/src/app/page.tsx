@@ -69,7 +69,7 @@ export default async function HomePage() {
         />
 
         <div className="relative flex flex-col gap-6">
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/70 px-3 py-1.5 text-xs text-text-secondary">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-earth-border bg-earth-dark/70 px-3 py-1.5 text-fluid-000 text-text-secondary">
             <span className="relative inline-flex h-2 w-2">
               <span
                 className={`absolute inline-flex h-full w-full animate-pulse-ring rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
@@ -88,7 +88,7 @@ export default async function HomePage() {
               Seberapa rawan gempa{" "}
               <span className="text-seismic-orange">lokasi kamu?</span>
             </h1>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-text-secondary">
+            <p className="mt-4 max-w-xl text-fluid-0 leading-relaxed text-text-secondary">
               Lebih dari 50 tahun catatan seismik BMKG dan USGS, dibaca sebagai
               pola untuk wilayahmu sendiri — bukan sekadar daftar gempa terbaru,
               dan bukan ramalan.
@@ -97,7 +97,7 @@ export default async function HomePage() {
 
           <div className="max-w-xl">
             <RegionSearch size="lg" />
-            <p className="mt-2.5 text-xs text-text-muted">
+            <p className="mt-2.5 text-fluid-000 text-text-muted">
               Ketik nama kabupaten/kota, atau{" "}
               <Link
                 href="/risk-check"
@@ -156,7 +156,7 @@ export default async function HomePage() {
           action={
             <Link
               href="/map"
-              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
             >
               Peta bahaya lengkap →
             </Link>
@@ -207,7 +207,7 @@ export default async function HomePage() {
           action={
             <Link
               href="/explore"
-              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
             >
               Lihat semua →
             </Link>
@@ -222,7 +222,7 @@ export default async function HomePage() {
           action={
             <Link
               href="/timeline"
-              className="text-xs text-text-secondary transition-colors hover:text-seismic-bright"
+              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
             >
               Linimasa lengkap →
             </Link>
@@ -234,13 +234,13 @@ export default async function HomePage() {
             <ul className="divide-y divide-earth-border/70">
               {disasters.slice(0, 4).map((d) => (
                 <li key={d.id} className="flex items-baseline gap-3 py-2.5">
-                  <span className="w-24 shrink-0 font-mono text-xs tabular-nums text-text-muted">
+                  <span className="w-24 shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
                     {shortDate(d.event_date)}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-sm text-text-primary">
+                  <span className="min-w-0 flex-1 truncate text-fluid-00 text-text-primary">
                     {d.name}
                   </span>
-                  <span className="shrink-0 font-mono text-xs tabular-nums text-seismic-bright">
+                  <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-seismic-bright">
                     {magnitude(d.magnitude)}
                   </span>
                 </li>

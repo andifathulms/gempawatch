@@ -44,13 +44,13 @@ export function ShareButton({ path, caption }: Props) {
         href={whatsappHref()}
         target="_blank"
         rel="noopener noreferrer"
-        className="rounded-lg bg-[#25D366] px-4 py-2 text-sm font-semibold text-earth-dark hover:brightness-110"
+        className="rounded-lg bg-[#25D366] px-4 py-2 text-fluid-00 font-semibold text-earth-dark hover:brightness-110"
       >
         Bagikan ke WhatsApp
       </a>
       <button
         onClick={nativeShare}
-        className="rounded-lg border border-earth-border px-4 py-2 text-sm text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-orange"
+        className="rounded-lg border border-earth-border px-4 py-2 text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-orange"
       >
         Bagikan / Salin tautan
       </button>

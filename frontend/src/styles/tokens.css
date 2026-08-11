@@ -6,9 +6,25 @@
    and the type is a three-voice system: a display face for headlines, a UI face
    for prose, and a tabular mono for every number the user might compare.
 
-   Contrast: every text token below clears WCAG AA (4.5:1) against --surface,
-   which is the lightest background any body copy sits on. The previous muted
-   tone (#6B6660) sat at ~3.4:1 and failed.
+   Contrast: every text token below clears WCAG AA (4.5:1) against every
+   background token, measured — not assumed. Worst case for each is against
+   --surface-raised, the lightest surface any text sits on:
+
+     text-primary 14.22   text-secondary 7.53   text-muted   4.83
+     seismic-orange 5.33  seismic-bright 6.92   depth-blue   4.81
+     risk-red 4.54        risk-amber 8.24       risk-green   6.25
+
+   The `-fill` tones are BELOW 4.5:1 on purpose and are not text colours — they
+   are for solid shapes only (legend dots, markers, gauge arcs), where the
+   contrast requirement is 3:1 against the adjacent background rather than the
+   4.5:1 that body text owes. Never set type in a -fill tone; use its unsuffixed
+   sibling, which is luminance-lifted for exactly this reason.
+
+   Spacing: Tailwind's own 4px-based scale IS the spacing scale, used directly
+   as p-4 / gap-3 / mt-2.5. It is not mirrored into variables here — a parallel
+   CSS-variable spacing ramp would be a *second* scale competing with the one
+   every component already speaks, which is the failure mode this file exists to
+   prevent (see the type scale note below for the same argument).
    ========================================================================== */
 :root {
   /* --- Colour channels -----------------------------------------------------
@@ -99,11 +115,25 @@
   --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.4), 0 10px 32px rgba(232, 116, 59, 0.18);
   --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 
-  /* --- Fluid type scale ----------------------------------------------------
-     Ratio ~1.2 at mobile widening to ~1.25 at desktop, so headlines gain
-     presence on large screens without the body copy ballooning with them. */
-  --step-0: 0.9375rem; /* 15px body */
-  --step-1: clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem);
+  /* --- Type scale ----------------------------------------------------------
+     ONE scale, ratio ~1.2 at mobile widening to ~1.25 at desktop, so headlines
+     gain presence on large screens without the body copy ballooning with them.
+
+     Every size on the site must come from a step below. Tailwind's own
+     text-xs/sm/base/lg scale is a *second* scale — using it alongside these
+     meant sizes were chosen per component and nothing lined up across pages.
+     The steps are exposed as `text-fluid-*` utilities (see tailwind.config.ts);
+     there is no sanctioned size smaller than --step-000.
+
+     The two sub-body steps are deliberately few. Anything that needs to be
+     smaller than 12.5px is either not worth showing or is being asked to carry
+     more than fine print should — including the BMKG attribution, which is a
+     legal obligation and therefore has to be genuinely readable, not merely
+     present. */
+  --step-000: 0.78125rem; /* 12.5px — badges, eyebrows, micro-labels */
+  --step-00: 0.875rem; /* 14px — captions, dense UI, secondary rows */
+  --step-0: 1rem; /* 16px body — the floor for prose */
+  --step-1: clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem); /* section heading */
   --step-2: clamp(1.25rem, 0.7vw + 1.1rem, 1.5rem);
   --step-3: clamp(1.5rem, 1.3vw + 1.2rem, 1.95rem);
   --step-4: clamp(1.85rem, 2.4vw + 1.3rem, 2.6rem);

@@ -76,9 +76,9 @@ export default async function ExplorePage() {
             <ul className="space-y-2.5">
               {WEIGHTS.map((w) => (
                 <li key={w.label}>
-                  <div className="flex items-baseline justify-between gap-3 text-sm">
+                  <div className="flex items-baseline justify-between gap-3 text-fluid-00">
                     <span className="text-text-secondary">{w.label}</span>
-                    <span className="shrink-0 font-mono text-xs tabular-nums text-text-muted">
+                    <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
                       maks {w.max}
                     </span>
                   </div>
@@ -91,7 +91,7 @@ export default async function ExplorePage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-3 text-[11px] leading-relaxed text-text-muted">
+            <p className="mt-3 text-fluid-000 leading-relaxed text-text-muted">
               Jumlah kejadian dihitung dalam radius tetap dan tidak dinormalisasi
               terhadap luas wilayah maupun populasi — dua wilayah berskor sama belum
               tentu sebanding paparannya. Gunakan persentil untuk konteks relatif.

@@ -113,10 +113,10 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
   return (
     <div
       role="status"
-      className={`animate-fade-in-up pointer-events-auto flex items-center gap-3 rounded-lg border ${style.ring} bg-earth-raised px-4 py-3 text-sm text-text-primary shadow-lg`}
+      className={`animate-fade-in-up pointer-events-auto flex items-center gap-3 rounded-lg border ${style.ring} bg-earth-raised px-4 py-3 text-fluid-00 text-text-primary shadow-lg`}
     >
       <span
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs font-bold ${style.badge}`}
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-fluid-000 font-bold ${style.badge}`}
         aria-hidden="true"
       >
         {style.icon}

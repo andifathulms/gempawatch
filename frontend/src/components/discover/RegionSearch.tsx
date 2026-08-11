@@ -132,15 +132,15 @@ export function RegionSearch({
         }
         className={`w-full rounded-lg border border-earth-border bg-earth-dark/60 text-text-primary shadow-sm transition-colors placeholder:text-text-muted focus:border-seismic-orange focus:outline-none ${
           lg
-            ? "py-3.5 pl-12 pr-4 text-base sm:text-[1.0625rem]"
-            : "py-2.5 pl-10 pr-4 text-sm"
+            ? "py-3.5 pl-12 pr-4 text-fluid-0 sm:text-fluid-1"
+            : "py-2.5 pl-10 pr-4 text-fluid-00"
         }`}
       />
 
       {searching && (
         <span
           aria-hidden="true"
-          className={`absolute top-1/2 -translate-y-1/2 text-xs text-text-muted ${lg ? "right-4" : "right-3.5"}`}
+          className={`absolute top-1/2 -translate-y-1/2 text-fluid-000 text-text-muted ${lg ? "right-4" : "right-3.5"}`}
         >
           …
         </span>
@@ -153,7 +153,7 @@ export function RegionSearch({
           className="absolute z-[1200] mt-2 max-h-80 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised py-1 shadow-lg"
         >
           {noMatches ? (
-            <li className="px-4 py-3 text-sm text-text-muted">
+            <li className="px-4 py-3 text-fluid-00 text-text-muted">
               Tidak ada wilayah cocok dengan “{q.trim()}”.
             </li>
           ) : (
@@ -162,12 +162,12 @@ export function RegionSearch({
                 <button
                   onMouseEnter={() => setCursor(i)}
                   onClick={() => go(r)}
-                  className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-sm transition-colors ${
+                  className={`flex w-full items-center justify-between gap-3 px-4 py-2.5 text-left text-fluid-00 transition-colors ${
                     i === cursor ? "bg-earth-surface text-text-primary" : "text-text-secondary"
                   }`}
                 >
                   <span className="truncate">{r.name}</span>
-                  <span className="shrink-0 text-xs text-text-muted">
+                  <span className="shrink-0 text-fluid-000 text-text-muted">
                     {regionType(r.type)}
                     {r.is_coastal ? " · pesisir" : ""}
                   </span>

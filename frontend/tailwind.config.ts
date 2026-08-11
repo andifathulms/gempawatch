@@ -17,6 +17,26 @@ const channel = (name: string) => `rgb(var(--${name}-c) / <alpha-value>)`;
 const config: Config = {
   content: ["./src/app/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
   theme: {
+    // The whole type scale, and the only sizes the app may use. This sits
+    // OUTSIDE `extend` on purpose: it replaces Tailwind's built-in
+    // text-xs/sm/base/lg scale rather than joining it.
+    //
+    // The default scale used to stay available alongside the fluid steps, and
+    // it won by sheer convenience — 133 uses of the default scale against 7 of
+    // the fluid one, plus 23 hardcoded text-[11px]-style escapes. That is three
+    // scales, so nothing lined up between components. Overriding the key means
+    // a leftover `text-sm` now resolves to nothing and shows up as an unstyled
+    // element in review, instead of quietly reintroducing a fourth scale.
+    fontSize: {
+      "fluid-000": ["var(--step-000)", { lineHeight: "1.45" }],
+      "fluid-00": ["var(--step-00)", { lineHeight: "1.5" }],
+      "fluid-0": ["var(--step-0)", { lineHeight: "1.6" }],
+      "fluid-1": ["var(--step-1)", { lineHeight: "1.4" }],
+      "fluid-2": ["var(--step-2)", { lineHeight: "1.3" }],
+      "fluid-3": ["var(--step-3)", { lineHeight: "1.2" }],
+      "fluid-4": ["var(--step-4)", { lineHeight: "1.1" }],
+      "fluid-5": ["var(--step-5)", { lineHeight: "1.02" }],
+    },
     extend: {
       colors: {
         earth: {
@@ -51,15 +71,6 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
-      },
-      // Fluid steps for editorial type; Tailwind's own scale stays available
-      // for UI chrome (text-xs, text-sm) where a fixed size is what you want.
-      fontSize: {
-        "fluid-1": ["var(--step-1)", { lineHeight: "1.5" }],
-        "fluid-2": ["var(--step-2)", { lineHeight: "1.3" }],
-        "fluid-3": ["var(--step-3)", { lineHeight: "1.2" }],
-        "fluid-4": ["var(--step-4)", { lineHeight: "1.1" }],
-        "fluid-5": ["var(--step-5)", { lineHeight: "1.02" }],
       },
       borderRadius: {
         sm: "var(--r-sm)",

@@ -92,7 +92,7 @@ export default async function AboutPage() {
           aria-label="Daftar isi"
           className="hidden lg:sticky lg:top-20 lg:block lg:self-start"
         >
-          <p className="font-display text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+          <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
             Isi halaman
           </p>
           <ul className="mt-3 space-y-1.5 border-l border-earth-border">
@@ -100,7 +100,7 @@ export default async function AboutPage() {
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  className="-ml-px block border-l border-transparent py-1 pl-3 text-sm text-text-secondary transition-colors hover:border-seismic-orange hover:text-text-primary"
+                  className="-ml-px block border-l border-transparent py-1 pl-3 text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-text-primary"
                 >
                   {s.label}
                 </a>
@@ -112,7 +112,7 @@ export default async function AboutPage() {
         <div className="min-w-0 space-y-5">
           <Card id="bukan-peringatan" title="Bukan sistem peringatan dini">
             <div className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] p-4">
-              <p className="text-sm leading-relaxed text-text-secondary">
+              <p className="text-fluid-00 leading-relaxed text-text-secondary">
                 GempaWatch menampilkan{" "}
                 <strong className="font-semibold text-text-primary">
                   pola historis dan konteks risiko
@@ -135,7 +135,7 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="sumber-data" title="Sumber data">
-            <dl className="space-y-4 text-sm leading-relaxed text-text-secondary">
+            <dl className="space-y-4 text-fluid-00 leading-relaxed text-text-secondary">
               <div>
                 <dt className="font-semibold text-text-primary">
                   BMKG — Badan Meteorologi, Klimatologi, dan Geofisika
@@ -183,10 +183,10 @@ export default async function AboutPage() {
               {WEIGHTS.map((w) => (
                 <li key={w.label}>
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-sm font-medium text-text-primary">
+                    <span className="text-fluid-00 font-medium text-text-primary">
                       {w.label}
                     </span>
-                    <span className="shrink-0 font-mono text-xs tabular-nums text-text-muted">
+                    <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
                       maks {w.max}
                     </span>
                   </div>
@@ -196,11 +196,11 @@ export default async function AboutPage() {
                       style={{ width: `${w.max}%` }}
                     />
                   </div>
-                  <p className="mt-1 text-xs text-text-muted">{w.note}</p>
+                  <p className="mt-1 text-fluid-000 text-text-muted">{w.note}</p>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 border-t border-earth-border pt-3.5 text-sm leading-relaxed text-text-secondary">
+            <p className="mt-4 border-t border-earth-border pt-3.5 text-fluid-00 leading-relaxed text-text-secondary">
               <strong className="font-semibold text-text-primary">Persentil</strong>{" "}
               memeringkat skor itu terhadap seluruh wilayah lain di basis data,
               sehingga memberi konteks relatif — &ldquo;lebih aktif dari X%
@@ -210,12 +210,12 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="tsunami" title="Tingkat risiko tsunami">
-            <p className="text-sm leading-relaxed text-text-secondary">
+            <p className="text-fluid-00 leading-relaxed text-text-secondary">
               Indikator pola historis, bukan peringatan resmi. Kriterianya: wilayah
               pesisir dengan gempa dangkal (&lt;70 km) bermagnitudo ≥6.5 dalam radius
               150 km.
             </p>
-            <ul className="mt-3 space-y-2 text-sm">
+            <ul className="mt-3 space-y-2 text-fluid-00">
               <li className="flex items-baseline gap-2.5">
                 <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-risk-red-fill" />
                 <span className="text-text-secondary">
@@ -241,7 +241,7 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="keterbatasan" title="Keterbatasan yang kami akui">
-            <ul className="space-y-3 text-sm leading-relaxed text-text-secondary">
+            <ul className="space-y-3 text-fluid-00 leading-relaxed text-text-secondary">
               <li>
                 <strong className="text-text-primary">
                   Tidak dinormalisasi terhadap luas atau populasi.

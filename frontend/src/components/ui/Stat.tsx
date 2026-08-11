@@ -20,18 +20,18 @@ export function Stat({ label, value, unit, accent, hint }: Props) {
   return (
     <div className="flex items-baseline justify-between gap-3 border-b border-earth-border/60 py-2.5 last:border-b-0">
       <span
-        className={`text-sm text-text-secondary ${hint ? "cursor-help decoration-dotted underline-offset-4 hover:underline" : ""}`}
+        className={`text-fluid-00 text-text-secondary ${hint ? "cursor-help decoration-dotted underline-offset-4 hover:underline" : ""}`}
         title={hint}
       >
         {label}
       </span>
       <span className="flex shrink-0 items-baseline gap-1">
         <span
-          className={`font-mono text-lg font-medium tabular-nums ${accent ? "text-seismic-bright" : "text-text-primary"}`}
+          className={`font-mono text-fluid-1 font-medium tabular-nums ${accent ? "text-seismic-bright" : "text-text-primary"}`}
         >
           {value}
         </span>
-        {unit && <span className="text-xs text-text-muted">{unit}</span>}
+        {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
       </span>
     </div>
   );
@@ -65,12 +65,12 @@ export function StatTile({ label, value, unit, tone = "default", hint }: TilePro
       title={hint}
     >
       <div className="flex items-baseline gap-1">
-        <span className={`font-mono text-2xl font-bold tabular-nums ${color}`}>
+        <span className={`font-mono text-fluid-2 font-bold tabular-nums ${color}`}>
           {value}
         </span>
-        {unit && <span className="text-xs text-text-muted">{unit}</span>}
+        {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
       </div>
-      <p className="mt-1 text-xs leading-snug text-text-muted">{label}</p>
+      <p className="mt-1 text-fluid-000 leading-snug text-text-muted">{label}</p>
     </div>
   );
 }

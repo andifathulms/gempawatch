@@ -46,8 +46,8 @@ export function PreparednessChecklist({ tier, coastal = false }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-text-primary">Siap Gempa</h3>
-        <span className="font-mono text-xs text-text-muted">
+        <h3 className="text-fluid-00 font-semibold text-text-primary">Siap Gempa</h3>
+        <span className="font-mono text-fluid-000 text-text-muted">
           {done}/{steps.length}
         </span>
       </div>
@@ -60,7 +60,7 @@ export function PreparednessChecklist({ tier, coastal = false }: Props) {
       <ul className="space-y-2">
         {steps.map((step, i) => (
           <li key={i}>
-            <label className="flex cursor-pointer items-start gap-3 text-sm">
+            <label className="flex cursor-pointer items-start gap-3 text-fluid-00">
               <input
                 type="checkbox"
                 checked={checked[i]}
@@ -74,7 +74,7 @@ export function PreparednessChecklist({ tier, coastal = false }: Props) {
           </li>
         ))}
       </ul>
-      <p className="text-[11px] text-text-muted">
+      <p className="text-fluid-000 text-text-muted">
         Checklist edukatif umum. Untuk panduan resmi, rujuk BNPB & BMKG.
       </p>
     </div>

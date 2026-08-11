@@ -36,13 +36,13 @@ export function RiskReportView({ report, lat, lng }: Props) {
   return (
     <div className="mx-auto max-w-xl space-y-5">
       <header>
-        <p className="font-display text-xs font-semibold uppercase tracking-[0.16em] text-seismic-orange">
+        <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-seismic-orange">
           Laporan risiko titik
         </p>
         <h1 className="mt-1.5 text-fluid-3 font-bold tracking-tight">
           {report.nearest_region?.name ?? "Lokasi pilihanmu"}
         </h1>
-        <p className="mt-1 font-mono text-xs tabular-nums text-text-muted">
+        <p className="mt-1 font-mono text-fluid-000 tabular-nums text-text-muted">
           {lat.toFixed(4)}, {lng.toFixed(4)}
         </p>
       </header>
@@ -88,7 +88,7 @@ export function RiskReportView({ report, lat, lng }: Props) {
 
       <Link
         href="/risk-check"
-        className="block rounded-lg border border-earth-border py-3 text-center text-sm text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+        className="block rounded-lg border border-earth-border py-3 text-center text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
       >
         ← Cek lokasi lain di peta
       </Link>

@@ -21,7 +21,7 @@ export function RiskTierBadge({ tier, label, size = "md" }: Props) {
   return (
     <span
       className={`inline-flex items-center gap-1.5 rounded-full font-medium ${
-        size === "sm" ? "px-2.5 py-0.5 text-[11px]" : "px-3 py-1 text-xs"
+        size === "sm" ? "px-2.5 py-0.5 text-fluid-000" : "px-3 py-1 text-fluid-000"
       }`}
       style={{
         backgroundColor: `${dot}1f`,

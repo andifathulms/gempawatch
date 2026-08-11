@@ -103,14 +103,14 @@ export function HazardMap({ faults, events, zones }: Props) {
               />
               <span className="min-w-0">
                 <span
-                  className={`block text-sm font-medium ${on ? "text-text-primary" : "text-text-muted"}`}
+                  className={`block text-fluid-00 font-medium ${on ? "text-text-primary" : "text-text-muted"}`}
                 >
                   {l.label}
                 </span>
-                <span className="mt-0.5 block text-xs leading-snug text-text-muted">
+                <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
                   {l.description}
                 </span>
-                <span className="mt-1 block font-mono text-[11px] tabular-nums text-text-muted">
+                <span className="mt-1 block font-mono text-fluid-000 tabular-nums text-text-muted">
                   {num(counts[l.key])} objek
                 </span>
               </span>
@@ -156,14 +156,14 @@ export function HazardMap({ faults, events, zones }: Props) {
             >
               <Popup>
                 <div className="min-w-[180px] space-y-1">
-                  <p className="font-mono text-sm font-bold text-text-primary">
+                  <p className="font-mono text-fluid-00 font-bold text-text-primary">
                     M{e.magnitude.toFixed(1)} · {e.depth_km.toFixed(0)} km
                   </p>
-                  <p className="text-xs text-text-secondary">
+                  <p className="text-fluid-000 text-text-secondary">
                     {e.location_description}
                   </p>
                   <p
-                    className="text-[11px] text-text-muted"
+                    className="text-fluid-000 text-text-muted"
                     title={absolute(e.event_time)}
                   >
                     {timeAgo(e.event_time)} · {e.source}
@@ -192,15 +192,15 @@ export function HazardMap({ faults, events, zones }: Props) {
               </Tooltip>
               <Popup>
                 <div className="space-y-1">
-                  <p className="text-sm font-semibold text-text-primary">
+                  <p className="text-fluid-00 font-semibold text-text-primary">
                     {z.region_name}
                   </p>
-                  <p className="text-xs text-text-secondary">
+                  <p className="text-fluid-000 text-text-secondary">
                     Risiko tsunami historis: {riskTierLabel(z.tsunami_risk_tier)}
                   </p>
                   <Link
                     href={`/region/${z.slug}`}
-                    className="text-xs text-seismic-bright underline underline-offset-2"
+                    className="text-fluid-000 text-seismic-bright underline underline-offset-2"
                   >
                     Lihat profil risiko →
                   </Link>
@@ -210,7 +210,7 @@ export function HazardMap({ faults, events, zones }: Props) {
           ))}
       </MapContainer>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-text-muted">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-fluid-000 text-text-muted">
         <span className="flex items-center gap-2">
           <span aria-hidden="true" className="flex items-end gap-1">
             <span className="h-1.5 w-1.5 rounded-full bg-text-muted" />
@@ -227,7 +227,7 @@ export function HazardMap({ faults, events, zones }: Props) {
               style={{ backgroundColor: b.color }}
             />
             <span className="text-text-secondary">{b.label}</span>
-            <span className="font-mono text-[11px]">{b.detail}</span>
+            <span className="font-mono text-fluid-000">{b.detail}</span>
           </span>
         ))}
       </div>

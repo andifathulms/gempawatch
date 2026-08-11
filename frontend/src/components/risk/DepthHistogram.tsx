@@ -59,7 +59,7 @@ export function DepthHistogram({ events }: { events: TimelineEvent[] }) {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
+      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
         {DEPTH_BANDS.map((b) => (
           <span key={b.label} className="flex items-center gap-1.5">
             <span

@@ -36,14 +36,14 @@ function Select({
 }) {
   return (
     <label className="flex-1">
-      <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-text-muted">
+      <span className="mb-1.5 block text-fluid-000 font-medium uppercase tracking-wider text-text-muted">
         {label}
       </span>
       <select
         aria-label={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-earth-border bg-earth-dark/60 px-3 py-2.5 text-sm text-text-primary transition-colors focus:border-seismic-orange focus:outline-none"
+        className="w-full rounded-lg border border-earth-border bg-earth-dark/60 px-3 py-2.5 text-fluid-00 text-text-primary transition-colors focus:border-seismic-orange focus:outline-none"
       >
         <option value="">Pilih wilayah…</option>
         {options.map((o) => (

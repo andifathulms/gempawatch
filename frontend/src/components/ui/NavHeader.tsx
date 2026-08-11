@@ -68,11 +68,11 @@ export function NavHeader() {
           className="flex shrink-0 items-center"
           aria-label="GempaWatch beranda"
         >
-          <Logo size={28} className="text-[0.9375rem]" />
+          <Logo size={28} className="text-fluid-0" />
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden items-center gap-0.5 text-sm md:flex">
+        <div className="hidden items-center gap-0.5 text-fluid-00 md:flex">
           {LINKS.map((l) => {
             const active = isActive(pathname, l.href);
             return (
@@ -102,7 +102,7 @@ export function NavHeader() {
           <Link
             href={CTA.href}
             aria-current={isActive(pathname, CTA.href) ? "page" : undefined}
-            className="hidden rounded-lg bg-seismic-orange px-4 py-2 text-sm font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
+            className="hidden rounded-lg bg-seismic-orange px-4 py-2 text-fluid-00 font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
           >
             {CTA.label}
           </Link>
@@ -157,7 +157,7 @@ export function NavHeader() {
                   key={l.href}
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex items-center justify-between rounded-md px-3 py-3 text-[0.9375rem] transition-colors ${
+                  className={`flex items-center justify-between rounded-md px-3 py-3 text-fluid-0 transition-colors ${
                     active
                       ? "bg-earth-surface text-seismic-bright"
                       : "text-text-secondary hover:bg-earth-surface hover:text-text-primary"

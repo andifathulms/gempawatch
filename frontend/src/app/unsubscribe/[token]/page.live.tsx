@@ -35,17 +35,17 @@ export default async function UnsubscribePage({
   return (
     <div className="mx-auto max-w-md py-10">
       <Card>
-        <h1 className="text-lg font-semibold">
+        <h1 className="text-fluid-1 font-semibold">
           {ok ? "Langganan dinonaktifkan" : "Terjadi kesalahan"}
         </h1>
-        <p className="mt-2 text-sm text-text-secondary">
+        <p className="mt-2 text-fluid-00 text-text-secondary">
           {ok
             ? "Anda tidak akan lagi menerima email notifikasi untuk lokasi ini. Anda bisa berlangganan kembali kapan saja."
             : "Tautan tidak valid atau sudah kedaluwarsa. Coba lagi dari email terbaru."}
         </p>
         <Link
           href="/"
-          className="mt-4 inline-block text-sm text-seismic-orange hover:brightness-110"
+          className="mt-4 inline-block text-fluid-00 text-seismic-orange hover:brightness-110"
         >
           ← Kembali ke GempaWatch
         </Link>

@@ -32,13 +32,13 @@ export function PageHeader({ eyebrow, title, subtitle, action, children }: Props
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           {eyebrow && (
-            <p className="font-display text-xs font-semibold uppercase tracking-[0.16em] text-seismic-orange">
+            <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-seismic-orange">
               {eyebrow}
             </p>
           )}
           <h1 className="mt-1.5 text-fluid-4 font-bold tracking-tight">{title}</h1>
           {subtitle && (
-            <p className="mt-2.5 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-[0.9375rem]">
+            <p className="mt-2.5 max-w-2xl text-fluid-00 leading-relaxed text-text-secondary sm:text-fluid-0">
               {subtitle}
             </p>
           )}

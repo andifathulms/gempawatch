@@ -165,7 +165,7 @@ export function CompareResult() {
           <div key={p.region.slug} className="flex flex-col items-center gap-2">
             <Link
               href={`/region/${p.region.slug}`}
-              className="text-center font-display text-base font-semibold text-text-primary transition-colors hover:text-seismic-bright"
+              className="text-center font-display text-fluid-0 font-semibold text-text-primary transition-colors hover:text-seismic-bright"
             >
               {p.region.name}
             </Link>
@@ -180,7 +180,7 @@ export function CompareResult() {
         ))}
       </div>
 
-      <table className="mt-2 w-full text-sm">
+      <table className="mt-2 w-full text-fluid-00">
         <caption className="sr-only">
           Perbandingan metrik risiko {left.region.name} dan {right.region.name}
         </caption>
@@ -212,7 +212,7 @@ export function CompareResult() {
                   {row.value(left)}
                 </td>
                 <td
-                  className="w-2/5 px-2 py-2.5 text-center text-xs leading-snug text-text-muted"
+                  className="w-2/5 px-2 py-2.5 text-center text-fluid-000 leading-snug text-text-muted"
                   title={row.hint}
                 >
                   {row.label}
@@ -229,7 +229,7 @@ export function CompareResult() {
         </tbody>
       </table>
 
-      <p className="mt-4 text-[11px] leading-relaxed text-text-muted">
+      <p className="mt-4 text-fluid-000 leading-relaxed text-text-muted">
         Nilai yang lebih tinggi ditandai dengan warna. Angka lebih tinggi tidak
         selalu berarti lebih berbahaya — jumlah kejadian dihitung dalam radius
         tetap dan tidak dinormalisasi terhadap luas wilayah maupun populasi.

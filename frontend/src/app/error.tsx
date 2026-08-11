@@ -40,7 +40,7 @@ export default function Error({
         <h1 className="text-fluid-2 font-bold tracking-tight text-text-primary">
           Terjadi kesalahan
         </h1>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-secondary">
+        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-text-secondary">
           Halaman ini gagal dimuat — kemungkinan besar gangguan sementara pada
           koneksi data. Coba muat ulang, atau kembali ke beranda. Untuk informasi
           gempa resmi, selalu tersedia di{" "}
