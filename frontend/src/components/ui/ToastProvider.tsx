@@ -87,12 +87,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       {mounted &&
         createPortal(
-          <div
-            className="pointer-events-none fixed inset-x-0 bottom-6 z-[2000] flex flex-col items-center gap-2 px-4"
-            role="region"
-            aria-live="polite"
-            aria-label="Notifikasi"
-          >
+          /*
+            No live region here. Each ToastCard is already role="status", which
+            carries an implicit aria-live="polite"; nesting a second live region
+            around them made every toast announce twice. A landmark for a
+            transient notification stack is not useful to navigate to either.
+          */
+          <div className="pointer-events-none fixed inset-x-0 bottom-6 z-[2000] flex flex-col items-center gap-2 px-4">
             {toasts.map((t) => (
               <ToastCard key={t.id} toast={t} onClose={() => dismiss(t.id)} />
             ))}

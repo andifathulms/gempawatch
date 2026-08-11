@@ -84,10 +84,11 @@ export function ScoreBreakdown({ components, total }: Props) {
                 </span>
               </div>
 
+              {/* The points are printed beside this bar, so labelling it
+                  would say the same thing twice. */}
               <div
+                aria-hidden="true"
                 className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-earth-dark"
-                role="img"
-                aria-label={`${meta.title}: ${c.points} dari ${c.max_points} poin`}
               >
                 <div
                   className="h-full origin-left rounded-full bg-seismic-orange motion-safe:animate-draw-in"

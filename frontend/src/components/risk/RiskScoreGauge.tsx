@@ -72,8 +72,7 @@ export function RiskScoreGauge({
         width={size}
         height={size / 2 + 14}
         viewBox={`0 0 ${size} ${size / 2 + 14}`}
-        role="img"
-        aria-label={`Skor aktivitas seismik ${score != null ? score.toFixed(0) : "tidak tersedia"} dari 100, tingkat ${riskTierLabel(tier)}`}
+        aria-hidden="true"
       >
         <path
           d={arc}

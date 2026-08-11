@@ -102,9 +102,14 @@ export function RiskCheckTool() {
               onClick={useGeolocation}
               size="sm"
               disabled={locating}
-              aria-label="Gunakan lokasi saya"
             >
-              {locating ? "Mencari…" : "📍 Lokasi Saya"}
+              {locating ? (
+                "Mencari…"
+              ) : (
+                <>
+                  <span aria-hidden="true">📍</span> Lokasi Saya
+                </>
+              )}
             </Button>
           }
           footer={<SourceAttribution variant="inline" />}
