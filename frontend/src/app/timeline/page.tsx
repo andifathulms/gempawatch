@@ -63,7 +63,20 @@ export default async function TimelinePage() {
 
       <DisasterTimeline disasters={disasters} />
 
-      <SourceAttribution sources={["BMKG", "USGS"]} />
+      {/* The source set is correct — every entry in the archive cites USGS and
+          one also cites BMKG — but crediting only the two feeds implied they
+          supply the whole entry, including the casualty and displacement
+          figures. Those come from the curation, not from either API, and that
+          distinction matters on a page whose largest numbers are death tolls. */}
+      <div className="space-y-2">
+        <SourceAttribution sources={["BMKG", "USGS"]} />
+        <p className="text-fluid-000 leading-relaxed text-text-muted">
+          Magnitudo dan episentrum tiap kejadian berasal dari katalog di atas.
+          Angka korban jiwa dan pengungsi dikurasi manual dari catatan publik
+          per kejadian, bukan dari feed BMKG maupun USGS, dan dapat berbeda
+          antar sumber resmi.
+        </p>
+      </div>
     </div>
   );
 }
