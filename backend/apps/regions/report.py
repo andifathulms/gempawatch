@@ -121,13 +121,38 @@ def _largest_event_counterfactual(
     Returns None when there is nothing to remove, or when removing it would
     leave no events at all: there is no meaningful "without it" for a record
     of one.
+
+    TIE-BREAK. Several events can share the maximum magnitude — Yogyakarta has
+    two M6.3 — and which one is removed changes the answer, because they differ
+    in depth and therefore move the shallow ratio differently. The rule has to
+    be identical here and in the TypeScript port, and it cannot use the primary
+    key: the static engine reads a CSV with no ids. So the key is built from
+    fields both sides hold, in this order:
+
+        shallowest depth (missing depth sorts last), then earliest year,
+        then westmost longitude, then southmost latitude
+
+    Shallowest first is the meaningful part — among equally large events, the
+    shallow one is the more damaging, so it is the one worth asking about. The
+    rest is only there to make the ordering total.
     """
     if largest_magnitude is None:
         return None
 
-    biggest = score_area.filter(magnitude=largest_magnitude).order_by("id").first()
-    if biggest is None:
+    # Ties are few (usually one row), so resolving them in Python keeps the
+    # ordering identical to the port instead of encoding it in SQL twice.
+    tied = list(score_area.filter(magnitude=largest_magnitude))
+    if not tied:
         return None
+    biggest = min(
+        tied,
+        key=lambda e: (
+            e.depth_km if e.depth_km is not None else float("inf"),
+            e.event_time.year,
+            e.location.x,
+            e.location.y,
+        ),
+    )
 
     remaining = score_area.exclude(pk=biggest.pk)
     total = remaining.count()

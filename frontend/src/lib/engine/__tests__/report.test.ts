@@ -94,6 +94,43 @@ describe("risk report matches Django golden fixtures", () => {
       expect(scoreDelta).toBeLessThanOrEqual(SCORE_TOLERANCE);
 
       expect(actual.activity_percentile).toBe(want.activity_percentile);
+
+      // Derived output has to match too. Pinning only the headline score let
+      // the engines disagree about WHICH event the counterfactual removed while
+      // both reported a plausible number — two M6.3s at Yogyakarta, one deep and
+      // one shallow, picked by primary key in Django and by array order here.
+      expect(actual.activity_percentile_basis).toEqual(
+        want.activity_percentile_basis,
+      );
+      expect(actual.comparison_set).toEqual(want.comparison_set);
+
+      // Components are exact except for the proximity term, which inherits the
+      // spherical-vs-geodetic fault distance drift the block above tolerates.
+      expect(actual.score_breakdown.map((c) => c.key)).toEqual(
+        want.score_breakdown.map((c) => c.key),
+      );
+      actual.score_breakdown.forEach((got, i) => {
+        const expected = want.score_breakdown[i];
+        expect(got.max_points).toBe(expected.max_points);
+        expect(got.saturated).toBe(expected.saturated);
+        expect(Math.abs(got.points - expected.points)).toBeLessThanOrEqual(
+          got.key === "proximity" ? SCORE_TOLERANCE : 0,
+        );
+      });
+
+      // The identity of the removed event is exact — that is the whole point.
+      if (want.largest_event_sensitivity === null) {
+        expect(actual.largest_event_sensitivity).toBeNull();
+      } else {
+        const got = actual.largest_event_sensitivity!;
+        const expected = want.largest_event_sensitivity;
+        expect(got.removed).toEqual(expected.removed);
+        expect(got.next_largest_magnitude).toBe(expected.next_largest_magnitude);
+        expect(got.tier_without).toBe(expected.tier_without);
+        expect(
+          Math.abs(got.score_without - expected.score_without),
+        ).toBeLessThanOrEqual(SCORE_TOLERANCE);
+      }
     },
   );
 });

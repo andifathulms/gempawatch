@@ -4,7 +4,7 @@
     "lat": -6.2,
     "lng": 106.8,
     "expected": {
-      "composite_score": 48.3,
+      "composite_score": 48.5,
       "activity_tier": "MODERATE",
       "activity_percentile": 17,
       "event_count_m4_within_50km": 32,
@@ -19,6 +19,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 29.9,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.73
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 3.6,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.241
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 102.14
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 45.3,
+        "score_delta": 3.2,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -42,6 +111,75 @@
         "earliest_year": 1974,
         "latest_year": 2025,
         "years": 52
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 31.4,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.92
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.721
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.7,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 2.2
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2016,
+          "depth_km": 13.0
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 69.9,
+        "score_delta": 2.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -65,6 +203,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 5.3
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 21.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 9.3,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.623
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 3.6,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 76.26
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.6,
+          "year": 2009,
+          "depth_km": 81.0
+        },
+        "next_largest_magnitude": 6.4,
+        "score_without": 67.3,
+        "score_delta": 7.2,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -76,7 +283,7 @@
       "composite_score": 89.2,
       "activity_tier": "HIGH",
       "activity_percentile": 100,
-      "event_count_m4_within_50km": 117,
+      "event_count_m4_within_50km": 116,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "kota-palu",
@@ -88,6 +295,75 @@
         "earliest_year": 1977,
         "latest_year": 2026,
         "years": 50
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 8.3
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 21.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.959
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 13.9,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 7.63
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.5,
+          "year": 2018,
+          "depth_km": 20.0
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 84.4,
+        "score_delta": 4.8,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -111,6 +387,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 11.68
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 19.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.2
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.998
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 117.85
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.2,
+          "year": 2008,
+          "depth_km": 25.0
+        },
+        "next_largest_magnitude": 7.0,
+        "score_without": 73.0,
+        "score_delta": 1.2,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -134,6 +479,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 14.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.75
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 8.2,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.548
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1.42
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2006,
+          "depth_km": 12.5
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 50.6,
+        "score_delta": 0.3,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -157,6 +571,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.98
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 17.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.9
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.5,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.766
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 168.89
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.9,
+          "year": 2018,
+          "depth_km": 21.0
+        },
+        "next_largest_magnitude": 6.9,
+        "score_without": 68.9,
+        "score_delta": 0.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -180,6 +663,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 11.07
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 16.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.713
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 654.07
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.8,
+          "year": 2000,
+          "depth_km": 16.0
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 66.9,
+        "score_delta": 0.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -191,7 +743,7 @@
       "composite_score": 67.6,
       "activity_tier": "HIGH",
       "activity_percentile": 46,
-      "event_count_m4_within_50km": 156,
+      "event_count_m4_within_50km": 157,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "HIGH",
       "nearest_region_slug": "jayapura",
@@ -203,6 +755,75 @@
         "earliest_year": 1973,
         "latest_year": 2026,
         "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.67
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 12.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.1
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.998
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1905.51
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.1,
+          "year": 1995,
+          "depth_km": 20.2
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 67.0,
+        "score_delta": 0.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -226,7 +847,66 @@
         "earliest_year": 1996,
         "latest_year": 1996,
         "years": 1
-      }
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 8.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 0.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 4.1
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 1.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 775.79
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": null
     }
   },
   {
@@ -249,6 +929,75 @@
         "earliest_year": 1981,
         "latest_year": 2025,
         "years": 45
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 12.1,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.51
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 10.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 5.7
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 9.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.603
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 9.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 40.03
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 5.7,
+          "year": 2005,
+          "depth_km": 18.3
+        },
+        "next_largest_magnitude": 5.4,
+        "score_without": 38.3,
+        "score_delta": 2.0,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -272,7 +1021,66 @@
         "earliest_year": null,
         "latest_year": null,
         "years": 0
-      }
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 0.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 0.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": null
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1820.82
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": null
     }
   },
   {
@@ -295,6 +1103,75 @@
         "earliest_year": 1975,
         "latest_year": 2026,
         "years": 52
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 19.8,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 2.48
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 17.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.9
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.408
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 4.6,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 69.37
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.9,
+          "year": 1994,
+          "depth_km": 23.1
+        },
+        "next_largest_magnitude": 5.7,
+        "score_without": 40.5,
+        "score_delta": 7.5,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -318,6 +1195,75 @@
         "earliest_year": 1972,
         "latest_year": 2026,
         "years": 55
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 5.44
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.727
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 98.4
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2016,
+          "depth_km": 28.0
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 63.1,
+        "score_delta": 1.8,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -329,7 +1275,7 @@
       "composite_score": 58.8,
       "activity_tier": "MODERATE",
       "activity_percentile": 33,
-      "event_count_m4_within_50km": 101,
+      "event_count_m4_within_50km": 102,
       "largest_magnitude_within_50km": 5.3,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "kota-manado",
@@ -341,6 +1287,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 8.49
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.331
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 619.64
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2004,
+          "depth_km": 90.8
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 58.2,
+        "score_delta": 0.6,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -364,6 +1379,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.23
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.3,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.755
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 5.52
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2016,
+          "depth_km": 13.0
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 78.7,
+        "score_delta": 1.8,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -387,6 +1471,75 @@
         "earliest_year": 1974,
         "latest_year": 2025,
         "years": 52
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 31.1,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.88
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.723
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.6,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 2.36
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2016,
+          "depth_km": 13.0
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 69.6,
+        "score_delta": 2.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -410,6 +1563,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 5.2
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 14.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.4
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 8.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.582
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 7.4,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 50.83
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.4,
+          "year": 1999,
+          "depth_km": 101.4
+        },
+        "next_largest_magnitude": 5.7,
+        "score_without": 66.3,
+        "score_delta": 4.2,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -433,6 +1655,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 17.2,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 2.15
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.518
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 13.7,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 8.4
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2006,
+          "depth_km": 12.5
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 52.3,
+        "score_delta": 0.2,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -456,6 +1747,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 13.56
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 17.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.97
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.759
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.7,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 2.3
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.97,
+          "year": 1971,
+          "depth_km": 80.6
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 82.3,
+        "score_delta": 1.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -464,7 +1824,7 @@
     "lat": -6.82,
     "lng": 107.14,
     "expected": {
-      "composite_score": 71.1,
+      "composite_score": 71.2,
       "activity_tier": "HIGH",
       "activity_percentile": 67,
       "event_count_m4_within_50km": 87,
@@ -479,6 +1839,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.45
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.475
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 9.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 39.81
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 68.2,
+        "score_delta": 3.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -487,7 +1916,7 @@
     "lat": -8.67,
     "lng": 115.22,
     "expected": {
-      "composite_score": 54.1,
+      "composite_score": 54.2,
       "activity_tier": "MODERATE",
       "activity_percentile": 29,
       "event_count_m4_within_50km": 52,
@@ -502,6 +1931,75 @@
         "earliest_year": 1973,
         "latest_year": 2026,
         "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 31.9,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.98
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.493
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 146.54
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1976,
+          "depth_km": 40.0
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 52.9,
+        "score_delta": 1.3,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -510,7 +2008,7 @@
     "lat": -0.68,
     "lng": 119.74,
     "expected": {
-      "composite_score": 86.3,
+      "composite_score": 86.4,
       "activity_tier": "HIGH",
       "activity_percentile": 96,
       "event_count_m4_within_50km": 88,
@@ -525,6 +2023,75 @@
         "earliest_year": 1977,
         "latest_year": 2026,
         "years": 50
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.38
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 21.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.2,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.944
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 11.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 25.36
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.5,
+          "year": 2018,
+          "depth_km": 20.0
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 81.5,
+        "score_delta": 4.9,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -533,7 +2100,7 @@
     "lat": -6.18,
     "lng": 106.83,
     "expected": {
-      "composite_score": 46.3,
+      "composite_score": 46.5,
       "activity_tier": "MODERATE",
       "activity_percentile": 17,
       "event_count_m4_within_50km": 33,
@@ -548,6 +2115,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 28.1,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 3.52
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 3.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.225
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 101.15
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 44.0,
+        "score_delta": 2.5,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -559,7 +2195,7 @@
       "composite_score": 67.6,
       "activity_tier": "HIGH",
       "activity_percentile": 46,
-      "event_count_m4_within_50km": 155,
+      "event_count_m4_within_50km": 156,
       "largest_magnitude_within_50km": 5.7,
       "overall_risk_band": "HIGH",
       "nearest_region_slug": "jayapura",
@@ -571,6 +2207,75 @@
         "earliest_year": 1973,
         "latest_year": 2026,
         "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.65
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 12.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.1
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.998
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1905.94
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.1,
+          "year": 1995,
+          "depth_km": 20.2
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 67.0,
+        "score_delta": 0.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -582,7 +2287,7 @@
       "composite_score": 79.2,
       "activity_tier": "HIGH",
       "activity_percentile": 83,
-      "event_count_m4_within_50km": 491,
+      "event_count_m4_within_50km": 492,
       "largest_magnitude_within_50km": 7.0,
       "overall_risk_band": "HIGH",
       "nearest_region_slug": "kepulauan-mentawai",
@@ -594,6 +2299,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 15.84
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 19.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.2
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.983
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 5.2,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 65.24
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "higher"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.2,
+          "year": 2008,
+          "depth_km": 25.0
+        },
+        "next_largest_magnitude": 7.0,
+        "score_without": 78.0,
+        "score_delta": 1.2,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -617,6 +2391,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 11.09
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 16.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.712
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 653.57
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.8,
+          "year": 2000,
+          "depth_km": 16.0
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 66.9,
+        "score_delta": 0.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -625,7 +2468,7 @@
     "lat": -6.91,
     "lng": 107.61,
     "expected": {
-      "composite_score": 73.9,
+      "composite_score": 74.0,
       "activity_tier": "HIGH",
       "activity_percentile": 75,
       "event_count_m4_within_50km": 51,
@@ -640,6 +2483,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 38.7,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 4.84
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 6.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.452
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 13.5,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 9.88
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 2017,
+          "depth_km": 90.0
+        },
+        "next_largest_magnitude": 6.5,
+        "score_without": 73.9,
+        "score_delta": 0.1,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -651,7 +2563,7 @@
       "composite_score": 65.2,
       "activity_tier": "HIGH",
       "activity_percentile": 38,
-      "event_count_m4_within_50km": 129,
+      "event_count_m4_within_50km": 130,
       "largest_magnitude_within_50km": 6.1,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "kota-kupang",
@@ -663,6 +2575,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 6.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 13.2,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.2
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 12.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.798
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 207.86
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.2,
+          "year": 2018,
+          "depth_km": 14.0
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 64.6,
+        "score_delta": 0.6,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -686,6 +2667,75 @@
         "earliest_year": 1993,
         "latest_year": 2015,
         "years": 23
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 2.4,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 6.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 5.0
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 15.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 1.0
+          },
+          "saturated": true
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 207.99
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 5.0,
+          "year": 1993,
+          "depth_km": 60.0
+        },
+        "next_largest_magnitude": 4.6,
+        "score_without": 20.7,
+        "score_delta": 2.7,
+        "tier_without": "LOW"
       }
     }
   },
@@ -697,7 +2747,7 @@
       "composite_score": 58.8,
       "activity_tier": "MODERATE",
       "activity_percentile": 33,
-      "event_count_m4_within_50km": 100,
+      "event_count_m4_within_50km": 101,
       "largest_magnitude_within_50km": 5.3,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "kota-manado",
@@ -709,6 +2759,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 8.38
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.0,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.331
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 621.2
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2004,
+          "depth_km": 90.8
+        },
+        "next_largest_magnitude": 6.2,
+        "score_without": 58.2,
+        "score_delta": 0.6,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -717,7 +2836,7 @@
     "lat": -8.58,
     "lng": 116.12,
     "expected": {
-      "composite_score": 68.4,
+      "composite_score": 68.3,
       "activity_tier": "HIGH",
       "activity_percentile": 50,
       "event_count_m4_within_50km": 121,
@@ -732,6 +2851,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.07
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 17.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.9
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 10.9,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.73
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 172.87
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.9,
+          "year": 2018,
+          "depth_km": 21.0
+        },
+        "next_largest_magnitude": 6.9,
+        "score_without": 68.3,
+        "score_delta": 0.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -743,7 +2931,7 @@
       "composite_score": 89.2,
       "activity_tier": "HIGH",
       "activity_percentile": 100,
-      "event_count_m4_within_50km": 117,
+      "event_count_m4_within_50km": 116,
       "largest_magnitude_within_50km": 6.7,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "kota-palu",
@@ -755,6 +2943,75 @@
         "earliest_year": 1977,
         "latest_year": 2026,
         "years": 50
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 8.3
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 21.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.4,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.959
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 13.9,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 7.63
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.5,
+          "year": 2018,
+          "depth_km": 20.0
+        },
+        "next_largest_magnitude": 6.7,
+        "score_without": 84.4,
+        "score_delta": 4.8,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -763,7 +3020,7 @@
     "lat": -7.25,
     "lng": 112.75,
     "expected": {
-      "composite_score": 22.9,
+      "composite_score": 22.7,
       "activity_tier": "LOW",
       "activity_percentile": 4,
       "event_count_m4_within_50km": 8,
@@ -776,8 +3033,77 @@
       "comparison_relation": "lower",
       "data_coverage": {
         "earliest_year": 1975,
-        "latest_year": 2024,
-        "years": 50
+        "latest_year": 2026,
+        "years": 52
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 6.8,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 0.85
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 10.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 5.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 5.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.341
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 238.36
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 5.8,
+          "year": 1975,
+          "depth_km": 141.0
+        },
+        "next_largest_magnitude": 5.6,
+        "score_without": 21.7,
+        "score_delta": 1.0,
+        "tier_without": "LOW"
       }
     }
   },
@@ -801,6 +3127,75 @@
         "earliest_year": 1974,
         "latest_year": 2026,
         "years": 53
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 14.2,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.77
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 13.8,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.3
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 8.1,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.543
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1.19
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.3,
+          "year": 2006,
+          "depth_km": 12.5
+        },
+        "next_largest_magnitude": 6.3,
+        "score_without": 50.7,
+        "score_delta": 0.2,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -824,6 +3219,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.18
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 17.4,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.9
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 11.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.787
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 184.86
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "similar"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.9,
+          "year": 2018,
+          "depth_km": 21.0
+        },
+        "next_largest_magnitude": 6.9,
+        "score_without": 69.2,
+        "score_delta": 0.0,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -847,6 +3311,75 @@
         "earliest_year": 1970,
         "latest_year": 2026,
         "years": 57
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 5.63
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 21.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 7.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 9.7,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.648
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 4.3,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 71.55
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 7.6,
+          "year": 2009,
+          "depth_km": 81.0
+        },
+        "next_largest_magnitude": 6.4,
+        "score_without": 68.4,
+        "score_delta": 7.2,
+        "tier_without": "HIGH"
       }
     }
   },
@@ -855,10 +3388,10 @@
     "lat": -0.88,
     "lng": 131.25,
     "expected": {
-      "composite_score": 44.9,
+      "composite_score": 44.8,
       "activity_tier": "MODERATE",
       "activity_percentile": 12,
-      "event_count_m4_within_50km": 52,
+      "event_count_m4_within_50km": 53,
       "largest_magnitude_within_50km": 6.6,
       "overall_risk_band": "MODERATE",
       "nearest_region_slug": "sorong",
@@ -868,8 +3401,77 @@
       "comparison_relation": "higher",
       "data_coverage": {
         "earliest_year": 1973,
-        "latest_year": 2025,
-        "years": 53
+        "latest_year": 2026,
+        "years": 54
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 14.4,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 1.8
+          },
+          "saturated": false
+        },
+        {
+          "key": "magnitude",
+          "points": 15.6,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.6
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 14.8,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.99
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 0.0,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 1113.41
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "lower"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.6,
+          "year": 2015,
+          "depth_km": 18.0
+        },
+        "next_largest_magnitude": 6.1,
+        "score_without": 41.7,
+        "score_delta": 3.1,
+        "tier_without": "MODERATE"
       }
     }
   },
@@ -878,7 +3480,7 @@
     "lat": -6.92,
     "lng": 106.92,
     "expected": {
-      "composite_score": 69.3,
+      "composite_score": 69.4,
       "activity_tier": "HIGH",
       "activity_percentile": 58,
       "event_count_m4_within_50km": 135,
@@ -893,6 +3495,75 @@
         "earliest_year": 1971,
         "latest_year": 2026,
         "years": 56
+      },
+      "score_breakdown": [
+        {
+          "key": "frequency",
+          "points": 40.0,
+          "max_points": 40,
+          "basis": {
+            "events_per_year": 7.75
+          },
+          "saturated": true
+        },
+        {
+          "key": "magnitude",
+          "points": 15.0,
+          "max_points": 30,
+          "basis": {
+            "largest_magnitude": 6.5
+          },
+          "saturated": false
+        },
+        {
+          "key": "shallow",
+          "points": 7.5,
+          "max_points": 15,
+          "basis": {
+            "shallow_ratio": 0.499
+          },
+          "saturated": false
+        },
+        {
+          "key": "proximity",
+          "points": 6.9,
+          "max_points": 15,
+          "basis": {
+            "nearest_fault_distance_km": 53.99
+          },
+          "saturated": false
+        }
+      ],
+      "activity_percentile_basis": {
+        "region_count": 24
+      },
+      "comparison_set": [
+        {
+          "reference_city": "Jakarta",
+          "reference_m4_count": 25,
+          "relation": "higher"
+        },
+        {
+          "reference_city": "Padang",
+          "reference_m4_count": 220,
+          "relation": "lower"
+        },
+        {
+          "reference_city": "Palu",
+          "reference_m4_count": 180,
+          "relation": "similar"
+        }
+      ],
+      "largest_event_sensitivity": {
+        "removed": {
+          "magnitude": 6.5,
+          "year": 1985,
+          "depth_km": 153.8
+        },
+        "next_largest_magnitude": 6.0,
+        "score_without": 66.4,
+        "score_delta": 3.0,
+        "tier_without": "HIGH"
       }
     }
   }

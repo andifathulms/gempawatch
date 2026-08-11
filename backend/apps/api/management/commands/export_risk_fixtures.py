@@ -100,6 +100,23 @@ class Command(BaseCommand):
                         "tsunami_risk_tier": report["tsunami_risk_tier"],
                         "comparison_relation": report["comparison"]["relation"],
                         "data_coverage": report["data_coverage"],
+                        # Everything below is derived output that the port has
+                        # to reproduce too. Pinning only the headline score let
+                        # the two engines disagree about WHICH event they had
+                        # removed while both reported a plausible number: at
+                        # Yogyakarta, Django dropped a deep 2001 M6.3 and the
+                        # port a shallow 2006 M6.3 of the same magnitude, for
+                        # different shallow ratios and a 0.2-point split. The
+                        # tie-break is a documented rule now, so it is pinned
+                        # like every other rule.
+                        "score_breakdown": report["score_breakdown"],
+                        "activity_percentile_basis": report[
+                            "activity_percentile_basis"
+                        ],
+                        "comparison_set": report["comparison_set"],
+                        "largest_event_sensitivity": report[
+                            "largest_event_sensitivity"
+                        ],
                     },
                 }
             )

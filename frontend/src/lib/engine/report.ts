@@ -206,10 +206,24 @@ function scanRadii(
  * interesting — a sparse area where the big one is also a large share of the
  * whole record.
  *
- * Ties are broken by first encounter, so the result is deterministic.
- *
  * Returns null when there is nothing to remove, or when removing it would leave
  * no events at all — there is no meaningful "without it" for a record of one.
+ *
+ * TIE-BREAK. Several events can share the maximum magnitude — Yogyakarta has
+ * two M6.3 — and which one is removed changes the answer, because they differ
+ * in depth and therefore move the shallow ratio differently. This used to take
+ * whichever came first in array order while Django took the lowest primary key,
+ * and the two picked different events: a 2006 M6.3 at 12.5km here, a 2001 M6.3
+ * at 143.1km there, for a 0.2-point disagreement on the same coordinates. The
+ * rule is now spelled out identically on both sides, and cannot use the primary
+ * key because this engine reads a CSV with no ids:
+ *
+ *     shallowest depth (missing depth sorts last), then earliest year,
+ *     then westmost longitude, then southmost latitude
+ *
+ * Shallowest first is the meaningful part — among equally large events, the
+ * shallow one is the more damaging, so it is the one worth asking about. The
+ * rest is only there to make the ordering total.
  */
 function largestEventCounterfactual(
   data: EngineData,
@@ -227,32 +241,51 @@ function largestEventCounterfactual(
   const cosLat = Math.max(0.01, Math.cos((lat * Math.PI) / 180));
   const dLon = radiusKm / (111.32 * cosLat) + 0.05;
 
+  const inRadius = (i: number) => {
+    const elat = e.lat[i];
+    if (elat < lat - dLat || elat > lat + dLat) return false;
+    const elon = e.lon[i];
+    if (elon < lon - dLon || elon > lon + dLon) return false;
+    return haversineKm(lon, lat, elon, elat) <= radiusKm;
+  };
+
+  // Pass 1: pick which of the tied maxima to remove, by the documented key.
+  let victim = -1;
+  for (let i = 0; i < e.count; i++) {
+    if (e.mag[i] !== largestMagnitude || !inRadius(i)) continue;
+    if (victim === -1) {
+      victim = i;
+      continue;
+    }
+    const d = Number.isNaN(e.depth[i]) ? Infinity : e.depth[i];
+    const bd = Number.isNaN(e.depth[victim]) ? Infinity : e.depth[victim];
+    const key: Array<[number, number]> = [
+      [d, bd],
+      [e.year[i], e.year[victim]],
+      [e.lon[i], e.lon[victim]],
+      [e.lat[i], e.lat[victim]],
+    ];
+    for (const [a, b] of key) {
+      if (a !== b) {
+        if (a < b) victim = i;
+        break;
+      }
+    }
+  }
+  if (victim === -1) return null;
+
+  // Pass 2: aggregate everything except that one event.
   let total = 0;
   let m4Count = 0;
   let shallowCount = 0;
   let secondLargest: number | null = null;
   let earliestYear: number | null = null;
   let latestYear: number | null = null;
-  let removedYear: number | null = null;
-  let removedDepth = Number.NaN;
-  let skipped = false;
 
   for (let i = 0; i < e.count; i++) {
-    const elat = e.lat[i];
-    if (elat < lat - dLat || elat > lat + dLat) continue;
-    const elon = e.lon[i];
-    if (elon < lon - dLon || elon > lon + dLon) continue;
-    if (haversineKm(lon, lat, elon, elat) > radiusKm) continue;
+    if (i === victim || !inRadius(i)) continue;
 
     const mag = e.mag[i];
-    // Drop exactly one event: the first encountered at the maximum magnitude.
-    if (!skipped && mag === largestMagnitude) {
-      skipped = true;
-      removedYear = e.year[i];
-      removedDepth = e.depth[i];
-      continue;
-    }
-
     total++;
     if (mag >= 4.0) m4Count++;
     if (!Number.isNaN(e.depth[i]) && e.depth[i] < 70) shallowCount++;
@@ -262,7 +295,10 @@ function largestEventCounterfactual(
     if (latestYear === null || year > latestYear) latestYear = year;
   }
 
-  if (!skipped || total === 0) return null;
+  if (total === 0) return null;
+
+  const removedYear = e.year[victim];
+  const removedDepth = e.depth[victim];
 
   const coverageYears =
     earliestYear && latestYear ? latestYear - earliestYear + 1 : 0;
