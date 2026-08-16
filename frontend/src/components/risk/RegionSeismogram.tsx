@@ -13,9 +13,22 @@ import {
 } from "@/lib/seismogram";
 import type { Source } from "@/lib/types";
 
+interface Trace {
+  regionName: string;
+  events: SeismogramEvent[];
+}
+
 interface Props {
   regionName: string;
   events: SeismogramEvent[];
+  /**
+   * A second trace stacked below the first, sharing the same x and y scale
+   * (DESIGN.md §5.4 — "the single most important constraint in this
+   * component"). Both scales are fixed and absolute (1970–now on x, the same
+   * magnitude curve on y) rather than fit to each dataset, so passing a
+   * comparison trace can never silently rescale either one.
+   */
+  comparison?: Trace | null;
   /** Right edge of the trace. Defaults to render time; a prop so tests and the golden fixtures are deterministic. */
   now?: Date;
   className?: string;
@@ -31,6 +44,15 @@ interface ScaleConfig {
   labelFontSize: number;
   /** Years between x-axis ticks. Wider on mobile so labels don't collide. */
   decadeStep: number;
+  /**
+   * Fraction of vbW, measured from the right edge, inside which the
+   * largest-event label switches from centred to right-anchored so it can't
+   * run past the plot. A monospace label is a much bigger fraction of a
+   * 340-unit mobile viewBox than a 1000-unit desktop one at the same
+   * character count, so this can't be one constant for both scales — it was,
+   * and "M7.5 · 28 Sep 2018" clipped at the mobile card's right edge.
+   */
+  labelEdgeFraction: number;
 }
 
 /**
@@ -49,11 +71,12 @@ interface ScaleConfig {
  */
 const DESKTOP_SCALE: ScaleConfig = {
   vbW: 1000,
-  vbH: 280,
+  vbH: 240,
   margin: { top: 28, right: 14, bottom: 28, left: 30 },
   axisFontSize: 11,
   labelFontSize: 12,
   decadeStep: 10,
+  labelEdgeFraction: 0.14,
 };
 
 /**
@@ -65,50 +88,41 @@ const DESKTOP_SCALE: ScaleConfig = {
  */
 const MOBILE_SCALE: ScaleConfig = {
   vbW: 340,
-  vbH: 210,
+  vbH: 190,
   margin: { top: 24, right: 8, bottom: 22, left: 26 },
   axisFontSize: 10,
   labelFontSize: 10,
   decadeStep: 20,
+  labelEdgeFraction: 0.34,
 };
 
-/**
- * A fifty-year instrument trace, not a scatter plot: one vertical spike per
- * event, height = magnitude (mild power curve, see lib/seismogram.ts),
- * colour = depth. A scatter shows the same numbers; it does not show a quiet
- * decade the way a flat stretch in a trace does at a glance. See DESIGN.md §5.
- *
- * No trend line, no forward-looking mark of any kind — CLAUDE.md's ban on
- * predictive framing is absolute, and a line drawn across a seismic record
- * reads as "this is where it's headed" whether or not that's the intent.
- *
- * §5.4's comparison mode (two traces on one shared scale) and §5.3's
- * ticker-as-right-edge are later migration steps and not built here.
- */
-export function RegionSeismogram({ regionName, events, now, className }: Props) {
-  const rightEdge = now ?? new Date();
-  const sorted = [...events].sort((a, b) => a.event_time.localeCompare(b.event_time));
+interface RegionTraceData {
+  regionName: string;
+  sorted: SeismogramEvent[];
+  reduced: SeismogramEvent[];
+  largest: SeismogramEvent | null;
+  quietStretch: ReturnType<typeof findLongestQuietStretch>;
+  sourcesPresent: Source[];
+  rows: Array<[string, string]>;
+}
 
-  const domainStartMs = DOMAIN_START.getTime();
-  const domainEndMs = rightEdge.getTime();
-  const domainSpan = Math.max(1, domainEndMs - domainStartMs);
-
+function analyzeTrace(trace: Trace, rightEdge: Date): RegionTraceData {
+  const sorted = [...trace.events].sort((a, b) => a.event_time.localeCompare(b.event_time));
   const largest = findLargestEvent(sorted);
   const quietStretch = findLongestQuietStretch(sorted, rightEdge);
 
-  // The annotations above are always computed from the full record — dropping
-  // sub-M5 events on mobile must never change what "largest event" or "quiet
-  // stretch" means, only how many background spikes surround them. The
-  // largest event stays in the reduced set even when it is itself below M5
-  // (a region that has never had an M5+ at all), so the label always points
-  // at a spike that is actually on screen.
-  const reducedEvents = sorted.filter((e) => e.magnitude >= 5 || e === largest);
+  // Dropping sub-M5 events on mobile must never change what "largest event" or
+  // "quiet stretch" means, only how many background spikes surround them. The
+  // largest event stays in the reduced set even when it is itself below M5 (a
+  // region that has never had an M5+ at all), so the label always points at a
+  // spike that is actually on screen.
+  const reduced = sorted.filter((e) => e.magnitude >= 5 || e === largest);
 
   const sourcesPresent = Array.from(
     new Set(sorted.map((e) => e.source).filter((s): s is Source => Boolean(s))),
   );
 
-  // Decade summary — the same reasoning as EventScatterTimeline's sr-only
+  // Decade summary — the same reasoning as EventScatterTimeline's old sr-only
   // table: a per-spike row for a region with 1,600 events tells a
   // screen-reader user nothing a chart-shaped table wouldn't already fail to
   // tell them. Decade counts answer the same question the trace answers.
@@ -143,6 +157,47 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
     ]);
   }
 
+  return {
+    regionName: trace.regionName,
+    sorted,
+    reduced,
+    largest,
+    quietStretch,
+    sourcesPresent,
+    rows: [...annotationRows, ...decadeRows],
+  };
+}
+
+/**
+ * A fifty-year instrument trace, not a scatter plot: one vertical spike per
+ * event, height = magnitude (mild power curve, see lib/seismogram.ts),
+ * colour = depth. A scatter shows the same numbers; it does not show a quiet
+ * decade the way a flat stretch in a trace does at a glance. See DESIGN.md §5.
+ *
+ * No trend line, no forward-looking mark of any kind — CLAUDE.md's ban on
+ * predictive framing is absolute, and a line drawn across a seismic record
+ * reads as "this is where it's headed" whether or not that's the intent.
+ *
+ * §5.3's ticker-as-right-edge is a later migration step and not built here.
+ */
+export function RegionSeismogram({ regionName, events, comparison, now, className }: Props) {
+  const rightEdge = now ?? new Date();
+  const domainStartMs = DOMAIN_START.getTime();
+  const domainEndMs = rightEdge.getTime();
+  const domainSpan = Math.max(1, domainEndMs - domainStartMs);
+
+  const main = analyzeTrace({ regionName, events }, rightEdge);
+  const ref = comparison ? analyzeTrace(comparison, rightEdge) : null;
+  const traces = ref ? [main, ref] : [main];
+
+  const sourcesPresent = Array.from(
+    new Set(traces.flatMap((t) => t.sourcesPresent)),
+  );
+
+  const rows: Array<[string, string]> = ref
+    ? traces.flatMap((t) => t.rows.map(([label, value]) => [`${t.regionName} — ${label}`, value] as [string, string]))
+    : main.rows;
+
   const legend = (
     <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
       <span>Warna = kedalaman:</span>
@@ -159,11 +214,13 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
     </div>
   );
 
-  function renderTrace(scale: ScaleConfig, eventsToPlot: SeismogramEvent[]) {
-    const { vbW, vbH, margin, axisFontSize, labelFontSize, decadeStep } = scale;
+  function renderTrace(scale: ScaleConfig, data: RegionTraceData, useReduced: boolean, showXAxis: boolean) {
+    const { vbW, vbH, margin, axisFontSize, labelFontSize, decadeStep, labelEdgeFraction } = scale;
     const plotW = vbW - margin.left - margin.right;
     const plotH = vbH - margin.top - margin.bottom;
     const baselineY = margin.top + plotH;
+    const { largest, quietStretch } = data;
+    const eventsToPlot = useReduced ? data.reduced : data.sorted;
 
     function xOf(iso: string): number {
       const t = new Date(iso).getTime();
@@ -177,7 +234,9 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
     const startYear = 1970;
     const endYear = rightEdge.getUTCFullYear();
     const decadeTicks: number[] = [];
-    for (let y = startYear; y <= endYear; y += decadeStep) decadeTicks.push(y);
+    if (showXAxis) {
+      for (let y = startYear; y <= endYear; y += decadeStep) decadeTicks.push(y);
+    }
 
     return (
       <svg viewBox={`0 0 ${vbW} ${vbH}`} className="w-full" style={{ height: vbH }}>
@@ -242,7 +301,7 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
           strokeWidth={1}
         />
 
-        {/* Decade ticks */}
+        {/* Decade ticks — only on the bottom-most trace when two are stacked, so the shared x-axis isn't printed twice. */}
         {decadeTicks.map((year) => {
           const x = xOf(new Date(Date.UTC(year, 0, 1)).toISOString());
           if (x > vbW - margin.right) return null;
@@ -277,7 +336,7 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
           <text
             x={Math.min(vbW - margin.right - 4, Math.max(margin.left + 4, xOf(largest.event_time)))}
             y={Math.max(labelFontSize + 2, yTopOf(largest.magnitude) - 8)}
-            textAnchor={xOf(largest.event_time) > vbW - vbW * 0.14 ? "end" : "middle"}
+            textAnchor={xOf(largest.event_time) > vbW - vbW * labelEdgeFraction ? "end" : "middle"}
             fontSize={labelFontSize}
             fontFamily="var(--font-mono)"
             fill="var(--text-primary)"
@@ -292,22 +351,49 @@ export function RegionSeismogram({ regionName, events, now, className }: Props) 
     );
   }
 
+  function renderStack(scale: ScaleConfig, useReduced: boolean) {
+    return (
+      <div className="space-y-1">
+        {traces.map((t, i) => {
+          const isLast = i === traces.length - 1;
+          return (
+            <div key={t.regionName}>
+              {ref && (
+                <p className="text-fluid-000 font-semibold uppercase tracking-wide text-text-secondary">
+                  {t.regionName}
+                  {i === 1 && " (pembanding)"}
+                </p>
+              )}
+              {renderTrace(scale, t, useReduced, isLast)}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
       <ChartFigure
-        caption={`Rekaman gempa 1970–sekarang untuk ${regionName}, tinggi paku = magnitudo, warna = kedalaman`}
+        caption={
+          ref
+            ? `Rekaman gempa 1970–sekarang untuk ${regionName} dibandingkan ${ref.regionName}, sumbu waktu dan magnitudo sama untuk keduanya`
+            : `Rekaman gempa 1970–sekarang untuk ${regionName}, tinggi paku = magnitudo, warna = kedalaman`
+        }
         columns={["Ringkasan", "Nilai"]}
-        rows={[...annotationRows, ...decadeRows]}
+        rows={rows}
         note={legend}
       >
         {/*
-          Two renders, not one stretched via CSS — see DESIGN_SCALE comments
-          above. `hidden sm:block` / `sm:hidden` is a CSS-only breakpoint
-          switch so the component stays server-renderable; no ResizeObserver,
-          no client boundary.
+          Two renders per trace, not one stretched via CSS — see the scale
+          comments above. `hidden sm:block` / `sm:hidden` is a CSS-only
+          breakpoint switch so the component stays server-renderable; no
+          ResizeObserver, no client boundary. Comparison mode stacks a second
+          trace under the first at each breakpoint, both built from the same
+          xOf/yTopOf closures — there is no per-trace scale to drift.
         */}
-        <div className="hidden sm:block">{renderTrace(DESKTOP_SCALE, sorted)}</div>
-        <div className="sm:hidden">{renderTrace(MOBILE_SCALE, reducedEvents)}</div>
+        <div className="hidden sm:block">{renderStack(DESKTOP_SCALE, false)}</div>
+        <div className="sm:hidden">{renderStack(MOBILE_SCALE, true)}</div>
       </ChartFigure>
       <SourceAttribution
         variant="inline"

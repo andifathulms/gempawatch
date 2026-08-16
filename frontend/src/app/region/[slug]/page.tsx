@@ -1,23 +1,39 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { api, IS_STATIC } from "@/lib/api";
-import type { RegionRiskProfile, RegionTimeline } from "@/lib/types";
+import type { AdminRegion, RegionRiskProfile, RegionTimeline } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink } from "@/components/ui/Button";
 import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
-import { RegionSeismogram } from "@/components/risk/RegionSeismogram";
+import { SeismogramComparePicker } from "@/components/risk/SeismogramComparePicker";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { RegionJsonLd } from "@/components/seo/JsonLd";
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
+import { haversineKm } from "@/lib/engine/geo";
 import { pageMetadata } from "@/lib/meta";
 import { binByDepth, riskTierLabel } from "@/lib/seismic";
 import { magnitude, num, regionType } from "@/lib/format";
+import type { SeismogramEvent } from "@/lib/seismogram";
+
+/**
+ * The same three anchors `lib/engine/report.ts` already treats as the app's
+ * canonical comparison set (see REFERENCE_CITIES there) — one vocabulary of
+ * "reference city" across the whole app, not a second list invented here.
+ * Slugs resolved once against the exported region data, not hardcoded
+ * coordinates: `api.region()` stays the source of truth for where each one
+ * actually is.
+ */
+const REFERENCE_CITY_SLUGS: Record<string, string> = {
+  Jakarta: "jakarta-pusat",
+  Padang: "padang",
+  Palu: "kota-palu",
+};
 
 export const revalidate = 3600;
 
@@ -98,12 +114,59 @@ export default async function RegionPage({
   const depthBins = binByDepth(timeline.events);
   // `id` is read by nothing here — every field on a client component's props
   // ends up in the HTML, so only project what's actually plotted or read.
-  const seismogramEvents = timeline.events.map((e) => ({
-    event_time: e.event_time,
-    magnitude: e.magnitude,
-    depth_km: e.depth_km,
-    source: e.source,
-  }));
+  const toSeismogramEvents = (events: RegionTimeline["events"]): SeismogramEvent[] =>
+    events.map((e) => ({
+      event_time: e.event_time,
+      magnitude: e.magnitude,
+      depth_km: e.depth_km,
+      source: e.source,
+    }));
+  const seismogramEvents = toSeismogramEvents(timeline.events);
+
+  /*
+   * Default comparison reference for the seismogram (DESIGN.md §5.4): the
+   * nearest of the app's three reference cities, resolved server-side so the
+   * first paint already has a real comparison trace — no client fetch, no
+   * loading flash. `SeismogramComparePicker` only re-fetches when the reader
+   * picks a different reference.
+   */
+  const referenceCandidates = (
+    await Promise.all(
+      Object.values(REFERENCE_CITY_SLUGS)
+        .filter((slug) => slug !== profile.region.slug)
+        .map((slug) => api.region(slug).catch(() => null)),
+    )
+  ).filter((r): r is AdminRegion => r !== null);
+
+  const nearestReference = referenceCandidates
+    .map((region) => ({
+      region,
+      distanceKm: haversineKm(
+        profile.region.longitude,
+        profile.region.latitude,
+        region.longitude,
+        region.latitude,
+      ),
+    }))
+    .sort((a, b) => a.distanceKm - b.distanceKm)[0]?.region;
+
+  const defaultReferenceEvents = nearestReference
+    ? await api
+        .regionTimeline(nearestReference.slug)
+        .then((t) => toSeismogramEvents(t.events))
+        .catch(() => [])
+    : [];
+
+  // Same source the old two-select `/compare` form used, minus this region.
+  const compareOptions = (
+    await api
+      .leaderboard(50, "desc")
+      .then((r) => r.results)
+      .catch(() => [])
+  )
+    .map((r) => ({ slug: r.slug, name: r.region_name }))
+    .filter((o) => o.slug !== profile.region.slug)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   const scoreInputs = scoreInputsFromProfile(profile);
 
@@ -166,9 +229,16 @@ export default async function RegionPage({
       */}
       <Card
         title="Rekaman gempa 1970–sekarang"
-        subtitle={`${num(timeline.events.length)} kejadian tercatat. Satu paku per kejadian — tinggi menandai magnitudo, warna menandai kedalaman. Rentang tenang terpanjang dan gempa terbesar ditandai otomatis.`}
+        subtitle={`${num(timeline.events.length)} kejadian tercatat. Satu paku per kejadian — tinggi menandai magnitudo, warna menandai kedalaman. Rentang tenang terpanjang dan gempa terbesar ditandai otomatis. Skala waktu dan magnitudo sama pada trace pembanding.`}
       >
-        <RegionSeismogram regionName={profile.region.name} events={seismogramEvents} />
+        <SeismogramComparePicker
+          regionName={profile.region.name}
+          events={seismogramEvents}
+          options={compareOptions}
+          defaultReferenceSlug={nearestReference?.slug ?? ""}
+          defaultReferenceName={nearestReference?.name ?? ""}
+          defaultReferenceEvents={defaultReferenceEvents}
+        />
       </Card>
 
       <div className="grid gap-5 lg:grid-cols-3">
