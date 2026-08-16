@@ -3,13 +3,12 @@
 import { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { api } from "@/lib/api";
-import { riskResultPath } from "@/lib/routes";
 import type { RiskCheckReport } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
-import { Button, ButtonLink } from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MapSkeleton, Skeleton } from "@/components/ui/Skeleton";
-import { ShareableRiskCard } from "./ShareableRiskCard";
+import { RiskReportView } from "./RiskReportView";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { riskTierLabel } from "@/lib/seismic";
 
@@ -194,17 +193,12 @@ export function RiskCheckTool() {
           </Card>
         )}
 
+        {/* The full answer, in place — DESIGN.md §6: no navigation between the
+            question and its report. /risk/[lat]/[lng] (or ?lat=&lng= on static
+            builds) stays as this same view's shareable permalink; ShareButton
+            inside RiskReportView is what points there. */}
         {report && !loading && (
-          <>
-            <ShareableRiskCard report={report} />
-            <ButtonLink
-              href={riskResultPath(position[0], position[1])}
-              size="lg"
-              className="w-full"
-            >
-              Buka & bagikan hasil ini →
-            </ButtonLink>
-          </>
+          <RiskReportView report={report} lat={position[0]} lng={position[1]} />
         )}
 
         {!report && !loading && !error && (

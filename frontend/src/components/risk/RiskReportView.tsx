@@ -5,6 +5,7 @@ import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklis
 import { ShareButton } from "@/components/ui/ShareButton";
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { LargestEventSensitivity } from "@/components/risk/LargestEventSensitivity";
+import { PointSeismogram } from "@/components/risk/PointSeismogram";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { TsunamiEvidencePanel } from "@/components/risk/TsunamiEvidencePanel";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
@@ -66,6 +67,9 @@ export function RiskReportView({ report, lat, lng }: Props) {
       </header>
 
       <ShareableRiskCard report={report} />
+
+      {/* The signature object carries this answer too (DESIGN.md §1 decision 4), not just region pages. */}
+      <PointSeismogram nearestRegion={report.nearest_region} />
 
       <Card
         title="Bagikan hasil ini"
