@@ -4,13 +4,11 @@ import { api, IS_STATIC } from "@/lib/api";
 import type { RegionRiskProfile, RegionTimeline } from "@/lib/types";
 import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { StatTile } from "@/components/ui/Stat";
 import { ButtonLink } from "@/components/ui/Button";
 import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
-import { EventScatterTimeline } from "@/components/risk/EventScatterTimeline";
-import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { RegionSeismogram } from "@/components/risk/RegionSeismogram";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { RegionJsonLd } from "@/components/seo/JsonLd";
@@ -90,30 +88,53 @@ export default async function RegionPage({
     notFound();
   }
 
-  const coverage =
-    profile.earliest_event_year && profile.latest_event_year
-      ? `${profile.earliest_event_year}–${profile.latest_event_year}`
-      : "catatan historis";
-
   /*
     Binned here, at build time, rather than in the browser.
 
-    DepthHistogram and EventScatterTimeline are sibling client components, so
-    passing the event array to both made React serialise all 903 events into the
-    HTML twice — 93.9 kB of the 350 kB Kepulauan Mentawai page, duplicated. The
-    histogram only ever needed five integers.
+    DepthHistogram is a client component; passing the full event array to it
+    just for five integers made React serialise all 903 events into the HTML
+    for a region like Kepulauan Mentawai — 93.9 kB of a 350 kB page.
   */
   const depthBins = binByDepth(timeline.events);
-  // `id` and `source` are read by neither chart, but every field on a client
-  // component's props ends up in the HTML. Project to what is actually plotted.
-  const scatterPoints = timeline.events.map((e) => ({
+  // `id` is read by nothing here — every field on a client component's props
+  // ends up in the HTML, so only project what's actually plotted or read.
+  const seismogramEvents = timeline.events.map((e) => ({
     event_time: e.event_time,
     magnitude: e.magnitude,
     depth_km: e.depth_km,
+    source: e.source,
   }));
 
   const scoreInputs = scoreInputsFromProfile(profile);
-  const scoredRegionCount = profile.activity_percentile_basis?.region_count;
+
+  /*
+   * The finding in prose, not a stat row (DESIGN.md §7 item 2) — replaces the
+   * four-StatTile row that used to sit here (skor/persentil/magnitudo/tsunami),
+   * which was the dashboard reflex this rework exists to remove. The activity
+   * score, percentile, and tsunami tier still live in RiskProfileCard right
+   * below; this sentence states the M5+ record itself.
+   */
+  const coverage =
+    profile.earliest_event_year && profile.latest_event_year
+      ? `${profile.earliest_event_year}–${profile.latest_event_year}`
+      : null;
+  const coverageYears =
+    profile.earliest_event_year && profile.latest_event_year
+      ? profile.latest_event_year - profile.earliest_event_year
+      : null;
+  const largestEventYear = profile.largest_event
+    ? new Date(profile.largest_event.event_time).getFullYear()
+    : null;
+  const headline = [
+    coverageYears
+      ? `Dalam ${coverageYears} tahun terakhir (${coverage}) tercatat ${num(profile.event_count_m5)} gempa M5 ke atas dalam radius 100 km dari ${profile.region.name}.`
+      : `Tercatat ${num(profile.event_count_m5)} gempa M5 ke atas dalam radius 100 km dari ${profile.region.name}.`,
+    profile.largest_magnitude != null && largestEventYear
+      ? `Yang terbesar ${magnitude(profile.largest_magnitude)} pada ${largestEventYear}.`
+      : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div className="space-y-6">
@@ -121,7 +142,7 @@ export default async function RegionPage({
       <PageHeader
         eyebrow={regionType(profile.region.type)}
         title={profile.region.name}
-        subtitle={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage}.`}
+        subtitle={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.`}
         action={
           <ShareButton
             path={`/region/${profile.region.slug}`}
@@ -132,39 +153,23 @@ export default async function RegionPage({
         }
       />
 
-      {/* Headline figures, so the page states its findings before any chart. */}
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <StatTile
-          label="Skor aktivitas"
-          value={profile.composite_score?.toFixed(0) ?? "—"}
-          unit="/100"
-          tone="accent"
-        />
-        {/* Not "nasional". The rank is against the regions this deployment has
-            scored, and the gauge immediately below already says so — the two
-            were contradicting each other a few hundred pixels apart, with the
-            wrong claim set in the bigger type. */}
-        <StatTile
-          label="Persentil antar-wilayah terskor"
-          value={
-            profile.activity_percentile != null ? profile.activity_percentile : "—"
-          }
-          unit={profile.activity_percentile != null ? "%" : undefined}
-          hint={
-            scoredRegionCount
-              ? `Dari ${scoredRegionCount} wilayah yang sudah diskor di sini — bukan seluruh Indonesia.`
-              : "Dari wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
-          }
-        />
-        <StatTile
-          label="Magnitudo terbesar tercatat"
-          value={magnitude(profile.largest_magnitude)}
-        />
-        <StatTile
-          label="Risiko tsunami historis"
-          value={riskTierLabel(profile.tsunami_risk_tier)}
-        />
-      </div>
+      {/* The finding in prose — see the comment above `headline`. */}
+      <p className="animate-fade-in-up max-w-3xl text-fluid-2 font-medium leading-snug text-text-primary">
+        {headline}
+      </p>
+
+      {/*
+        The signature object (DESIGN.md §5), full width, directly under the
+        headline it backs up — per §7's target order this comes before the
+        gauge and the distribution charts, not after them. RegionSeismogram
+        renders its own SourceAttribution inline, so no Card footer here.
+      */}
+      <Card
+        title="Rekaman gempa 1970–sekarang"
+        subtitle={`${num(timeline.events.length)} kejadian tercatat. Satu paku per kejadian — tinggi menandai magnitudo, warna menandai kedalaman. Rentang tenang terpanjang dan gempa terbesar ditandai otomatis.`}
+      >
+        <RegionSeismogram regionName={profile.region.name} events={seismogramEvents} />
+      </Card>
 
       <div className="grid gap-5 lg:grid-cols-3">
         <div className="lg:col-span-1">
@@ -222,14 +227,6 @@ export default async function RegionPage({
           </Card>
         </div>
       </div>
-
-      <Card
-        title="Linimasa kegempaan"
-        subtitle={`${num(timeline.events.length)} kejadian tercatat. Magnitudo pada sumbu Y, waktu pada sumbu X — kelompok titik yang rapat biasanya menandai rentetan gempa susulan.`}
-        footer={<SourceAttribution />}
-      >
-        <EventScatterTimeline events={scatterPoints} />
-      </Card>
 
       <Card
         title="Langkah kesiapsiagaan"
