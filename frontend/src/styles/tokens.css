@@ -115,6 +115,16 @@
   --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.4), 0 10px 32px rgba(232, 116, 59, 0.18);
   --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.045);
 
+  /* Headline voice aliased to the body voice (DESIGN.md §10 step 8) — Inter
+     for both, just at font-semibold/font-bold where it's carrying a heading.
+     `--font-sans` itself is set by next/font on <html> (see layout.tsx); this
+     only needs to exist so `var(--font-display)` in tailwind.config.ts and
+     globals.css's h1–h4 rule resolves to something rather than an unset
+     custom property, which would make those font-family declarations invalid
+     and fall back to the browser default instead of gracefully skipping to
+     the next name in the stack. */
+  --font-display: var(--font-sans);
+
   /* --- Type scale ----------------------------------------------------------
      ONE scale, ratio ~1.2 at mobile widening to ~1.25 at desktop, so headlines
      gain presence on large screens without the body copy ballooning with them.

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
@@ -9,23 +9,24 @@ import { SiteJsonLd } from "@/components/seo/JsonLd";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
 
 /**
- * Three voices, self-hosted by next/font so they are preloaded, subset, and
- * free of the layout shift a webfont @import causes.
+ * Two voices, self-hosted by next/font so they are preloaded, subset, and free
+ * of the layout shift a webfont @import causes.
  *
- * Space Grotesk carries headlines — its slightly technical, drafting-table
- * letterforms suit an instrument readout better than another neutral grotesk.
- * Inter runs the prose and UI. JetBrains Mono handles every figure on the site,
- * because its tabular numerals keep magnitudes and counts aligned in columns.
+ * Inter runs both headlines and prose — DESIGN.md §3.2/§10 step 8: Space
+ * Grotesk's slightly technical, drafting-table letterforms read as techy and
+ * informal against a product whose stated philosophy is "a trusted government
+ * instrument, not a doom-scrolling disaster app," and PRD.md originally
+ * specified Inter 600–700 for headlines. `--font-display` is aliased to
+ * `--font-sans` in globals.css rather than loading Inter a second time under a
+ * second variable — same font file, headline weight comes from Tailwind's
+ * font-semibold/font-bold like it already does everywhere else.
+ *
+ * JetBrains Mono handles every figure on the site, because its tabular
+ * numerals keep magnitudes and counts aligned in columns.
  */
 const sans = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap",
-});
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
   display: "swap",
 });
 const mono = JetBrains_Mono({
@@ -103,7 +104,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${sans.variable} ${display.variable} ${mono.variable}`}
+      className={`${sans.variable} ${mono.variable}`}
     >
       <body className="min-h-screen bg-earth-dark text-text-primary antialiased">
         <ToastProvider>
