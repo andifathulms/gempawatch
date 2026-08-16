@@ -38,7 +38,7 @@ export default async function MapPage() {
         title="Sesar, gempa, dan zona tsunami"
         subtitle="Indonesia duduk di pertemuan tiga lempeng besar. Nyalakan atau matikan tiap lapisan untuk melihat bagaimana sesar aktif, kegempaan terkini, dan riwayat tsunami saling bertumpuk di wilayahmu."
         action={
-          <ButtonLink href="/risk-check" variant="secondary">
+          <ButtonLink href="/" variant="secondary">
             Cek titik saya →
           </ButtonLink>
         }

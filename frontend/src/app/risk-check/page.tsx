@@ -1,33 +1,20 @@
-import { RiskCheckTool } from "@/components/risk/RiskCheckTool";
+import { RouteStub } from "@/components/ui/RouteStub";
 import { pageMetadata } from "@/lib/meta";
-import { PageHeader } from "@/components/ui/PageHeader";
 
+// Retired (DESIGN.md §10 step 5) — RiskCheckTool moved to "/" itself in step 4.
 export const metadata = pageMetadata({
   title: "Cek Risiko Gempa Saya",
-  description: "Apakah lokasi saya berada di zona rawan gempa? Cek jarak ke sesar, jumlah gempa historis, dan tingkat risiko tsunami.",
+  description: "Cek risiko gempa lokasimu di beranda GempaWatch.",
   path: "/risk-check",
+  canonicalPath: "/",
+  noindex: true,
 });
 
 export default function RiskCheckPage() {
   return (
-    <div className="space-y-6">
-      <PageHeader
-        eyebrow="Cek risiko"
-        title="Apakah saya di zona risiko?"
-        subtitle={
-          <>
-            Pilih satu titik dan dapatkan laporan instan: jarak ke sesar aktif
-            terdekat, jumlah gempa M4+ dalam radius 50 km sepanjang catatan
-            sejarah, dan tingkat risiko tsunami historis bila titik itu berada di
-            pesisir. Semuanya adalah{" "}
-            <strong className="font-semibold text-text-primary">
-              indikator pola historis
-            </strong>{" "}
-            — bukan prediksi, dan bukan peringatan dini.
-          </>
-        }
-      />
-      <RiskCheckTool />
-    </div>
+    <RouteStub
+      to="/"
+      message="Cek risiko sekarang ada di beranda."
+    />
   );
 }

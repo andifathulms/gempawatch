@@ -42,7 +42,7 @@ export default async function TimelinePage() {
         title="Yang sudah terjadi, dan apa yang kita pelajari"
         subtitle="Arsip gempa dan tsunami besar yang membentuk kesadaran kebencanaan Indonesia. Halaman ini bukan peringatan — ini catatan, supaya kesiapsiagaan hari ini punya pijakan."
         action={
-          <ButtonLink href="/risk-check" variant="secondary">
+          <ButtonLink href="/" variant="secondary">
             Cek risiko lokasiku →
           </ButtonLink>
         }

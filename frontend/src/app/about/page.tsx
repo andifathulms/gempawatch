@@ -358,11 +358,11 @@ export default async function AboutPage() {
           <Card id="atribusi" title="Atribusi">
             <SourceAttribution />
             <div className="mt-4 flex flex-wrap gap-3">
-              <ButtonLink href="/risk-check" size="sm">
+              <ButtonLink href="/" size="sm">
                 Cek risiko lokasiku →
               </ButtonLink>
-              <ButtonLink href="/explore" variant="secondary" size="sm">
-                Lihat peringkat wilayah
+              <ButtonLink href="/map" variant="secondary" size="sm">
+                Lihat peta bahaya
               </ButtonLink>
             </div>
           </Card>

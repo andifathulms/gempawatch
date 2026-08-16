@@ -136,19 +136,19 @@ export function RegionJsonLd({ profile }: { profile: RegionRiskProfile }) {
           variableMeasured: variables,
         }}
       />
+      {/*
+        Two levels, not three: /explore — the old middle "Jelajahi wilayah"
+        step — retired once its job (ranking context) moved onto region pages
+        themselves (DESIGN.md §10 step 5). Region pages are reached from the
+        homepage directly now, not through a browse hub.
+      */}
       <Script
         data={{
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "Beranda", item: url("/") },
-            {
-              "@type": "ListItem",
-              position: 2,
-              name: "Jelajahi wilayah",
-              item: url("/explore"),
-            },
-            { "@type": "ListItem", position: 3, name: r.name, item: url(path) },
+            { "@type": "ListItem", position: 2, name: r.name, item: url(path) },
           ],
         }}
       />

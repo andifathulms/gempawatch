@@ -7,6 +7,7 @@ import { RiskReportView } from "@/components/risk/RiskReportView";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ButtonLink } from "@/components/ui/Button";
+import { RouteStub } from "@/components/ui/RouteStub";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { api } from "@/lib/api";
 import type { RiskCheckReport } from "@/lib/types";
@@ -84,20 +85,29 @@ export function RiskQueryResult() {
     );
   }
 
-  if (state.status === "invalid" || state.status === "error") {
+  // No usable coordinates in the URL means this wasn't opened as a permalink
+  // — it's someone landing on the bare route, which is retired as a
+  // destination (DESIGN.md §10 step 5). A share link always carries ?lat=&lng=
+  // and never reaches this branch.
+  if (state.status === "invalid") {
+    return (
+      <RouteStub
+        to="/"
+        message="Cek risiko sekarang ada di beranda — pilih titikmu di peta."
+      />
+    );
+  }
+
+  if (state.status === "error") {
     return (
       <div className="mx-auto max-w-xl">
         <Card>
           <EmptyState
             tone="warning"
-            title={
-              state.status === "invalid"
-                ? "Koordinat pada tautan ini tidak valid."
-                : "Gagal memuat laporan risiko untuk titik ini."
-            }
+            title="Gagal memuat laporan risiko untuk titik ini."
             description="Pilih titik langsung di peta untuk mendapatkan laporan baru."
             action={
-              <ButtonLink href="/risk-check" size="sm">
+              <ButtonLink href="/" size="sm">
                 Pilih lokasi di peta →
               </ButtonLink>
             }

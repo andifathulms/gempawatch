@@ -8,29 +8,26 @@ import { Logo } from "@/components/ui/Logo";
 /**
  * Primary navigation.
  *
+ * Five public destinations (DESIGN.md §4) collapse to four links plus the
+ * logo: the logo already goes home, so "Beranda" as a second link to the same
+ * place was redundant, and "Jelajahi" (/explore) retired once its ranking
+ * context moved onto region pages (§7 item 5, §10 step 5).
+ *
  * "Cek Risiko" is pulled out of the link row and rendered as the one solid
  * button on the page, because it is the single action the whole product exists
- * to deliver — everything else is browsing. The active link is marked with an
- * underline rule rather than a filled chip, so the orange fill stays unique to
- * that call to action.
- *
- * On the homepage it is suppressed. /risk-check was linked three times in the
- * first viewport — this button, the hero's primary button, and the hero's GPS
- * hint — with two of them rendered as solid orange, so the page had two things
- * claiming to be the single most important action while being the same action.
- * There, the search field is the primary action and the hero's own hint line
- * carries this destination, so a second copy in the header only competes.
+ * to deliver — everything else is browsing. It now points at "/" itself,
+ * since the risk-check tool moved to the homepage (§10 step 4) — and stays
+ * suppressed there, so the button never sits next to the exact tool it links
+ * to.
  */
 
 const LINKS = [
-  { href: "/", label: "Beranda" },
-  { href: "/explore", label: "Jelajahi" },
   { href: "/map", label: "Peta Bahaya" },
   { href: "/timeline", label: "Sejarah" },
   { href: "/about", label: "Tentang" },
 ];
 
-const CTA = { href: "/risk-check", label: "Cek Risiko" };
+const CTA = { href: "/", label: "Cek Risiko" };
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);

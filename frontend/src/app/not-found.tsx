@@ -12,17 +12,14 @@ export default function NotFound() {
           Halaman tidak ditemukan
         </h1>
         <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-text-secondary">
-          Wilayah atau halaman yang kamu cari tidak tersedia. Coba cari wilayah lain,
-          atau langsung cek risiko untuk titik koordinat pilihanmu.
+          Wilayah atau halaman yang kamu cari tidak tersedia. Coba cari wilayahmu
+          atau cek risiko untuk titik koordinat pilihanmu dari beranda.
         </p>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-3">
-        <ButtonLink href="/explore">Jelajahi wilayah</ButtonLink>
-        <ButtonLink href="/risk-check" variant="secondary">
-          Cek risiko lokasiku
-        </ButtonLink>
-        <ButtonLink href="/" variant="ghost">
-          Beranda
+        <ButtonLink href="/">Cek risiko lokasiku</ButtonLink>
+        <ButtonLink href="/map" variant="secondary">
+          Peta bahaya & sesar
         </ButtonLink>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { RiskCheckTool } from "@/components/risk/RiskCheckTool";
 import { Card } from "@/components/ui/Card";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Leaderboard } from "@/components/discover/Leaderboard";
+import { RegionSearch } from "@/components/discover/RegionSearch";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { magnitude, shortDate } from "@/lib/format";
@@ -155,19 +156,19 @@ export default async function HomePage() {
 
       {/* Discovery + history: two ways to leave the homepage with something. */}
       <section className="grid gap-5 lg:grid-cols-2">
+        {/* /explore retired (DESIGN.md §10 step 5) — its ranking list is now
+            each region's own page (RegionRankRow), and its search field lives
+            here instead, since name lookup has no other home in the five
+            surviving destinations now that the picker map is the homepage's
+            primary path in. */}
         <Card
           title="Wilayah paling aktif"
           subtitle="Skor 0–100 menimbang frekuensi, magnitudo, kedalaman, dan kedekatan sesar."
-          action={
-            <Link
-              href="/explore"
-              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
-            >
-              Lihat semua →
-            </Link>
-          }
         >
-          <Leaderboard rows={top} variant="compact" />
+          <RegionSearch placeholder="Atau cari nama wilayahmu…" />
+          <div className="mt-4">
+            <Leaderboard rows={top} variant="compact" />
+          </div>
         </Card>
 
         <Card

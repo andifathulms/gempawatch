@@ -8,6 +8,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
+import { RegionRankRow } from "@/components/discover/RegionRankRow";
 import { SeismogramComparePicker } from "@/components/risk/SeismogramComparePicker";
 import { ShareButton } from "@/components/ui/ShareButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
@@ -158,15 +159,34 @@ export default async function RegionPage({
     : [];
 
   // Same source the old two-select `/compare` form used, minus this region.
-  const compareOptions = (
-    await api
-      .leaderboard(50, "desc")
-      .then((r) => r.results)
-      .catch(() => [])
-  )
+  const leaderboardDesc = await api
+    .leaderboard(50, "desc")
+    .then((r) => r.results)
+    .catch(() => []);
+  const compareOptions = leaderboardDesc
     .map((r) => ({ slug: r.slug, name: r.region_name }))
     .filter((o) => o.slug !== profile.region.slug)
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  /*
+   * Ranking context, absorbed from /explore's Leaderboard as a single
+   * positioned row rather than a list (DESIGN.md §7 item 5, §10 step 5). The
+   * export only ships the top 50 by score and the bottom 50 (`leaderboard`
+   * asc/desc, both capped at 50) — for a region outside the top 50 desc, its
+   * rank is recovered from the ascending list instead, since with ~52 scored
+   * regions today the two lists together cover everyone even though neither
+   * alone does.
+   */
+  const totalScored = profile.activity_percentile_basis?.region_count ?? leaderboardDesc.length;
+  let rankRow = leaderboardDesc.find((r) => r.slug === profile.region.slug) ?? null;
+  if (!rankRow && totalScored > leaderboardDesc.length) {
+    const leaderboardAsc = await api
+      .leaderboard(50, "asc")
+      .then((r) => r.results)
+      .catch(() => []);
+    const ascMatch = leaderboardAsc.find((r) => r.slug === profile.region.slug);
+    if (ascMatch) rankRow = { ...ascMatch, rank: totalScored - ascMatch.rank + 1 };
+  }
 
   const scoreInputs = scoreInputsFromProfile(profile);
 
@@ -298,6 +318,15 @@ export default async function RegionPage({
         </div>
       </div>
 
+      {rankRow && (
+        <Card
+          title="Peringkat aktivitas"
+          subtitle="Posisi wilayah ini di antara semua wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
+        >
+          <RegionRankRow row={rankRow} total={totalScored} />
+        </Card>
+      )}
+
       <Card
         title="Langkah kesiapsiagaan"
         subtitle="Disesuaikan dengan tingkat aktivitas wilayah ini dan status pesisirnya."
@@ -308,12 +337,11 @@ export default async function RegionPage({
         />
       </Card>
 
+      {/* No "Bandingkan dengan wilayah lain" button here — that was /compare's
+          job, and the seismogram card above already does it inline. */}
       <div className="flex flex-wrap gap-3">
-        <ButtonLink href="/risk-check" variant="secondary">
+        <ButtonLink href="/" variant="secondary">
           Cek titik persismu di peta →
-        </ButtonLink>
-        <ButtonLink href="/compare" variant="secondary">
-          Bandingkan dengan wilayah lain
         </ButtonLink>
       </div>
     </div>

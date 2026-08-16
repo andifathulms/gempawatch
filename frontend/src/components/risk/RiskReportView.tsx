@@ -224,7 +224,7 @@ export function RiskReportView({ report, lat, lng }: Props) {
       <SourceAttribution />
 
       <Link
-        href="/risk-check"
+        href="/"
         className="block rounded-lg border border-earth-border py-3 text-center text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
       >
         ← Cek lokasi lain di peta

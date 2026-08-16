@@ -45,6 +45,8 @@ export function pageMetadata({
   description,
   path,
   image,
+  canonicalPath,
+  noindex,
 }: {
   title: string;
   description: string;
@@ -55,15 +57,28 @@ export function pageMetadata({
    * generate one. Falls back to the shared card.
    */
   image?: string;
+  /**
+   * Where the canonical tag should point, when it differs from `path` —
+   * a retired route redirecting readers to its replacement (DESIGN.md §10
+   * step 5) still needs `path` for its own og:url, but the canonical has to
+   * name the page a crawler should index instead.
+   */
+  canonicalPath?: string;
+  /** Retired routes: keep the page reachable (it still redirects real
+   * visitors) but tell crawlers not to index the stub itself. */
+  noindex?: boolean;
 }): Metadata {
   const url = `${BASE_PATH}${path === "/" ? "/" : path}`;
+  const canonicalTarget = canonicalPath ?? path;
+  const canonicalUrl = `${BASE_PATH}${canonicalTarget === "/" ? "/" : canonicalTarget}`;
   const card = image
     ? { url: `${BASE_PATH}${image}`, width: 1200, height: 630 }
     : SHARE_IMAGE;
   return {
     title,
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: canonicalUrl },
+    ...(noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: { title, description, url, images: [card] },
     twitter: { title, description, images: [card] },
   };

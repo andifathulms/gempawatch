@@ -3,7 +3,7 @@ import { api } from "@/lib/api";
 import type { RegionRiskProfile } from "@/lib/types";
 
 /**
- * The 24 region pages are fully prerendered and linked from /explore, so a
+ * The 24 region pages are fully prerendered and linked from the homepage, so a
  * crawler could reach them — but nothing advertised them, and sitemap.xml was a
  * 404. They are the site's long tail: one page per kabupaten/kota, each
  * answering a query someone actually types.
@@ -11,18 +11,21 @@ import type { RegionRiskProfile } from "@/lib/types";
  * Region URLs are enumerated from the same API call that generateStaticParams
  * uses, so the sitemap cannot list a page the build did not produce, or miss
  * one it did.
+ *
+ * /explore, /risk-check, /compare and /risk (bare, no ?lat=&lng=) are not
+ * listed: each is now a redirect stub, marked `robots: { index: false }`
+ * with its canonical pointing elsewhere (DESIGN.md §10 step 5) — a sitemap
+ * entry for a noindex page just tells a crawler to ignore an entry it was
+ * itself told to list.
  */
 const ORIGIN = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const STATIC_PATHS = [
   { path: "/", priority: 1 },
-  { path: "/explore", priority: 0.9 },
-  { path: "/risk-check", priority: 0.9 },
   { path: "/map", priority: 0.7 },
   { path: "/timeline", priority: 0.7 },
   { path: "/about", priority: 0.6 },
-  { path: "/compare", priority: 0.5 },
 ];
 
 export const dynamic = "force-static";

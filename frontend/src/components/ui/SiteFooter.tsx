@@ -11,20 +11,25 @@ import { Logo } from "@/components/ui/Logo";
  * never read as part of the data attribution.
  */
 
+/*
+ * Five public destinations (DESIGN.md §4): "Peringkat wilayah" (/explore) and
+ * "Bandingkan wilayah" (/compare) retired here once their jobs moved onto
+ * region pages — a ranking row and an inline comparison trace respectively
+ * (§10 steps 3 and 5) — and "Cek risiko lokasi saya" now just points at "/",
+ * where the tool itself lives, so it reads as "Beranda" instead of a second
+ * link to the same page under a different label.
+ */
 const SECTIONS: { title: string; links: { href: string; label: string }[] }[] = [
   {
     title: "Jelajahi",
     links: [
       { href: "/", label: "Beranda" },
-      { href: "/explore", label: "Peringkat wilayah" },
-      { href: "/compare", label: "Bandingkan wilayah" },
       { href: "/map", label: "Peta bahaya & sesar" },
     ],
   },
   {
     title: "Pahami",
     links: [
-      { href: "/risk-check", label: "Cek risiko lokasi saya" },
       { href: "/timeline", label: "Memori bencana" },
       { href: "/about", label: "Metodologi & sumber data" },
     ],
