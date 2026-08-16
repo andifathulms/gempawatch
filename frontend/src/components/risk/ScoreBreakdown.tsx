@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   FAULT_PROXIMITY_RANGE_KM,
   FREQUENCY_SATURATION_PER_YEAR,
@@ -8,6 +9,32 @@ import type { ScoreComponent } from "@/lib/types";
 interface Props {
   components: ScoreComponent[];
   total: number;
+  /** ScoreLab renders its own recomputed ScoreBreakdown — a link back to itself, from itself, is not the deep link this is for. */
+  showLabLink?: boolean;
+}
+
+/**
+ * ScoreLab's four URL keys (see ScoreLab.tsx's `KEYS`), read straight off
+ * this breakdown's own `basis` values — every ScoreBreakdown already carries
+ * exactly the four numbers ScoreLab's sliders start from, so the link can be
+ * built here once rather than re-derived at each of its call sites (region
+ * pages, the homepage worked example, a point risk report).
+ */
+function scoreLabQuery(components: ScoreComponent[]): string | null {
+  const basisOf = (key: ScoreComponent["key"]) =>
+    components.find((c) => c.key === key)?.basis;
+  const pairs: Array<[string, number | null | undefined]> = [
+    ["f", basisOf("frequency")?.events_per_year],
+    ["m", basisOf("magnitude")?.largest_magnitude],
+    ["s", basisOf("shallow")?.shallow_ratio],
+    ["d", basisOf("proximity")?.nearest_fault_distance_km],
+  ];
+  const params = new URLSearchParams();
+  for (const [key, value] of pairs) {
+    if (value != null) params.set(key, String(value));
+  }
+  const qs = params.toString();
+  return qs ? qs : null;
 }
 
 /**
@@ -66,7 +93,9 @@ const LABELS: Record<
   },
 };
 
-export function ScoreBreakdown({ components, total }: Props) {
+export function ScoreBreakdown({ components, total, showLabLink = true }: Props) {
+  const labQuery = showLabLink ? scoreLabQuery(components) : null;
+
   return (
     <div className="space-y-4">
       <ul className="space-y-3.5">
@@ -190,6 +219,21 @@ export function ScoreBreakdown({ components, total }: Props) {
         berbeda. Yang kami janjikan bukan bahwa angka ini benar secara mutlak,
         melainkan bahwa aturannya terbuka dan bisa kamu periksa sendiri.
       </p>
+
+      {/*
+        The deep link DESIGN.md §9 asks for: ScoreLab already reads f/m/s/d
+        off the URL and adopts them as a what-if (see ScoreLab.tsx), so this
+        just has to carry this breakdown's own four numbers there rather than
+        sending every reader to Yogyakarta's fixed example.
+      */}
+      {labQuery && (
+        <Link
+          href={`/about?${labQuery}#skor-lab`}
+          className="block rounded-lg border border-earth-border px-3.5 py-3 text-center text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+        >
+          Coba ubah angka ini di ScoreLab →
+        </Link>
+      )}
     </div>
   );
 }

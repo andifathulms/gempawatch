@@ -1,6 +1,9 @@
 import type { HistoricalDisaster } from "@/lib/types";
+import type { DisasterFragment } from "@/lib/seismogram";
 import { DisasterEntry } from "./DisasterEntry";
 import { EmptyState } from "@/components/ui/EmptyState";
+
+export type { DisasterFragment };
 
 /**
  * Vertical timeline — the shareable, educational, commemorative layer.
@@ -14,7 +17,13 @@ function decadeOf(iso: string): number {
   return Math.floor(new Date(iso).getFullYear() / 10) * 10;
 }
 
-export function DisasterTimeline({ disasters }: { disasters: HistoricalDisaster[] }) {
+interface Props {
+  disasters: HistoricalDisaster[];
+  /** Keyed by disaster id; missing or null just means no fragment renders for that entry. */
+  fragments?: Record<number, DisasterFragment | null>;
+}
+
+export function DisasterTimeline({ disasters, fragments = {} }: Props) {
   if (disasters.length === 0) {
     return (
       <EmptyState
@@ -49,7 +58,7 @@ export function DisasterTimeline({ disasters }: { disasters: HistoricalDisaster[
               padding here slides every dot off the rail it marks. */}
           <div className="relative space-y-5 border-l border-earth-border">
             {g.items.map((d) => (
-              <DisasterEntry key={d.id} disaster={d} />
+              <DisasterEntry key={d.id} disaster={d} fragment={fragments[d.id] ?? null} />
             ))}
           </div>
         </section>

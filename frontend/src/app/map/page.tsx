@@ -44,9 +44,17 @@ export default async function MapPage() {
         }
       />
 
-      <Card>
-        <DynamicHazardMap faults={faults} events={events} zones={zones} />
-      </Card>
+      {/*
+        The only route where a map should fill the viewport (DESIGN.md §9) —
+        broken out of <main>'s max-w-6xl via the left/right/-mx-[50vw]
+        full-bleed technique, rather than left inside a bounded Card fighting
+        the thing this page exists to do.
+      */}
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <div className="h-[calc(100vh-5rem)] min-h-[420px]">
+          <DynamicHazardMap faults={faults} events={events} zones={zones} />
+        </div>
+      </div>
 
       <Card title="Cara membaca peta ini">
         <div className="grid gap-4 text-fluid-00 leading-relaxed text-text-secondary sm:grid-cols-3">

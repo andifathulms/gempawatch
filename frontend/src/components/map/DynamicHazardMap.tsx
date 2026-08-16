@@ -6,7 +6,7 @@ import type { GeoFeatureCollection, EarthquakeEvent, TsunamiZone } from "@/lib/t
 const HazardMap = dynamic(() => import("./HazardMap").then((m) => m.HazardMap), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[560px] w-full items-center justify-center rounded-xl bg-earth-surface text-text-muted">
+    <div className="flex h-full w-full items-center justify-center bg-earth-surface text-text-muted">
       Memuat peta bahaya…
     </div>
   ),

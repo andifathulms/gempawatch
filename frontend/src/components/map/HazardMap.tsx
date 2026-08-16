@@ -67,6 +67,7 @@ export function HazardMap({ faults, events, zones }: Props) {
     events: true,
     tsunami: false,
   });
+  const [panelOpen, setPanelOpen] = useState(true);
 
   const counts: Record<LayerKey, number> = {
     faults: faults.features.length,
@@ -78,51 +79,8 @@ export function HazardMap({ faults, events, zones }: Props) {
 
   const reduceMotion = prefersReducedMotion();
 
-
   return (
-    <div className="space-y-4">
-      <fieldset className="grid gap-2 sm:grid-cols-3">
-        <legend className="sr-only">Lapisan peta</legend>
-        {LAYERS.map((l) => {
-          const on = active[l.key];
-          return (
-            <button
-              key={l.key}
-              type="button"
-              onClick={() => toggle(l.key)}
-              aria-pressed={on}
-              className={`flex items-start gap-3 rounded-lg border p-3 text-left transition-colors ${
-                on
-                  ? "border-seismic-orange/60 bg-seismic-orange/[0.07]"
-                  : "border-earth-border bg-earth-dark/40 hover:border-earth-border-strong"
-              }`}
-            >
-              <span
-                aria-hidden="true"
-                className={`mt-1 h-3 w-3 shrink-0 rounded-full transition-opacity ${on ? "" : "opacity-30"}`}
-                style={{
-                  backgroundColor: l.dashed ? "transparent" : l.swatch,
-                  border: l.dashed ? `2px dashed ${l.swatch}` : undefined,
-                }}
-              />
-              <span className="min-w-0">
-                <span
-                  className={`block text-fluid-00 font-medium ${on ? "text-text-primary" : "text-text-muted"}`}
-                >
-                  {l.label}
-                </span>
-                <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
-                  {l.description}
-                </span>
-                <span className="mt-1 block font-mono text-fluid-000 tabular-nums text-text-muted">
-                  {num(counts[l.key])} objek
-                </span>
-              </span>
-            </button>
-          );
-        })}
-      </fieldset>
-
+    <div className="relative h-full w-full">
       <MapContainer
         // Leaflet animates zoom/pan itself, out of reach of the CSS
         // reduced-motion rule that covers the rest of the site.
@@ -131,7 +89,7 @@ export function HazardMap({ faults, events, zones }: Props) {
         fadeAnimation={!reduceMotion}
         center={[-2.5, 118]}
         zoom={5}
-        style={{ height: 600, width: "100%", borderRadius: 12 }}
+        style={{ height: "100%", width: "100%" }}
         scrollWheelZoom
       >
         <TileLayer
@@ -219,29 +177,110 @@ export function HazardMap({ faults, events, zones }: Props) {
           ))}
       </MapContainer>
 
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-fluid-000 text-text-muted">
-        <span className="flex items-center gap-2">
-          <span aria-hidden="true" className="flex items-end gap-1">
-            <span className="h-1.5 w-1.5 rounded-full bg-text-muted" />
-            <span className="h-2.5 w-2.5 rounded-full bg-text-muted" />
-            <span className="h-3.5 w-3.5 rounded-full bg-text-muted" />
-          </span>
-          Ukuran = magnitudo
-        </span>
-        {DEPTH_BANDS.map((b) => (
-          <span key={b.label} className="flex items-center gap-1.5">
-            <span
-              aria-hidden="true"
-              className="h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: b.color }}
-            />
-            <span className="text-text-secondary">{b.label}</span>
-            <span className="font-mono text-fluid-000">{b.detail}</span>
-          </span>
-        ))}
+      {/*
+        Floating, not stacked in normal flow (DESIGN.md §9: "full-bleed
+        height... with the layer toggles floating over it"). pointer-events-
+        none on the wrapper so clicks over the empty parts of the map still
+        reach Leaflet; the panel itself opts back in.
+      */}
+      {/* Top-right, not top-left: Leaflet's own zoom control defaults to
+          top-left, and stacking this panel on top of it made the "+/-"
+          buttons unreachable. */}
+      {/*
+        w-72, not max-w-xs: shrink-to-fit on an absolutely positioned element
+        with only `right` set (no `left`) let the toggle buttons' unwrapped
+        preferred width win over the cap in practice, and the outer
+        rounded-corner overflow-hidden then clipped them mid-word instead of
+        wrapping. An explicit width removes the ambiguity.
+      */}
+      <div className="pointer-events-none absolute right-3 top-3 z-[900] w-72 max-w-[calc(100vw-1.5rem)] sm:right-4 sm:top-4">
+        <div className="pointer-events-auto overflow-hidden rounded-xl border border-earth-border bg-earth-surface shadow-raised">
+          <button
+            type="button"
+            onClick={() => setPanelOpen((v) => !v)}
+            aria-expanded={panelOpen}
+            className="flex w-full items-center justify-between gap-3 px-3.5 py-2.5 text-left"
+          >
+            <span className="font-display text-fluid-00 font-semibold text-text-primary">
+              Lapisan peta
+            </span>
+            <span aria-hidden="true" className="text-fluid-000 text-text-muted">
+              {panelOpen ? "▲" : "▼"}
+            </span>
+          </button>
+
+          {panelOpen && (
+            <fieldset className="space-y-1.5 border-t border-earth-border px-3 pb-3 pt-2.5">
+              <legend className="sr-only">Lapisan peta</legend>
+              {LAYERS.map((l) => {
+                const on = active[l.key];
+                return (
+                  <button
+                    key={l.key}
+                    type="button"
+                    onClick={() => toggle(l.key)}
+                    aria-pressed={on}
+                    className={`flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors ${
+                      on
+                        ? "border-seismic-orange/60 bg-seismic-orange/[0.07]"
+                        : "border-earth-border bg-earth-dark/40 hover:border-earth-border-strong"
+                    }`}
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`mt-1 h-3 w-3 shrink-0 rounded-full transition-opacity ${on ? "" : "opacity-30"}`}
+                      style={{
+                        backgroundColor: l.dashed ? "transparent" : l.swatch,
+                        border: l.dashed ? `2px dashed ${l.swatch}` : undefined,
+                      }}
+                    />
+                    <span className="min-w-0">
+                      <span
+                        className={`block text-fluid-000 font-medium ${on ? "text-text-primary" : "text-text-muted"}`}
+                      >
+                        {l.label}
+                      </span>
+                      <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
+                        {l.description}
+                      </span>
+                      <span className="mt-1 block font-mono text-fluid-000 tabular-nums text-text-muted">
+                        {num(counts[l.key])} objek
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </fieldset>
+          )}
+        </div>
       </div>
 
-      <SourceAttribution />
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[900] sm:inset-x-4 sm:bottom-4">
+        <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-earth-border bg-earth-surface px-3.5 py-2.5 text-fluid-000 text-text-muted shadow-raised">
+          <span className="flex items-center gap-2">
+            <span aria-hidden="true" className="flex items-end gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-text-muted" />
+              <span className="h-2.5 w-2.5 rounded-full bg-text-muted" />
+              <span className="h-3.5 w-3.5 rounded-full bg-text-muted" />
+            </span>
+            Ukuran = magnitudo
+          </span>
+          {DEPTH_BANDS.map((b) => (
+            <span key={b.label} className="flex items-center gap-1.5">
+              <span
+                aria-hidden="true"
+                className="h-2.5 w-2.5 rounded-full"
+                style={{ backgroundColor: b.color }}
+              />
+              <span className="text-text-secondary">{b.label}</span>
+              <span className="font-mono text-fluid-000">{b.detail}</span>
+            </span>
+          ))}
+          <span className="w-full sm:w-auto">
+            <SourceAttribution variant="inline" />
+          </span>
+        </div>
+      </div>
     </div>
   );
 }

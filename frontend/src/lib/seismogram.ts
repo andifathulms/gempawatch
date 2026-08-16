@@ -12,6 +12,12 @@ export interface SeismogramEvent {
   source?: Source;
 }
 
+/** A disaster archive entry's regional context — see DisasterSeismogramFragment. */
+export interface DisasterFragment {
+  regionName: string;
+  events: SeismogramEvent[];
+}
+
 /** Height stops growing below this — the USGS bootstrap floor is M4.0 anyway; this only clamps defensively. */
 const MAG_FLOOR = 3;
 /** Height stops growing above this — no recorded Indonesian event has approached it since Aceh 2004 (M9.1). */
@@ -98,4 +104,34 @@ export function formatDurationId(days: number): string {
   if (days < 730) return `${Math.round(days / 30)} bulan`;
   const years = days / 365.25;
   return `${years.toLocaleString("id-ID", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} tahun`;
+}
+
+/**
+ * The event in a region's timeline that corresponds to a curated
+ * HistoricalDisaster entry, for /timeline's seismogram fragments (DESIGN.md
+ * §9). The two records don't share an id — `HistoricalDisaster.event_date`
+ * is a curated date, `SeismogramEvent.event_time` is the catalogue's own
+ * timestamp for the same earthquake — so the match is nearest-in-time, not
+ * exact. `toleranceDays` guards against a false match when the disaster's
+ * nearest region has no corresponding event at all (an offshore epicentre
+ * far from any admin region's search radius, say): a wrong "closest" event
+ * years away is worse than admitting there's no match to highlight.
+ */
+export function findEventNear<T extends SeismogramEvent>(
+  events: T[],
+  targetIso: string,
+  toleranceDays = 2,
+): T | null {
+  if (events.length === 0) return null;
+  const targetMs = new Date(targetIso).getTime();
+  let best: T | null = null;
+  let bestDiffMs = Infinity;
+  for (const e of events) {
+    const diff = Math.abs(new Date(e.event_time).getTime() - targetMs);
+    if (diff < bestDiffMs) {
+      bestDiffMs = diff;
+      best = e;
+    }
+  }
+  return best && bestDiffMs <= toleranceDays * 86_400_000 ? best : null;
 }

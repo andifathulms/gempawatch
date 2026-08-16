@@ -1,6 +1,8 @@
 import { MagnitudeBadge } from "@/components/ui/MagnitudeBadge";
+import { DisasterSeismogramFragment } from "./DisasterSeismogramFragment";
 import { num } from "@/lib/format";
 import type { HistoricalDisaster } from "@/lib/types";
+import type { DisasterFragment } from "@/lib/seismogram";
 
 /**
  * One entry in the disaster archive.
@@ -14,7 +16,13 @@ function isMajor(casualties: number | null): boolean {
   return (casualties ?? 0) >= 5000;
 }
 
-export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
+interface Props {
+  disaster: HistoricalDisaster;
+  /** This event's regional context (DESIGN.md §9) — null just means it renders without one. */
+  fragment?: DisasterFragment | null;
+}
+
+export function DisasterEntry({ disaster, fragment }: Props) {
   const major = isMajor(disaster.casualties);
   const date = new Date(disaster.event_date);
 
@@ -63,6 +71,19 @@ export function DisasterEntry({ disaster }: { disaster: HistoricalDisaster }) {
         <p className="mt-3 text-fluid-00 leading-relaxed text-text-secondary">
           {disaster.description}
         </p>
+
+        {fragment && (
+          <div className="mt-4">
+            <DisasterSeismogramFragment
+              regionName={fragment.regionName}
+              events={fragment.events}
+              disasterDateIso={disaster.event_date}
+            />
+            <p className="mt-1 text-fluid-000 text-text-muted">
+              Konteks regional: rekaman gempa {fragment.regionName}, kejadian ini ditandai.
+            </p>
+          </div>
+        )}
 
         {(disaster.casualties != null || disaster.displaced != null) && (
           <dl className="mt-4 flex flex-wrap gap-3">

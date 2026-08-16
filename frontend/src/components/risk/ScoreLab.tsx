@@ -264,7 +264,7 @@ export function ScoreLab({ seed }: Props) {
         )}
       </div>
 
-      <ScoreBreakdown components={components} total={total} />
+      <ScoreBreakdown components={components} total={total} showLabLink={false} />
 
       {touched && (
         <p className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">

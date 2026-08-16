@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  findEventNear,
   findLargestEvent,
   findLongestQuietStretch,
   formatDurationId,
@@ -84,6 +85,25 @@ describe("findLongestQuietStretch", () => {
     const stretch = findLongestQuietStretch(events, NOW);
     expect(stretch?.startIso).toBe("2000-01-01T00:00:00.000Z");
     expect(stretch?.endIso).toBe(NOW.toISOString());
+  });
+});
+
+describe("findEventNear", () => {
+  const { dominant } = SEISMOGRAM_REGION_FIXTURES;
+
+  it("returns null for an empty region", () => {
+    expect(findEventNear([], "1992-12-12T00:00:00Z")).toBeNull();
+  });
+
+  it("finds Sikka's real M7.8 within a day of its curated date", () => {
+    // Sikka's timeline records this event at 1992-12-12T05:29:26Z.
+    const match = findEventNear(dominant.events, "1992-12-12T00:00:00Z");
+    expect(match?.magnitude).toBe(7.8);
+  });
+
+  it("refuses a distant match rather than picking the nearest event regardless of gap", () => {
+    // Nothing in this fixture is anywhere near 1970-01-01.
+    expect(findEventNear(dominant.events, "1970-01-01T00:00:00Z")).toBeNull();
   });
 });
 

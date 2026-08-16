@@ -1,7 +1,7 @@
 import { api } from "@/lib/api";
 import { pageMetadata } from "@/lib/meta";
 import type { HistoricalDisaster } from "@/lib/types";
-import { DisasterTimeline } from "@/components/timeline/DisasterTimeline";
+import { DisasterTimeline, type DisasterFragment } from "@/components/timeline/DisasterTimeline";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatTile } from "@/components/ui/Stat";
 import { ButtonLink } from "@/components/ui/Button";
@@ -23,6 +23,34 @@ export default async function TimelinePage() {
   } catch {
     disasters = [];
   }
+
+  /*
+   * Each entry's regional context (DESIGN.md §9) — the curated archive is
+   * small (a handful of entries), so resolving a nearest region and its
+   * timeline per disaster, in parallel, at build time, costs nothing a
+   * reader waits on. A resolution failure degrades that one entry's fragment
+   * silently rather than the page — DisasterEntry just doesn't render one.
+   */
+  const fragments: Record<number, DisasterFragment | null> = {};
+  await Promise.all(
+    disasters.map(async (d) => {
+      try {
+        const region = await api.nearestRegion(d.latitude, d.longitude);
+        const timeline = await api.regionTimeline(region.slug);
+        fragments[d.id] = {
+          regionName: region.name,
+          events: timeline.events.map((e) => ({
+            event_time: e.event_time,
+            magnitude: e.magnitude,
+            depth_km: e.depth_km,
+            source: e.source,
+          })),
+        };
+      } catch {
+        fragments[d.id] = null;
+      }
+    }),
+  );
 
   const casualties = disasters.reduce((sum, d) => sum + (d.casualties ?? 0), 0);
   const largest = disasters.reduce<number | null>(
@@ -65,7 +93,7 @@ export default async function TimelinePage() {
         </div>
       )}
 
-      <DisasterTimeline disasters={disasters} />
+      <DisasterTimeline disasters={disasters} fragments={fragments} />
 
       {/* The source set is correct — every entry in the archive cites USGS and
           one also cites BMKG — but crediting only the two feeds implied they
