@@ -138,7 +138,7 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
                 {/* The ceiling is the most load-bearing thing this panel can
                     say: past it, this term stops telling two places apart. */}
                 {c.saturated && (
-                  <span className="text-tier-mod"> Komponen ini sudah mentok.</span>
+                  <span className="font-semibold text-ink"> Komponen ini sudah mentok.</span>
                 )}
               </p>
             </li>

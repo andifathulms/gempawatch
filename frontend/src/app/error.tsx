@@ -21,7 +21,7 @@ export default function Error({
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-6 py-16 text-center">
       <span
         aria-hidden="true"
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-tier-mod/15 text-tier-mod"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-ink text-on-ink"
       >
         <svg
           width="22"

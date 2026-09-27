@@ -80,8 +80,8 @@ export function LargestEventSensitivity({ sensitivity, score }: Props) {
       </div>
 
       {/* The one reading this panel must not invite. */}
-      <p className="rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-ink-2">
-        <strong className="font-semibold text-tier-mod">Bukan berarti</strong>{" "}
+      <p className="border-l-2 border-ink pl-3.5 py-1 text-fluid-00 leading-relaxed text-ink-2">
+        <strong className="font-bold text-ink">Bukan berarti</strong>{" "}
         angka yang lebih rendah itu yang benar. Kejadian besar yang sudah pernah
         terjadi adalah bukti tentang wilayah ini, bukan pengecualian yang bisa
         dicoret. Perbandingan ini hanya menunjukkan seberapa besar bagian skor

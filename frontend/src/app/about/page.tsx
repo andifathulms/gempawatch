@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/Card";
 import { pageMetadata } from "@/lib/meta";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { StatTile } from "@/components/ui/Stat";
+import { FactRow } from "@/components/risk/VerdictBand";
 import { ButtonLink } from "@/components/ui/Button";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { ScoreLab, type ScoreLabSeed } from "@/components/risk/ScoreLab";
@@ -116,22 +116,21 @@ export default async function AboutPage() {
       : "historis";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <PageHeader
-        eyebrow="Tentang & metodologi"
+        eyebrow="Metodologi"
         title="Bagaimana GempaWatch menghitung risiko"
         subtitle="GempaWatch membantu masyarakat memahami risiko gempa di lokasi mereka sendiri — bukan sekadar menampilkan daftar gempa terbaru. Halaman ini menjelaskan datanya dari mana, angkanya dihitung bagaimana, dan apa saja yang tidak bisa disimpulkan darinya."
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        <StatTile
-          label="Kejadian dalam basis data"
-          value={num(coverage.count)}
-          tone="accent"
-        />
-        <StatTile label="Rentang catatan" value={span} />
-        <StatTile label="Sumber data" value="BMKG + USGS" />
-      </div>
+      <FactRow
+        facts={[
+          { value: num(coverage.count), label: "kejadian dalam basis data" },
+          { value: span, label: "rentang catatan" },
+          { value: "BMKG + USGS", label: "sumber data, digabung tanpa duplikat" },
+          { value: "4", label: "komponen skor, bobotnya terbuka" },
+        ]}
+      />
 
       <div className="grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
         {/* Contents rail — this page gets linked to in parts. */}
@@ -156,9 +155,9 @@ export default async function AboutPage() {
           </ul>
         </nav>
 
-        <div className="min-w-0 space-y-5">
-          <Card id="bukan-peringatan" title="Bukan sistem peringatan dini">
-            <div className="rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] p-4">
+        <div className="min-w-0 space-y-14">
+          <Card variant="plain" id="bukan-peringatan" title="Bukan sistem peringatan dini">
+            <div className="border-l-2 border-ink pl-4">
               <p className="text-fluid-00 leading-relaxed text-ink-2">
                 GempaWatch menampilkan{" "}
                 <strong className="font-semibold text-ink">
@@ -181,7 +180,7 @@ export default async function AboutPage() {
             </div>
           </Card>
 
-          <Card id="sumber-data" title="Sumber data">
+          <Card variant="plain" id="sumber-data" title="Sumber data">
             <dl className="space-y-4 text-fluid-00 leading-relaxed text-ink-2">
               <div>
                 <dt className="font-semibold text-ink">
@@ -221,12 +220,12 @@ export default async function AboutPage() {
             </dl>
           </Card>
 
-          <Card
+          <Card variant="plain"
             id="skor"
             title="Cara skor dihitung"
             subtitle="Satu angka 0–100, dari empat komponen berbobot tetap, dalam radius 100 km dari titik pusat wilayah."
           >
-            <p className="mb-4 rounded-lg border border-ink/25 bg-ink/[0.06] px-4 py-3 text-fluid-00 leading-relaxed text-ink-2">
+            <p className="mb-4 border-l-2 border-ink pl-4 text-fluid-00 leading-relaxed text-ink-2">
               <strong className="font-semibold text-ink">
                 Sebelum angkanya:
               </strong>{" "}
@@ -289,7 +288,7 @@ export default async function AboutPage() {
             </p>
           </Card>
 
-          <Card id="tsunami" title="Tingkat risiko tsunami">
+          <Card variant="plain" id="tsunami" title="Tingkat risiko tsunami">
             <p className="text-fluid-00 leading-relaxed text-ink-2">
               Indikator pola historis, bukan peringatan resmi. Kriterianya: wilayah
               pesisir dengan gempa dangkal (&lt;70 km) bermagnitudo ≥6.5 dalam radius
@@ -320,7 +319,7 @@ export default async function AboutPage() {
             </ul>
           </Card>
 
-          <Card id="keterbatasan" title="Keterbatasan yang kami akui">
+          <Card variant="plain" id="keterbatasan" title="Keterbatasan yang kami akui">
             <ul className="space-y-3 text-fluid-00 leading-relaxed text-ink-2">
               <li>
                 <strong className="text-ink">
@@ -355,7 +354,7 @@ export default async function AboutPage() {
             </ul>
           </Card>
 
-          <Card id="atribusi" title="Atribusi">
+          <Card variant="plain" id="atribusi" title="Atribusi">
             <SourceAttribution />
             <div className="mt-4 flex flex-wrap gap-3">
               <ButtonLink href="/" size="sm">

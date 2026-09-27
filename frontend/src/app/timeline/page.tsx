@@ -93,7 +93,7 @@ export default async function TimelinePage() {
               Rekaman nasional
             </h2>
             <NationalTrace
-              flags={disasters.map((d) => ({ id: d.id, label: shortName(d.name), date: d.event_date }))}
+              flags={disasters.map((d) => ({ id: d.id, label: shortName(d.name), date: d.event_date, weight: d.casualties ?? 0 }))}
             />
           </section>
 

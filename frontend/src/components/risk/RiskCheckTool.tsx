@@ -266,7 +266,7 @@ export function RiskCheckTool() {
         )}
 
         {report && !loading && position && (
-          <RiskReportView report={report} lat={position[0]} lng={position[1]} />
+          <RiskReportView report={report} lat={position[0]} lng={position[1]} animate />
         )}
       </div>
     </div>

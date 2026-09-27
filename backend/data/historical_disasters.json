@@ -1,63 +1,49 @@
 [
   {
-    "name": "Gempa & Tsunami Aceh (Samudra Hindia)",
-    "slug": "aceh-tsunami-2004",
-    "event_date": "2004-12-26",
-    "magnitude": 9.1,
-    "longitude": 95.85,
-    "latitude": 3.30,
-    "casualties": 167000,
-    "displaced": 500000,
-    "description": "Gempa megathrust M9.1 di lepas pantai barat Aceh memicu tsunami Samudra Hindia, salah satu bencana alam paling mematikan dalam sejarah modern. Gelombang menerjang Aceh dan menyebar ke 14 negara.",
+    "name": "Gempa Cianjur",
+    "slug": "cianjur-2022",
+    "event_date": "2022-11-21",
+    "magnitude": 5.6,
+    "longitude": 107.05,
+    "latitude": -6.84,
+    "casualties": 635,
+    "displaced": 114000,
+    "description": "Gempa dangkal M5.6 di Cianjur, Jawa Barat, menyebabkan kerusakan berat dan korban jiwa yang tinggi relatif terhadap magnitudonya akibat kedalaman dangkal dan kepadatan penduduk.",
     "image_url": null,
     "source_links": [
-      "https://earthquake.usgs.gov/earthquakes/eventpage/official20041226005853450_30",
-      "https://www.bmkg.go.id/"
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us7000iqgw"
     ]
   },
   {
-    "name": "Gempa Yogyakarta",
-    "slug": "yogyakarta-2006",
-    "event_date": "2006-05-27",
-    "magnitude": 6.4,
-    "longitude": 110.45,
-    "latitude": -7.96,
-    "casualties": 5782,
-    "displaced": 1500000,
-    "description": "Gempa dangkal M6.4 di dekat Sesar Opak meruntuhkan puluhan ribu bangunan di Bantul dan sekitarnya. Kedalaman dangkal membuat kerusakan sangat parah meski magnitudonya menengah.",
+    "name": "Gempa Mamuju–Majene",
+    "slug": "mamuju-majene-2021",
+    "event_date": "2021-01-15",
+    "magnitude": 6.2,
+    "longitude": 118.89,
+    "latitude": -2.97,
+    "casualties": 105,
+    "displaced": null,
+    "description": "Gempa dangkal mengguncang Kabupaten Mamuju dan Majene, Sulawesi Barat, pada dini hari 15 Januari 2021 waktu setempat, meruntuhkan rumah sakit, kantor pemerintahan, dan ribuan rumah. Menurut BNPB, 105 orang meninggal dan ribuan orang luka-luka.",
     "image_url": null,
     "source_links": [
-      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000eg6c"
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us7000d030",
+      "https://www.metrotvnews.com/read/NnjCWlLx-15-januari-2021-jejak-kerusakan-gempa-majene-mamuju-renggut-105-jiwa"
     ]
   },
   {
-    "name": "Gempa & Tsunami Padang/Mentawai",
-    "slug": "padang-2009",
-    "event_date": "2009-09-30",
-    "magnitude": 7.6,
-    "longitude": 99.96,
-    "latitude": -0.72,
-    "casualties": 1115,
-    "displaced": 250000,
-    "description": "Gempa M7.6 di lepas pantai Sumatera Barat menyebabkan kerusakan luas di Kota Padang dan sekitarnya, dengan ribuan bangunan runtuh.",
+    "name": "Gempa Ambon",
+    "slug": "ambon-2019",
+    "event_date": "2019-09-26",
+    "magnitude": 6.5,
+    "longitude": 128.37,
+    "latitude": -3.45,
+    "casualties": 41,
+    "displaced": 170900,
+    "description": "Gempa dangkal di timur laut Ambon pada pagi 26 September 2019 waktu setempat merusak lebih dari 6.000 rumah di Maluku dan memicu longsor serta likuefaksi. Sebanyak 41 orang meninggal dan sekitar 170.900 orang kehilangan tempat tinggal atau mengungsi.",
     "image_url": null,
     "source_links": [
-      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000h1ws"
-    ]
-  },
-  {
-    "name": "Gempa Lombok",
-    "slug": "lombok-2018",
-    "event_date": "2018-08-05",
-    "magnitude": 6.9,
-    "longitude": 116.45,
-    "latitude": -8.37,
-    "casualties": 563,
-    "displaced": 417000,
-    "description": "Rangkaian gempa kuat mengguncang Pulau Lombok pada Juli–Agustus 2018, dengan puncak M6.9 yang menimbulkan kerusakan besar di Lombok Utara dan Timur.",
-    "image_url": null,
-    "source_links": [
-      "https://earthquake.usgs.gov/earthquakes/eventpage/us2000gk5b"
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us70005lfd",
+      "https://en.wikipedia.org/wiki/2019_Ambon_earthquake"
     ]
   },
   {
@@ -76,18 +62,256 @@
     ]
   },
   {
-    "name": "Gempa Cianjur",
-    "slug": "cianjur-2022",
-    "event_date": "2022-11-21",
-    "magnitude": 5.6,
-    "longitude": 107.05,
-    "latitude": -6.84,
-    "casualties": 635,
-    "displaced": 114000,
-    "description": "Gempa dangkal M5.6 di Cianjur, Jawa Barat, menyebabkan kerusakan berat dan korban jiwa yang tinggi relatif terhadap magnitudonya akibat kedalaman dangkal dan kepadatan penduduk.",
+    "name": "Gempa Lombok",
+    "slug": "lombok-2018",
+    "event_date": "2018-08-05",
+    "magnitude": 6.9,
+    "longitude": 116.45,
+    "latitude": -8.37,
+    "casualties": 563,
+    "displaced": 417000,
+    "description": "Rangkaian gempa kuat mengguncang Pulau Lombok pada Juli–Agustus 2018, dengan puncak M6.9 yang menimbulkan kerusakan besar di Lombok Utara dan Timur.",
     "image_url": null,
     "source_links": [
-      "https://earthquake.usgs.gov/earthquakes/eventpage/us7000iqgw"
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us2000gk5b"
+    ]
+  },
+  {
+    "name": "Gempa Pidie Jaya",
+    "slug": "pidie-jaya-2016",
+    "event_date": "2016-12-07",
+    "magnitude": 6.5,
+    "longitude": 96.17,
+    "latitude": 5.28,
+    "casualties": 104,
+    "displaced": 85256,
+    "description": "Gempa dangkal di darat mengguncang Kabupaten Pidie Jaya dan sekitarnya pada pagi 7 Desember 2016 waktu setempat, merusak lebih dari 18.000 bangunan. Sedikitnya 104 orang meninggal dan lebih dari 85.000 orang mengungsi.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/us10007ghm",
+      "https://en.wikipedia.org/wiki/2016_Aceh_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Mentawai",
+    "slug": "mentawai-2010",
+    "event_date": "2010-10-25",
+    "magnitude": 7.8,
+    "longitude": 100.08,
+    "latitude": -3.49,
+    "casualties": 509,
+    "displaced": 11425,
+    "description": "Gempa di lepas pantai Kepulauan Mentawai memicu tsunami yang melanda pesisir Pulau Pagai Utara, Pagai Selatan, dan Sipura. Menurut BNPB, 509 orang meninggal, 21 orang hilang, dan 11.425 orang mengungsi.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000hnj4",
+      "https://www.tempo.co/politik/kilas-balik-gempa-mentawai-25-oktober-2010-disertai-tsunami-dan-ratusan-orang-meninggal-128351"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Padang/Mentawai",
+    "slug": "padang-2009",
+    "event_date": "2009-09-30",
+    "magnitude": 7.6,
+    "longitude": 99.96,
+    "latitude": -0.72,
+    "casualties": 1115,
+    "displaced": 250000,
+    "description": "Gempa M7.6 di lepas pantai Sumatera Barat menyebabkan kerusakan luas di Kota Padang dan sekitarnya, dengan ribuan bangunan runtuh.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000h1ws"
+    ]
+  },
+  {
+    "name": "Gempa Tasikmalaya",
+    "slug": "tasikmalaya-2009",
+    "event_date": "2009-09-02",
+    "magnitude": 7.0,
+    "longitude": 107.3,
+    "latitude": -7.78,
+    "casualties": 81,
+    "displaced": null,
+    "description": "Gempa di selatan Jawa Barat menimbulkan kerusakan parah di Tasikmalaya, Cianjur, dan sekitarnya, termasuk longsor di Cikangkareng, Cianjur. Sedikitnya 81 orang meninggal dan lebih dari 1.200 orang luka-luka.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000h152",
+      "https://en.wikipedia.org/wiki/2009_West_Java_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa Bengkulu",
+    "slug": "bengkulu-2007",
+    "event_date": "2007-09-12",
+    "magnitude": 8.4,
+    "longitude": 101.37,
+    "latitude": -4.44,
+    "casualties": 25,
+    "displaced": null,
+    "description": "Gempa besar di lepas pantai Bengkulu, disusul gempa M7,9 keesokan paginya, merusak lebih dari 56.000 bangunan di Bengkulu dan Sumatera Barat. Sebanyak 25 orang meninggal dan sedikitnya 161 orang luka-luka.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/official20070912111026830_34",
+      "https://en.wikipedia.org/wiki/September_2007_Sumatra_earthquakes"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Pangandaran",
+    "slug": "pangandaran-2006",
+    "event_date": "2006-07-17",
+    "magnitude": 7.7,
+    "longitude": 107.42,
+    "latitude": -9.28,
+    "casualties": 665,
+    "displaced": null,
+    "description": "Gempa di selatan Jawa dengan guncangan yang relatif lemah di darat memicu tsunami yang melanda sekitar 300 km pesisir selatan Jawa Barat dan Jawa Tengah, termasuk Pangandaran dan Cilacap. Sekitar 665 orang meninggal dan 65 orang hilang, seluruhnya akibat tsunami.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000ensm",
+      "https://en.wikipedia.org/wiki/2006_Pangandaran_earthquake_and_tsunami"
+    ]
+  },
+  {
+    "name": "Gempa Yogyakarta",
+    "slug": "yogyakarta-2006",
+    "event_date": "2006-05-27",
+    "magnitude": 6.4,
+    "longitude": 110.45,
+    "latitude": -7.96,
+    "casualties": 5782,
+    "displaced": 1500000,
+    "description": "Gempa dangkal M6.4 di dekat Sesar Opak meruntuhkan puluhan ribu bangunan di Bantul dan sekitarnya. Kedalaman dangkal membuat kerusakan sangat parah meski magnitudonya menengah.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp000eg6c"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Nias",
+    "slug": "nias-2005",
+    "event_date": "2005-03-28",
+    "magnitude": 8.6,
+    "longitude": 97.11,
+    "latitude": 2.09,
+    "casualties": 1303,
+    "displaced": null,
+    "description": "Gempa besar di lepas pantai barat Sumatera Utara, tiga bulan setelah gempa Aceh 2004, menghancurkan banyak bangunan di Pulau Nias, Simeulue, dan Kepulauan Banyak serta memicu tsunami lokal. Lebih dari 1.300 orang meninggal, sebagian besar di Pulau Nias.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/official20050328160936530_30",
+      "https://en.wikipedia.org/wiki/2005_Nias%E2%80%93Simeulue_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Aceh (Samudra Hindia)",
+    "slug": "aceh-tsunami-2004",
+    "event_date": "2004-12-26",
+    "magnitude": 9.1,
+    "longitude": 95.85,
+    "latitude": 3.3,
+    "casualties": 167000,
+    "displaced": 500000,
+    "description": "Gempa megathrust M9.1 di lepas pantai barat Aceh memicu tsunami Samudra Hindia, salah satu bencana alam paling mematikan dalam sejarah modern. Gelombang menerjang Aceh dan menyebar ke 14 negara.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/official20041226005853450_30",
+      "https://www.bmkg.go.id/"
+    ]
+  },
+  {
+    "name": "Gempa Bengkulu (Enggano)",
+    "slug": "bengkulu-2000",
+    "event_date": "2000-06-04",
+    "magnitude": 7.9,
+    "longitude": 102.09,
+    "latitude": -4.72,
+    "casualties": 103,
+    "displaced": null,
+    "description": "Gempa di lepas pantai selatan Bengkulu dekat Pulau Enggano menimbulkan kerusakan luas dan longsor di wilayah Bengkulu. Sedikitnya 103 orang meninggal dan lebih dari 2.000 orang luka-luka.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp0009txv",
+      "https://en.wikipedia.org/wiki/2000_Enggano_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Banggai",
+    "slug": "banggai-2000",
+    "event_date": "2000-05-04",
+    "magnitude": 7.6,
+    "longitude": 123.57,
+    "latitude": -1.11,
+    "casualties": 46,
+    "displaced": 30000,
+    "description": "Gempa di Kepulauan Banggai, Sulawesi Tengah, disertai tsunami lokal yang merusak pesisir timur Luwuk dan Pulau Peleng. Sedikitnya 46 orang meninggal dan sekitar 30.000 orang kehilangan tempat tinggal.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp0009sbh",
+      "https://en.wikipedia.org/wiki/2000_Banggai_Islands_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Biak",
+    "slug": "biak-1996",
+    "event_date": "1996-02-17",
+    "magnitude": 8.1,
+    "longitude": 136.95,
+    "latitude": -0.89,
+    "casualties": 108,
+    "displaced": null,
+    "description": "Gempa besar di lepas pantai utara Papua memicu tsunami setinggi hingga sekitar 7 meter yang merusak Pulau Biak dan Supiori. Sedikitnya 108 orang meninggal, 58 orang hilang, dan lebih dari 5.000 rumah rusak.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/official19960217055930550_33",
+      "https://en.wikipedia.org/wiki/1996_Biak_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Banyuwangi",
+    "slug": "banyuwangi-1994",
+    "event_date": "1994-06-03",
+    "magnitude": 7.8,
+    "longitude": 112.84,
+    "latitude": -10.48,
+    "casualties": 250,
+    "displaced": null,
+    "description": "Gempa di selatan Jawa Timur pada dini hari 3 Juni 1994 waktu setempat memicu tsunami yang melanda pesisir selatan Banyuwangi. Sedikitnya 250 orang meninggal dan 27 orang hilang, sebagian besar akibat tsunami.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp0006djk",
+      "https://en.wikipedia.org/wiki/1994_Java_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa Liwa (Lampung Barat)",
+    "slug": "liwa-1994",
+    "event_date": "1994-02-16",
+    "magnitude": 6.9,
+    "longitude": 104.3,
+    "latitude": -4.97,
+    "casualties": 207,
+    "displaced": 75000,
+    "description": "Gempa dangkal mengguncang Lampung Barat dini hari 16 Februari 1994 waktu setempat, dengan kerusakan terparah di sekitar Liwa akibat guncangan, longsor, dan kebakaran. Sedikitnya 207 orang meninggal dan sekitar 75.000 orang kehilangan tempat tinggal.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp00068jd",
+      "https://en.wikipedia.org/wiki/1994_Liwa_earthquake"
+    ]
+  },
+  {
+    "name": "Gempa & Tsunami Flores",
+    "slug": "flores-1992",
+    "event_date": "1992-12-12",
+    "magnitude": 7.8,
+    "longitude": 121.9,
+    "latitude": -8.48,
+    "casualties": 2500,
+    "displaced": 90000,
+    "description": "Gempa di Laut Flores memicu tsunami yang melanda pesisir utara Pulau Flores, dengan kerusakan terberat di Maumere dan Pulau Babi. Sekitar 2.500 orang meninggal atau hilang dan sekitar 90.000 orang kehilangan tempat tinggal.",
+    "image_url": null,
+    "source_links": [
+      "https://earthquake.usgs.gov/earthquakes/eventpage/usp0005j5a",
+      "https://en.wikipedia.org/wiki/1992_Flores_earthquake_and_tsunami"
     ]
   }
 ]

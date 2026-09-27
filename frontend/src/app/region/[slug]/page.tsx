@@ -25,7 +25,7 @@ import { haversineKm } from "@/lib/engine/geo";
 import { islandOf } from "@/lib/islands";
 import { pageMetadata } from "@/lib/meta";
 import { activityTierMeaning, binByDepth, riskTierLabel } from "@/lib/seismic";
-import { depth, magnitude, num, regionType } from "@/lib/format";
+import { depth, magnitude, num, regionType, shortDate } from "@/lib/format";
 import type { SeismogramEvent } from "@/lib/seismogram";
 
 /**
@@ -245,7 +245,9 @@ export default async function RegionPage({
             headingLevel={1}
             eyebrow={`${regionType(profile.region.type)} · ${island}`}
             place={profile.region.name}
-            meta={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.`}
+            meta={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.${
+              profile.last_updated ? ` Diperbarui ${shortDate(profile.last_updated)}.` : ""
+            }`}
             score={profile.composite_score}
             tier={profile.activity_tier}
             finding={headline}

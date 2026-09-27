@@ -26,6 +26,8 @@ interface Props {
    * question above it is already the h1.
    */
   headingLevel?: 1 | 2;
+  /** Count the score up as the result lands — homepage (client) only. */
+  animate?: boolean;
 }
 
 const RELATION_LABEL: Record<string, string> = {
@@ -46,7 +48,7 @@ const RELATION_LABEL: Record<string, string> = {
  * methodology panels at the same weight as the answer. Those now live in
  * expandable rows — still on the page, still indexed, one tap away.
  */
-export function RiskReportView({ report, lat, lng, headingLevel = 2 }: Props) {
+export function RiskReportView({ report, lat, lng, headingLevel = 2, animate = false }: Props) {
   const place = report.nearest_region?.name ?? "Lokasi pilihanmu";
   const caption = `Risiko gempa ${place}: ${riskTierLabel(report.activity_tier)} (skor ${report.composite_score.toFixed(
     0,
@@ -59,6 +61,7 @@ export function RiskReportView({ report, lat, lng, headingLevel = 2 }: Props) {
     <article className="space-y-12 sm:space-y-14">
       <VerdictBand
         headingLevel={headingLevel}
+        animateScore={animate}
         eyebrow="Laporan risiko titik"
         place={place}
         meta={

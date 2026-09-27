@@ -8,6 +8,8 @@ interface Flag {
   id: number;
   label: string;
   date: string; // ISO date
+  /** Label priority when space runs out — the archive passes the death toll. */
+  weight?: number;
 }
 
 const FIRST = 1970;
@@ -63,7 +65,24 @@ export function NationalTrace({ flags }: { flags: Flag[] }) {
   const y = (m: number) => base - magnitudeToUnitHeight(m) * H;
   const spike = Math.max(2, ((width - pl - pr) / (last + 1 - FIRST)) * 0.5);
 
-  const sortedFlags = [...flags].sort((a, b) => a.date.localeCompare(b.date));
+  // Greedy label placement: each flag takes the first row with room, in
+  // priority order (deadliest first), and a flag with no room keeps its tick
+  // but loses its label — with twenty entries, three fixed rows collided.
+  const rowEnds = Array.from({ length: flagRows }, () => [] as Array<[number, number]>);
+  const charW = narrow ? 6.6 : 7.4;
+  const placed = [...flags]
+    .sort((a, b) => (b.weight ?? 0) - (a.weight ?? 0))
+    .map((f) => {
+      const [yy, mm] = f.date.split("-").map(Number);
+      const fx = x(yy + (mm - 0.5) / 12);
+      const text = `${f.label} ${yy}`;
+      const w = text.length * charW + 8;
+      const end = fx > width * 0.78;
+      const span: [number, number] = end ? [fx - w, fx + 2] : [fx - 2, fx + w];
+      const row = rowEnds.findIndex((spans) => spans.every(([s, e]) => span[1] < s || span[0] > e));
+      if (row >= 0) rowEnds[row].push(span);
+      return { id: f.id, x: fx, text, end, row: row >= 0 ? row : null };
+    });
 
   return (
     <figure className="m-0">
@@ -78,28 +97,30 @@ export function NationalTrace({ flags }: { flags: Flag[] }) {
                 </text>
               </g>
             ))}
-            {sortedFlags.map((f, i) => {
-              const [yy, mm] = f.date.split("-").map(Number);
-              const fx = x(yy + (mm - 0.5) / 12);
-              const row = i % flagRows;
-              const ly = 14 + row * 17;
-              const end = fx > width * 0.78;
-              return (
-                <g key={f.id}>
-                  <line x1={fx} x2={fx} y1={ly + 4} y2={base} stroke="var(--ink-3)" strokeDasharray="2 3" />
+            {placed.map((f) => (
+              <g key={f.id}>
+                <line
+                  x1={f.x}
+                  x2={f.x}
+                  y1={f.row == null ? top - 6 : 14 + f.row * 17 + 4}
+                  y2={base}
+                  stroke="var(--ink-3)"
+                  strokeDasharray="2 3"
+                />
+                {f.row != null && (
                   <text
-                    x={fx + (end ? -4 : 4)}
-                    y={ly}
-                    textAnchor={end ? "end" : "start"}
+                    x={f.x + (f.end ? -4 : 4)}
+                    y={14 + f.row * 17}
+                    textAnchor={f.end ? "end" : "start"}
                     fontSize={narrow ? 11 : 12}
                     fontWeight={600}
                     fill="var(--ink)"
                   >
-                    {f.label} {yy}
+                    {f.text}
                   </text>
-                </g>
-              );
-            })}
+                )}
+              </g>
+            ))}
             {Array.from(perYear.entries()).map(([yr, v]) => (
               <line
                 key={yr}

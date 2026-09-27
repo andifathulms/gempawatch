@@ -1,5 +1,6 @@
 import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
 import { RegionDotPlot } from "@/components/risk/RegionDotPlot";
+import { ScoreNumeral } from "@/components/risk/ScoreNumeral";
 import { riskTierTextColor } from "@/lib/seismic";
 import type { RiskTier } from "@/lib/types";
 
@@ -19,6 +20,8 @@ interface Props {
   headingLevel?: 1 | 2;
   /** Follows the finding — the share row on region pages. */
   action?: React.ReactNode;
+  /** Count the score up once (client-rendered results only). */
+  animateScore?: boolean;
 }
 
 /**
@@ -40,6 +43,7 @@ export function VerdictBand({
   plotSlug,
   headingLevel = 2,
   action,
+  animateScore = false,
 }: Props) {
   const Heading = headingLevel === 1 ? "h1" : "h2";
   return (
@@ -54,7 +58,7 @@ export function VerdictBand({
             className="text-fluid-6 font-extrabold tabular-nums tracking-[-0.05em]"
             style={{ color: riskTierTextColor(tier) }}
           >
-            {Math.round(score)}
+            <ScoreNumeral value={score} animate={animateScore} />
             <span className="ml-1 text-fluid-2 font-semibold tracking-normal text-ink-3">/100</span>
           </p>
           <div className="grid gap-1.5 pb-2">

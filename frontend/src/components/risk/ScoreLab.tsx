@@ -267,8 +267,8 @@ export function ScoreLab({ seed }: Props) {
       <ScoreBreakdown components={components} total={total} showLabLink={false} />
 
       {touched && (
-        <p className="rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-ink-2">
-          <strong className="font-semibold text-tier-mod">Ingat —</strong> yang
+        <p className="border-l-2 border-ink pl-3.5 py-1 text-fluid-00 leading-relaxed text-ink-2">
+          <strong className="font-bold text-ink">Ingat —</strong> yang
           kamu lihat sekarang adalah wilayah rekaan, bukan {seed.regionName} dan
           bukan wilayah mana pun. Gunanya untuk merasakan bobot tiap komponen,
           bukan untuk menyimpulkan risiko suatu tempat.

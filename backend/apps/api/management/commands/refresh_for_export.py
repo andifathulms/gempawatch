@@ -18,13 +18,14 @@ Usage:
 """
 from django.core.management.base import BaseCommand, CommandError
 
+from apps.disasters.loader import load_historical_disasters
 from apps.earthquakes.tasks.bmkg import poll_bmkg_all
 from apps.earthquakes.tasks.usgs import sync_usgs_recent
 from apps.regions.tasks.risk_profile import recompute_region_risk_profiles
 
 
 class Command(BaseCommand):
-    help = "Poll BMKG, sync recent USGS, and recompute risk profiles."
+    help = "Poll BMKG, sync recent USGS, load the disaster archive, and recompute risk profiles."
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -44,6 +45,13 @@ class Command(BaseCommand):
             self._best_effort(
                 "USGS sync", sync_usgs_recent, days=options["usgs_days"]
             )
+
+        # The curated archive is a file in the repo, but it was only loaded by
+        # earthquake_bootstrap — which CI skips whenever the database cache
+        # hits, so edits to historical_disasters.json never reached the
+        # export. The loader upserts by slug, so running it every time is safe.
+        self.stdout.write(self.style.MIGRATE_HEADING("Loading disaster archive..."))
+        self.stdout.write(f"  {load_historical_disasters()} entries upserted")
 
         self.stdout.write(self.style.MIGRATE_HEADING("Recomputing risk profiles..."))
         try:
