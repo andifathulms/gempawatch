@@ -28,7 +28,7 @@ export default function RiskQueryPage() {
     <Suspense
       fallback={
         <Card>
-          <p className="py-10 text-center text-text-muted">Memuat…</p>
+          <p className="py-10 text-center text-ink-3">Memuat…</p>
         </Card>
       }
     >

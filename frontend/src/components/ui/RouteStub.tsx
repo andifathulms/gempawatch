@@ -30,10 +30,10 @@ export function RouteStub({ to, message }: Props) {
 
   return (
     <div className="mx-auto max-w-md space-y-3 py-20 text-center">
-      <p className="text-fluid-00 leading-relaxed text-text-secondary">{message}</p>
+      <p className="text-fluid-00 leading-relaxed text-ink-2">{message}</p>
       <Link
         href={to}
-        className="inline-block text-fluid-00 font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
+        className="inline-block text-fluid-00 font-medium text-ink underline underline-offset-2 hover:brightness-110"
       >
         Lanjut ke sana →
       </Link>

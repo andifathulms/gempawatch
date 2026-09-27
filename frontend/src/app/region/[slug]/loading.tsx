@@ -13,7 +13,7 @@ export default function RegionLoading() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-3">
-        <div className="rounded-xl border border-earth-border bg-earth-surface p-4 sm:p-5 lg:col-span-1">
+        <div className="rounded-xl border border-rule bg-surface p-4 sm:p-5 lg:col-span-1">
           <Skeleton className="mb-4 h-3 w-32" />
           <Skeleton className="mx-auto h-28 w-48" />
           <div className="mt-5 space-y-2.5">

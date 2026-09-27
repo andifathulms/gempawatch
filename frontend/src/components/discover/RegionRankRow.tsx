@@ -36,11 +36,11 @@ export function RegionRankRow({ row, total }: Props) {
           className="absolute inset-y-0 left-0 origin-left animate-draw-in rounded-lg"
           style={{
             width: `${Math.max(2, Math.min(100, row.composite_score))}%`,
-            background: `linear-gradient(90deg, ${fill}26, ${fill}08)`,
+            background: `linear-gradient(90deg, color-mix(in srgb, ${fill} 16%, transparent), color-mix(in srgb, ${fill} 4%, transparent))`,
           }}
         />
 
-        <span className="relative w-8 shrink-0 text-center font-mono text-fluid-00 tabular-nums text-text-muted">
+        <span className="relative w-8 shrink-0 text-center font-mono text-fluid-00 tabular-nums text-ink-3">
           #{row.rank}
         </span>
 
@@ -53,10 +53,10 @@ export function RegionRankRow({ row, total }: Props) {
         </span>
 
         <span className="relative min-w-0 flex-1">
-          <span className="block truncate text-fluid-00 font-medium text-text-primary">
+          <span className="block truncate text-fluid-00 font-medium text-ink">
             {row.region_name}
           </span>
-          <span className="block truncate text-fluid-000 text-text-muted">
+          <span className="block truncate text-fluid-000 text-ink-3">
             Peringkat {row.rank} dari {num(total)} wilayah yang sudah diskor
           </span>
         </span>
@@ -67,17 +67,17 @@ export function RegionRankRow({ row, total }: Props) {
       </div>
 
       <div className="mt-2 px-2.5">
-        <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-earth-border">
+        <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-rule">
           <span
             aria-hidden="true"
-            className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-earth-surface"
+            className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-surface"
             style={{
               left: `${position * 100}%`,
               backgroundColor: fill,
             }}
           />
         </div>
-        <div className="mt-1 flex justify-between text-fluid-000 text-text-muted">
+        <div className="mt-1 flex justify-between text-fluid-000 text-ink-3">
           <span>Paling aktif</span>
           <span>Paling tenang</span>
         </div>

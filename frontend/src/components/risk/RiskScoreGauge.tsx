@@ -77,7 +77,7 @@ export function RiskScoreGauge({
         <path
           d={arc}
           fill="none"
-          stroke="var(--border)"
+          stroke="var(--rule)"
           strokeWidth={stroke}
           strokeLinecap="round"
         />
@@ -88,7 +88,7 @@ export function RiskScoreGauge({
             y1={t.y1}
             x2={t.x2}
             y2={t.y2}
-            stroke="var(--border-strong)"
+            stroke="var(--rule-strong)"
             strokeWidth={1.5}
             strokeLinecap="round"
           />
@@ -111,7 +111,7 @@ export function RiskScoreGauge({
         >
           {score != null ? score.toFixed(0) : "—"}
         </span>
-        <span className="mt-1 text-fluid-000 uppercase tracking-[0.12em] text-text-muted">
+        <span className="mt-1 text-fluid-000 uppercase tracking-[0.12em] text-ink-3">
           skor / 100
         </span>
       </div>
@@ -120,15 +120,15 @@ export function RiskScoreGauge({
         Aktivitas {riskTierLabel(tier)}
       </p>
       {percentile != null && (
-        <p className="mt-0.5 max-w-[20rem] text-center text-fluid-000 text-text-secondary">
+        <p className="mt-0.5 max-w-[20rem] text-center text-fluid-000 text-ink-2">
           Lebih aktif dari{" "}
-          <span className="font-mono font-medium tabular-nums text-text-primary">
+          <span className="font-mono font-medium tabular-nums text-ink">
             {percentile}%
           </span>{" "}
           {percentileRegionCount ? (
             <>
               dari{" "}
-              <span className="font-mono font-medium tabular-nums text-text-primary">
+              <span className="font-mono font-medium tabular-nums text-ink">
                 {percentileRegionCount}
               </span>{" "}
               wilayah
@@ -137,7 +137,7 @@ export function RiskScoreGauge({
             "wilayah"
           )}{" "}
           yang sudah diskor di sini —{" "}
-          <span className="text-text-muted">bukan seluruh Indonesia</span>
+          <span className="text-ink-3">bukan seluruh Indonesia</span>
         </p>
       )}
     </div>

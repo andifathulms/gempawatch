@@ -31,7 +31,7 @@ export function LiveTicker({ events, loadFailed }: Props) {
   return (
     <section
       aria-label="Gempa 24 jam terakhir"
-      className="rounded-xl border border-earth-border bg-earth-surface"
+      className="rounded-xl border border-rule bg-surface"
     >
       <button
         type="button"
@@ -41,19 +41,19 @@ export function LiveTicker({ events, loadFailed }: Props) {
       >
         <span className="relative inline-flex h-2 w-2 shrink-0">
           <span
-            className={`absolute inline-flex h-full w-full animate-pulse-ring rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
+            className={`absolute inline-flex h-full w-full animate-pulse-ring rounded-full ${loadFailed ? "bg-tier-mod" : "bg-tier-low"}`}
           />
           <span
-            className={`relative inline-flex h-2 w-2 rounded-full ${loadFailed ? "bg-risk-amber" : "bg-risk-green"}`}
+            className={`relative inline-flex h-2 w-2 rounded-full ${loadFailed ? "bg-tier-mod" : "bg-tier-low"}`}
           />
         </span>
 
-        <span className="min-w-0 flex-1 truncate text-fluid-00 text-text-secondary">
+        <span className="min-w-0 flex-1 truncate text-fluid-00 text-ink-2">
           {loadFailed ? (
             "Data langsung sementara tidak tersedia"
           ) : (
             <>
-              <strong className="font-semibold text-text-primary">
+              <strong className="font-semibold text-ink">
                 {num(events.length)} gempa
               </strong>{" "}
               tercatat 24 jam terakhir
@@ -61,7 +61,7 @@ export function LiveTicker({ events, loadFailed }: Props) {
                 <>
                   {" "}
                   · terbesar{" "}
-                  <span className="font-mono tabular-nums text-seismic-bright">
+                  <span className="font-mono tabular-nums text-ink">
                     {magnitude(largest.magnitude)}
                   </span>{" "}
                   {largest.location_description}
@@ -71,21 +71,21 @@ export function LiveTicker({ events, loadFailed }: Props) {
           )}
         </span>
 
-        <span aria-hidden="true" className="shrink-0 text-fluid-000 text-text-muted">
+        <span aria-hidden="true" className="shrink-0 text-fluid-000 text-ink-3">
           {open ? "Tutup ▲" : "Lihat daftar ▾"}
         </span>
       </button>
 
       {open && (
-        <div className="border-t border-earth-border px-4 py-3 sm:px-5">
+        <div className="border-t border-rule px-4 py-3 sm:px-5">
           <div className="max-h-[420px] overflow-y-auto pr-1">
             <EventList events={events} />
           </div>
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-earth-border pt-3">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-3">
             <SourceAttribution variant="inline" />
             <Link
               href="/map"
-              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
+              className="text-fluid-000 text-ink-2 transition-colors hover:text-ink"
             >
               Peta bahaya lengkap →
             </Link>

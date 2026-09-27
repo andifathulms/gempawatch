@@ -57,21 +57,21 @@ export default async function MapPage() {
       </div>
 
       <Card title="Cara membaca peta ini">
-        <div className="grid gap-4 text-fluid-00 leading-relaxed text-text-secondary sm:grid-cols-3">
+        <div className="grid gap-4 text-fluid-00 leading-relaxed text-ink-2 sm:grid-cols-3">
           <p>
-            <strong className="text-text-primary">Sesar aktif</strong> adalah
+            <strong className="text-ink">Sesar aktif</strong> adalah
             retakan kerak bumi tempat energi gempa dilepaskan. Dekat dengan sesar
             berarti guncangan cenderung lebih kuat pada magnitudo yang sama —
             bukan berarti gempa pasti terjadi.
           </p>
           <p>
-            <strong className="text-text-primary">Kedalaman</strong> menentukan
+            <strong className="text-ink">Kedalaman</strong> menentukan
             seberapa keras guncangan sampai ke permukaan. Gempa dangkal
             (&lt;30&nbsp;km) pada magnitudo sedang bisa lebih merusak daripada
             gempa dalam bermagnitudo besar.
           </p>
           <p>
-            <strong className="text-text-primary">Zona tsunami</strong> menandai
+            <strong className="text-ink">Zona tsunami</strong> menandai
             wilayah pesisir dengan riwayat gempa pemicu tsunami. Ini indikator
             pola historis — peringatan tsunami resmi hanya berasal dari BMKG.
           </p>

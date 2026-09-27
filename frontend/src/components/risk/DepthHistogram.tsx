@@ -37,7 +37,7 @@ export function DepthHistogram({ bins }: { bins: DepthBin[] }) {
   }));
 
   const legend = (
-    <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
+    <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-ink-3">
       {DEPTH_BANDS.map((b) => (
         <span key={b.label} className="flex items-center gap-1.5">
           <span
@@ -59,8 +59,8 @@ export function DepthHistogram({ bins }: { bins: DepthBin[] }) {
       note={
         <div className="mt-2 space-y-2.5">
           {legend}
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
-            <strong className="font-semibold text-text-primary">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
+            <strong className="font-semibold text-ink">
               Kenapa kedalaman dihitung terpisah dari kekuatan.
             </strong>{" "}
             Gempa M6 pada kedalaman 10 km dan M6 pada kedalaman 200 km punya
@@ -70,14 +70,14 @@ export function DepthHistogram({ bins }: { bins: DepthBin[] }) {
             Gempa dalam menyebar energinya lewat jarak yang lebih panjang, jadi
             terasa lebih luas tetapi lebih lemah.
           </p>
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
             Yogyakarta 2006 adalah contohnya: M6,3 — tidak termasuk gempa
             terbesar di arsip ini — tetapi kedalamannya hanya sekitar 12 km, dan
             menjadi salah satu bencana paling mematikan dalam catatan modern
             Indonesia. Itulah sebabnya batang di sebelah kiri grafik ini lebih
             penting daripada tingginya saja.
           </p>
-          <p className="text-fluid-000 leading-relaxed text-text-muted">
+          <p className="text-fluid-000 leading-relaxed text-ink-3">
             Batas 70 km yang dipakai skor adalah garis yang kami tetapkan untuk
             memisahkan &ldquo;dangkal&rdquo; dari &ldquo;dalam&rdquo;. Alam
             tidak punya batas setegas itu — kedalaman 69 km dan 71 km hampir

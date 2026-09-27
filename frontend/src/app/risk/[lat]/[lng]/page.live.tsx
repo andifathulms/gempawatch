@@ -58,8 +58,8 @@ export default async function RiskResultPage({
   if (!report) {
     return (
       <div className="space-y-4">
-        <p className="text-text-secondary">Gagal memuat laporan risiko untuk titik ini.</p>
-        <Link href="/risk-check" className="text-seismic-orange underline">
+        <p className="text-ink-2">Gagal memuat laporan risiko untuk titik ini.</p>
+        <Link href="/risk-check" className="text-ink underline">
           Coba lokasi lain →
         </Link>
       </div>

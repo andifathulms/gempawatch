@@ -55,13 +55,13 @@ export function RiskReportView({ report, lat, lng }: Props) {
   return (
     <div className="mx-auto max-w-xl space-y-5">
       <header>
-        <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-seismic-orange">
+        <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-ink">
           Laporan risiko titik
         </p>
         <h1 className="mt-1.5 text-fluid-3 font-bold tracking-tight">
           {report.nearest_region?.name ?? "Lokasi pilihanmu"}
         </h1>
-        <p className="mt-1 font-mono text-fluid-000 tabular-nums text-text-muted">
+        <p className="mt-1 font-mono text-fluid-000 tabular-nums text-ink-3">
           {lat.toFixed(4)}, {lng.toFixed(4)}
         </p>
       </header>
@@ -104,14 +104,14 @@ export function RiskReportView({ report, lat, lng }: Props) {
           tier, with eyebrow titles so they stop competing with the answer.
          ------------------------------------------------------------------ */}
       <section aria-labelledby="audit-trail" className="space-y-4 pt-2">
-        <div className="border-t border-earth-border pt-5">
+        <div className="border-t border-rule pt-5">
           <h2
             id="audit-trail"
-            className="font-display text-fluid-1 font-semibold tracking-tight text-text-primary"
+            className="font-display text-fluid-1 font-semibold tracking-tight text-ink"
           >
             Bagaimana angka ini dibaca
           </h2>
-          <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
+          <p className="mt-1 text-fluid-00 leading-relaxed text-ink-2">
             Setiap angka di atas bisa ditelusuri ke aturannya. Panel berikut
             menunjukkan perhitungannya, cakupan datanya, dan batasnya.
           </p>
@@ -170,25 +170,25 @@ export function RiskReportView({ report, lat, lng }: Props) {
           title="Dibanding kota acuan"
           subtitle="Jumlah gempa M4+ dalam radius 50 km, dibanding tiga kota yang polanya sudah dikenal."
         >
-          <ul className="divide-y divide-earth-border/70">
+          <ul className="divide-y divide-rule/70">
             {report.comparison_set.map((c) => (
               <li
                 key={c.reference_city}
                 className="flex items-baseline justify-between gap-3 py-2.5"
               >
-                <span className="text-fluid-00 text-text-primary">
+                <span className="text-fluid-00 text-ink">
                   {c.reference_city}
-                  <span className="ml-2 font-mono text-fluid-000 tabular-nums text-text-muted">
+                  <span className="ml-2 font-mono text-fluid-000 tabular-nums text-ink-3">
                     ±{c.reference_m4_count} M4+
                   </span>
                 </span>
                 <span
                   className={`shrink-0 text-fluid-00 font-medium ${
                     c.relation === "higher"
-                      ? "text-risk-amber"
+                      ? "text-tier-mod"
                       : c.relation === "lower"
-                        ? "text-risk-green"
-                        : "text-text-secondary"
+                        ? "text-tier-low"
+                        : "text-ink-2"
                   }`}
                 >
                   {RELATION_LABEL[c.relation] ?? c.relation}
@@ -196,7 +196,7 @@ export function RiskReportView({ report, lat, lng }: Props) {
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-fluid-00 leading-relaxed text-text-muted">
+          <p className="mt-3 text-fluid-00 leading-relaxed text-ink-3">
             Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan
             lokasi ini pada rentang — bukan skor resmi kota tersebut.
           </p>
@@ -225,7 +225,7 @@ export function RiskReportView({ report, lat, lng }: Props) {
 
       <Link
         href="/"
-        className="block rounded-lg border border-earth-border py-3 text-center text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+        className="block rounded-lg border border-rule py-3 text-center text-fluid-00 text-ink-2 transition-colors hover:border-ink hover:text-ink"
       >
         ← Cek lokasi lain di peta
       </Link>

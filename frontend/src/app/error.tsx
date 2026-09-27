@@ -21,7 +21,7 @@ export default function Error({
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-6 py-16 text-center">
       <span
         aria-hidden="true"
-        className="flex h-12 w-12 items-center justify-center rounded-full bg-risk-amber/15 text-risk-amber"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-tier-mod/15 text-tier-mod"
       >
         <svg
           width="22"
@@ -37,10 +37,10 @@ export default function Error({
         </svg>
       </span>
       <div>
-        <h1 className="text-fluid-2 font-bold tracking-tight text-text-primary">
+        <h1 className="text-fluid-2 font-bold tracking-tight text-ink">
           Terjadi kesalahan
         </h1>
-        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-text-secondary">
+        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-ink-2">
           Halaman ini gagal dimuat — kemungkinan besar gangguan sementara pada
           koneksi data. Coba muat ulang, atau kembali ke beranda. Untuk informasi
           gempa resmi, selalu tersedia di{" "}
@@ -48,7 +48,7 @@ export default function Error({
             href="https://www.bmkg.go.id/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-seismic-bright underline underline-offset-2"
+            className="text-ink underline underline-offset-2"
           >
             bmkg.go.id
           </a>

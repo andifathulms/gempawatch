@@ -35,15 +35,15 @@ export function CoverageNote({
   const area = scope === "point" ? "titik ini" : "wilayah ini";
 
   return (
-    <div className="space-y-3 text-fluid-00 leading-relaxed text-text-secondary">
+    <div className="space-y-3 text-fluid-00 leading-relaxed text-ink-2">
       {hasWindow ? (
         <p>
           Catatan gempa di sekitar {area} membentang{" "}
-          <span className="font-mono font-semibold tabular-nums text-text-primary">
+          <span className="font-mono font-semibold tabular-nums text-ink">
             {earliestYear}–{latestYear}
           </span>
           , yaitu{" "}
-          <span className="font-mono font-semibold tabular-nums text-text-primary">
+          <span className="font-mono font-semibold tabular-nums text-ink">
             {num(years)}
           </span>{" "}
           tahun
@@ -51,7 +51,7 @@ export function CoverageNote({
             <>
               {" "}
               berisi{" "}
-              <span className="font-mono font-semibold tabular-nums text-text-primary">
+              <span className="font-mono font-semibold tabular-nums text-ink">
                 {num(m4Count)}
               </span>{" "}
               gempa M4+
@@ -69,11 +69,11 @@ export function CoverageNote({
 
       <ul className="space-y-2.5">
         <li className="flex gap-2.5">
-          <span aria-hidden="true" className="shrink-0 text-text-secondary">
+          <span aria-hidden="true" className="shrink-0 text-ink-2">
             ·
           </span>
           <span>
-            <strong className="font-semibold text-text-secondary">
+            <strong className="font-semibold text-ink-2">
               Rentangnya berbeda tiap lokasi.
             </strong>{" "}
             Rentang dihitung dari kejadian yang ditemukan di dekat lokasi, bukan
@@ -83,11 +83,11 @@ export function CoverageNote({
           </span>
         </li>
         <li className="flex gap-2.5">
-          <span aria-hidden="true" className="shrink-0 text-text-secondary">
+          <span aria-hidden="true" className="shrink-0 text-ink-2">
             ·
           </span>
           <span>
-            <strong className="font-semibold text-text-secondary">
+            <strong className="font-semibold text-ink-2">
               Ada batas magnitudo.
             </strong>{" "}
             Arsip historis USGS disaring pada M4,0 ke atas, jadi gempa yang lebih
@@ -96,11 +96,11 @@ export function CoverageNote({
           </span>
         </li>
         <li className="flex gap-2.5">
-          <span aria-hidden="true" className="shrink-0 text-text-secondary">
+          <span aria-hidden="true" className="shrink-0 text-ink-2">
             ·
           </span>
           <span>
-            <strong className="font-semibold text-text-secondary">
+            <strong className="font-semibold text-ink-2">
               Dekade awal lebih tipis.
             </strong>{" "}
             Jaringan seismik dulu lebih jarang, sehingga kejadian lama lebih

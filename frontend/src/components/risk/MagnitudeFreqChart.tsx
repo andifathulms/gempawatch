@@ -52,8 +52,8 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
             the scale is explained where magnitudes are first set against each
             other, not on a methodology page.
           */}
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
-            <strong className="font-semibold text-text-primary">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
+            <strong className="font-semibold text-ink">
               Tiap satu angka magnitudo adalah lompatan besar.
             </strong>{" "}
             Skala magnitudo bersifat logaritmik: naik 1 angka berarti guncangan
@@ -62,13 +62,13 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
             energinya sekitar 32 kali lipat, dan M7 dibanding M5 sekitar 1.000
             kali lipat.
           </p>
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
             Itu juga sebabnya batangnya memendek drastis: gempa besar melepas
             energi jauh lebih banyak, dan kejadian sebesar itu jauh lebih
             jarang. Pola menurun seperti ini berlaku di seluruh dunia, bukan
             khas wilayah ini.
           </p>
-          <p className="text-fluid-000 leading-relaxed text-text-muted">
+          <p className="text-fluid-000 leading-relaxed text-ink-3">
             Jumlah dihitung dalam radius 100 km dari pusat wilayah. Angka
             perbandingan energi di atas adalah pembulatan yang lazim dipakai
             untuk penjelasan, bukan hasil hitungan per kejadian.
@@ -101,7 +101,7 @@ export function MagnitudeFreqChart({ profile }: { profile: RegionRiskProfile }) 
               position="right"
               formatter={(v: number) => num(v)}
               style={{
-                fill: "#B8B1A6",
+                fill: "var(--ink-2)",
                 fontSize: 12,
                 fontFamily: "var(--font-mono)",
               }}

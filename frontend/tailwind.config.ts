@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * "Seismograph" design system — calm authority, not alarmism (see PRD).
+ * "Kertas & Tinta" design system — ink on paper, colour only for data.
  *
  * Colours read the channel triplets declared in src/styles/tokens.css, so
  * retuning the palette is a one-file change and the two can never drift.
@@ -36,35 +36,45 @@ const config: Config = {
       "fluid-3": ["var(--step-3)", { lineHeight: "1.2" }],
       "fluid-4": ["var(--step-4)", { lineHeight: "1.1" }],
       "fluid-5": ["var(--step-5)", { lineHeight: "1.02" }],
+      // The score numeral, and nothing else.
+      "fluid-6": ["var(--step-6)", { lineHeight: "0.85" }],
     },
     extend: {
+      // Chrome is paper and ink; colour is data (tokens.css header).
       colors: {
-        earth: {
-          dark: channel("earth-dark"),
-          surface: channel("surface"),
-          raised: channel("surface-raised"),
-          sunken: channel("surface-sunken"),
-          border: channel("border"),
-          "border-strong": channel("border-strong"),
+        paper: channel("paper"),
+        surface: channel("surface"),
+        raised: channel("raised"),
+        sunken: channel("sunken"),
+        grid: channel("grid"),
+        rule: {
+          DEFAULT: channel("rule"),
+          strong: channel("rule-strong"),
         },
-        seismic: {
-          orange: channel("seismic-orange"),
-          bright: channel("seismic-bright"),
-          soft: channel("seismic-soft"),
+        ink: {
+          DEFAULT: channel("ink"),
+          2: channel("ink-2"),
+          3: channel("ink-3"),
         },
-        depth: { blue: channel("depth-blue") },
-        risk: {
-          red: channel("risk-red"),
-          "red-fill": channel("risk-red-fill"),
-          amber: channel("risk-amber"),
-          "amber-fill": channel("risk-amber-fill"),
-          green: channel("risk-green"),
-          "green-fill": channel("risk-green-fill"),
+        "on-ink": channel("on-ink"),
+        depth: {
+          shallow: channel("depth-shallow"),
+          mid: channel("depth-mid"),
+          deep: channel("depth-deep"),
+          "shallow-fill": channel("depth-shallow-fill"),
+          "mid-fill": channel("depth-mid-fill"),
+          "deep-fill": channel("depth-deep-fill"),
         },
-        text: {
-          primary: channel("text-primary"),
-          secondary: channel("text-secondary"),
-          muted: channel("text-muted"),
+        tier: {
+          high: channel("tier-high"),
+          mod: channel("tier-mod"),
+          low: channel("tier-low"),
+          "high-fill": channel("tier-high-fill"),
+          "mod-fill": channel("tier-mod-fill"),
+          "low-fill": channel("tier-low-fill"),
+          "high-bg": channel("tier-high-bg"),
+          "mod-bg": channel("tier-mod-bg"),
+          "low-bg": channel("tier-low-bg"),
         },
       },
       fontFamily: {
@@ -93,8 +103,9 @@ const config: Config = {
         sm: "var(--shadow-sm)",
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
-        glow: "var(--shadow-glow)",
-        raised: "var(--highlight-top), var(--shadow-md)",
+        // `raised` kept as an alias so older call sites resolve to the new,
+        // quieter elevation instead of to nothing.
+        raised: "var(--shadow-md)",
       },
       transitionTimingFunction: {
         "out-soft": "var(--ease-out)",

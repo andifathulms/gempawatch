@@ -1,87 +1,99 @@
 // Shared visual encoding for earthquake data — magnitude → size, depth → colour.
 // Kept in one place so the map, badges, charts, and share cards stay consistent.
 //
+// Colours are returned as CSS variables (tokens.css), not hexes, so every
+// marker, badge and chart follows the Kertas/Malam theme on its own. var()
+// works in inline styles and in SVG presentation attributes — which is what
+// Leaflet's SVG renderer and Recharts write — in every engine we ship to.
+// The one renderer that cannot resolve a variable is next/og (Satori); it
+// uses the *_HEX mirrors at the bottom of this file.
+//
 // Two colour roles per semantic value, and they are not interchangeable:
-//   *Fill  — solid shapes (badge backgrounds, map markers, gauge arcs), read
-//            against dark text or nothing.
-//   base   — text and thin strokes on a charcoal background, where the fill
-//            tones are too dim to clear WCAG AA.
+//   fill   — solid shapes (badge backgrounds, map markers, spikes, arcs)
+//   base   — text and thin strokes, luminance-tuned to clear WCAG AA
+// Text printed ON a fill uses its `--on-*` partner (see onFillTextColor).
 
 export function magnitudeSize(mag: number): number {
   return Math.max(24, Math.min(64, mag * 8));
 }
 
+export type DepthBand = "shallow" | "mid" | "deep";
+
+/** CLAUDE.md thresholds: <30 km shallow, <100 km intermediate, else deep. */
+export function depthBand(depthKm: number): DepthBand {
+  if (depthKm < 30) return "shallow"; // most destructive
+  if (depthKm < 100) return "mid";
+  return "deep"; // felt less at the surface
+}
+
 /** Shallow quakes do the damage, so shallow is the alarming end of the ramp. */
 export function depthColor(depthKm: number): string {
-  if (depthKm < 30) return "#C0392B"; // shallow — most destructive
-  if (depthKm < 100) return "#E8743B"; // intermediate
-  return "#5B93B8"; // deep — felt less at the surface
+  return `var(--depth-${depthBand(depthKm)}-fill)`;
+}
+
+/** Depth tone for text and hairlines. */
+export function depthTextColor(depthKm: number): string {
+  return `var(--depth-${depthBand(depthKm)})`;
 }
 
 /** Legend rows for anything that encodes depth by colour. */
 export const DEPTH_BANDS = [
-  { color: "#C0392B", label: "Dangkal", detail: "< 30 km" },
-  { color: "#E8743B", label: "Menengah", detail: "30–100 km" },
-  { color: "#5B93B8", label: "Dalam", detail: "> 100 km" },
+  { color: "var(--depth-shallow-fill)", label: "Dangkal", detail: "< 30 km" },
+  { color: "var(--depth-mid-fill)", label: "Menengah", detail: "30–100 km" },
+  { color: "var(--depth-deep-fill)", label: "Dalam", detail: "> 100 km" },
 ] as const;
 
+const ON_FILL: Record<string, string> = {
+  "var(--depth-shallow-fill)": "var(--on-shallow)",
+  "var(--depth-mid-fill)": "var(--on-mid)",
+  "var(--depth-deep-fill)": "var(--on-deep)",
+  "var(--tier-high-fill)": "var(--on-high)",
+  "var(--tier-mod-fill)": "var(--on-mod)",
+  "var(--tier-low-fill)": "var(--on-low)",
+};
+
 /**
- * Readable foreground for text sitting *on* one of the solid fills above.
+ * Readable foreground for text sitting *on* one of the fills above.
  *
- * The fills span a wide luminance range — the HIGH red is dark enough that the
- * near-black ink used everywhere else only reaches 3.5:1 on it (a WCAG AA
- * failure for the 14px figures in magnitude badges and leaderboard chips),
- * while the amber is light enough that white would fail just as badly. Rather
- * than hand-pick per swatch and re-check every time the palette moves, this
- * computes the relative luminance and returns whichever of ink or paper wins.
+ * The pairs are chosen by measured contrast per theme in tokens.css (all
+ * ≥ 4.5:1) — white on the Kertas red/blue/green fills, dark ink on the orange
+ * and amber ones and on every Malam fill — so this is a lookup, not a
+ * calculation.
  */
-const INK = "#121110";
-const PAPER = "#F5F1EA";
-
-function relativeLuminance(hex: string): number {
-  const n = parseInt(hex.replace("#", ""), 16);
-  const channels = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-}
-
-function contrast(a: string, b: string): number {
-  const [x, y] = [relativeLuminance(a), relativeLuminance(b)];
-  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
-}
-
 export function onFillTextColor(fill: string): string {
-  return contrast(fill, INK) >= contrast(fill, PAPER) ? INK : PAPER;
+  return ON_FILL[fill] ?? "var(--ink)";
 }
 
-/** Solid tier colour — badge fills, markers, gauge arcs. */
+type TierKey = "high" | "mod" | "low";
+function tierKey(tier: string | null): TierKey | null {
+  switch (tier) {
+    case "HIGH":
+      return "high";
+    case "MODERATE":
+      return "mod";
+    case "LOW":
+      return "low";
+    default:
+      return null;
+  }
+}
+
+/** Solid tier colour — badge fills, markers, dots. */
 export function riskTierColor(tier: string | null): string {
-  switch (tier) {
-    case "HIGH":
-      return "#C0392B";
-    case "MODERATE":
-      return "#D4A12B";
-    case "LOW":
-      return "#5B8C5A";
-    default:
-      return "#494339";
-  }
+  const k = tierKey(tier);
+  return k ? `var(--tier-${k}-fill)` : "var(--rule-strong)";
 }
 
-/** Lightened tier colour for text and hairlines on the dark surface. */
+/** Tier tone for text and hairlines. */
 export function riskTierTextColor(tier: string | null): string {
-  switch (tier) {
-    case "HIGH":
-      return "#E8594A";
-    case "MODERATE":
-      return "#E6B23F";
-    case "LOW":
-      return "#74B071";
-    default:
-      return "#948C81";
-  }
+  const k = tierKey(tier);
+  return k ? `var(--tier-${k})` : "var(--ink-3)";
+}
+
+/** Tinted background behind tier text (pills, verdict bands). */
+export function riskTierBgColor(tier: string | null): string {
+  const k = tierKey(tier);
+  return k ? `var(--tier-${k}-bg)` : "var(--raised)";
 }
 
 export function riskTierLabel(tier: string | null): string {
@@ -151,4 +163,28 @@ export function binByDepth(events: Array<{ depth_km: number }>): DepthBin[] {
     label: b.label,
     count: events.filter((e) => e.depth_km >= b.min && e.depth_km < b.max).length,
   }));
+}
+
+/**
+ * Hex mirrors of the Kertas tokens, for renderers that cannot resolve CSS
+ * variables: next/og (Satori) builds share images server-side. Keep in step
+ * with tokens.css.
+ */
+export const DEPTH_HEX: Record<DepthBand, string> = {
+  shallow: "#C23A2E",
+  mid: "#E58A2E",
+  deep: "#2F78B4",
+};
+
+export function riskTierHex(tier: string | null): string {
+  switch (tier) {
+    case "HIGH":
+      return "#B42318";
+    case "MODERATE":
+      return "#8F5B0A";
+    case "LOW":
+      return "#23704A";
+    default:
+      return "#626B73";
+  }
 }

@@ -22,16 +22,16 @@ export function EmptyState({ title, description, action, tone = "neutral" }: Pro
     <div
       className={`flex flex-col items-center gap-3 rounded-lg border px-5 py-10 text-center ${
         warning
-          ? "border-risk-amber/30 bg-risk-amber/[0.05]"
-          : "border-dashed border-earth-border bg-earth-dark/30"
+          ? "border-rule-strong bg-surface"
+          : "border-dashed border-rule bg-paper"
       }`}
     >
       <span
         aria-hidden="true"
         className={`flex h-9 w-9 items-center justify-center rounded-full ${
           warning
-            ? "bg-risk-amber/15 text-risk-amber"
-            : "bg-earth-raised text-text-muted"
+            ? "bg-ink text-on-ink"
+            : "bg-raised text-ink-3"
         }`}
       >
         <svg
@@ -58,12 +58,12 @@ export function EmptyState({ title, description, action, tone = "neutral" }: Pro
         </svg>
       </span>
       <p
-        className={`text-fluid-00 font-medium ${warning ? "text-risk-amber" : "text-text-secondary"}`}
+        className={`text-fluid-00 font-semibold ${warning ? "text-ink" : "text-ink-2"}`}
       >
         {title}
       </p>
       {description && (
-        <p className="max-w-sm text-fluid-00 leading-relaxed text-text-muted">
+        <p className="max-w-sm text-fluid-00 leading-relaxed text-ink-3">
           {description}
         </p>
       )}

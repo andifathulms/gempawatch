@@ -237,7 +237,7 @@ export default async function RegionPage({
       />
 
       {/* The finding in prose — see the comment above `headline`. */}
-      <p className="animate-fade-in-up max-w-3xl text-fluid-2 font-medium leading-snug text-text-primary">
+      <p className="animate-fade-in-up max-w-3xl text-fluid-2 font-medium leading-snug text-ink">
         {headline}
       </p>
 

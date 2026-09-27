@@ -83,8 +83,8 @@ export function NavHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-[1000] bg-earth-dark/85 backdrop-blur-md transition-shadow duration-200 ${
-        scrolled ? "border-b border-earth-border shadow-md" : "border-b border-transparent"
+      className={`sticky top-0 z-[1000] bg-paper/85 backdrop-blur-md transition-shadow duration-200 ${
+        scrolled ? "border-b border-rule shadow-md" : "border-b border-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -107,15 +107,15 @@ export function NavHeader() {
                 aria-current={active ? "page" : undefined}
                 className={`relative rounded-md px-3 py-2 transition-colors duration-[130ms] ${
                   active
-                    ? "text-text-primary"
-                    : "text-text-secondary hover:text-text-primary"
+                    ? "text-ink"
+                    : "text-ink-2 hover:text-ink"
                 }`}
               >
                 {l.label}
                 {active && (
                   <span
                     aria-hidden="true"
-                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-seismic-orange"
+                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-ink"
                   />
                 )}
               </Link>
@@ -128,7 +128,7 @@ export function NavHeader() {
             <Link
               href={CTA.href}
               aria-current={isActive(pathname, CTA.href) ? "page" : undefined}
-              className="hidden rounded-lg bg-seismic-orange px-4 py-2 text-fluid-00 font-semibold text-earth-dark shadow-glow transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
+              className="hidden rounded-lg bg-ink px-4 py-2 text-fluid-00 font-semibold text-on-ink shadow-md transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
             >
               {CTA.label}
             </Link>
@@ -142,7 +142,7 @@ export function NavHeader() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Tutup menu" : "Buka menu"}
-            className="flex h-10 w-10 items-center justify-center rounded-md text-text-secondary transition-colors hover:bg-earth-surface hover:text-text-primary md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface hover:text-ink md:hidden"
           >
             <svg
               width="20"
@@ -175,7 +175,7 @@ export function NavHeader() {
       {open && (
         <div
           id="mobile-nav"
-          className="animate-fade-in border-t border-earth-border bg-earth-dark px-4 py-3 md:hidden"
+          className="animate-fade-in border-t border-rule bg-paper px-4 py-3 md:hidden"
         >
           <div className="flex flex-col gap-0.5">
             {[...LINKS, CTA].map((l) => {
@@ -187,12 +187,12 @@ export function NavHeader() {
                   aria-current={active ? "page" : undefined}
                   className={`flex items-center justify-between rounded-md px-3 py-3 text-fluid-0 transition-colors ${
                     active
-                      ? "bg-earth-surface text-seismic-bright"
-                      : "text-text-secondary hover:bg-earth-surface hover:text-text-primary"
+                      ? "bg-surface text-ink"
+                      : "text-ink-2 hover:bg-surface hover:text-ink"
                   }`}
                 >
                   {l.label}
-                  <span aria-hidden="true" className="text-text-muted">
+                  <span aria-hidden="true" className="text-ink-3">
                     →
                   </span>
                 </Link>

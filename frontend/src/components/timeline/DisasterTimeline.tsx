@@ -51,12 +51,12 @@ export function DisasterTimeline({ disasters, fragments = {} }: Props) {
     <div className="space-y-8">
       {groups.map((g) => (
         <section key={g.decade}>
-          <h2 className="sticky top-16 z-10 -mx-1 mb-4 w-fit rounded-full border border-earth-border bg-earth-dark/90 px-3.5 py-1 font-mono text-fluid-00 font-bold tabular-nums text-seismic-orange backdrop-blur">
+          <h2 className="sticky top-16 z-10 -mx-1 mb-4 w-fit rounded-full border border-rule bg-paper/90 px-3.5 py-1 font-mono text-fluid-00 font-bold tabular-nums text-ink backdrop-blur">
             {g.decade}s
           </h2>
           {/* No left padding: the dot centres on the article edge, so any
               padding here slides every dot off the rail it marks. */}
-          <div className="relative space-y-5 border-l border-earth-border">
+          <div className="relative space-y-5 border-l border-rule">
             {g.items.map((d) => (
               <DisasterEntry key={d.id} disaster={d} fragment={fragments[d.id] ?? null} />
             ))}

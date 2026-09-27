@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { MakerSignature } from "@/components/ui/MakerSignature";
 import { NavHeader } from "@/components/ui/NavHeader";
@@ -12,19 +12,15 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
  * Two voices, self-hosted by next/font so they are preloaded, subset, and free
  * of the layout shift a webfont @import causes.
  *
- * Inter runs both headlines and prose — DESIGN.md §3.2/§10 step 8: Space
- * Grotesk's slightly technical, drafting-table letterforms read as techy and
- * informal against a product whose stated philosophy is "a trusted government
- * instrument, not a doom-scrolling disaster app," and PRD.md originally
- * specified Inter 600–700 for headlines. `--font-display` is aliased to
- * `--font-sans` in globals.css rather than loading Inter a second time under a
- * second variable — same font file, headline weight comes from Tailwind's
- * font-semibold/font-bold like it already does everywhere else.
+ * Plus Jakarta Sans runs headlines and prose (DESIGN.md §3.2). It was drawn by
+ * the Indonesian foundry Tokotype for Jakarta's city identity — an Indonesian
+ * typeface for an Indonesian instrument — with a confident 800 for the score
+ * and place names and a calm 400 for reading.
  *
- * JetBrains Mono handles every figure on the site, because its tabular
- * numerals keep magnitudes and counts aligned in columns.
+ * JetBrains Mono is kept only where digits must align in columns or read as
+ * instrument output: coordinates, axis ticks, tables.
  */
-const sans = Inter({
+const sans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
@@ -82,7 +78,7 @@ export const metadata: Metadata = {
     title: "GempaWatch",
     // Matches --earth-dark, so the iOS status bar blends into the page instead
     // of drawing a light strip above a dark app.
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
   },
   formatDetection: {
     // Coordinates like "-0.9000, 119.8700" get auto-linked as phone numbers by
@@ -92,8 +88,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121110",
-  colorScheme: "dark",
+  // Mirrors --paper in each theme so the browser chrome and iOS status bar
+  // blend into the page.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F5F6F3" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F1214" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -106,7 +107,7 @@ export default function RootLayout({
       lang="id"
       className={`${sans.variable} ${mono.variable}`}
     >
-      <body className="min-h-screen bg-earth-dark text-text-primary antialiased">
+      <body className="min-h-screen bg-paper text-ink antialiased">
         <ToastProvider>
           <a href="#main" className="skip-link">
             Lompat ke konten utama

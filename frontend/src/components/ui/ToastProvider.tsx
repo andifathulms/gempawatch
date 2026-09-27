@@ -39,18 +39,18 @@ export function useToast(): ToastContextValue {
 
 const STYLES: Record<ToastVariant, { ring: string; badge: string; icon: string }> = {
   success: {
-    ring: "border-risk-green/50",
-    badge: "bg-risk-green/20 text-risk-green",
+    ring: "border-tier-low/50",
+    badge: "bg-tier-low/20 text-tier-low",
     icon: "✓",
   },
   error: {
-    ring: "border-risk-red/50",
-    badge: "bg-risk-red/20 text-risk-red",
+    ring: "border-tier-high/50",
+    badge: "bg-tier-high/20 text-tier-high",
     icon: "!",
   },
   info: {
-    ring: "border-depth-blue/50",
-    badge: "bg-depth-blue/20 text-depth-blue",
+    ring: "border-depth-deep/50",
+    badge: "bg-depth-deep/20 text-depth-deep",
     icon: "i",
   },
 };
@@ -114,7 +114,7 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
   return (
     <div
       role="status"
-      className={`animate-fade-in-up pointer-events-auto flex items-center gap-3 rounded-lg border ${style.ring} bg-earth-raised px-4 py-3 text-fluid-00 text-text-primary shadow-lg`}
+      className={`animate-fade-in-up pointer-events-auto flex items-center gap-3 rounded-lg border ${style.ring} bg-raised px-4 py-3 text-fluid-00 text-ink shadow-lg`}
     >
       <span
         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-fluid-000 font-bold ${style.badge}`}
@@ -127,7 +127,7 @@ function ToastCard({ toast, onClose }: { toast: ToastItem; onClose: () => void }
         type="button"
         onClick={onClose}
         aria-label="Tutup notifikasi"
-        className="ml-1 inline-flex min-h-tap min-w-tap shrink-0 items-center justify-center rounded text-text-muted transition-colors hover:text-text-primary"
+        className="ml-1 inline-flex min-h-tap min-w-tap shrink-0 items-center justify-center rounded text-ink-3 transition-colors hover:text-ink"
       >
         ✕
       </button>

@@ -44,12 +44,12 @@ const OFFICIAL = [
 
 export function SiteFooter({ children }: { children?: React.ReactNode }) {
   return (
-    <footer className="mt-20 border-t border-earth-border bg-earth-surface/40">
+    <footer className="mt-20 border-t border-rule bg-surface/40">
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <Logo size={26} className="text-fluid-00" />
-            <p className="mt-3 max-w-xs text-fluid-00 leading-relaxed text-text-secondary">
+            <p className="mt-3 max-w-xs text-fluid-00 leading-relaxed text-ink-2">
               Intelijen risiko gempa untuk Indonesia. Data resmi BMKG dan arsip
               historis USGS, dibaca sebagai pola — bukan ramalan.
             </p>
@@ -57,7 +57,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
 
           {SECTIONS.map((section) => (
             <nav key={section.title} aria-label={section.title}>
-              <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
+              <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-ink-3">
                 {section.title}
               </h2>
               <ul className="mt-3 space-y-2">
@@ -65,7 +65,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-fluid-00 text-text-secondary transition-colors hover:text-seismic-bright"
+                      className="text-fluid-00 text-ink-2 transition-colors hover:text-ink"
                     >
                       {l.label}
                     </Link>
@@ -76,7 +76,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           ))}
 
           <nav aria-label="Sumber resmi">
-            <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
+            <h2 className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-ink-3">
               Sumber resmi
             </h2>
             <ul className="mt-3 space-y-2">
@@ -86,7 +86,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-fluid-00 text-text-secondary transition-colors hover:text-seismic-bright"
+                    className="text-fluid-00 text-ink-2 transition-colors hover:text-ink"
                   >
                     {l.label} ↗
                   </a>
@@ -96,17 +96,17 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           </nav>
         </div>
 
-        <div className="mt-10 rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-4 py-3.5">
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
-            <strong className="font-semibold text-risk-amber">Penting —</strong>{" "}
+        <div className="mt-10 rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] px-4 py-3.5">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
+            <strong className="font-semibold text-tier-mod">Penting —</strong>{" "}
             GempaWatch menampilkan pola risiko historis, bukan prediksi, dan{" "}
-            <strong className="font-semibold text-text-primary">bukan pengganti</strong>{" "}
+            <strong className="font-semibold text-ink">bukan pengganti</strong>{" "}
             peringatan dini resmi BMKG. Untuk peringatan tsunami resmi, selalu rujuk{" "}
             <a
               href="https://www.bmkg.go.id/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
+              className="font-medium text-ink underline underline-offset-2 hover:brightness-110"
             >
               bmkg.go.id
             </a>
@@ -114,7 +114,7 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           </p>
         </div>
 
-        <p className="mt-5 border-t border-earth-border pt-5 text-fluid-000 leading-relaxed text-text-muted">
+        <p className="mt-5 border-t border-rule pt-5 text-fluid-000 leading-relaxed text-ink-3">
           Data: BMKG (Badan Meteorologi, Klimatologi, dan Geofisika) &middot; USGS
           (United States Geological Survey). Atribusi BMKG bersifat wajib pada setiap
           tampilan datanya.

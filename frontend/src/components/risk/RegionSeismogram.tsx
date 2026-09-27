@@ -199,7 +199,7 @@ export function RegionSeismogram({ regionName, events, comparison, now, classNam
     : main.rows;
 
   const legend = (
-    <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-text-muted">
+    <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-fluid-000 text-ink-3">
       <span>Warna = kedalaman:</span>
       {DEPTH_BANDS.map((b) => (
         <span key={b.label} className="flex items-center gap-1.5">
@@ -339,14 +339,14 @@ export function RegionSeismogram({ regionName, events, comparison, now, classNam
             textAnchor={xOf(largest.event_time) > vbW - vbW * labelEdgeFraction ? "end" : "middle"}
             fontSize={labelFontSize}
             fontFamily="var(--font-mono)"
-            fill="var(--text-primary)"
+            fill="var(--ink)"
           >
             {fmtMagnitude(largest.magnitude)} · {shortDate(largest.event_time)}
           </text>
         )}
 
         {/* Live marker — the right edge is "now", per DESIGN.md §5.3 (the ticker-as-right-edge migration lands later; this is the static anchor it will attach to). */}
-        <circle cx={vbW - margin.right} cy={baselineY} r={3} fill="var(--seismic-bright)" />
+        <circle cx={vbW - margin.right} cy={baselineY} r={3} fill="var(--ink)" />
       </svg>
     );
   }
@@ -359,7 +359,7 @@ export function RegionSeismogram({ regionName, events, comparison, now, classNam
           return (
             <div key={t.regionName}>
               {ref && (
-                <p className="text-fluid-000 font-semibold uppercase tracking-wide text-text-secondary">
+                <p className="text-fluid-000 font-semibold uppercase tracking-wide text-ink-2">
                   {t.regionName}
                   {i === 1 && " (pembanding)"}
                 </p>

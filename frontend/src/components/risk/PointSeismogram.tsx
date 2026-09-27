@@ -68,7 +68,7 @@ export function PointSeismogram({ nearestRegion }: Props) {
       )}
       <Link
         href={`/region/${nearestRegion.slug}`}
-        className="mt-3 inline-block text-fluid-00 text-text-secondary underline underline-offset-2 transition-colors hover:text-seismic-bright"
+        className="mt-3 inline-block text-fluid-00 text-ink-2 underline underline-offset-2 transition-colors hover:text-ink"
       >
         Lihat profil lengkap {nearestRegion.name} →
       </Link>

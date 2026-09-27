@@ -75,11 +75,11 @@ export function SeismogramComparePicker({
   return (
     <div>
       <label className="mb-3 flex flex-wrap items-center gap-2 text-fluid-00">
-        <span className="text-text-secondary">Bandingkan dengan:</span>
+        <span className="text-ink-2">Bandingkan dengan:</span>
         <select
           value={refSlug}
           onChange={(e) => onChange(e.target.value)}
-          className="rounded-lg border border-earth-border bg-earth-dark/60 px-3 py-1.5 text-text-primary transition-colors focus:border-seismic-orange focus:outline-none"
+          className="rounded-lg border border-rule bg-paper/60 px-3 py-1.5 text-ink transition-colors focus:border-ink focus:outline-none"
         >
           <option value="">Tanpa pembanding</option>
           {options.map((o) => (
@@ -88,7 +88,7 @@ export function SeismogramComparePicker({
             </option>
           ))}
         </select>
-        {loading && <span className="text-fluid-000 text-text-muted">Memuat…</span>}
+        {loading && <span className="text-fluid-000 text-ink-3">Memuat…</span>}
       </label>
 
       <RegionSeismogram

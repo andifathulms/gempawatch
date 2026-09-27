@@ -102,7 +102,7 @@ export function RegionSearch({
   return (
     <div ref={rootRef} className="relative">
       <svg
-        className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-text-muted ${lg ? "left-4" : "left-3.5"}`}
+        className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-ink-3 ${lg ? "left-4" : "left-3.5"}`}
         width={lg ? 18 : 16}
         height={lg ? 18 : 16}
         viewBox="0 0 16 16"
@@ -130,7 +130,7 @@ export function RegionSearch({
         aria-activedescendant={
           open && results.length ? `${listId}-opt-${cursor}` : undefined
         }
-        className={`w-full rounded-lg border border-earth-border bg-earth-dark/60 text-text-primary shadow-sm transition-colors placeholder:text-text-muted focus:border-seismic-orange focus:outline-none ${
+        className={`w-full rounded-lg border border-rule bg-paper/60 text-ink shadow-sm transition-colors placeholder:text-ink-3 focus:border-ink focus:outline-none ${
           lg
             ? "py-3.5 pl-12 pr-4 text-fluid-0 sm:text-fluid-1"
             : "py-2.5 pl-10 pr-4 text-fluid-00"
@@ -140,7 +140,7 @@ export function RegionSearch({
       {searching && (
         <span
           aria-hidden="true"
-          className={`absolute top-1/2 -translate-y-1/2 text-fluid-000 text-text-muted ${lg ? "right-4" : "right-3.5"}`}
+          className={`absolute top-1/2 -translate-y-1/2 text-fluid-000 text-ink-3 ${lg ? "right-4" : "right-3.5"}`}
         >
           …
         </span>
@@ -169,7 +169,7 @@ export function RegionSearch({
       {/* A listbox may only contain options, so the empty-state message is a
           sibling of the list rather than a childless li pretending to be one. */}
       {open && noMatches && (
-        <div className="absolute z-[1200] mt-2 w-full rounded-lg border border-earth-border bg-earth-raised px-4 py-3 text-fluid-00 text-text-muted shadow-lg">
+        <div className="absolute z-[1200] mt-2 w-full rounded-lg border border-rule bg-raised px-4 py-3 text-fluid-00 text-ink-3 shadow-lg">
           Tidak ada wilayah cocok dengan “{q.trim()}”.
         </div>
       )}
@@ -178,7 +178,7 @@ export function RegionSearch({
         <ul
           id={listId}
           role="listbox"
-          className="absolute z-[1200] mt-2 max-h-80 w-full overflow-y-auto rounded-lg border border-earth-border bg-earth-raised py-1 shadow-lg"
+          className="absolute z-[1200] mt-2 max-h-80 w-full overflow-y-auto rounded-lg border border-rule bg-raised py-1 shadow-lg"
         >
           {
             /*
@@ -203,11 +203,11 @@ export function RegionSearch({
                   go(r);
                 }}
                 className={`flex cursor-pointer items-center justify-between gap-3 px-4 py-2.5 text-left text-fluid-00 transition-colors ${
-                  i === cursor ? "bg-earth-surface text-text-primary" : "text-text-secondary"
+                  i === cursor ? "bg-surface text-ink" : "text-ink-2"
                 }`}
               >
                 <span className="truncate">{r.name}</span>
-                <span className="shrink-0 text-fluid-000 text-text-muted">
+                <span className="shrink-0 text-fluid-000 text-ink-3">
                   {regionType(r.type)}
                   {r.is_coastal ? " · pesisir" : ""}
                 </span>

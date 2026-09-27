@@ -27,7 +27,7 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
       <div className="flex flex-wrap items-center gap-2.5">
         <RiskTierBadge tier={tier} label="Risiko tsunami historis" />
         {!is_coastal && (
-          <span className="text-fluid-00 text-text-secondary">
+          <span className="text-fluid-00 text-ink-2">
             Titik ini tidak ditandai pesisir, jadi tidak diberi tingkat.
           </span>
         )}
@@ -36,20 +36,20 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
       {is_coastal && (
         <>
           {/* The arithmetic, in the order the rule applies it. */}
-          <p className="text-fluid-00 leading-relaxed text-text-secondary">
-            <span className="font-mono font-bold tabular-nums text-text-primary">
+          <p className="text-fluid-00 leading-relaxed text-ink-2">
+            <span className="font-mono font-bold tabular-nums text-ink">
               {num(n)}
             </span>{" "}
             gempa dalam catatan memenuhi ketiga syarat sekaligus — magnitudo{" "}
-            <span className="font-mono tabular-nums text-text-primary">
+            <span className="font-mono tabular-nums text-ink">
               ≥{c.min_magnitude.toLocaleString("id-ID")}
             </span>
             , kedalaman{" "}
-            <span className="font-mono tabular-nums text-text-primary">
+            <span className="font-mono tabular-nums text-ink">
               &lt;{num(c.max_depth_km)} km
             </span>
             , dan berjarak{" "}
-            <span className="font-mono tabular-nums text-text-primary">
+            <span className="font-mono tabular-nums text-ink">
               ≤{num(c.search_radius_km)} km
             </span>{" "}
             dari titik ini.
@@ -61,15 +61,15 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
                 label: "Tinggi",
                 tier: "HIGH",
                 min: c.high_threshold,
-                tone: "text-risk-red",
+                tone: "text-tier-high",
               },
               {
                 label: "Sedang",
                 tier: "MODERATE",
                 min: c.moderate_threshold,
-                tone: "text-risk-amber",
+                tone: "text-tier-mod",
               },
-              { label: "Rendah", tier: "LOW", min: 0, tone: "text-risk-green" },
+              { label: "Rendah", tier: "LOW", min: 0, tone: "text-tier-low" },
             ].map((band) => {
               // The engine already decided; re-deriving it here would be a
               // second implementation of the same rule, free to disagree.
@@ -78,16 +78,16 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
                 <li
                   key={band.label}
                   className={`flex items-baseline gap-2.5 rounded-md px-2 py-1 ${
-                    active ? "bg-earth-dark/60" : ""
+                    active ? "bg-paper/60" : ""
                   }`}
                 >
                   <span
                     aria-hidden="true"
-                    className={active ? "text-seismic-bright" : "text-transparent"}
+                    className={active ? "text-ink" : "text-transparent"}
                   >
                     →
                   </span>
-                  <span className={active ? "text-text-primary" : "text-text-muted"}>
+                  <span className={active ? "text-ink" : "text-ink-3"}>
                     <strong className={`font-semibold ${band.tone}`}>
                       {band.label}
                     </strong>{" "}
@@ -98,7 +98,7 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
                         ? `${num(band.min)} kejadian atau lebih`
                         : `${num(band.min)}–${num(c.high_threshold - 1)} kejadian`}
                     {active && (
-                      <span className="text-text-secondary">
+                      <span className="text-ink-2">
                         {" "}
                         — ini yang berlaku di sini
                       </span>
@@ -112,8 +112,8 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
       )}
 
       {/* The simplification, admitted where the verdict is, not on another page. */}
-      <p className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3 text-fluid-000 leading-relaxed text-text-muted">
-        <strong className="font-semibold text-text-secondary">
+      <p className="rounded-lg border border-rule bg-paper/40 px-3.5 py-3 text-fluid-000 leading-relaxed text-ink-3">
+        <strong className="font-semibold text-ink-2">
           Yang disederhanakan:
         </strong>{" "}
         status &ldquo;pesisir&rdquo; adalah penanda yang kami hitung sebelumnya
@@ -121,7 +121,7 @@ export function TsunamiEvidencePanel({ evidence }: { evidence: TsunamiEvidence }
         garis pantai yang presisi. Ambang batas di atas kami tetapkan sendiri
         dari pola kejadian historis; ini bukan kriteria resmi BMKG maupun
         standar internasional, dan{" "}
-        <strong className="font-semibold text-text-secondary">
+        <strong className="font-semibold text-ink-2">
           bukan peringatan dini
         </strong>
         .

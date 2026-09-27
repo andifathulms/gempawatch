@@ -106,14 +106,14 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
           return (
             <li key={c.key}>
               <div className="flex items-baseline justify-between gap-3">
-                <span className="text-fluid-00 font-medium text-text-primary">
+                <span className="text-fluid-00 font-medium text-ink">
                   {meta.title}
                 </span>
-                <span className="shrink-0 font-mono text-fluid-00 tabular-nums text-text-secondary">
-                  <span className="font-bold text-text-primary">
+                <span className="shrink-0 font-mono text-fluid-00 tabular-nums text-ink-2">
+                  <span className="font-bold text-ink">
                     {c.points.toLocaleString("id-ID")}
                   </span>
-                  <span className="text-text-muted"> / {c.max_points}</span>
+                  <span className="text-ink-3"> / {c.max_points}</span>
                 </span>
               </div>
 
@@ -121,24 +121,24 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
                   would say the same thing twice. */}
               <div
                 aria-hidden="true"
-                className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-earth-dark"
+                className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-paper"
               >
                 <div
-                  className="h-full origin-left rounded-full bg-seismic-orange motion-safe:animate-draw-in"
+                  className="h-full origin-left rounded-full bg-ink motion-safe:animate-draw-in"
                   style={{ width: `${Math.max(0, Math.min(100, pct))}%` }}
                 />
               </div>
 
-              <p className="mt-1.5 text-fluid-00 leading-relaxed text-text-secondary">
+              <p className="mt-1.5 text-fluid-00 leading-relaxed text-ink-2">
                 {basis ? (
-                  <span className="font-medium text-text-primary">{basis}</span>
+                  <span className="font-medium text-ink">{basis}</span>
                 ) : null}
                 {basis ? " · " : null}
                 {meta.rule}
                 {/* The ceiling is the most load-bearing thing this panel can
                     say: past it, this term stops telling two places apart. */}
                 {c.saturated && (
-                  <span className="text-risk-amber"> Komponen ini sudah mentok.</span>
+                  <span className="text-tier-mod"> Komponen ini sudah mentok.</span>
                 )}
               </p>
             </li>
@@ -152,24 +152,24 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
         reconciled them was a sentence on /about. Saying which is which belongs
         where both numbers are visible.
       */}
-      <p className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
-        <strong className="font-semibold text-text-primary">
+      <p className="rounded-lg border border-rule bg-paper/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-ink-2">
+        <strong className="font-semibold text-ink">
           Kenapa ada dua radius?
         </strong>{" "}
         Skor di atas dihitung dalam radius{" "}
-        <span className="font-mono tabular-nums text-text-primary">100 km</span>{" "}
+        <span className="font-mono tabular-nums text-ink">100 km</span>{" "}
         supaya bisa dibandingkan langsung dengan wilayah lain, yang semuanya
         diukur dengan radius sama. Sementara hitungan &ldquo;gempa M4+ di
         dekatku&rdquo; pada kartu hasil memakai radius{" "}
-        <span className="font-mono tabular-nums text-text-primary">50 km</span>,
+        <span className="font-mono tabular-nums text-ink">50 km</span>,
         karena itu jarak yang lebih masuk akal disebut &ldquo;sekitar sini&rdquo;.
         Angkanya beda bukan karena salah satu keliru, tapi karena keduanya
         menjawab pertanyaan berbeda.
       </p>
 
-      <p className="border-t border-earth-border pt-3 text-fluid-00 leading-relaxed text-text-muted">
+      <p className="border-t border-rule pt-3 text-fluid-00 leading-relaxed text-ink-3">
         Skor total{" "}
-        <span className="font-mono font-bold tabular-nums text-text-primary">
+        <span className="font-mono font-bold tabular-nums text-ink">
           {total.toLocaleString("id-ID")}
         </span>{" "}
         dari 100. Tiap komponen dibulatkan satu desimal sendiri-sendiri, jadi
@@ -187,8 +187,8 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
         explanation on the site is downstream of that mistake — so this belongs
         next to the arithmetic, not in a methodology footnote.
       */}
-      <p className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
-        <strong className="font-semibold text-text-primary">
+      <p className="rounded-lg border border-rule bg-paper/40 px-3.5 py-3 text-fluid-00 leading-relaxed text-ink-2">
+        <strong className="font-semibold text-ink">
           Skor ini buatan GempaWatch.
         </strong>{" "}
         Datanya resmi — kejadian gempa dari{" "}
@@ -196,7 +196,7 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
           href="https://www.bmkg.go.id/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-seismic-bright"
+          className="underline underline-offset-2 hover:text-ink"
         >
           BMKG
         </a>{" "}
@@ -205,12 +205,12 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
           href="https://earthquake.usgs.gov/"
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-seismic-bright"
+          className="underline underline-offset-2 hover:text-ink"
         >
           USGS
         </a>{" "}
         — tetapi{" "}
-        <strong className="font-semibold text-text-primary">
+        <strong className="font-semibold text-ink">
           pembagian bobotnya kami yang menentukan
         </strong>
         : angka 40/30/15/15 di atas adalah pilihan editorial kami, bukan ukuran
@@ -229,7 +229,7 @@ export function ScoreBreakdown({ components, total, showLabLink = true }: Props)
       {labQuery && (
         <Link
           href={`/about?${labQuery}#skor-lab`}
-          className="block rounded-lg border border-earth-border px-3.5 py-3 text-center text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+          className="block rounded-lg border border-rule px-3.5 py-3 text-center text-fluid-00 text-ink-2 transition-colors hover:border-ink hover:text-ink"
         >
           Coba ubah angka ini di ScoreLab →
         </Link>

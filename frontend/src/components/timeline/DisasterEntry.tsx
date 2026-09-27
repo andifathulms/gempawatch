@@ -30,18 +30,18 @@ export function DisasterEntry({ disaster, fragment }: Props) {
     <article className="relative pl-8">
       <span
         aria-hidden="true"
-        className="absolute left-0 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full ring-4 ring-earth-dark"
-        style={{ backgroundColor: major ? "#C0392B" : "#E8743B" }}
+        className="absolute left-0 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full ring-4 ring-paper"
+        style={{ backgroundColor: "var(--ink)" }}
       />
 
       <div
-        className={`rounded-xl border border-earth-border bg-earth-surface p-4 shadow-raised sm:p-5 ${
-          major ? "ring-1 ring-risk-red/25" : ""
+        className={`rounded-xl border border-rule bg-surface p-4 shadow-raised sm:p-5 ${
+          major ? "ring-1 ring-tier-high/25" : ""
         }`}
       >
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="font-mono text-fluid-000 tabular-nums text-text-muted">
+            <p className="font-mono text-fluid-000 tabular-nums text-ink-3">
               <time dateTime={disaster.event_date}>
                 {date.toLocaleDateString("id-ID", {
                   day: "numeric",
@@ -68,7 +68,7 @@ export function DisasterEntry({ disaster, fragment }: Props) {
           )}
         </div>
 
-        <p className="mt-3 text-fluid-00 leading-relaxed text-text-secondary">
+        <p className="mt-3 text-fluid-00 leading-relaxed text-ink-2">
           {disaster.description}
         </p>
 
@@ -79,7 +79,7 @@ export function DisasterEntry({ disaster, fragment }: Props) {
               events={fragment.events}
               disasterDateIso={disaster.event_date}
             />
-            <p className="mt-1 text-fluid-000 text-text-muted">
+            <p className="mt-1 text-fluid-000 text-ink-3">
               Konteks regional: rekaman gempa {fragment.regionName}, kejadian ini ditandai.
             </p>
           </div>
@@ -88,17 +88,17 @@ export function DisasterEntry({ disaster, fragment }: Props) {
         {(disaster.casualties != null || disaster.displaced != null) && (
           <dl className="mt-4 flex flex-wrap gap-3">
             {disaster.casualties != null && (
-              <div className="rounded-lg border border-risk-red/25 bg-risk-red/[0.06] px-3.5 py-2">
-                <dt className="text-fluid-000 text-text-muted">Korban jiwa</dt>
-                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-risk-red">
+              <div className="rounded-lg border border-tier-high/25 bg-tier-high/[0.06] px-3.5 py-2">
+                <dt className="text-fluid-000 text-ink-3">Korban jiwa</dt>
+                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-tier-high">
                   {num(disaster.casualties)}
                 </dd>
               </div>
             )}
             {disaster.displaced != null && (
-              <div className="rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-2">
-                <dt className="text-fluid-000 text-text-muted">Mengungsi</dt>
-                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-text-primary">
+              <div className="rounded-lg border border-rule bg-paper/40 px-3.5 py-2">
+                <dt className="text-fluid-000 text-ink-3">Mengungsi</dt>
+                <dd className="font-mono text-fluid-1 font-bold tabular-nums text-ink">
                   {num(disaster.displaced)}
                 </dd>
               </div>
@@ -107,15 +107,15 @@ export function DisasterEntry({ disaster, fragment }: Props) {
         )}
 
         {disaster.source_links.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-3 border-t border-earth-border pt-3 text-fluid-000">
-            <span className="text-text-muted">Rujukan:</span>
+          <div className="mt-4 flex flex-wrap gap-3 border-t border-rule pt-3 text-fluid-000">
+            <span className="text-ink-3">Rujukan:</span>
             {disaster.source_links.map((link, i) => (
               <a
                 key={link}
                 href={link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-depth-blue underline underline-offset-2 transition-colors hover:text-seismic-bright"
+                className="text-depth-deep underline underline-offset-2 transition-colors hover:text-ink"
               >
                 Sumber {i + 1} ↗
               </a>

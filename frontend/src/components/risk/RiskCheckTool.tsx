@@ -116,21 +116,21 @@ export function RiskCheckTool() {
           <PickerMap position={position} onPick={handlePick} />
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-md border border-earth-border bg-earth-dark/50 px-2.5 py-1 font-mono text-fluid-000 tabular-nums text-text-secondary">
+            <span className="rounded-md border border-rule bg-paper/50 px-2.5 py-1 font-mono text-fluid-000 tabular-nums text-ink-2">
               {position[0].toFixed(4)}, {position[1].toFixed(4)}
             </span>
             {loading && (
-              <span className="text-fluid-000 text-text-muted">menghitung…</span>
+              <span className="text-fluid-000 text-ink-3">menghitung…</span>
             )}
           </div>
 
           <div className="mt-3 flex flex-wrap gap-1.5">
-            <span className="py-1 text-fluid-000 text-text-muted">Coba cepat:</span>
+            <span className="py-1 text-fluid-000 text-ink-3">Coba cepat:</span>
             {SHORTCUTS.map((s) => (
               <button
                 key={s.label}
                 onClick={() => handlePick(s.at[0], s.at[1])}
-                className="inline-flex min-h-tap items-center rounded-full border border-earth-border px-3 py-1 text-fluid-000 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+                className="inline-flex min-h-tap items-center rounded-full border border-rule px-3 py-1 text-fluid-000 text-ink-2 transition-colors hover:border-ink hover:text-ink"
               >
                 {s.label}
               </button>

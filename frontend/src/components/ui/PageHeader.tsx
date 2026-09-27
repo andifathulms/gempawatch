@@ -10,38 +10,26 @@ interface Props {
 }
 
 /**
- * Interior-page header — the lighter sibling of the homepage hero.
+ * Interior-page header — type on paper, closed by a hairline.
  *
- * A hairline contour pattern replaces the old flat gradient: it reads as
- * topography at a glance, gives the page a fixed visual anchor, and costs
- * nothing because it is a repeating gradient rather than an image.
+ * It used to be a bordered, shadowed card with an orange hatch pattern, which
+ * put a box around the one thing on the page that should lead. "Fewer boxes"
+ * (DESIGN.md §3): the headline carries the hierarchy by size and weight, and
+ * the rule underneath hands over to the content.
  */
 export function PageHeader({ eyebrow, title, subtitle, action, children }: Props) {
-  // No overflow-hidden on the section: this header hosts the region search, and
-  // clipping the container also clipped its dropdown. The decorative layer
-  // below carries its own rounding instead, which is all the clipping was for.
   return (
-    <section className="animate-fade-in-up relative rounded-2xl border border-earth-border bg-earth-surface px-5 py-6 shadow-raised sm:px-7 sm:py-7">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-[0.5]"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(115deg, transparent 0 22px, rgba(232,116,59,0.05) 22px 23px)",
-          maskImage: "linear-gradient(to left, black, transparent 62%)",
-          WebkitMaskImage: "linear-gradient(to left, black, transparent 62%)",
-        }}
-      />
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <section className="animate-fade-in-up border-b border-rule pb-6 sm:pb-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
           {eyebrow && (
-            <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-seismic-orange">
+            <p className="text-fluid-000 font-bold uppercase tracking-[0.14em] text-ink-3">
               {eyebrow}
             </p>
           )}
-          <h1 className="mt-1.5 text-fluid-4 font-bold tracking-tight">{title}</h1>
+          <h1 className="mt-2 text-fluid-5 font-extrabold tracking-tight">{title}</h1>
           {subtitle && (
-            <p className="mt-2.5 max-w-2xl text-fluid-00 leading-relaxed text-text-secondary sm:text-fluid-0">
+            <p className="mt-3 max-w-2xl text-fluid-0 leading-relaxed text-ink-2 sm:text-fluid-1">
               {subtitle}
             </p>
           )}

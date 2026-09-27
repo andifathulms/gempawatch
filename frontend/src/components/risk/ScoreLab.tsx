@@ -183,11 +183,11 @@ export function ScoreLab({ seed }: Props) {
 
   return (
     <div id="skor-lab" className="space-y-5 scroll-mt-24">
-      <p className="text-fluid-00 leading-relaxed text-text-secondary">
+      <p className="text-fluid-00 leading-relaxed text-ink-2">
         Ini bukan contoh karangan. Angka awalnya diambil langsung dari profil{" "}
         <Link
           href={`/region/${seed.slug}`}
-          className="font-medium text-seismic-bright underline underline-offset-2"
+          className="font-medium text-ink underline underline-offset-2"
         >
           {seed.regionName}
         </Link>
@@ -198,28 +198,28 @@ export function ScoreLab({ seed }: Props) {
         {seed.faultName ? ` (${seed.faultName})` : ""} berjarak{" "}
         {seed.faultDistanceKm.toLocaleString("id-ID")} km. Empat angka itu
         menghasilkan skor{" "}
-        <span className="font-mono font-bold tabular-nums text-text-primary">
+        <span className="font-mono font-bold tabular-nums text-ink">
           {seed.publishedScore.toLocaleString("id-ID")}
         </span>
         .
       </p>
 
-      <p className="text-fluid-00 leading-relaxed text-text-secondary">
+      <p className="text-fluid-00 leading-relaxed text-ink-2">
         Geser mana pun di bawah ini untuk melihat bagian mana yang sebenarnya
         menggerakkan skor.
       </p>
 
-      <div className="space-y-4 rounded-lg border border-earth-border bg-earth-dark/40 p-4">
+      <div className="space-y-4 rounded-lg border border-rule bg-paper/40 p-4">
         {CONTROLS.map((c) => (
           <div key={c.key}>
             <div className="flex items-baseline justify-between gap-3">
               <label
                 htmlFor={`lab-${c.key}`}
-                className="text-fluid-00 text-text-secondary"
+                className="text-fluid-00 text-ink-2"
               >
                 {c.label}
               </label>
-              <span className="shrink-0 font-mono text-fluid-00 tabular-nums text-text-primary">
+              <span className="shrink-0 font-mono text-fluid-00 tabular-nums text-ink">
                 {c.format(c.value)}
               </span>
             </div>
@@ -231,23 +231,23 @@ export function ScoreLab({ seed }: Props) {
               step={c.step}
               value={c.value}
               onChange={(e) => setParam(c.key, Number(e.target.value))}
-              className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-full bg-earth-border accent-seismic-orange"
+              className="mt-2 h-2 w-full cursor-pointer appearance-none rounded-full bg-rule accent-ink"
             />
           </div>
         ))}
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-earth-border bg-earth-surface px-4 py-3">
-        <p className="text-fluid-00 text-text-secondary">
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-rule bg-surface px-4 py-3">
+        <p className="text-fluid-00 text-ink-2">
           Skor jadi{" "}
-          <span className="font-mono text-fluid-1 font-bold tabular-nums text-text-primary">
+          <span className="font-mono text-fluid-1 font-bold tabular-nums text-ink">
             {total.toLocaleString("id-ID")}
           </span>{" "}
-          <span className="text-text-muted">
+          <span className="text-ink-3">
             ({riskTierLabel(tier as never)})
           </span>
           {touched && delta !== 0 && (
-            <span className="ml-2 font-mono tabular-nums text-seismic-bright">
+            <span className="ml-2 font-mono tabular-nums text-ink">
               {delta > 0 ? "+" : ""}
               {delta.toLocaleString("id-ID")} dari {seed.regionName}
             </span>
@@ -257,7 +257,7 @@ export function ScoreLab({ seed }: Props) {
           <button
             type="button"
             onClick={reset}
-            className="inline-flex min-h-tap items-center rounded-lg border border-earth-border px-3 text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-seismic-bright"
+            className="inline-flex min-h-tap items-center rounded-lg border border-rule px-3 text-fluid-00 text-ink-2 transition-colors hover:border-ink hover:text-ink"
           >
             Kembalikan ke angka asli
           </button>
@@ -267,8 +267,8 @@ export function ScoreLab({ seed }: Props) {
       <ScoreBreakdown components={components} total={total} showLabLink={false} />
 
       {touched && (
-        <p className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-text-secondary">
-          <strong className="font-semibold text-risk-amber">Ingat —</strong> yang
+        <p className="rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] px-3.5 py-3 text-fluid-00 leading-relaxed text-ink-2">
+          <strong className="font-semibold text-tier-mod">Ingat —</strong> yang
           kamu lihat sekarang adalah wilayah rekaan, bukan {seed.regionName} dan
           bukan wilayah mana pun. Gunanya untuk merasakan bobot tiap komponen,
           bukan untuk menyimpulkan risiko suatu tempat.

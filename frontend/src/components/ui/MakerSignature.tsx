@@ -93,13 +93,13 @@ export function MakerSignature() {
 
   return (
     <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
-      <p className="text-fluid-000 text-text-muted">
+      <p className="text-fluid-000 text-ink-3">
         Designed &amp; built by{" "}
         <a
           href={portfolio}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-text-secondary underline underline-offset-2 transition-colors hover:text-seismic-orange"
+          className="text-ink-2 underline underline-offset-2 transition-colors hover:text-ink"
         >
           {MAKER.name}
         </a>{" "}
@@ -114,7 +114,7 @@ export function MakerSignature() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="flex rounded-md p-1.5 text-text-muted transition-colors hover:bg-earth-surface hover:text-text-primary"
+              className="flex rounded-md p-1.5 text-ink-3 transition-colors hover:bg-surface hover:text-ink"
             >
               <Icon className="h-[18px] w-[18px]" />
             </a>

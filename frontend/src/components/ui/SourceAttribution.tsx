@@ -37,7 +37,7 @@ export function SourceAttribution({
 }: Props) {
   if (variant === "inline") {
     return (
-      <p className={`text-fluid-000 leading-relaxed text-text-muted ${className ?? ""}`}>
+      <p className={`text-fluid-000 leading-relaxed text-ink-3 ${className ?? ""}`}>
         Sumber data:{" "}
         {sources.map((s, i) => (
           <span key={s}>
@@ -46,7 +46,7 @@ export function SourceAttribution({
               href={LABELS[s].href}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-text-secondary"
+              className="underline underline-offset-2 hover:text-ink-2"
             >
               {LABELS[s].short}
             </a>
@@ -58,7 +58,7 @@ export function SourceAttribution({
 
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1 text-fluid-000 text-text-muted ${className ?? ""}`}
+      className={`flex flex-wrap items-center gap-x-4 gap-y-1 text-fluid-000 text-ink-3 ${className ?? ""}`}
     >
       {sources.map((s) => (
         <a
@@ -66,11 +66,11 @@ export function SourceAttribution({
           href={LABELS[s].href}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 underline decoration-earth-border-strong underline-offset-2 transition-colors hover:text-text-secondary hover:decoration-text-muted"
+          className="inline-flex items-center gap-1.5 underline decoration-rule-strong underline-offset-2 transition-colors hover:text-ink-2 hover:decoration-ink-3"
         >
           <span
             aria-hidden="true"
-            className="h-1 w-1 rounded-full bg-text-muted"
+            className="h-1 w-1 rounded-full bg-ink-3"
           />
           {LABELS[s].text}
         </a>

@@ -4,21 +4,20 @@ import { useEffect } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import { BaseMap, INDONESIA_BOUNDS } from "@/components/map/BaseMap";
 import { MapContainer, Marker, useMap, useMapEvents } from "react-leaflet";
-import { Icon } from "leaflet";
+import { divIcon } from "leaflet";
 
-// A minimal pin icon that doesn't depend on Leaflet's asset paths (which break
-// under bundlers). Uses an inline SVG data URL.
-const PIN = new Icon({
-  iconUrl:
-    "data:image/svg+xml;base64," +
-    btoa(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="34" height="46" viewBox="0 0 34 46">
-        <ellipse cx="17" cy="43" rx="6" ry="2.5" fill="rgba(0,0,0,0.45)"/>
-        <path fill="#E8743B" stroke="#121110" stroke-width="1.75"
-          d="M17 1.5C9.3 1.5 3 7.8 3 15.5c0 9.6 14 27 14 27s14-17.4 14-27C31 7.8 24.7 1.5 17 1.5z"/>
-        <circle cx="17" cy="15.5" r="5" fill="#121110"/>
-      </svg>`,
-    ),
+// The pin is an HTML divIcon rather than an image so it can take the theme
+// tokens: an ink drop with a paper core, legible on both the Kertas and the
+// Malam basemap. (An <img> data-URL cannot resolve CSS variables.)
+const PIN = divIcon({
+  className: "gw-pin",
+  html: `<svg width="34" height="46" viewBox="0 0 34 46" aria-hidden="true">
+      <ellipse cx="17" cy="43" rx="6" ry="2.5" fill="rgba(0,0,0,0.3)"/>
+      <path fill="var(--ink)" stroke="var(--paper)" stroke-width="2"
+        d="M17 1.5C9.3 1.5 3 7.8 3 15.5c0 9.6 14 27 14 27s14-17.4 14-27C31 7.8 24.7 1.5 17 1.5z"/>
+      <circle cx="17" cy="15.5" r="5.5" fill="var(--paper)"/>
+      <circle cx="17" cy="15.5" r="2.5" fill="var(--depth-shallow-fill)"/>
+    </svg>`,
   iconSize: [34, 46],
   iconAnchor: [17, 44],
 });

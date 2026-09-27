@@ -1,4 +1,4 @@
-import { riskTierColor, riskTierTextColor, riskTierLabel } from "@/lib/seismic";
+import { riskTierBgColor, riskTierColor, riskTierTextColor, riskTierLabel } from "@/lib/seismic";
 import type { RiskTier } from "@/lib/types";
 
 interface Props {
@@ -20,13 +20,12 @@ export function RiskTierBadge({ tier, label, size = "md" }: Props) {
   const text = riskTierTextColor(tier);
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium ${
+      className={`inline-flex items-center gap-1.5 rounded-full font-semibold ${
         size === "sm" ? "px-2.5 py-0.5 text-fluid-000" : "px-3 py-1 text-fluid-000"
       }`}
       style={{
-        backgroundColor: `${dot}1f`,
+        backgroundColor: riskTierBgColor(tier),
         color: text,
-        border: `1px solid ${dot}55`,
       }}
     >
       <span

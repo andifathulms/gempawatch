@@ -343,10 +343,11 @@ INSTALLED_APPS += ['rest_framework_gis']
 // components/ui/MagnitudeBadge.tsx
 // size scales with magnitude, color scales with depth
 const getSize = (mag: number) => Math.max(24, Math.min(64, mag * 8))
+// thresholds are fixed; colours are theme tokens (lib/seismic.ts depthColor)
 const getDepthColor = (depthKm: number) => {
-  if (depthKm < 30) return '#C0392B'   // shallow = most dangerous = red
-  if (depthKm < 100) return '#E8743B'  // seismic-orange
-  return '#4A7C9E'                      // deep = depth-blue
+  if (depthKm < 30) return 'var(--depth-shallow-fill)'  // shallow = most dangerous = red
+  if (depthKm < 100) return 'var(--depth-mid-fill)'     // intermediate = orange
+  return 'var(--depth-deep-fill)'                        // deep = blue
 }
 ```
 
@@ -468,7 +469,7 @@ volumes:
 4. Test all in browsable API
 
 ### Step 6 — Frontend
-1. Tailwind + Fault Line design tokens
+1. Tailwind + "Kertas & Tinta" design tokens (see DESIGN.md §3.1)
 2. Build MagnitudeBadge, SourceAttribution, RiskTierBadge primitives
 3. Build LiveMap + homepage
 4. Build Region Risk Profile page

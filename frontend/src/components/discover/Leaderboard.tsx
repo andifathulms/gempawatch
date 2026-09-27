@@ -50,7 +50,7 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
           <li key={r.slug}>
             <Link
               href={`/region/${r.slug}`}
-              className="group relative flex items-center gap-3 overflow-hidden rounded-lg px-2.5 py-2.5 transition-colors hover:bg-earth-raised/60"
+              className="group relative flex items-center gap-3 overflow-hidden rounded-lg px-2.5 py-2.5 transition-colors hover:bg-raised/60"
             >
               {/* Score bar, drawn behind the row content. */}
               <span
@@ -58,11 +58,11 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
                 className="absolute inset-y-0 left-0 origin-left animate-draw-in rounded-lg transition-opacity group-hover:opacity-90"
                 style={{
                   width: `${Math.max(2, Math.min(100, r.composite_score))}%`,
-                  background: `linear-gradient(90deg, ${fill}26, ${fill}08)`,
+                  background: `linear-gradient(90deg, color-mix(in srgb, ${fill} 16%, transparent), color-mix(in srgb, ${fill} 4%, transparent))`,
                 }}
               />
 
-              <span className="relative w-5 shrink-0 text-center font-mono text-fluid-000 tabular-nums text-text-muted">
+              <span className="relative w-5 shrink-0 text-center font-mono text-fluid-000 tabular-nums text-ink-3">
                 {r.rank}
               </span>
 
@@ -77,11 +77,11 @@ export function Leaderboard({ rows, variant = "default" }: Props) {
               </span>
 
               <span className="relative min-w-0 flex-1">
-                <span className="block truncate text-fluid-00 font-medium text-text-primary">
+                <span className="block truncate text-fluid-00 font-medium text-ink">
                   {r.region_name}
                 </span>
                 {!compact && (
-                  <span className="block truncate text-fluid-000 text-text-muted">
+                  <span className="block truncate text-fluid-000 text-ink-3">
                     {num(r.event_count_m4)} gempa M4+ · terbesar{" "}
                     {magnitude(r.largest_magnitude)}
                   </span>

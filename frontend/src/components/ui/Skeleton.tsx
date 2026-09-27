@@ -12,7 +12,7 @@ interface Props {
 export function Skeleton({ className }: Props) {
   return (
     <div
-      className={`relative overflow-hidden rounded-md bg-earth-raised/70 ${className ?? ""}`}
+      className={`relative overflow-hidden rounded-md bg-raised/70 ${className ?? ""}`}
       aria-hidden="true"
     >
       <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
@@ -23,7 +23,7 @@ export function Skeleton({ className }: Props) {
 // Header skeleton matching the PageHeader footprint.
 export function PageHeaderSkeleton() {
   return (
-    <div className="rounded-2xl border border-earth-border bg-earth-surface px-5 py-6 sm:px-7 sm:py-7">
+    <div className="rounded-2xl border border-rule bg-surface px-5 py-6 sm:px-7 sm:py-7">
       <div className="space-y-3">
         <Skeleton className="h-3 w-24" />
         <Skeleton className="h-9 w-64 max-w-full" />
@@ -37,7 +37,7 @@ export function PageHeaderSkeleton() {
 // Card skeleton — bordered box with a label rule and a few shimmer lines.
 export function CardSkeleton({ lines = 4 }: { lines?: number }) {
   return (
-    <div className="rounded-xl border border-earth-border bg-earth-surface p-4 sm:p-5">
+    <div className="rounded-xl border border-rule bg-surface p-4 sm:p-5">
       <Skeleton className="mb-4 h-3 w-32" />
       <div className="space-y-2.5">
         {Array.from({ length: lines }).map((_, i) => (
@@ -57,15 +57,15 @@ export function CardSkeleton({ lines = 4 }: { lines?: number }) {
 export function MapSkeleton({ height = 460 }: { height?: number }) {
   return (
     <div
-      className="flex items-center justify-center rounded-xl border border-earth-border bg-earth-sunken"
+      className="flex items-center justify-center rounded-xl border border-rule bg-sunken"
       style={{ height }}
     >
       <div className="flex flex-col items-center gap-3">
         <span className="relative inline-flex h-3 w-3">
-          <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-seismic-orange" />
-          <span className="relative inline-flex h-3 w-3 rounded-full bg-seismic-orange" />
+          <span className="absolute inline-flex h-full w-full animate-pulse-ring rounded-full bg-ink" />
+          <span className="relative inline-flex h-3 w-3 rounded-full bg-ink" />
         </span>
-        <span className="text-fluid-00 text-text-muted">Memuat peta…</span>
+        <span className="text-fluid-00 text-ink-3">Memuat peta…</span>
       </div>
     </div>
   );

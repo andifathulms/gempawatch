@@ -14,8 +14,8 @@ export default function GlobalError({ reset }: { reset: () => void }) {
     <html lang="id">
       <body
         style={{
-          background: "#121110", // --earth-dark
-          color: "#f5f1ea", // --text-primary
+          background: "#F5F6F3", // --paper (Kertas)
+          color: "#15181B", // --ink
           fontFamily:
             "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif",
           margin: 0,
@@ -32,7 +32,7 @@ export default function GlobalError({ reset }: { reset: () => void }) {
           <p
             style={{
               marginTop: "0.5rem",
-              color: "#b8b1a6", // --text-secondary
+              color: "#474F57", // --ink-2
               fontSize: "0.875rem",
               lineHeight: 1.6,
             }}
@@ -44,8 +44,8 @@ export default function GlobalError({ reset }: { reset: () => void }) {
             onClick={reset}
             style={{
               marginTop: "1.25rem",
-              background: "#e8743b", // --seismic-orange
-              color: "#121110",
+              background: "#15181B", // --ink
+              color: "#F5F6F3", // --on-ink
               border: "none",
               borderRadius: "0.5rem",
               padding: "0.625rem 1.25rem",

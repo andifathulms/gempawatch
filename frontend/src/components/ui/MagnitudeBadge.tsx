@@ -35,7 +35,7 @@ export function MagnitudeBadge({ magnitude, depthKm, size }: Props) {
         // WCAG AA at this size; the foreground is chosen per fill.
         color: onFillTextColor(color),
         fontSize: Math.max(11, px * 0.34),
-        boxShadow: `0 0 0 ${Math.max(2, px * 0.09)}px ${color}22`,
+        boxShadow: `0 0 0 ${Math.max(2, px * 0.09)}px color-mix(in srgb, ${color} 14%, transparent)`,
       }}
     >
       <span aria-hidden="true">{magnitude.toFixed(1)}</span>

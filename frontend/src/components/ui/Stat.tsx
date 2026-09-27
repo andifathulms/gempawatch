@@ -18,24 +18,24 @@ interface Props {
  */
 export function Stat({ label, value, unit, accent, hint }: Props) {
   return (
-    <div className="flex items-baseline justify-between gap-3 border-b border-earth-border/60 py-2.5 last:border-b-0">
+    <div className="flex items-baseline justify-between gap-3 border-b border-rule/60 py-2.5 last:border-b-0">
       {/* Same reasoning as StatTile: a `title` tooltip is invisible on touch,
           so a caveat parked in one reaches nobody who needs it. */}
       <span className="min-w-0">
-        <span className="text-fluid-00 text-text-secondary">{label}</span>
+        <span className="text-fluid-00 text-ink-2">{label}</span>
         {hint && (
-          <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
+          <span className="mt-0.5 block text-fluid-000 leading-snug text-ink-3">
             {hint}
           </span>
         )}
       </span>
       <span className="flex shrink-0 items-baseline gap-1">
         <span
-          className={`font-mono text-fluid-1 font-medium tabular-nums ${accent ? "text-seismic-bright" : "text-text-primary"}`}
+          className={`font-mono text-fluid-1 font-medium tabular-nums ${accent ? "text-ink" : "text-ink"}`}
         >
           {value}
         </span>
-        {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
+        {unit && <span className="text-fluid-000 text-ink-3">{unit}</span>}
       </span>
     </div>
   );
@@ -72,24 +72,24 @@ interface TileProps {
 export function StatTile({ label, value, unit, tone = "default", hint }: TileProps) {
   const color =
     tone === "accent"
-      ? "text-seismic-bright"
+      ? "text-ink"
       : tone === "danger"
-        ? "text-risk-red"
-        : "text-text-primary";
+        ? "text-tier-high"
+        : "text-ink";
   return (
     /* h-full + centred: grid rows stretch every tile to the tallest, and a
        tile carrying a hint is taller than one without, which left its
        neighbours with their figures floating at the top of an empty box. */
-    <div className="flex h-full flex-col justify-center rounded-lg border border-earth-border bg-earth-dark/40 px-3.5 py-3">
+    <div className="flex h-full flex-col justify-center rounded-lg border border-rule bg-paper/40 px-3.5 py-3">
       <div className="flex items-baseline gap-1">
         <span className={`font-mono text-fluid-2 font-bold tabular-nums ${color}`}>
           {value}
         </span>
-        {unit && <span className="text-fluid-000 text-text-muted">{unit}</span>}
+        {unit && <span className="text-fluid-000 text-ink-3">{unit}</span>}
       </div>
-      <p className="mt-1.5 text-fluid-00 leading-snug text-text-secondary">{label}</p>
+      <p className="mt-1.5 text-fluid-00 leading-snug text-ink-2">{label}</p>
       {hint && (
-        <p className="mt-1.5 text-fluid-000 leading-snug text-text-muted">{hint}</p>
+        <p className="mt-1.5 text-fluid-000 leading-snug text-ink-3">{hint}</p>
       )}
     </div>
   );

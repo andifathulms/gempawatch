@@ -76,7 +76,7 @@ export function DisasterSeismogramFragment({
           x2={VB_W - MARGIN.right}
           y1={BASELINE_Y}
           y2={BASELINE_Y}
-          stroke="#33302B"
+          stroke="var(--rule)"
           strokeWidth={1}
         />
         {reduced.map((e, i) => {
@@ -103,14 +103,14 @@ export function DisasterSeismogramFragment({
               x2={xOf(highlight.event_time)}
               y1={BASELINE_Y}
               y2={yTopOf(highlight.magnitude)}
-              stroke="var(--seismic-bright)"
+              stroke="var(--ink)"
               strokeWidth={2}
             />
             <circle
               cx={xOf(highlight.event_time)}
               cy={yTopOf(highlight.magnitude)}
               r={2.5}
-              fill="var(--seismic-bright)"
+              fill="var(--ink)"
             />
           </g>
         )}

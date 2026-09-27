@@ -29,33 +29,33 @@ export function EventList({ events }: Props) {
   }
 
   return (
-    <ul className="divide-y divide-earth-border/70">
+    <ul className="divide-y divide-rule/70">
       {events.map((e) => (
         <li
           key={e.id}
-          className="-mx-2 flex items-start gap-3 rounded-lg px-2 py-3 transition-colors duration-[130ms] hover:bg-earth-raised/50"
+          className="-mx-2 flex items-start gap-3 rounded-lg px-2 py-3 transition-colors duration-[130ms] hover:bg-raised/50"
         >
           <MagnitudeBadge magnitude={e.magnitude} depthKm={e.depth_km} size={42} />
 
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <p className="min-w-0 flex-1 truncate text-fluid-00 font-medium text-text-primary">
+              <p className="min-w-0 flex-1 truncate text-fluid-00 font-medium text-ink">
                 {e.location_description || "Lokasi tidak tersedia"}
               </p>
-              <time dateTime={e.event_time}                className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
+              <time dateTime={e.event_time}                className="shrink-0 font-mono text-fluid-000 tabular-nums text-ink-3">
   <span aria-hidden="true">{timeAgo(e.event_time)}</span>
   <span className="sr-only">{absolute(e.event_time)}</span>
 </time>
             </div>
 
-            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-fluid-000 text-text-muted">
+            <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-fluid-000 text-ink-3">
               <span className="font-mono tabular-nums">{depth(e.depth_km)}</span>
               <span aria-hidden="true">·</span>
               <span>{e.source}</span>
               {e.is_preliminary && <PreliminaryTag />}
               {e.felt_reports && <FeltBadge />}
               {e.potensi_tsunami && (
-                <span className="rounded border border-risk-red/40 bg-risk-red/10 px-1.5 py-0.5 text-fluid-000 font-semibold uppercase tracking-wide text-risk-red">
+                <span className="rounded border border-tier-high/40 bg-tier-high/10 px-1.5 py-0.5 text-fluid-000 font-semibold uppercase tracking-wide text-tier-high">
                   Potensi tsunami
                 </span>
               )}
@@ -69,11 +69,11 @@ export function EventList({ events }: Props) {
         under the list is what turns "BMKG" and "USGS" from decoration into
         something a reader can interpret.
       */}
-      <li className="pt-3 text-fluid-000 leading-relaxed text-text-muted">
+      <li className="pt-3 text-fluid-000 leading-relaxed text-ink-3">
         Daftar ini menggabungkan dua katalog. Kalau BMKG dan USGS sama-sama
         mencatat gempa yang sama — selisih di bawah 5 menit dan 50 km — keduanya
         dianggap satu kejadian dan{" "}
-        <strong className="font-semibold text-text-secondary">
+        <strong className="font-semibold text-ink-2">
           catatan BMKG yang dipakai
         </strong>
         , karena lebih akurat untuk wilayah Indonesia. Label sumber di tiap baris

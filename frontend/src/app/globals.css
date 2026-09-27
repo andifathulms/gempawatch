@@ -17,8 +17,8 @@ html {
 }
 
 body {
-  background-color: var(--earth-dark);
-  color: var(--text-primary);
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   font-size: var(--step-0);
   line-height: 1.6;
@@ -47,14 +47,14 @@ h4 {
 }
 
 ::selection {
-  background: rgba(232, 116, 59, 0.3);
-  color: var(--text-primary);
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+  color: var(--ink);
 }
 
 /* Consistent, accessible keyboard focus across every interactive element.
    Mouse users don't see it (focus-visible), keyboard users always do. */
 :focus-visible {
-  outline: 2px solid var(--seismic-bright);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -67,8 +67,8 @@ h4 {
   z-index: 2000;
   translate: -50% -200%;
   border-radius: var(--r-sm);
-  background: var(--seismic-orange);
-  color: var(--earth-dark);
+  background: var(--ink);
+  color: var(--paper);
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
   font-weight: 600;
@@ -81,18 +81,18 @@ h4 {
 /* Custom scrollbars — thin, on-theme, unobtrusive. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-color: var(--rule-strong) transparent;
 }
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 *::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: var(--rule-strong);
   border-radius: 8px;
 }
 *::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--ink-3);
 }
 
 /* Respect users who ask for less motion. */
@@ -114,45 +114,50 @@ h4 {
    to stop looking like a light-mode widget dropped into a dark page.
    ------------------------------------------------------------------------- */
 .leaflet-container {
-  background: var(--surface-sunken);
+  background: var(--sunken);
   font-family: var(--font-sans), sans-serif;
 }
 .leaflet-control-attribution {
-  background: rgba(18, 17, 16, 0.8) !important;
-  color: var(--text-muted) !important;
+  background: color-mix(in srgb, var(--paper) 85%, transparent) !important;
+  color: var(--ink-3) !important;
   font-size: 10px !important;
 }
 .leaflet-control-attribution a {
-  color: var(--text-secondary) !important;
+  color: var(--ink-2) !important;
 }
 .leaflet-control-zoom a {
-  background: var(--surface-raised) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--border) !important;
+  background: var(--raised) !important;
+  color: var(--ink) !important;
+  border-color: var(--rule) !important;
 }
 .leaflet-control-zoom a:hover {
-  background: var(--border) !important;
+  background: var(--rule) !important;
 }
 /* Popups ship with a white bubble and a white tail; both need overriding. */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-  background: var(--surface-raised) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border);
+  background: var(--raised) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--rule);
   box-shadow: var(--shadow-lg);
 }
 .leaflet-popup-content-wrapper {
   border-radius: var(--r-md) !important;
 }
 .leaflet-popup-close-button {
-  color: var(--text-muted) !important;
+  color: var(--ink-3) !important;
 }
 .leaflet-tooltip {
-  background: var(--surface-raised) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border) !important;
+  background: var(--raised) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--rule) !important;
   box-shadow: var(--shadow-md) !important;
 }
 .leaflet-tooltip::before {
-  border-top-color: var(--border) !important;
+  border-top-color: var(--rule) !important;
+}
+/* Picker pin (PickerMap): a divIcon, so strip Leaflet's default white box. */
+.gw-pin {
+  background: none;
+  border: 0;
 }

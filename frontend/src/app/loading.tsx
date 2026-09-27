@@ -6,7 +6,7 @@ import { Skeleton, CardSkeleton, MapSkeleton } from "@/components/ui/Skeleton";
 export default function HomeLoading() {
   return (
     <div className="space-y-8">
-      <div className="rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 sm:px-8 sm:py-12">
+      <div className="rounded-2xl border border-rule bg-surface px-5 py-8 sm:px-8 sm:py-12">
         <Skeleton className="h-7 w-64 rounded-full" />
         <Skeleton className="mt-6 h-12 w-3/4 max-w-lg" />
         <Skeleton className="mt-3 h-4 w-full max-w-xl" />
@@ -24,7 +24,7 @@ export default function HomeLoading() {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-5">
-        <div className="rounded-xl border border-earth-border bg-earth-surface p-4 sm:p-5 lg:col-span-3">
+        <div className="rounded-xl border border-rule bg-surface p-4 sm:p-5 lg:col-span-3">
           <Skeleton className="mb-3 h-3 w-48" />
           <MapSkeleton height={440} />
         </div>

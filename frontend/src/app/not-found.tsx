@@ -4,14 +4,14 @@ import { ButtonLink } from "@/components/ui/Button";
 export default function NotFound() {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-6 py-16 text-center">
-      <span className="font-mono text-6xl font-bold tabular-nums text-seismic-orange">
+      <span className="font-mono text-6xl font-bold tabular-nums text-ink">
         404
       </span>
       <div>
-        <h1 className="text-fluid-2 font-bold tracking-tight text-text-primary">
+        <h1 className="text-fluid-2 font-bold tracking-tight text-ink">
           Halaman tidak ditemukan
         </h1>
-        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-text-secondary">
+        <p className="mx-auto mt-2 max-w-md text-fluid-00 leading-relaxed text-ink-2">
           Wilayah atau halaman yang kamu cari tidak tersedia. Coba cari wilayahmu
           atau cek risiko untuk titik koordinat pilihanmu dari beranda.
         </p>

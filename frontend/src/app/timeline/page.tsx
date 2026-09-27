@@ -102,7 +102,7 @@ export default async function TimelinePage() {
           distinction matters on a page whose largest numbers are death tolls. */}
       <div className="space-y-2">
         <SourceAttribution sources={["BMKG", "USGS"]} />
-        <p className="text-fluid-000 leading-relaxed text-text-muted">
+        <p className="text-fluid-000 leading-relaxed text-ink-3">
           Magnitudo dan episentrum tiap kejadian berasal dari katalog di atas.
           Angka korban jiwa dan pengungsi dikurasi manual dari catatan publik
           per kejadian, bukan dari feed BMKG maupun USGS, dan dapat berbeda

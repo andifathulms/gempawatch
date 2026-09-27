@@ -20,19 +20,19 @@ const BASE =
   "disabled:opacity-50 whitespace-nowrap";
 
 const VARIANTS: Record<Variant, string> = {
-  primary:
-    "bg-seismic-orange text-earth-dark shadow-glow hover:brightness-110",
+  // Ink, not a brand hue: colour on this site is reserved for data.
+  primary: "bg-ink text-on-ink hover:bg-ink/85",
   secondary:
-    "border border-earth-border bg-earth-surface text-text-primary " +
-    "hover:border-seismic-orange hover:bg-earth-raised",
+    "border border-rule-strong bg-surface text-ink " +
+    "hover:border-ink",
   ghost:
-    "text-text-secondary hover:bg-earth-surface hover:text-text-primary",
+    "text-ink-2 hover:bg-raised hover:text-ink",
 };
 
 const SIZES: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-fluid-000",
-  md: "px-4 py-2.5 text-fluid-00",
-  lg: "px-6 py-3 text-fluid-0",
+  sm: "min-h-[36px] px-3.5 py-1.5 text-fluid-00",
+  md: "min-h-tap-comfortable px-4 py-2.5 text-fluid-00",
+  lg: "min-h-[52px] px-6 py-3 text-fluid-0",
 };
 
 interface CommonProps {

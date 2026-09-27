@@ -1,167 +1,170 @@
 /* ============================================================================
-   "Seismograph" design tokens — GempaWatch
+   "Kertas & Tinta" design tokens — GempaWatch
    ----------------------------------------------------------------------------
-   The product reads risk data off an instrument. The palette is a warm charcoal
-   ramp (volcanic rock, not blue-grey UI chrome) with a single seismic accent,
-   and the type is a three-voice system: a display face for headlines, a UI face
-   for prose, and a tabular mono for every number the user might compare.
+   A seismograph writes in ink on paper, and so does this interface. The chrome
+   is ink on a faintly gridded paper ground; colour appears ONLY when earthquake
+   data is speaking:
 
-   Contrast: every text token below clears WCAG AA (4.5:1) against every
-   background token, measured — not assumed. Worst case for each is against
-   --surface-raised, the lightest surface any text sits on:
+     depth  — every quake mark: shallow red · intermediate orange · deep blue
+              (MagnitudeBadge's <30 km / <100 km / deeper thresholds)
+     tier   — every risk answer: tinggi red · sedang amber · rendah green
 
-     text-primary 14.22   text-secondary 7.53   text-muted   4.83
-     seismic-orange 5.33  seismic-bright 6.92   depth-blue   4.81
-     risk-red 4.54        risk-amber 8.24       risk-green   6.25
+   Buttons, links, headings and focus rings are ink. If something is coloured,
+   it encodes depth or a tier — nothing else may be. (The previous palette used
+   one orange for brand, buttons, links, heading ticks AND the 30–100 km depth
+   band, right next to risk red, so on a HIGH result nothing carried meaning.)
 
-   The `-fill` tones are BELOW 4.5:1 on purpose and are not text colours — they
-   are for solid shapes only (legend dots, markers, gauge arcs), where the
-   contrast requirement is 3:1 against the adjacent background rather than the
-   4.5:1 that body text owes. Never set type in a -fill tone; use its unsuffixed
-   sibling, which is luminance-lifted for exactly this reason.
+   Two themes, one set of meanings (DESIGN.md §3.1):
+     Kertas (light) — the default. Most visitors read on phones, often outdoors,
+                      and results travel as WhatsApp screenshots.
+     Malam  (dark)  — follows the OS dark setting. Cool graphite, not brown.
 
-   Spacing: Tailwind's own 4px-based scale IS the spacing scale, used directly
-   as p-4 / gap-3 / mt-2.5. It is not mirrored into variables here — a parallel
-   CSS-variable spacing ramp would be a *second* scale competing with the one
-   every component already speaks, which is the failure mode this file exists to
-   prevent (see the type scale note below for the same argument).
+   Contrast, measured (WCAG 2.x), worst case against paper or surface:
+                     Kertas   Malam
+     ink             16.4     15.0
+     ink-2            7.7      8.1
+     ink-3            5.0      5.7
+     depth-shallow    5.5      5.6        tier-high   6.1   5.6
+     depth-mid        4.6      7.3        tier-mod    5.3   8.9
+     depth-deep       5.8      7.2        tier-low    5.6   7.7
+
+   The `-fill` tones are for solid shapes (dots, spikes, badges), not text. Each
+   has an `--on-*` partner for text printed ON it, chosen by measured contrast
+   (all ≥ 4.5:1). Orange and amber fills sit at ~2–2.4:1 against Kertas paper,
+   under the 3:1 non-text guideline; they never carry meaning alone — every
+   depth or tier mark ships with a text legend or label.
+
+   Spacing: Tailwind's own 4px scale IS the spacing scale (p-4, gap-3). It is
+   not mirrored here — a second ramp would compete with the one every
+   component already speaks.
    ========================================================================== */
 :root {
+  color-scheme: light;
+
   /* --- Colour channels -----------------------------------------------------
-     Every colour is declared once, as space-separated RGB channels.
-     Tailwind consumes these as `rgb(var(--x) / <alpha-value>)`, which is what
-     makes opacity modifiers work: `bg-earth-surface/60` cannot be built from a
-     variable holding a hex string, and Tailwind silently emits no rule at all
-     when it tries — so every `/40`, `/60`, `/[0.06]` utility on a token colour
-     produced nothing, and the elements relying on them fell back to their
-     browser defaults (a white input on a dark page, most visibly).
+     Declared once as space-separated RGB channels. Tailwind consumes them as
+     `rgb(var(--x-c) / <alpha-value>)`, which is what makes opacity modifiers
+     like `bg-paper/80` work at all — a variable holding a hex string makes
+     Tailwind silently emit no rule for every `/40`-style utility. */
 
-     The `-c` suffixed names below are the raw channels; the unsuffixed names
-     are ready-to-use colours for plain CSS and inline styles. Both are derived
-     from the same declaration, so they can never drift apart. */
+  /* Chrome: paper and ink */
+  --paper-c: 245 246 243; /* page ground — seismograph paper */
+  --surface-c: 255 255 255; /* objects you act on: inputs, popovers, cards */
+  --raised-c: 238 240 236; /* hover wash, selected row */
+  --sunken-c: 236 238 234; /* wells: bar tracks, code, frames */
+  --grid-c: 227 231 225; /* the faint chart-paper grid */
+  --rule-c: 213 218 211; /* hairlines between sections */
+  --rule-strong-c: 183 191 182; /* control borders, axes */
+  --ink-c: 21 24 27; /* primary text, buttons, focus */
+  --ink-2-c: 71 79 87; /* secondary text */
+  --ink-3-c: 98 107 115; /* captions, meta, axis labels */
+  --on-ink-c: 245 246 243; /* text on an ink-filled button */
 
-  /* Neutral ramp — warm charcoal. The page is darker than the cards so
-     elevation reads without relying on shadow alone (shadows are nearly
-     invisible on dark surfaces). */
-  --earth-dark-c: 18 17 16; /* page background */
-  --surface-c: 28 26 24; /* card / panel */
-  --surface-raised-c: 36 33 30; /* popover, hover, nested panel */
-  --surface-sunken-c: 13 12 11; /* wells: map frames, inset charts */
-  --border-c: 51 48 43;
-  --border-strong-c: 73 67 57;
+  /* Data: depth (text tones, then solid fills) */
+  --depth-shallow-c: 184 50 42;
+  --depth-mid-c: 180 83 9;
+  --depth-deep-c: 42 101 144;
+  --depth-shallow-fill-c: 194 58 46;
+  --depth-mid-fill-c: 229 138 46;
+  --depth-deep-fill-c: 47 120 180;
 
-  /* Accent — seismic orange is the brand and the "interactive" signal. The
-     bright variant is for text/icons on dark, where the base tone is too dim. */
-  --seismic-orange-c: 232 116 59;
-  --seismic-bright-c: 255 139 83;
-  --seismic-soft-c: 240 148 106;
-  --depth-blue-c: 91 147 184;
+  /* Data: risk tier (text tones, solid fills, tinted backgrounds) */
+  --tier-high-c: 180 35 24;
+  --tier-mod-c: 143 91 10;
+  --tier-low-c: 35 112 74;
+  --tier-high-fill-c: 192 52 42;
+  --tier-mod-fill-c: 226 163 58;
+  --tier-low-fill-c: 47 133 88;
+  --tier-high-bg-c: 251 233 230;
+  --tier-mod-bg-c: 251 241 220;
+  --tier-low-bg-c: 227 242 234;
 
-  /* Risk semantics — two tones per tier: -fill for solid shapes (badges,
-     markers, arcs), and the base for text, which needs more luminance to stay
-     legible on charcoal. */
-  --risk-red-c: 232 89 74;
-  --risk-red-fill-c: 192 57 43;
-  --risk-amber-c: 230 178 63;
-  --risk-amber-fill-c: 212 161 43;
-  --risk-green-c: 116 176 113;
-  --risk-green-fill-c: 91 140 90;
-
-  /* Text */
-  --text-primary-c: 245 241 234;
-  --text-secondary-c: 184 177 166;
-  --text-muted-c: 148 140 129;
+  /* Text printed ON a fill — see the header note. */
+  --on-shallow-c: 255 255 255;
+  --on-mid-c: 21 24 27;
+  --on-deep-c: 255 255 255;
+  --on-high-c: 255 255 255;
+  --on-mod-c: 21 24 27;
+  --on-low-c: 255 255 255;
 
   /* --- Ready-to-use colours ------------------------------------------------
-     For hand-written CSS, SVG attributes, and inline styles. */
-  --earth-dark: rgb(var(--earth-dark-c));
+     For hand-written CSS, SVG attributes (var() works there in every engine
+     we ship to — verified in Chromium and WebKit) and inline styles. */
+  --paper: rgb(var(--paper-c));
   --surface: rgb(var(--surface-c));
-  --surface-raised: rgb(var(--surface-raised-c));
-  --surface-sunken: rgb(var(--surface-sunken-c));
-  --border: rgb(var(--border-c));
-  --border-strong: rgb(var(--border-strong-c));
+  --raised: rgb(var(--raised-c));
+  --sunken: rgb(var(--sunken-c));
+  --grid: rgb(var(--grid-c));
+  --rule: rgb(var(--rule-c));
+  --rule-strong: rgb(var(--rule-strong-c));
+  --ink: rgb(var(--ink-c));
+  --ink-2: rgb(var(--ink-2-c));
+  --ink-3: rgb(var(--ink-3-c));
+  --on-ink: rgb(var(--on-ink-c));
 
-  --seismic-orange: rgb(var(--seismic-orange-c));
-  --seismic-bright: rgb(var(--seismic-bright-c));
-  --seismic-orange-soft: rgb(var(--seismic-soft-c));
-  --seismic-dim: rgb(var(--seismic-orange-c) / 0.14);
-  --depth-blue: rgb(var(--depth-blue-c));
+  --depth-shallow: rgb(var(--depth-shallow-c));
+  --depth-mid: rgb(var(--depth-mid-c));
+  --depth-deep: rgb(var(--depth-deep-c));
+  --depth-shallow-fill: rgb(var(--depth-shallow-fill-c));
+  --depth-mid-fill: rgb(var(--depth-mid-fill-c));
+  --depth-deep-fill: rgb(var(--depth-deep-fill-c));
 
-  --risk-red: rgb(var(--risk-red-c));
-  --risk-red-fill: rgb(var(--risk-red-fill-c));
-  --risk-amber: rgb(var(--risk-amber-c));
-  --risk-amber-fill: rgb(var(--risk-amber-fill-c));
-  --risk-green: rgb(var(--risk-green-c));
-  --risk-green-fill: rgb(var(--risk-green-fill-c));
+  --tier-high: rgb(var(--tier-high-c));
+  --tier-mod: rgb(var(--tier-mod-c));
+  --tier-low: rgb(var(--tier-low-c));
+  --tier-high-fill: rgb(var(--tier-high-fill-c));
+  --tier-mod-fill: rgb(var(--tier-mod-fill-c));
+  --tier-low-fill: rgb(var(--tier-low-fill-c));
+  --tier-high-bg: rgb(var(--tier-high-bg-c));
+  --tier-mod-bg: rgb(var(--tier-mod-bg-c));
+  --tier-low-bg: rgb(var(--tier-low-bg-c));
 
-  --text-primary: rgb(var(--text-primary-c));
-  --text-secondary: rgb(var(--text-secondary-c));
-  --text-muted: rgb(var(--text-muted-c));
+  --on-shallow: rgb(var(--on-shallow-c));
+  --on-mid: rgb(var(--on-mid-c));
+  --on-deep: rgb(var(--on-deep-c));
+  --on-high: rgb(var(--on-high-c));
+  --on-mod: rgb(var(--on-mod-c));
+  --on-low: rgb(var(--on-low-c));
 
   /* --- Radii ---------------------------------------------------------------
-     One scale, used everywhere. Nested corners step down by one. */
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 20px;
-  --r-2xl: 28px;
+     One scale. Nested corners step down by one. */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 24px;
 
   /* --- Elevation -----------------------------------------------------------
-     Each level pairs a shadow with a 1px inner top highlight, which is what
-     actually makes a surface read as raised on a dark background. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
-  --shadow-glow: 0 0 0 1px rgba(232, 116, 59, 0.4), 0 10px 32px rgba(232, 116, 59, 0.18);
-  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+     Rare by design: most sections are separated by space and hairlines, and
+     only floating things (popovers, map panels, the ask panel) cast a shadow. */
+  --shadow-sm: 0 1px 2px rgba(20, 24, 27, 0.06);
+  --shadow-md: 0 1px 2px rgba(20, 24, 27, 0.05), 0 8px 24px rgba(20, 24, 27, 0.07);
+  --shadow-lg: 0 2px 4px rgba(20, 24, 27, 0.05), 0 18px 48px rgba(20, 24, 27, 0.12);
 
-  /* Headline voice aliased to the body voice (DESIGN.md §10 step 8) — Inter
-     for both, just at font-semibold/font-bold where it's carrying a heading.
-     `--font-sans` itself is set by next/font on <html> (see layout.tsx); this
-     only needs to exist so `var(--font-display)` in tailwind.config.ts and
-     globals.css's h1–h4 rule resolves to something rather than an unset
-     custom property, which would make those font-family declarations invalid
-     and fall back to the browser default instead of gracefully skipping to
-     the next name in the stack. */
+  /* The body face is set by next/font on <html> (layout.tsx). Headlines use
+     the same family at 700–800; this alias exists so `var(--font-display)`
+     always resolves instead of invalidating a font-family declaration. */
   --font-display: var(--font-sans);
 
   /* --- Type scale ----------------------------------------------------------
-     ONE scale, ratio ~1.2 at mobile widening to ~1.25 at desktop, so headlines
-     gain presence on large screens without the body copy ballooning with them.
-
-     Every size on the site must come from a step below. Tailwind's own
-     text-xs/sm/base/lg scale is a *second* scale — using it alongside these
-     meant sizes were chosen per component and nothing lined up across pages.
-     The steps are exposed as `text-fluid-*` utilities (see tailwind.config.ts);
-     there is no sanctioned size smaller than --step-000.
-
-     The two sub-body steps are deliberately few. Anything that needs to be
-     smaller than 12.5px is either not worth showing or is being asked to carry
-     more than fine print should — including the BMKG attribution, which is a
-     legal obligation and therefore has to be genuinely readable, not merely
-     present. */
+     ONE scale, ratio ~1.2 at mobile widening to ~1.25 at desktop. Every size
+     on the site comes from a step below (Tailwind's default text-sm/base/lg
+     scale is replaced, not extended — see tailwind.config.ts). Nothing smaller
+     than --step-000: the BMKG attribution is a legal obligation and has to be
+     genuinely readable. --step-6 exists for one thing: the score numeral. */
   --step-000: 0.78125rem; /* 12.5px — badges, eyebrows, micro-labels */
   --step-00: 0.875rem; /* 14px — captions, dense UI, secondary rows */
   --step-0: 1rem; /* 16px body — the floor for prose */
-  --step-1: clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem); /* section heading */
+  --step-1: clamp(1.0625rem, 0.4vw + 0.97rem, 1.1875rem);
   --step-2: clamp(1.25rem, 0.7vw + 1.1rem, 1.5rem);
   --step-3: clamp(1.5rem, 1.3vw + 1.2rem, 1.95rem);
-  --step-4: clamp(1.85rem, 2.4vw + 1.3rem, 2.6rem);
-  --step-5: clamp(2.2rem, 4vw + 1.3rem, 3.6rem);
+  --step-4: clamp(1.85rem, 2.4vw + 1.3rem, 2.75rem);
+  --step-5: clamp(2.2rem, 4vw + 1.3rem, 3.75rem);
+  --step-6: clamp(4.5rem, 7vw + 2rem, 7rem);
 
   /* --- Target size ---------------------------------------------------------
-     The smallest a pointer target may be, as one number rather than a padding
-     value guessed per component.
-
-     --tap-min is WCAG 2.5.8 Target Size (Minimum, AA): 24x24 CSS px. Small
-     chips and icon buttons were falling under it — the toast close button was a
-     bare glyph with no padding at all — which on a touch screen means a control
-     that is technically present and practically unhittable.
-
-     --tap-comfortable is the 44px figure from the platform guidelines, for
-     anything that is a primary action rather than an inline affordance. It is
-     deliberately NOT the default: applying 44px to every chip would wreck the
-     dense layouts this app relies on, and 2.5.8 does not ask for it. */
+     --tap-min is WCAG 2.5.8 (AA): 24x24 CSS px, the floor for every control.
+     --tap-comfortable is the 44px platform figure for primary actions. */
   --tap-min: 24px;
   --tap-comfortable: 44px;
 
@@ -171,4 +174,52 @@
   --dur-fast: 130ms;
   --dur-base: 200ms;
   --dur-slow: 400ms;
+}
+
+/* Malam — follows the OS. Only tokens are redefined here; components never
+   style themselves per theme. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --paper-c: 15 18 20;
+    --surface-c: 23 27 30;
+    --raised-c: 31 36 40;
+    --sunken-c: 10 12 14;
+    --grid-c: 29 34 38;
+    --rule-c: 42 49 53;
+    --rule-strong-c: 61 70 76;
+    --ink-c: 236 239 236;
+    --ink-2-c: 170 178 183;
+    --ink-3-c: 140 149 155;
+    --on-ink-c: 15 18 20;
+
+    --depth-shallow-c: 242 102 90;
+    --depth-mid-c: 240 145 63;
+    --depth-deep-c: 106 174 224;
+    --depth-shallow-fill-c: 229 83 63;
+    --depth-mid-fill-c: 238 139 52;
+    --depth-deep-fill-c: 78 155 214;
+
+    --tier-high-c: 242 102 90;
+    --tier-mod-c: 233 176 74;
+    --tier-low-c: 92 192 138;
+    --tier-high-fill-c: 229 83 63;
+    --tier-mod-fill-c: 224 162 58;
+    --tier-low-fill-c: 63 165 109;
+    --tier-high-bg-c: 58 23 20;
+    --tier-mod-bg-c: 51 39 15;
+    --tier-low-bg-c: 15 42 29;
+
+    --on-shallow-c: 21 24 27;
+    --on-mid-c: 21 24 27;
+    --on-deep-c: 21 24 27;
+    --on-high-c: 21 24 27;
+    --on-mod-c: 21 24 27;
+    --on-low-c: 21 24 27;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.4), 0 18px 48px rgba(0, 0, 0, 0.5);
+  }
 }

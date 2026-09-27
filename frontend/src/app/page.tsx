@@ -60,10 +60,10 @@ export default async function HomePage() {
           shortcut cities and an in-place idle/loading/error/report state
           union; it moved here unchanged (DESIGN.md §6).
          ------------------------------------------------------------------ */}
-      <section className="animate-fade-in-up relative rounded-2xl border border-earth-border bg-earth-surface px-5 py-8 shadow-raised sm:px-8 sm:py-10">
+      <section className="animate-fade-in-up relative rounded-2xl border border-rule bg-surface px-5 py-8 shadow-raised sm:px-8 sm:py-10">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-32 -z-10 h-[28rem] w-[28rem] rounded-full bg-seismic-orange/[0.07] blur-3xl"
+          className="pointer-events-none absolute -right-24 -top-32 -z-10 h-[28rem] w-[28rem] rounded-full bg-ink/[0.07] blur-3xl"
         />
         <div
           aria-hidden="true"
@@ -80,11 +80,11 @@ export default async function HomePage() {
           <div className="max-w-3xl">
             <h1 className="text-fluid-5 font-bold tracking-tight">
               Seberapa rawan gempa{" "}
-              <span className="text-seismic-orange">lokasi kamu?</span>
+              <span className="text-ink">lokasi kamu?</span>
             </h1>
-            <p className="mt-4 max-w-2xl text-fluid-1 leading-relaxed text-text-secondary">
+            <p className="mt-4 max-w-2xl text-fluid-1 leading-relaxed text-ink-2">
               Pilih titik di peta, dan dapatkan{" "}
-              <strong className="font-semibold text-text-primary">
+              <strong className="font-semibold text-ink">
                 skor paparan 0–100
               </strong>{" "}
               yang dihitung dari lebih dari 50 tahun catatan gempa BMKG dan
@@ -95,10 +95,10 @@ export default async function HomePage() {
 
           <RiskCheckTool />
 
-          <p className="max-w-2xl border-t border-earth-border pt-4 text-fluid-00 leading-relaxed text-text-muted">
-            <strong className="font-semibold text-risk-amber">Penting —</strong>{" "}
+          <p className="max-w-2xl border-t border-rule pt-4 text-fluid-00 leading-relaxed text-ink-3">
+            <strong className="font-semibold text-tier-mod">Penting —</strong>{" "}
             GempaWatch membaca pola gempa masa lalu. Ini{" "}
-            <strong className="font-semibold text-text-secondary">
+            <strong className="font-semibold text-ink-2">
               bukan sistem peringatan dini
             </strong>{" "}
             dan bukan prediksi. Untuk peringatan gempa dan tsunami resmi, selalu
@@ -107,7 +107,7 @@ export default async function HomePage() {
               href="https://www.bmkg.go.id/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-seismic-bright underline underline-offset-2 hover:brightness-110"
+              className="font-medium text-ink underline underline-offset-2 hover:brightness-110"
             >
               bmkg.go.id
             </a>
@@ -140,7 +140,7 @@ export default async function HomePage() {
             action={
               <Link
                 href="/about#skor-lab"
-                className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
+                className="text-fluid-000 text-ink-2 transition-colors hover:text-ink"
               >
                 Coba ubah angkanya →
               </Link>
@@ -177,7 +177,7 @@ export default async function HomePage() {
           action={
             <Link
               href="/timeline"
-              className="text-fluid-000 text-text-secondary transition-colors hover:text-seismic-bright"
+              className="text-fluid-000 text-ink-2 transition-colors hover:text-ink"
             >
               Linimasa lengkap →
             </Link>
@@ -186,16 +186,16 @@ export default async function HomePage() {
           {disasters.length === 0 ? (
             <EmptyState title="Arsip bencana belum tersedia." />
           ) : (
-            <ul className="divide-y divide-earth-border/70">
+            <ul className="divide-y divide-rule/70">
               {disasters.slice(0, 4).map((d) => (
                 <li key={d.id} className="flex items-baseline gap-3 py-2.5">
-                  <span className="w-24 shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
+                  <span className="w-24 shrink-0 font-mono text-fluid-000 tabular-nums text-ink-3">
                     {shortDate(d.event_date)}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-fluid-00 text-text-primary">
+                  <span className="min-w-0 flex-1 truncate text-fluid-00 text-ink">
                     {d.name}
                   </span>
-                  <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-seismic-bright">
+                  <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-ink">
                     {magnitude(d.magnitude)}
                   </span>
                 </li>

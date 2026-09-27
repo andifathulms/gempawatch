@@ -6,19 +6,13 @@ interface MarkProps {
 /**
  * The GempaWatch mark: a seismograph trace over epicentre rings.
  *
- * Inlined rather than loaded from /brand/icon.svg so it costs no request, can
- * inherit the page palette, and stays crisp at any size. Two deliberate
- * departures from the exported asset:
+ * Ink, like the rest of the chrome, with one exception — the epicentre dot is
+ * the shallow-depth fill. That is the only brand colour on the site and it
+ * still obeys the palette rule (colour is data): it marks a shallow epicentre.
  *
- * - No tile. The export carries its own #1a1a1a rounded square, which would
- *   read as a slightly-wrong charcoal patch against our --earth-dark header.
- *   On-site the glyph sits directly on the page.
- * - Higher ring opacities. The export's 0.25/0.4/0.55 were tuned for a 512px
- *   app icon; at the 30px the header renders, those strokes disappear and the
- *   mark collapses to a bare squiggle.
- *
- * The palette is the site's own tokens, so the mark's orange matches the
- * wordmark beside it exactly (the export sits a hair off at #e8722e).
+ * Inlined rather than loaded from /brand/icon.svg so it costs no request,
+ * follows the Kertas/Malam tokens, and stays crisp at header size (the rings
+ * are heavier than the exported 512px asset's, which vanish at 28px).
  */
 export function LogoMark({ size = 30, className }: MarkProps) {
   return (
@@ -30,38 +24,16 @@ export function LogoMark({ size = 30, className }: MarkProps) {
       aria-hidden="true"
       className={className}
     >
-      <circle
-        cx="49"
-        cy="49"
-        r="44"
-        stroke="var(--seismic-orange)"
-        strokeWidth="3"
-        opacity="0.45"
-      />
-      <circle
-        cx="49"
-        cy="49"
-        r="32"
-        stroke="var(--seismic-orange)"
-        strokeWidth="3"
-        opacity="0.65"
-      />
-      <circle
-        cx="49"
-        cy="49"
-        r="20"
-        stroke="var(--seismic-orange)"
-        strokeWidth="3"
-        opacity="0.85"
-      />
+      <circle cx="49" cy="49" r="44" stroke="var(--ink)" strokeWidth="4" opacity="0.22" />
+      <circle cx="49" cy="49" r="30" stroke="var(--ink)" strokeWidth="4" opacity="0.42" />
       <polyline
         points="8,49 24,49 30,32 38,66 46,20 54,78 62,49 90,49"
-        stroke="var(--text-primary)"
-        strokeWidth="4"
+        stroke="var(--ink)"
+        strokeWidth="6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="49" cy="49" r="6" fill="var(--seismic-orange)" />
+      <circle cx="49" cy="49" r="8" fill="var(--depth-shallow-fill)" />
     </svg>
   );
 }
@@ -80,9 +52,7 @@ export function Logo({ size = 30, markOnly, className }: LogoProps) {
     <span className={`inline-flex items-center gap-2.5 ${className ?? ""}`}>
       <LogoMark size={size} />
       {!markOnly && (
-        <span className="font-display font-bold tracking-tight text-text-primary">
-          GEMPA<span className="text-seismic-orange">WATCH</span>
-        </span>
+        <span className="font-extrabold tracking-tight text-ink">GempaWatch</span>
       )}
     </span>
   );

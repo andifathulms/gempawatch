@@ -44,20 +44,20 @@ const LAYERS: {
     key: "faults",
     label: "Sesar aktif",
     description: "Garis patahan darat yang dipetakan.",
-    swatch: "#E8743B",
+    swatch: "var(--ink)",
     dashed: true,
   },
   {
     key: "events",
     label: "Gempa terkini",
     description: "Kejadian 24 jam terakhir, warna = kedalaman.",
-    swatch: "#C0392B",
+    swatch: "var(--depth-shallow-fill)",
   },
   {
     key: "tsunami",
     label: "Zona tsunami historis",
     description: "Wilayah pesisir dengan riwayat gempa pemicu.",
-    swatch: "#D4A12B",
+    swatch: "var(--tier-mod-fill)",
   },
 ];
 
@@ -101,7 +101,7 @@ export function HazardMap({ faults, events, zones }: Props) {
         {active.faults && (
           <GeoJSON
             data={faults as never}
-            style={{ color: "#E8743B", weight: 2, dashArray: "6 4", opacity: 0.85 }}
+            style={{ color: "var(--ink)", weight: 1.5, dashArray: "6 4", opacity: 0.8 }}
             onEachFeature={(feature, layer) => {
               const name = (feature.properties as { name?: string })?.name;
               if (name) layer.bindTooltip(name, { sticky: true });
@@ -124,13 +124,13 @@ export function HazardMap({ faults, events, zones }: Props) {
             >
               <Popup>
                 <div className="min-w-[180px] space-y-1">
-                  <p className="font-mono text-fluid-00 font-bold text-text-primary">
+                  <p className="font-mono text-fluid-00 font-bold text-ink">
                     M{e.magnitude.toFixed(1)} · {e.depth_km.toFixed(0)} km
                   </p>
-                  <p className="text-fluid-000 text-text-secondary">
+                  <p className="text-fluid-000 text-ink-2">
                     {e.location_description}
                   </p>
-                  <p className="text-fluid-000 text-text-muted">
+                  <p className="text-fluid-000 text-ink-3">
                     <span aria-hidden="true">{timeAgo(e.event_time)}</span>
                     <span className="sr-only">{absolute(e.event_time)}</span>
                     {" · "}
@@ -160,15 +160,15 @@ export function HazardMap({ faults, events, zones }: Props) {
               </Tooltip>
               <Popup>
                 <div className="space-y-1">
-                  <p className="text-fluid-00 font-semibold text-text-primary">
+                  <p className="text-fluid-00 font-semibold text-ink">
                     {z.region_name}
                   </p>
-                  <p className="text-fluid-000 text-text-secondary">
+                  <p className="text-fluid-000 text-ink-2">
                     Risiko tsunami historis: {riskTierLabel(z.tsunami_risk_tier)}
                   </p>
                   <Link
                     href={`/region/${z.slug}`}
-                    className="text-fluid-000 text-seismic-bright underline underline-offset-2"
+                    className="text-fluid-000 text-ink underline underline-offset-2"
                   >
                     Lihat profil risiko →
                   </Link>
@@ -195,23 +195,23 @@ export function HazardMap({ faults, events, zones }: Props) {
         wrapping. An explicit width removes the ambiguity.
       */}
       <div className="pointer-events-none absolute right-3 top-3 z-[900] w-72 max-w-[calc(100vw-1.5rem)] sm:right-4 sm:top-4">
-        <div className="pointer-events-auto overflow-hidden rounded-xl border border-earth-border bg-earth-surface shadow-raised">
+        <div className="pointer-events-auto overflow-hidden rounded-xl border border-rule bg-surface shadow-raised">
           <button
             type="button"
             onClick={() => setPanelOpen((v) => !v)}
             aria-expanded={panelOpen}
             className="flex w-full items-center justify-between gap-3 px-3.5 py-2.5 text-left"
           >
-            <span className="font-display text-fluid-00 font-semibold text-text-primary">
+            <span className="font-display text-fluid-00 font-semibold text-ink">
               Lapisan peta
             </span>
-            <span aria-hidden="true" className="text-fluid-000 text-text-muted">
+            <span aria-hidden="true" className="text-fluid-000 text-ink-3">
               {panelOpen ? "▲" : "▼"}
             </span>
           </button>
 
           {panelOpen && (
-            <fieldset className="space-y-1.5 border-t border-earth-border px-3 pb-3 pt-2.5">
+            <fieldset className="space-y-1.5 border-t border-rule px-3 pb-3 pt-2.5">
               <legend className="sr-only">Lapisan peta</legend>
               {LAYERS.map((l) => {
                 const on = active[l.key];
@@ -223,8 +223,8 @@ export function HazardMap({ faults, events, zones }: Props) {
                     aria-pressed={on}
                     className={`flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors ${
                       on
-                        ? "border-seismic-orange/60 bg-seismic-orange/[0.07]"
-                        : "border-earth-border bg-earth-dark/40 hover:border-earth-border-strong"
+                        ? "border-ink/60 bg-ink/[0.07]"
+                        : "border-rule bg-paper/40 hover:border-rule-strong"
                     }`}
                   >
                     <span
@@ -237,14 +237,14 @@ export function HazardMap({ faults, events, zones }: Props) {
                     />
                     <span className="min-w-0">
                       <span
-                        className={`block text-fluid-000 font-medium ${on ? "text-text-primary" : "text-text-muted"}`}
+                        className={`block text-fluid-000 font-medium ${on ? "text-ink" : "text-ink-3"}`}
                       >
                         {l.label}
                       </span>
-                      <span className="mt-0.5 block text-fluid-000 leading-snug text-text-muted">
+                      <span className="mt-0.5 block text-fluid-000 leading-snug text-ink-3">
                         {l.description}
                       </span>
-                      <span className="mt-1 block font-mono text-fluid-000 tabular-nums text-text-muted">
+                      <span className="mt-1 block font-mono text-fluid-000 tabular-nums text-ink-3">
                         {num(counts[l.key])} objek
                       </span>
                     </span>
@@ -257,12 +257,12 @@ export function HazardMap({ faults, events, zones }: Props) {
       </div>
 
       <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[900] sm:inset-x-4 sm:bottom-4">
-        <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-earth-border bg-earth-surface px-3.5 py-2.5 text-fluid-000 text-text-muted shadow-raised">
+        <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-rule bg-surface px-3.5 py-2.5 text-fluid-000 text-ink-3 shadow-raised">
           <span className="flex items-center gap-2">
             <span aria-hidden="true" className="flex items-end gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-text-muted" />
-              <span className="h-2.5 w-2.5 rounded-full bg-text-muted" />
-              <span className="h-3.5 w-3.5 rounded-full bg-text-muted" />
+              <span className="h-1.5 w-1.5 rounded-full bg-ink-3" />
+              <span className="h-2.5 w-2.5 rounded-full bg-ink-3" />
+              <span className="h-3.5 w-3.5 rounded-full bg-ink-3" />
             </span>
             Ukuran = magnitudo
           </span>
@@ -273,7 +273,7 @@ export function HazardMap({ faults, events, zones }: Props) {
                 className="h-2.5 w-2.5 rounded-full"
                 style={{ backgroundColor: b.color }}
               />
-              <span className="text-text-secondary">{b.label}</span>
+              <span className="text-ink-2">{b.label}</span>
               <span className="font-mono text-fluid-000">{b.detail}</span>
             </span>
           ))}

@@ -139,15 +139,15 @@ export default async function AboutPage() {
           aria-label="Daftar isi"
           className="hidden lg:sticky lg:top-20 lg:block lg:self-start"
         >
-          <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-text-muted">
+          <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.14em] text-ink-3">
             Isi halaman
           </p>
-          <ul className="mt-3 space-y-1.5 border-l border-earth-border">
+          <ul className="mt-3 space-y-1.5 border-l border-rule">
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <a
                   href={`#${s.id}`}
-                  className="-ml-px block border-l border-transparent py-1 pl-3 text-fluid-00 text-text-secondary transition-colors hover:border-seismic-orange hover:text-text-primary"
+                  className="-ml-px block border-l border-transparent py-1 pl-3 text-fluid-00 text-ink-2 transition-colors hover:border-ink hover:text-ink"
                 >
                   {s.label}
                 </a>
@@ -158,10 +158,10 @@ export default async function AboutPage() {
 
         <div className="min-w-0 space-y-5">
           <Card id="bukan-peringatan" title="Bukan sistem peringatan dini">
-            <div className="rounded-lg border border-risk-amber/25 bg-risk-amber/[0.06] p-4">
-              <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            <div className="rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] p-4">
+              <p className="text-fluid-00 leading-relaxed text-ink-2">
                 GempaWatch menampilkan{" "}
-                <strong className="font-semibold text-text-primary">
+                <strong className="font-semibold text-ink">
                   pola historis dan konteks risiko
                 </strong>
                 , bukan prediksi. Kami tidak pernah, dan tidak akan, menyatakan
@@ -172,7 +172,7 @@ export default async function AboutPage() {
                   href="https://www.bmkg.go.id/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-seismic-bright underline underline-offset-2"
+                  className="font-medium text-ink underline underline-offset-2"
                 >
                   BMKG
                 </a>
@@ -182,9 +182,9 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="sumber-data" title="Sumber data">
-            <dl className="space-y-4 text-fluid-00 leading-relaxed text-text-secondary">
+            <dl className="space-y-4 text-fluid-00 leading-relaxed text-ink-2">
               <div>
-                <dt className="font-semibold text-text-primary">
+                <dt className="font-semibold text-ink">
                   BMKG — Badan Meteorologi, Klimatologi, dan Geofisika
                 </dt>
                 <dd className="mt-1">
@@ -196,7 +196,7 @@ export default async function AboutPage() {
                 </dd>
               </div>
               <div>
-                <dt className="font-semibold text-text-primary">
+                <dt className="font-semibold text-ink">
                   USGS — United States Geological Survey
                 </dt>
                 <dd className="mt-1">
@@ -206,13 +206,13 @@ export default async function AboutPage() {
                 </dd>
               </div>
               <div>
-                <dt className="font-semibold text-text-primary">
+                <dt className="font-semibold text-ink">
                   Ketika keduanya melaporkan gempa yang sama
                 </dt>
                 <dd className="mt-1">
                   Kejadian yang tercatat dalam selisih 5 menit dan 50 km dianggap
                   satu kejadian, dan catatan{" "}
-                  <strong className="text-text-primary">BMKG diprioritaskan</strong>{" "}
+                  <strong className="text-ink">BMKG diprioritaskan</strong>{" "}
                   karena lebih akurat secara lokal. Bacaan yang lebih baru dari 1
                   jam ditandai <em>awal</em>, karena BMKG masih dapat merevisi
                   magnitudo dan kedalamannya.
@@ -226,8 +226,8 @@ export default async function AboutPage() {
             title="Cara skor dihitung"
             subtitle="Satu angka 0–100, dari empat komponen berbobot tetap, dalam radius 100 km dari titik pusat wilayah."
           >
-            <p className="mb-4 rounded-lg border border-seismic-orange/25 bg-seismic-orange/[0.06] px-4 py-3 text-fluid-00 leading-relaxed text-text-secondary">
-              <strong className="font-semibold text-text-primary">
+            <p className="mb-4 rounded-lg border border-ink/25 bg-ink/[0.06] px-4 py-3 text-fluid-00 leading-relaxed text-ink-2">
+              <strong className="font-semibold text-ink">
                 Sebelum angkanya:
               </strong>{" "}
               skor ini kami susun sendiri. Kejadian gempanya resmi dari BMKG dan
@@ -242,29 +242,29 @@ export default async function AboutPage() {
               {WEIGHTS.map((w) => (
                 <li key={w.label}>
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="text-fluid-00 font-medium text-text-primary">
+                    <span className="text-fluid-00 font-medium text-ink">
                       {w.label}
                     </span>
-                    <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-text-muted">
+                    <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-ink-3">
                       maks {w.max}
                     </span>
                   </div>
-                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-earth-border">
+                  <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-rule">
                     <div
-                      className="h-full origin-left animate-draw-in rounded-full bg-seismic-orange/80"
+                      className="h-full origin-left animate-draw-in rounded-full bg-ink/80"
                       style={{ width: `${w.max}%` }}
                     />
                   </div>
-                  <p className="mt-1 text-fluid-000 text-text-muted">{w.note}</p>
+                  <p className="mt-1 text-fluid-000 text-ink-3">{w.note}</p>
                 </li>
               ))}
             </ul>
             {labSeed && (
-              <div className="mt-5 border-t border-earth-border pt-5">
-                <h3 className="font-display text-fluid-1 font-semibold tracking-tight text-text-primary">
+              <div className="mt-5 border-t border-rule pt-5">
+                <h3 className="font-display text-fluid-1 font-semibold tracking-tight text-ink">
                   Contoh lengkap, dengan angka sungguhan
                 </h3>
-                <p className="mt-1 text-fluid-00 leading-relaxed text-text-secondary">
+                <p className="mt-1 text-fluid-00 leading-relaxed text-ink-2">
                   Aturan di atas baru berarti kalau dijalankan sampai selesai.
                   Berikut satu wilayah nyata, dari data mentah hingga skor —
                   dan bisa kamu ubah sendiri.
@@ -275,10 +275,10 @@ export default async function AboutPage() {
               </div>
             )}
 
-            <p className="mt-4 border-t border-earth-border pt-3.5 text-fluid-00 leading-relaxed text-text-secondary">
-              <strong className="font-semibold text-text-primary">Persentil</strong>{" "}
+            <p className="mt-4 border-t border-rule pt-3.5 text-fluid-00 leading-relaxed text-ink-2">
+              <strong className="font-semibold text-ink">Persentil</strong>{" "}
               memeringkat skor itu terhadap wilayah lain yang{" "}
-              <strong className="font-semibold text-text-primary">
+              <strong className="font-semibold text-ink">
                 sudah kami skor
               </strong>
               , bukan terhadap seluruh Indonesia — jumlahnya masih puluhan, dan
@@ -290,30 +290,30 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="tsunami" title="Tingkat risiko tsunami">
-            <p className="text-fluid-00 leading-relaxed text-text-secondary">
+            <p className="text-fluid-00 leading-relaxed text-ink-2">
               Indikator pola historis, bukan peringatan resmi. Kriterianya: wilayah
               pesisir dengan gempa dangkal (&lt;70 km) bermagnitudo ≥6.5 dalam radius
               150 km.
             </p>
             <ul className="mt-3 space-y-2 text-fluid-00">
               <li className="flex items-baseline gap-2.5">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-risk-red-fill" />
-                <span className="text-text-secondary">
-                  <strong className="text-risk-red">Tinggi</strong> — 3 kejadian atau
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-tier-high-fill" />
+                <span className="text-ink-2">
+                  <strong className="text-tier-high">Tinggi</strong> — 3 kejadian atau
                   lebih memenuhi kriteria.
                 </span>
               </li>
               <li className="flex items-baseline gap-2.5">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-risk-amber-fill" />
-                <span className="text-text-secondary">
-                  <strong className="text-risk-amber">Sedang</strong> — 1 sampai 2
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-tier-mod-fill" />
+                <span className="text-ink-2">
+                  <strong className="text-tier-mod">Sedang</strong> — 1 sampai 2
                   kejadian.
                 </span>
               </li>
               <li className="flex items-baseline gap-2.5">
-                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-risk-green-fill" />
-                <span className="text-text-secondary">
-                  <strong className="text-risk-green">Rendah</strong> — pesisir, tanpa
+                <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-tier-low-fill" />
+                <span className="text-ink-2">
+                  <strong className="text-tier-low">Rendah</strong> — pesisir, tanpa
                   kejadian yang memenuhi kriteria.
                 </span>
               </li>
@@ -321,9 +321,9 @@ export default async function AboutPage() {
           </Card>
 
           <Card id="keterbatasan" title="Keterbatasan yang kami akui">
-            <ul className="space-y-3 text-fluid-00 leading-relaxed text-text-secondary">
+            <ul className="space-y-3 text-fluid-00 leading-relaxed text-ink-2">
               <li>
-                <strong className="text-text-primary">
+                <strong className="text-ink">
                   Tidak dinormalisasi terhadap luas atau populasi.
                 </strong>{" "}
                 Jumlah kejadian dihitung dalam radius tetap, sehingga dua wilayah
@@ -331,14 +331,14 @@ export default async function AboutPage() {
                 untuk perbandingan relatif.
               </li>
               <li>
-                <strong className="text-text-primary">
+                <strong className="text-ink">
                   Status &ldquo;pesisir&rdquo; adalah penyederhanaan.
                 </strong>{" "}
                 Kami memakainya sebagai pendekatan untuk episentrum lepas pantai,
                 bukan penentuan geospasial garis pantai yang presisi.
               </li>
               <li>
-                <strong className="text-text-primary">
+                <strong className="text-ink">
                   Catatan historis tidak merata.
                 </strong>{" "}
                 Kepadatan instrumen seismik meningkat pesat sejak 1970-an, sehingga
@@ -346,7 +346,7 @@ export default async function AboutPage() {
                 berarti dulu lebih tenang.
               </li>
               <li>
-                <strong className="text-text-primary">
+                <strong className="text-ink">
                   Riwayat bukan jaminan masa depan.
                 </strong>{" "}
                 Wilayah berskor rendah tetap bisa mengalami gempa besar. Skor rendah

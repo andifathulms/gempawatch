@@ -46,14 +46,14 @@ export function PreparednessChecklist({ tier, coastal = false }: Props) {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-fluid-00 font-semibold text-text-primary">Siap Gempa</h3>
-        <span className="font-mono text-fluid-000 text-text-muted">
+        <h3 className="text-fluid-00 font-semibold text-ink">Siap Gempa</h3>
+        <span className="font-mono text-fluid-000 text-ink-3">
           {done}/{steps.length}
         </span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-earth-border">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-rule">
         <div
-          className="h-full bg-risk-green transition-all"
+          className="h-full bg-tier-low transition-all"
           style={{ width: `${(done / steps.length) * 100}%` }}
         />
       </div>
@@ -65,16 +65,16 @@ export function PreparednessChecklist({ tier, coastal = false }: Props) {
                 type="checkbox"
                 checked={checked[i]}
                 onChange={() => toggle(i)}
-                className="mt-0.5 h-4 w-4 shrink-0 accent-risk-green"
+                className="mt-0.5 h-4 w-4 shrink-0 accent-tier-low"
               />
-              <span className={checked[i] ? "text-text-muted line-through" : "text-text-secondary"}>
+              <span className={checked[i] ? "text-ink-3 line-through" : "text-ink-2"}>
                 {step}
               </span>
             </label>
           </li>
         ))}
       </ul>
-      <p className="text-fluid-000 text-text-muted">
+      <p className="text-fluid-000 text-ink-3">
         Checklist edukatif umum. Untuk panduan resmi, rujuk BNPB & BMKG.
       </p>
     </div>

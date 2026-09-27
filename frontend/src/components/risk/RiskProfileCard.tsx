@@ -22,7 +22,7 @@ export function RiskProfileCard({ profile }: { profile: RegionRiskProfile }) {
 
   return (
     <Card title="Ringkasan risiko">
-      <div className="flex justify-center border-b border-earth-border pb-5">
+      <div className="flex justify-center border-b border-rule pb-5">
         <RiskScoreGauge
           score={p.composite_score}
           tier={p.activity_tier}
@@ -31,14 +31,14 @@ export function RiskProfileCard({ profile }: { profile: RegionRiskProfile }) {
         />
       </div>
 
-      <p className="py-4 text-fluid-00 leading-relaxed text-text-secondary">
+      <p className="py-4 text-fluid-00 leading-relaxed text-ink-2">
         {activityTierMeaning(p.activity_tier)}
       </p>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <RiskTierBadge tier={p.tsunami_risk_tier} label="Risiko tsunami" />
         {p.region.is_coastal && (
-          <span className="rounded-full border border-earth-border px-2.5 py-1 text-fluid-000 text-text-muted">
+          <span className="rounded-full border border-rule px-2.5 py-1 text-fluid-000 text-ink-3">
             Wilayah pesisir
           </span>
         )}
@@ -70,7 +70,7 @@ export function RiskProfileCard({ profile }: { profile: RegionRiskProfile }) {
         unit={p.nearest_fault_distance_km != null ? "km" : undefined}
       />
 
-      <p className="mt-4 border-t border-earth-border pt-3.5 text-fluid-000 leading-relaxed text-text-muted">
+      <p className="mt-4 border-t border-rule pt-3.5 text-fluid-000 leading-relaxed text-ink-3">
         Data historis {coverage}. Jumlah kejadian dihitung dalam radius tetap 100 km
         dan <em>tidak</em> dinormalisasi terhadap luas wilayah maupun populasi —
         gunakan persentil untuk perbandingan relatif. Indikator pola historis, bukan
