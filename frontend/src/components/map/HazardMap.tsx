@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
   CircleMarker,
@@ -9,20 +9,32 @@ import {
   Popup,
     Tooltip,
 } from "react-leaflet";
-import type { GeoFeatureCollection, EarthquakeEvent, TsunamiZone } from "@/lib/types";
+import type { GeoFeatureCollection, EarthquakeEvent, RiskTier, TsunamiZone } from "@/lib/types";
 import { prefersReducedMotion } from "@/lib/motion";
 import { BaseMap, INDONESIA_BOUNDS } from "@/components/map/BaseMap";
 import { DEPTH_BANDS, depthColor, riskTierColor, riskTierLabel } from "@/lib/seismic";
 import { absolute, num, timeAgo } from "@/lib/format";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { QuakeHistoryLayer } from "./QuakeHistoryLayer";
+import { countThrough, loadQuakes, type QuakeField } from "@/lib/quakes";
+
+export interface RegionScorePoint {
+  slug: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  score: number;
+  tier: RiskTier;
+}
 
 interface Props {
   faults: GeoFeatureCollection;
   events: EarthquakeEvent[];
   zones: TsunamiZone[];
+  regions?: RegionScorePoint[];
 }
 
-type LayerKey = "faults" | "events" | "tsunami";
+type LayerKey = "history" | "faults" | "events" | "tsunami" | "scores";
 
 /**
  * Full Indonesia hazard explorer.
@@ -41,6 +53,18 @@ const LAYERS: {
   dashed?: boolean;
 }[] = [
   {
+    key: "history",
+    label: "Rekaman 1970–kini",
+    description: "Semua gempa M4.5+, warna = kedalaman. Putar per tahun di bawah.",
+    swatch: "var(--depth-mid-fill)",
+  },
+  {
+    key: "events",
+    label: "Gempa terkini",
+    description: "Kejadian 24 jam terakhir, warna = kedalaman.",
+    swatch: "var(--depth-shallow-fill)",
+  },
+  {
     key: "faults",
     label: "Sesar aktif",
     description: "Garis patahan darat yang dipetakan.",
@@ -48,10 +72,10 @@ const LAYERS: {
     dashed: true,
   },
   {
-    key: "events",
-    label: "Gempa terkini",
-    description: "Kejadian 24 jam terakhir, warna = kedalaman.",
-    swatch: "var(--depth-shallow-fill)",
+    key: "scores",
+    label: "Skor per wilayah",
+    description: "Wilayah terskor, warna = tingkat aktivitas.",
+    swatch: "var(--tier-high-fill)",
   },
   {
     key: "tsunami",
@@ -61,15 +85,61 @@ const LAYERS: {
   },
 ];
 
-export function HazardMap({ faults, events, zones }: Props) {
+const FIRST_YEAR = 1970;
+
+export function HazardMap({ faults, events, zones, regions = [] }: Props) {
   const [active, setActive] = useState<Record<LayerKey, boolean>>({
+    history: true,
     faults: true,
     events: true,
     tsunami: false,
+    scores: false,
   });
-  const [panelOpen, setPanelOpen] = useState(true);
+  const [field, setField] = useState<QuakeField | null>(null);
+  const lastYear = useMemo(() => {
+    if (!field) return new Date().getFullYear();
+    let max = FIRST_YEAR;
+    for (let i = 0; i < field.count; i++) if (field.year[i] > max) max = field.year[i];
+    return max;
+  }, [field]);
+  const [year, setYear] = useState<number | null>(null);
+  const shownYear = year ?? lastYear;
+  const recorded = useMemo(() => (field ? countThrough(field, year ?? lastYear) : 0), [field, year, lastYear]);
+  const [playing, setPlaying] = useState(false);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    loadQuakes().then(setField);
+  }, []);
+
+  // Replay: one year per ~120 ms, 1970 → now. Reduced motion jumps to the end.
+  useEffect(() => {
+    if (!playing) return;
+    if (prefersReducedMotion()) {
+      setYear(null);
+      setPlaying(false);
+      return;
+    }
+    timer.current = setInterval(() => {
+      setYear((y) => {
+        const next = (y ?? FIRST_YEAR - 1) + 1;
+        if (next >= lastYear) {
+          setPlaying(false);
+          return null;
+        }
+        return next;
+      });
+    }, 120);
+    return () => {
+      if (timer.current) clearInterval(timer.current);
+    };
+  }, [playing, lastYear]);
+  // Open on wide screens; on a phone the panel would cover most of the map.
+  const [panelOpen, setPanelOpen] = useState(() => window.innerWidth >= 640);
 
   const counts: Record<LayerKey, number> = {
+    history: field?.count ?? 0,
+    scores: regions.length,
     faults: faults.features.length,
     events: events.length,
     tsunami: zones.length,
@@ -88,7 +158,8 @@ export function HazardMap({ faults, events, zones }: Props) {
         markerZoomAnimation={!reduceMotion}
         fadeAnimation={!reduceMotion}
         center={[-2.5, 118]}
-        zoom={5}
+        // A phone at zoom 5 shows about a third of the archipelago.
+        zoom={window.innerWidth < 640 ? 4 : 5}
         style={{ height: "100%", width: "100%" }}
         scrollWheelZoom
         minZoom={4}
@@ -97,6 +168,40 @@ export function HazardMap({ faults, events, zones }: Props) {
         maxBoundsViscosity={0.8}
       >
         <BaseMap />
+
+        {active.history && field && (
+          <QuakeHistoryLayer field={field} yearTo={shownYear} highlightYear={year ?? undefined} />
+        )}
+
+        {active.scores &&
+          regions.map((r) => (
+            <CircleMarker
+              key={r.slug}
+              center={[r.latitude, r.longitude]}
+              radius={5 + r.score / 12}
+              pathOptions={{
+                color: "var(--paper)",
+                weight: 1.5,
+                fillColor: riskTierColor(r.tier),
+                fillOpacity: 0.9,
+              }}
+            >
+              <Tooltip>
+                {r.name} — skor {Math.round(r.score)} ({riskTierLabel(r.tier)})
+              </Tooltip>
+              <Popup>
+                <div className="space-y-1">
+                  <p className="text-fluid-00 font-bold text-ink">{r.name}</p>
+                  <p className="text-fluid-000 text-ink-2">
+                    Skor aktivitas {Math.round(r.score)}/100 · {riskTierLabel(r.tier)}
+                  </p>
+                  <Link href={`/region/${r.slug}`} className="text-fluid-000 font-semibold text-ink underline underline-offset-2">
+                    Lihat profil risiko →
+                  </Link>
+                </div>
+              </Popup>
+            </CircleMarker>
+          ))}
 
         {active.faults && (
           <GeoJSON
@@ -195,7 +300,7 @@ export function HazardMap({ faults, events, zones }: Props) {
         wrapping. An explicit width removes the ambiguity.
       */}
       <div className="pointer-events-none absolute right-3 top-3 z-[900] w-72 max-w-[calc(100vw-1.5rem)] sm:right-4 sm:top-4">
-        <div className="pointer-events-auto overflow-hidden rounded-xl border border-rule bg-surface shadow-raised">
+        <div className="pointer-events-auto overflow-hidden rounded-xl border border-rule bg-surface shadow-md">
           <button
             type="button"
             onClick={() => setPanelOpen((v) => !v)}
@@ -222,9 +327,7 @@ export function HazardMap({ faults, events, zones }: Props) {
                     onClick={() => toggle(l.key)}
                     aria-pressed={on}
                     className={`flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors ${
-                      on
-                        ? "border-ink/60 bg-ink/[0.07]"
-                        : "border-rule bg-paper/40 hover:border-rule-strong"
+                      on ? "border-ink bg-surface" : "border-rule bg-paper hover:border-rule-strong"
                     }`}
                   >
                     <span
@@ -256,8 +359,55 @@ export function HazardMap({ faults, events, zones }: Props) {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[900] sm:inset-x-4 sm:bottom-4">
-        <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-rule bg-surface px-3.5 py-2.5 text-fluid-000 text-ink-3 shadow-raised">
+      <div className="pointer-events-none absolute inset-x-3 bottom-3 z-[900] space-y-2 sm:inset-x-4 sm:bottom-4">
+        {active.history && field && (
+          <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-rule bg-surface px-3.5 py-2.5 shadow-md">
+            <button
+              type="button"
+              onClick={() => {
+                if (!playing) setYear(FIRST_YEAR);
+                setPlaying((p) => !p);
+              }}
+              aria-label={playing ? "Jeda pemutaran" : "Putar rekaman dari 1970"}
+              className="inline-flex min-h-tap-comfortable min-w-tap-comfortable items-center justify-center rounded-lg bg-ink text-on-ink hover:bg-ink/85"
+            >
+              {playing ? (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <rect x="2" y="1.5" width="3.5" height="11" fill="currentColor" />
+                  <rect x="8.5" y="1.5" width="3.5" height="11" fill="currentColor" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                  <path d="M3 1.5v11l9-5.5z" fill="currentColor" />
+                </svg>
+              )}
+            </button>
+            <output htmlFor="year-scrub" className="w-[4ch] font-mono text-fluid-2 font-medium tabular-nums text-ink">
+              {shownYear}
+            </output>
+            <label className="min-w-[10rem] flex-1">
+              <span className="sr-only">Tampilkan gempa hingga tahun</span>
+              <input
+                id="year-scrub"
+                type="range"
+                min={FIRST_YEAR}
+                max={lastYear}
+                value={shownYear}
+                onChange={(e) => {
+                  setPlaying(false);
+                  const v = Number(e.target.value);
+                  setYear(v >= lastYear ? null : v);
+                }}
+                className="w-full accent-[rgb(var(--ink-c))]"
+              />
+            </label>
+            <span className="text-fluid-00 text-ink-2">
+              <b className="font-bold text-ink tabular-nums">{num(recorded)}</b> gempa M4.5+ hingga {shownYear}
+              {year != null && " · lingkaran = gempa M5+ tahun itu"}
+            </span>
+          </div>
+        )}
+        <div className="pointer-events-auto flex flex-wrap items-center gap-x-4 gap-y-1.5 rounded-xl border border-rule bg-surface px-3.5 py-2.5 text-fluid-000 text-ink-3 shadow-md">
           <span className="flex items-center gap-2">
             <span aria-hidden="true" className="flex items-end gap-1">
               <span className="h-1.5 w-1.5 rounded-full bg-ink-3" />

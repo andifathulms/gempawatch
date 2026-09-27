@@ -15,8 +15,8 @@ interface Props {
 }
 
 const DOMAIN_START = new Date("1970-01-01T00:00:00Z");
-const VB_W = 600;
-const VB_H = 56;
+const VB_W = 1000;
+const VB_H = 80;
 const MARGIN = { top: 6, right: 4, bottom: 6, left: 4 };
 const PLOT_W = VB_W - MARGIN.left - MARGIN.right;
 const PLOT_H = VB_H - MARGIN.top - MARGIN.bottom;
@@ -70,14 +70,23 @@ export function DisasterSeismogramFragment({
   return (
     <figure className="m-0">
       <figcaption className="sr-only">{caption}</figcaption>
-      <svg viewBox={`0 0 ${VB_W} ${VB_H}`} className="h-10 w-full sm:h-12" aria-hidden="true">
+      {/* Stretched to the row's width (preserveAspectRatio="none") with
+          non-scaling strokes: the old fixed-ratio version shrank to hairlines
+          in narrow columns. There is no text inside to distort. */}
+      <svg
+        viewBox={`0 0 ${VB_W} ${VB_H}`}
+        preserveAspectRatio="none"
+        className="h-16 w-full sm:h-20"
+        aria-hidden="true"
+      >
         <line
           x1={MARGIN.left}
           x2={VB_W - MARGIN.right}
           y1={BASELINE_Y}
           y2={BASELINE_Y}
-          stroke="var(--rule)"
+          stroke="var(--rule-strong)"
           strokeWidth={1}
+          vectorEffect="non-scaling-stroke"
         />
         {reduced.map((e, i) => {
           const isHighlight = e === highlight;
@@ -91,8 +100,9 @@ export function DisasterSeismogramFragment({
               y1={BASELINE_Y}
               y2={yTopOf(e.magnitude)}
               stroke={depthColor(e.depth_km)}
-              strokeWidth={1}
-              strokeOpacity={0.4}
+              strokeWidth={1.5}
+              strokeOpacity={0.75}
+              vectorEffect="non-scaling-stroke"
             />
           );
         })}
@@ -104,13 +114,8 @@ export function DisasterSeismogramFragment({
               y1={BASELINE_Y}
               y2={yTopOf(highlight.magnitude)}
               stroke="var(--ink)"
-              strokeWidth={2}
-            />
-            <circle
-              cx={xOf(highlight.event_time)}
-              cy={yTopOf(highlight.magnitude)}
-              r={2.5}
-              fill="var(--ink)"
+              strokeWidth={3}
+              vectorEffect="non-scaling-stroke"
             />
           </g>
         )}

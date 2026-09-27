@@ -3,7 +3,8 @@ import { pageMetadata } from "@/lib/meta";
 import type { HistoricalDisaster } from "@/lib/types";
 import { DisasterTimeline, type DisasterFragment } from "@/components/timeline/DisasterTimeline";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { StatTile } from "@/components/ui/Stat";
+import { FactRow } from "@/components/risk/VerdictBand";
+import { NationalTrace } from "@/components/timeline/NationalTrace";
 import { ButtonLink } from "@/components/ui/Button";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { magnitude, num } from "@/lib/format";
@@ -15,6 +16,15 @@ export const metadata = pageMetadata({
   description: "Arsip gempa dan tsunami besar Indonesia: Aceh 2004, Yogyakarta 2006, Palu 2018, dan lainnya.",
   path: "/timeline",
 });
+
+/** "Gempa, Tsunami & Likuefaksi Palu" → "Palu", for the trace's flags. */
+function shortName(name: string): string {
+  return name
+    .replace(/^Gempa(,? (dan|&) Tsunami| & Tsunami|, Tsunami & Likuefaksi)?\s*/i, "")
+    .replace(/\s*\(.*\)$/, "")
+    .split(/[/–-]/)[0]
+    .trim();
+}
 
 export default async function TimelinePage() {
   let disasters: HistoricalDisaster[] = [];
@@ -64,7 +74,7 @@ export default async function TimelinePage() {
     years.length > 0 ? `${Math.min(...years)}–${Math.max(...years)}` : "—";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
       <PageHeader
         eyebrow="Memori bencana"
         title="Yang sudah terjadi, dan apa yang kita pelajari"
@@ -77,20 +87,30 @@ export default async function TimelinePage() {
       />
 
       {disasters.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-          <StatTile label="Kejadian terdokumentasi" value={num(disasters.length)} />
-          <StatTile label="Rentang tahun" value={span} />
-          <StatTile label="Magnitudo terbesar" value={magnitude(largest)} tone="accent" />
-          {/* Default tone, not `danger`. Red is the site's high-risk signal;
-              a memorial figure is not a risk indicator, and the PRD asks for
-              calm authority rather than a doom-scrolling disaster app. The
-              number is grave enough without being coloured like an alert. */}
-          <StatTile
-            label="Total korban jiwa tercatat"
-            value={num(casualties)}
-            hint="Penjumlahan angka korban dari kejadian yang terdokumentasi di arsip ini — bukan total nasional."
+        <>
+          <section aria-labelledby="rekaman-nasional" className="space-y-4">
+            <h2 id="rekaman-nasional" className="text-fluid-3 font-extrabold tracking-tight">
+              Rekaman nasional
+            </h2>
+            <NationalTrace
+              flags={disasters.map((d) => ({ id: d.id, label: shortName(d.name), date: d.event_date }))}
+            />
+          </section>
+
+          {/* Plain figures, no tier colour: a death toll is a memorial, not a
+              risk indicator, and red belongs to the risk tier (DESIGN.md §3.3). */}
+          <FactRow
+            facts={[
+              { value: num(disasters.length), label: "kejadian terdokumentasi" },
+              { value: span, label: "rentang tahun" },
+              { value: magnitude(largest), label: "magnitudo terbesar" },
+              {
+                value: num(casualties),
+                label: "korban jiwa tercatat — jumlah dari arsip ini, bukan total nasional",
+              },
+            ]}
           />
-        </div>
+        </>
       )}
 
       <DisasterTimeline disasters={disasters} fragments={fragments} />
