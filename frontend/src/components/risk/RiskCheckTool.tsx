@@ -14,6 +14,7 @@ import { RiskReportView } from "./RiskReportView";
 import { DEPTH_BANDS, riskTierLabel } from "@/lib/seismic";
 import { num } from "@/lib/format";
 import type { Bbox } from "@/lib/quakes";
+import { prefersReducedMotion } from "@/lib/motion";
 
 const PickerMap = dynamic(() => import("./PickerMap").then((m) => m.PickerMap), {
   ssr: false,
@@ -69,11 +70,17 @@ export function RiskCheckTool() {
       setError("Gagal menghitung risiko untuk titik ini. Coba lagi.");
     } finally {
       setLoading(false);
-      // The result renders below the stage, out of view on a phone. Focusing
-      // it moves keyboard users to the answer and scrolls it into view (the
-      // browser's own scroll, which respects reduced motion). tabIndex={-1}
-      // lets it take focus without joining the tab order.
-      requestAnimationFrame(() => resultRef.current?.focus());
+      // The result renders below the stage, out of view on a phone. Focus
+      // moves keyboard users to the answer (tabIndex={-1} keeps it out of the
+      // tab order), but focus() alone doesn't align a tall element's top — on
+      // a phone it landed mid-report — so the scroll is explicit, to the
+      // verdict, smooth unless the reader asked for reduced motion.
+      requestAnimationFrame(() => {
+        const el = resultRef.current;
+        if (!el) return;
+        el.focus({ preventScroll: true });
+        el.scrollIntoView({ block: "start", behavior: prefersReducedMotion() ? "auto" : "smooth" });
+      });
     }
   }, []);
 
