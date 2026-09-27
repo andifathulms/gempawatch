@@ -16,6 +16,7 @@ import { DEPTH_BANDS, depthColor, riskTierColor, riskTierLabel } from "@/lib/sei
 import { absolute, num, timeAgo } from "@/lib/format";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { QuakeHistoryLayer } from "./QuakeHistoryLayer";
+import { RegionShadingLayer } from "./RegionShadingLayer";
 import { countThrough, loadQuakes, type QuakeField } from "@/lib/quakes";
 
 export interface RegionScorePoint {
@@ -74,7 +75,7 @@ const LAYERS: {
   {
     key: "scores",
     label: "Skor per wilayah",
-    description: "Wilayah terskor, warna = tingkat aktivitas.",
+    description: "Kabupaten/kota terskor diarsir menurut tingkat aktivitas; makin pekat, makin tinggi skornya.",
     swatch: "var(--tier-high-fill)",
   },
   {
@@ -173,35 +174,7 @@ export function HazardMap({ faults, events, zones, regions = [] }: Props) {
           <QuakeHistoryLayer field={field} yearTo={shownYear} highlightYear={year ?? undefined} />
         )}
 
-        {active.scores &&
-          regions.map((r) => (
-            <CircleMarker
-              key={r.slug}
-              center={[r.latitude, r.longitude]}
-              radius={5 + r.score / 12}
-              pathOptions={{
-                color: "var(--paper)",
-                weight: 1.5,
-                fillColor: riskTierColor(r.tier),
-                fillOpacity: 0.9,
-              }}
-            >
-              <Tooltip>
-                {r.name} — skor {Math.round(r.score)} ({riskTierLabel(r.tier)})
-              </Tooltip>
-              <Popup>
-                <div className="space-y-1">
-                  <p className="text-fluid-00 font-bold text-ink">{r.name}</p>
-                  <p className="text-fluid-000 text-ink-2">
-                    Skor aktivitas {Math.round(r.score)}/100 · {riskTierLabel(r.tier)}
-                  </p>
-                  <Link href={`/region/${r.slug}`} className="text-fluid-000 font-semibold text-ink underline underline-offset-2">
-                    Lihat profil risiko →
-                  </Link>
-                </div>
-              </Popup>
-            </CircleMarker>
-          ))}
+        {active.scores && <RegionShadingLayer regions={regions} />}
 
         {active.faults && (
           <GeoJSON

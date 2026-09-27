@@ -217,6 +217,27 @@ export default async function AboutPage() {
                   magnitudo dan kedalamannya.
                 </dd>
               </div>
+              <div>
+                <dt className="font-semibold text-ink">Peta dasar &amp; batas wilayah</dt>
+                <dd className="mt-1">
+                  Peta dasar dari data{" "}
+                  <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                    OpenStreetMap
+                  </a>{" "}
+                  (ODbL) melalui{" "}
+                  <a href="https://protomaps.com/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                    Protomaps
+                  </a>
+                  , disajikan dari situs ini sendiri. Batas kabupaten/kota untuk arsiran skor di peta bahaya
+                  berasal dari{" "}
+                  <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">
+                    geoBoundaries
+                  </a>{" "}
+                  (data BPS melalui WFP dan OCHA ROAP, 2020), lisensi CC BY 3.0 IGO, disederhanakan untuk
+                  tampilan. Arsiran menunjukkan skor aktivitas wilayah itu — dihitung dalam radius 100 km dari
+                  pusatnya — bukan tingkat bahaya di setiap titik di dalam batasnya.
+                </dd>
+              </div>
             </dl>
           </Card>
 
