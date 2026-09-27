@@ -186,3 +186,16 @@ h4 {
   background-size: 28px 28px;
   background-position: -1px -1px;
 }
+
+/* Quake detail on the /map history layer (QuakeHistoryLayer). */
+.gw-quake-tip {
+  font-size: var(--step-00);
+  line-height: 1.45;
+}
+.gw-quake-tip strong {
+  font-weight: 800;
+}
+.gw-quake-tip-src {
+  color: var(--ink-3);
+  font-size: var(--step-000);
+}

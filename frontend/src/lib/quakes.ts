@@ -19,6 +19,8 @@ export interface QuakeField {
   mag: Float32Array;
   /** 0 shallow, 1 intermediate, 2 deep — the same thresholds as depthBand(). */
   band: Uint8Array;
+  /** Depth in km, packed to 3 km steps (so within ~3 km of the catalogue). */
+  depthKm: Uint16Array;
   year: Uint16Array;
 }
 
@@ -45,6 +47,7 @@ export function decode(bytes: Uint8Array): QuakeField {
     lat: new Float32Array(count),
     mag: new Float32Array(count),
     band: new Uint8Array(count),
+    depthKm: new Uint16Array(count),
     year: new Uint16Array(count),
   };
   for (let i = 0; i < count; i++) {
@@ -52,7 +55,8 @@ export function decode(bytes: Uint8Array): QuakeField {
     f.lon[i] = (bytes[o] | (bytes[o + 1] << 8)) / 20 + 94;
     f.lat[i] = bytes[o + 2] / 10 - 12;
     f.mag[i] = bytes[o + 3] / 10;
-    f.band[i] = BANDS.indexOf(depthBand(bytes[o + 4] * 3));
+    f.depthKm[i] = bytes[o + 4] * 3;
+    f.band[i] = BANDS.indexOf(depthBand(f.depthKm[i]));
     f.year[i] = bytes[o + 5] + 1960;
   }
   return f;
