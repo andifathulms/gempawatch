@@ -29,6 +29,12 @@ interface Props {
   height?: number | string;
   /** Initial zoom — wider when nothing has been picked yet. */
   zoom?: number;
+  /**
+   * Fly to the pin when it moves from outside (GPS, a shortcut). Off in the
+   * phone sheet, where the pin only moves where the reader just tapped and a
+   * zoom-in on every tap would fight their panning.
+   */
+  follow?: boolean;
 }
 
 function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }) {
@@ -62,7 +68,7 @@ function FollowPin({ position }: { position: [number, number] }) {
   return null;
 }
 
-export function PickerMap({ position, onPick, height = 440, zoom = 5 }: Props) {
+export function PickerMap({ position, onPick, height = 440, zoom = 5, follow = true }: Props) {
   const reduceMotion = prefersReducedMotion();
 
   return (
@@ -83,7 +89,7 @@ export function PickerMap({ position, onPick, height = 440, zoom = 5 }: Props) {
     >
         <BaseMap />
       <ClickHandler onPick={onPick} />
-      <FollowPin position={position} />
+      {follow && <FollowPin position={position} />}
       <Marker
         position={position}
         icon={PIN}

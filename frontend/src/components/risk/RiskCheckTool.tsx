@@ -11,6 +11,7 @@ import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { RegionSearch } from "@/components/discover/RegionSearch";
 import { QuakeFieldCanvas } from "@/components/map/QuakeFieldCanvas";
 import { RiskReportView } from "./RiskReportView";
+import { MapPickerSheet } from "./MapPickerSheet";
 import { DEPTH_BANDS, riskTierLabel } from "@/lib/seismic";
 import { num } from "@/lib/format";
 import type { Bbox } from "@/lib/quakes";
@@ -59,6 +60,8 @@ export function RiskCheckTool() {
   const [error, setError] = useState<string | null>(null);
   const [mode, setMode] = useState<"field" | "map">("field");
   const [count, setCount] = useState<number | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const closeSheet = useCallback(() => setSheetOpen(false), []);
   const resultRef = useRef<HTMLDivElement>(null);
 
   const runCheck = useCallback(async (lat: number, lng: number) => {
@@ -190,7 +193,12 @@ export function RiskCheckTool() {
             </Button>
             <Button
               variant="secondary"
-              onClick={() => setMode((m) => (m === "map" ? "field" : "map"))}
+              onClick={() => {
+                // Below the desktop layout the stage is too small to pick in
+                // comfortably; open the full-screen sheet instead.
+                if (window.matchMedia("(max-width: 1023px)").matches) setSheetOpen(true);
+                else setMode((m) => (m === "map" ? "field" : "map"));
+              }}
               aria-pressed={mode === "map"}
             >
               {mode === "map" ? "Tutup peta" : "Pilih di peta"}
@@ -238,6 +246,18 @@ export function RiskCheckTool() {
           <SourceAttribution variant="inline" />
         </div>
       </section>
+
+      {sheetOpen && (
+        <MapPickerSheet
+          initial={position ?? DEFAULT}
+          zoom={position ? 9 : 5}
+          onClose={closeSheet}
+          onConfirm={(lat, lng) => {
+            setSheetOpen(false);
+            handlePick(lat, lng);
+          }}
+        />
+      )}
 
       {/* Announcements for assistive tech — loading, failure and the finished
           report all swap in visually without any other signal (WCAG 4.1.3). */}
