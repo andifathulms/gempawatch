@@ -117,5 +117,5 @@ export function RiskQueryResult() {
     );
   }
 
-  return <RiskReportView report={state.report} lat={state.lat} lng={state.lng} />;
+  return <RiskReportView report={state.report} lat={state.lat} lng={state.lng} headingLevel={1} />;
 }

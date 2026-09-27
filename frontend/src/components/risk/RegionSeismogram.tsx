@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { ChartFigure } from "./ChartFigure";
 import { AXIS, GRID } from "./chartTheme";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -32,6 +35,12 @@ interface Props {
   /** Right edge of the trace. Defaults to render time; a prop so tests and the golden fixtures are deterministic. */
   now?: Date;
   className?: string;
+  /**
+   * Draw the traces in left-to-right, like a pen on a recorder drum — the
+   * result page's one motion moment. Re-triggers whenever the key changes.
+   * Reduced-motion users get the finished trace (globals.css zeroes it).
+   */
+  drawKey?: string | number;
 }
 
 const DOMAIN_START = new Date("1970-01-01T00:00:00Z");
@@ -180,7 +189,45 @@ function analyzeTrace(trace: Trace, rightEdge: Date): RegionTraceData {
  *
  * §5.3's ticker-as-right-edge is a later migration step and not built here.
  */
-export function RegionSeismogram({ regionName, events, comparison, now, className }: Props) {
+/**
+ * Width of the rendered box, measured after mount. Null on the server and the
+ * first client paint, when the CSS-breakpoint pair below renders instead.
+ */
+function useWidth<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [width, setWidth] = useState<number | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setWidth(Math.round(entry.contentRect.width));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  return [ref, width] as const;
+}
+
+/**
+ * The two fixed scales still assumed a card of roughly their own width. In a
+ * half-width column the 1000-unit desktop scale was drawn at ~0.45 — 5px axis
+ * labels floating in a box of empty height. Once the real width is known the
+ * viewBox is set to it, so one unit is one CSS pixel at every width and the
+ * text renders at exactly its specified size.
+ */
+function scaleForWidth(width: number): ScaleConfig {
+  const base = width < 560 ? MOBILE_SCALE : DESKTOP_SCALE;
+  return {
+    ...base,
+    vbW: width,
+    decadeStep: width < 420 ? 20 : 10,
+    // The label is ~150px of monospace; keep it inside the plot at any width.
+    labelEdgeFraction: Math.min(0.45, 170 / width),
+  };
+}
+
+export function RegionSeismogram({ regionName, events, comparison, now, className, drawKey }: Props) {
+  const [boxRef, measured] = useWidth<HTMLDivElement>();
   const rightEdge = now ?? new Date();
   const domainStartMs = DOMAIN_START.getTime();
   const domainEndMs = rightEdge.getTime();
@@ -392,8 +439,16 @@ export function RegionSeismogram({ regionName, events, comparison, now, classNam
           trace under the first at each breakpoint, both built from the same
           xOf/yTopOf closures — there is no per-trace scale to drift.
         */}
-        <div className="hidden sm:block">{renderStack(DESKTOP_SCALE, false)}</div>
-        <div className="sm:hidden">{renderStack(MOBILE_SCALE, true)}</div>
+        <div ref={boxRef} key={drawKey} className={drawKey != null ? "gw-pen" : undefined}>
+          {measured ? (
+            renderStack(scaleForWidth(measured), measured < 560)
+          ) : (
+            <>
+              <div className="hidden sm:block">{renderStack(DESKTOP_SCALE, false)}</div>
+              <div className="sm:hidden">{renderStack(MOBILE_SCALE, true)}</div>
+            </>
+          )}
+        </div>
       </ChartFigure>
       <SourceAttribution
         variant="inline"

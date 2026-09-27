@@ -66,5 +66,5 @@ export default async function RiskResultPage({
     );
   }
 
-  return <RiskReportView report={report} lat={lat} lng={lng} />;
+  return <RiskReportView report={report} lat={lat} lng={lng} headingLevel={1} />;
 }

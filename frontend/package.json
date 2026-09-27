@@ -9,8 +9,9 @@
     "lint": "next lint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "build:static": "npm run og:generate && node scripts/build-static.mjs",
-    "og:generate": "vite-node --config scripts/og.vite.config.ts scripts/generate-og.tsx"
+    "build:static": "npm run og:generate && node scripts/pack-quakes.mjs && node scripts/build-static.mjs",
+    "og:generate": "vite-node --config scripts/og.vite.config.ts scripts/generate-og.tsx",
+    "quakes:pack": "node scripts/pack-quakes.mjs"
   },
   "dependencies": {
     "@protomaps/basemaps": "^5.7.2",

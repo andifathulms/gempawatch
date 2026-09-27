@@ -11,6 +11,11 @@ interface Props {
   size?: "md" | "lg";
   placeholder?: string;
   autoFocus?: boolean;
+  /**
+   * Handle a chosen region in place instead of navigating to its page — the
+   * homepage uses this to run the risk check at the region's centre.
+   */
+  onSelect?: (region: AdminRegion) => void;
 }
 
 /**
@@ -26,6 +31,7 @@ export function RegionSearch({
   size = "md",
   placeholder = "Cari kabupaten/kota… (mis. Palu, Bandung, Bantul)",
   autoFocus,
+  onSelect,
 }: Props) {
   const [q, setQ] = useState("");
   const [results, setResults] = useState<AdminRegion[]>([]);
@@ -75,9 +81,14 @@ export function RegionSearch({
   const go = useCallback(
     (region: AdminRegion) => {
       setOpen(false);
+      if (onSelect) {
+        setQ(region.name);
+        onSelect(region);
+        return;
+      }
       router.push(`/region/${region.slug}`);
     },
-    [router],
+    [router, onSelect],
   );
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -130,7 +141,7 @@ export function RegionSearch({
         aria-activedescendant={
           open && results.length ? `${listId}-opt-${cursor}` : undefined
         }
-        className={`w-full rounded-lg border border-rule bg-paper/60 text-ink shadow-sm transition-colors placeholder:text-ink-3 focus:border-ink focus:outline-none ${
+        className={`w-full rounded-xl border-[1.5px] border-rule-strong bg-surface text-ink transition-colors placeholder:text-ink-3 hover:border-ink focus:border-ink focus:outline-none ${
           lg
             ? "py-3.5 pl-12 pr-4 text-fluid-0 sm:text-fluid-1"
             : "py-2.5 pl-10 pr-4 text-fluid-00"

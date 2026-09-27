@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
 import { BaseMap, INDONESIA_BOUNDS } from "@/components/map/BaseMap";
 import { MapContainer, Marker, useMap, useMapEvents } from "react-leaflet";
@@ -25,7 +25,10 @@ const PIN = divIcon({
 interface Props {
   position: [number, number];
   onPick: (lat: number, lng: number) => void;
-  height?: number;
+  /** Pixels, or any CSS length ("100%") when the parent sets the size. */
+  height?: number | string;
+  /** Initial zoom — wider when nothing has been picked yet. */
+  zoom?: number;
 }
 
 function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }) {
@@ -46,13 +49,20 @@ function ClickHandler({ onPick }: { onPick: (lat: number, lng: number) => void }
  */
 function FollowPin({ position }: { position: [number, number] }) {
   const map = useMap();
+  const first = useRef(true);
   useEffect(() => {
+    // The map mounts already centred on the pin at the caller's zoom; flying
+    // on mount zoomed the untouched default (central Indonesia) into open sea.
+    if (first.current) {
+      first.current = false;
+      return;
+    }
     map.flyTo(position, Math.max(map.getZoom(), 8), { duration: 0.8 });
   }, [map, position]);
   return null;
 }
 
-export function PickerMap({ position, onPick, height = 440 }: Props) {
+export function PickerMap({ position, onPick, height = 440, zoom = 5 }: Props) {
   const reduceMotion = prefersReducedMotion();
 
   return (
@@ -63,8 +73,8 @@ export function PickerMap({ position, onPick, height = 440 }: Props) {
       markerZoomAnimation={!reduceMotion}
       fadeAnimation={!reduceMotion}
       center={position}
-      zoom={5}
-      style={{ height, width: "100%", borderRadius: 12 }}
+      zoom={zoom}
+      style={{ height, width: "100%" }}
       scrollWheelZoom
       minZoom={4}
       maxZoom={13}

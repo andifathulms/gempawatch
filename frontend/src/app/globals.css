@@ -161,3 +161,28 @@ h4 {
   background: none;
   border: 0;
 }
+
+/* The result's one motion moment (RegionSeismogram drawKey): the record draws
+   in left to right like a pen on a recorder drum. The reduced-motion rule
+   above collapses it to the finished trace. */
+.gw-pen svg {
+  animation: gw-pen 1.1s var(--ease-out) both;
+}
+@keyframes gw-pen {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Seismograph chart paper: a faint grid behind instrument surfaces (the
+   homepage stage, the map). Never behind reading text. */
+.gw-paper-grid {
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}

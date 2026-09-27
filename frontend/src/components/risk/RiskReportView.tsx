@@ -1,17 +1,18 @@
-import Link from "next/link";
-
-import { Card } from "@/components/ui/Card";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
-import { ShareButton } from "@/components/ui/ShareButton";
+import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
 import { CoverageNote } from "@/components/risk/CoverageNote";
 import { LargestEventSensitivity } from "@/components/risk/LargestEventSensitivity";
 import { PointSeismogram } from "@/components/risk/PointSeismogram";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
-import { TsunamiEvidencePanel } from "@/components/risk/TsunamiEvidencePanel";
 import { ShareableRiskCard } from "@/components/risk/ShareableRiskCard";
-import { WatchSubscribeForm } from "@/components/prepare/WatchSubscribeForm";
+import { TsunamiEvidencePanel } from "@/components/risk/TsunamiEvidencePanel";
+import { FactRow, VerdictBand } from "@/components/risk/VerdictBand";
+import { Disclosure, DisclosureGroup } from "@/components/ui/Disclosure";
+import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
+import { ShareButton } from "@/components/ui/ShareButton";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { IS_STATIC } from "@/lib/api";
+import { magnitude, num } from "@/lib/format";
 import { riskResultPath } from "@/lib/routes";
 import { riskTierLabel } from "@/lib/seismic";
 import type { RiskCheckReport } from "@/lib/types";
@@ -20,6 +21,11 @@ interface Props {
   report: RiskCheckReport;
   lat: number;
   lng: number;
+  /**
+   * h1 on the standalone permalink page; h2 on the homepage, where the
+   * question above it is already the h1.
+   */
+  headingLevel?: 1 | 2;
 }
 
 const RELATION_LABEL: Record<string, string> = {
@@ -29,206 +35,216 @@ const RELATION_LABEL: Record<string, string> = {
 };
 
 /**
- * The body of a risk result, shared by both route shapes: the server-rendered
- * /risk/[lat]/[lng] used on live deploys and the client-rendered /risk?lat=&lng=
- * used on static ones. Keeping it in one place is what stops the two from
- * drifting into different reports.
+ * The body of a risk result, shared by the homepage (in place), the
+ * server-rendered /risk/[lat]/[lng] on live deploys and /risk?lat=&lng= on
+ * static ones — one component so the three can never drift.
  *
- * Sharing is the point of this page — it is the URL people send each other — so
- * the share row sits directly under the card rather than at the end of the
- * page, where it was previously below a checklist and a subscribe form.
- *
- * The page reads in two tiers. First the answer and what to do with it: the
- * result card, sharing, preparedness. Then the audit trail — the four panels
- * explaining how the number was reached — under their own heading, so they
- * stop competing with the answer for a first-time reader's attention. The
- * methodology panels had drifted between the card and the share row, which
- * pushed sharing below about four screens of dense explanation and left every
- * panel claiming equal importance.
+ * Full width, read top to bottom: the verdict and where it sits among every
+ * scored region; four facts; the fifty-year record against a reference city;
+ * what to do and how to share it; then how the number was made. The previous
+ * version sat in a half-width column and ran to ~7,000px, with four
+ * methodology panels at the same weight as the answer. Those now live in
+ * expandable rows — still on the page, still indexed, one tap away.
  */
-export function RiskReportView({ report, lat, lng }: Props) {
-  const place = report.nearest_region?.name ?? "lokasi ini";
-  const caption = `Risiko gempa ${place}: ${riskTierLabel(
-    report.activity_tier,
-  )} (skor ${report.composite_score.toFixed(0)}/100). Cek lokasimu di GempaWatch:`;
+export function RiskReportView({ report, lat, lng, headingLevel = 2 }: Props) {
+  const place = report.nearest_region?.name ?? "Lokasi pilihanmu";
+  const caption = `Risiko gempa ${place}: ${riskTierLabel(report.activity_tier)} (skor ${report.composite_score.toFixed(
+    0,
+  )}/100). Cek lokasimu di GempaWatch:`;
+  const coverage = report.data_coverage;
+  const since = coverage.earliest_year ? ` sejak ${coverage.earliest_year}` : "";
+  const drawKey = `${lat.toFixed(4)},${lng.toFixed(4)}`;
 
   return (
-    <div className="mx-auto max-w-xl space-y-5">
-      <header>
-        <p className="font-display text-fluid-000 font-semibold uppercase tracking-[0.16em] text-ink">
-          Laporan risiko titik
-        </p>
-        <h1 className="mt-1.5 text-fluid-3 font-bold tracking-tight">
-          {report.nearest_region?.name ?? "Lokasi pilihanmu"}
-        </h1>
-        <p className="mt-1 font-mono text-fluid-000 tabular-nums text-ink-3">
-          {lat.toFixed(4)}, {lng.toFixed(4)}
-        </p>
-      </header>
+    <article className="space-y-12 sm:space-y-14">
+      <VerdictBand
+        headingLevel={headingLevel}
+        eyebrow="Laporan risiko titik"
+        place={place}
+        meta={
+          <>
+            <span className="font-mono tabular-nums">
+              {lat.toFixed(4)}, {lng.toFixed(4)}
+            </span>
+            {report.nearest_region && " · wilayah terdekat"}
+          </>
+        }
+        score={report.composite_score}
+        tier={report.activity_tier}
+        plotLabel="Titik ini"
+        finding={
+          <>
+            Dalam radius 50 km tercatat{" "}
+            <b className="font-bold">{num(report.event_count_m4_within_50km)} gempa M4 ke atas</b>
+            {since}
+            {report.largest_magnitude_within_50km != null && (
+              <>
+                ; yang terbesar <b className="font-bold">{magnitude(report.largest_magnitude_within_50km)}</b>
+              </>
+            )}
+            . {report.comparison.text}
+          </>
+        }
+      />
 
-      <ShareableRiskCard report={report} />
-
-      {/* The signature object carries this answer too (DESIGN.md §1 decision 4), not just region pages. */}
-      <PointSeismogram nearestRegion={report.nearest_region} />
-
-      <Card
-        title="Bagikan hasil ini"
-        subtitle="WhatsApp adalah kanal berbagi utama di Indonesia — tautannya membuka laporan yang sama persis."
-      >
-        <ShareButton path={riskResultPath(lat, lng)} caption={caption} />
-      </Card>
-
-      <Card
-        title="Langkah kesiapsiagaan"
-        subtitle="Disesuaikan dengan tingkat aktivitas dan status pesisir titik ini."
-      >
-        <PreparednessChecklist
-          tier={report.activity_tier}
-          coastal={report.tsunami_risk_tier != null}
-        />
-      </Card>
-
-      {/* ------------------------------------------------------------------
-          The audit trail.
-
-          Every panel on this page was a Card of identical weight, so the
-          answer, the way to share it, and four dense methodology panels all
-          read as equally important — and the share row, which this file's own
-          docblock calls the point of the page, had sunk below roughly four
-          screens of explanation.
-
-          Grouping them under one heading gives the page two tiers instead
-          of one flat stack: what your risk is, then how the number was made.
-          Nothing is hidden — collapsing these would be a behaviour change and
-          would need to survive a refresh — they are just marked as the second
-          tier, with eyebrow titles so they stop competing with the answer.
-         ------------------------------------------------------------------ */}
-      <section aria-labelledby="audit-trail" className="space-y-4 pt-2">
-        <div className="border-t border-rule pt-5">
-          <h2
-            id="audit-trail"
-            className="font-display text-fluid-1 font-semibold tracking-tight text-ink"
-          >
-            Bagaimana angka ini dibaca
-          </h2>
-          <p className="mt-1 text-fluid-00 leading-relaxed text-ink-2">
-            Setiap angka di atas bisa ditelusuri ke aturannya. Panel berikut
-            menunjukkan perhitungannya, cakupan datanya, dan batasnya.
-          </p>
-        </div>
-
-        <Card
-          titleAs="eyebrow"
-          title="Dari mana skor ini datang"
-          subtitle="Empat komponen berbobot, dihitung dari catatan gempa di sekitar titik ini."
-        >
-          <ScoreBreakdown
-            components={report.score_breakdown}
-            total={report.composite_score}
-          />
-        </Card>
-
-        {report.largest_event_sensitivity && (
-          <Card
-            titleAs="eyebrow"
-            title="Seberapa besar peran satu gempa"
-            subtitle="Komponen magnitudo memakai kejadian terbesar, bukan rata-rata, dan tidak melemah seiring waktu."
-          >
-            <LargestEventSensitivity
-              sensitivity={report.largest_event_sensitivity}
-              score={report.composite_score}
-            />
-          </Card>
-        )}
-
-        <Card
-          titleAs="eyebrow"
-          title="Dari mana tingkat tsunami ini datang"
-          subtitle="Tiga syarat yang harus dipenuhi sekaligus, lalu dihitung berapa kejadian yang memenuhinya."
-        >
-          <TsunamiEvidencePanel evidence={report.tsunami_evidence} />
-        </Card>
-
-        <Card
-          titleAs="eyebrow"
-          title="Cakupan data di balik angka ini"
-          subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
-        >
-          <CoverageNote
-            earliestYear={report.data_coverage.earliest_year}
-            latestYear={report.data_coverage.latest_year}
-            years={report.data_coverage.years}
-            scope="point"
-          />
-        </Card>
-
-        {/* One anchor cannot place you on a range. Jakarta alone says "more
-            active than Jakarta" without revealing whether that means slightly,
-            or nowhere near Padang. */}
-        <Card
-          titleAs="eyebrow"
-          title="Dibanding kota acuan"
-          subtitle="Jumlah gempa M4+ dalam radius 50 km, dibanding tiga kota yang polanya sudah dikenal."
-        >
-          <ul className="divide-y divide-rule/70">
-            {report.comparison_set.map((c) => (
-              <li
-                key={c.reference_city}
-                className="flex items-baseline justify-between gap-3 py-2.5"
-              >
-                <span className="text-fluid-00 text-ink">
-                  {c.reference_city}
-                  <span className="ml-2 font-mono text-fluid-000 tabular-nums text-ink-3">
-                    ±{c.reference_m4_count} M4+
+      <FactRow
+        facts={[
+          { value: num(report.event_count_m4_within_50km), label: "gempa M4+ dalam 50 km" },
+          { value: magnitude(report.largest_magnitude_within_50km), label: "terbesar dalam 50 km" },
+          report.nearest_fault?.distance_km != null
+            ? {
+                value: `${report.nearest_fault.distance_km.toFixed(0)} km`,
+                label: `ke ${report.nearest_fault.name}, sesar aktif terdekat`,
+              }
+            : { value: "—", label: "sesar aktif terdekat tidak tercatat" },
+          report.tsunami_risk_tier
+            ? {
+                value: (
+                  <span className="text-fluid-2">
+                    <RiskTierBadge tier={report.tsunami_risk_tier} />
                   </span>
-                </span>
-                <span
-                  className={`shrink-0 text-fluid-00 font-medium ${
-                    c.relation === "higher"
-                      ? "text-tier-mod"
-                      : c.relation === "lower"
-                        ? "text-tier-low"
-                        : "text-ink-2"
-                  }`}
-                >
-                  {RELATION_LABEL[c.relation] ?? c.relation}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 text-fluid-00 leading-relaxed text-ink-3">
-            Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan
-            lokasi ini pada rentang — bukan skor resmi kota tersebut.
+                ),
+                label: "riwayat tsunami (wilayah pesisir)",
+              }
+            : { value: "—", label: "bukan wilayah pesisir" },
+        ]}
+      />
+
+      <PointSeismogram
+        nearestRegion={report.nearest_region}
+        referenceCity={report.comparison.reference_city}
+        drawKey={drawKey}
+      />
+
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+        <section aria-labelledby="langkah">
+          <h2 id="langkah" className="text-fluid-3 font-extrabold tracking-tight">
+            Yang bisa kamu lakukan
+          </h2>
+          <p className="mb-4 mt-1 text-fluid-00 text-ink-2">
+            Mulai dari tiga langkah ini. Disesuaikan dengan tingkat aktivitas
+            {report.tsunami_risk_tier != null ? " dan status pesisir" : ""} titik ini.
           </p>
-        </Card>
+          <PreparednessChecklist
+            tier={report.activity_tier}
+            coastal={report.tsunami_risk_tier != null}
+            initialVisible={3}
+          />
+          {!IS_STATIC && (
+            <div className="mt-8 border-t border-rule pt-6">
+              <h3 className="text-fluid-1 font-bold">Pantau lokasi ini</h3>
+              <p className="mb-3 mt-1 text-fluid-00 text-ink-2">
+                Dapatkan email ketika gempa signifikan tercatat di dekat titik ini.
+              </p>
+              <WatchSubscribeForm lat={lat} lng={lng} defaultLabel={report.nearest_region?.name ?? ""} />
+            </div>
+          )}
+        </section>
+
+        <section aria-labelledby="bagikan">
+          <h2 id="bagikan" className="text-fluid-3 font-extrabold tracking-tight">
+            Bagikan
+          </h2>
+          <p className="mb-4 mt-1 text-fluid-00 text-ink-2">
+            Tautannya membuka laporan yang sama persis. Kartu ini aman di-screenshot — sumber dan
+            catatannya ikut di dalamnya.
+          </p>
+          <ShareableRiskCard report={report} />
+          <div className="mt-4">
+            <ShareButton path={riskResultPath(lat, lng)} caption={caption} />
+          </div>
+        </section>
+      </div>
+
+      <section aria-labelledby="metodologi">
+        <h2 id="metodologi" className="text-fluid-3 font-extrabold tracking-tight">
+          Bagaimana angka ini dibuat
+        </h2>
+        <p className="mb-4 mt-1 max-w-[70ch] text-fluid-00 text-ink-2">
+          Setiap angka di atas bisa ditelusuri ke aturannya. Buka bagian yang ingin kamu periksa.
+        </p>
+        <DisclosureGroup>
+          <Disclosure
+            title={`Dari mana skor ${Math.round(report.composite_score)} datang`}
+            summary="Empat komponen berbobot, dari catatan gempa di sekitar titik ini"
+          >
+            <ScoreBreakdown components={report.score_breakdown} total={report.composite_score} />
+          </Disclosure>
+          {report.largest_event_sensitivity && (
+            <Disclosure
+              title="Seberapa besar peran satu gempa"
+              summary="Komponen magnitudo memakai kejadian terbesar, bukan rata-rata"
+            >
+              <LargestEventSensitivity
+                sensitivity={report.largest_event_sensitivity}
+                score={report.composite_score}
+              />
+            </Disclosure>
+          )}
+          <Disclosure
+            title="Dari mana tingkat tsunami ini datang"
+            summary="Tiga syarat yang harus terpenuhi sekaligus"
+          >
+            <TsunamiEvidencePanel evidence={report.tsunami_evidence} />
+          </Disclosure>
+          <Disclosure
+            title="Cakupan data"
+            summary={
+              coverage.earliest_year && coverage.latest_year
+                ? `${coverage.earliest_year}–${coverage.latest_year} · ${num(report.event_count_m4_within_50km)} gempa M4+ dalam 50 km`
+                : undefined
+            }
+          >
+            <CoverageNote
+              earliestYear={coverage.earliest_year}
+              latestYear={coverage.latest_year}
+              years={coverage.years}
+              m4Count={report.event_count_m4_within_50km}
+              scope="point"
+            />
+          </Disclosure>
+          {report.comparison_set.length > 0 && (
+            <Disclosure title="Dibanding kota acuan" summary={report.comparison.text}>
+              <ul className="divide-y divide-rule">
+                {report.comparison_set.map((c) => (
+                  <li key={c.reference_city} className="flex items-baseline justify-between gap-3 py-2.5">
+                    <span className="text-fluid-00 text-ink">
+                      {c.reference_city}
+                      <span className="ml-2 font-mono text-fluid-000 tabular-nums text-ink-3">
+                        ±{c.reference_m4_count} M4+
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-fluid-00 font-semibold text-ink-2">
+                      {RELATION_LABEL[c.relation] ?? c.relation}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-fluid-00 leading-relaxed text-ink-3">
+                Angka acuan adalah perkiraan tetap, dipakai hanya untuk menempatkan lokasi ini pada
+                rentang — bukan skor resmi kota tersebut.
+              </p>
+            </Disclosure>
+          )}
+        </DisclosureGroup>
       </section>
 
-      {/*
-        Watch alerts need a backend to store the subscription and send mail.
-        The feature is kept intact for live deploys and simply not offered when
-        there is nothing to receive the form.
-      */}
-      {!IS_STATIC && (
-        <Card
-          title="Pantau lokasi ini"
-          subtitle="Dapatkan email ketika gempa signifikan tercatat di dekat titik ini."
-        >
-          <WatchSubscribeForm
-            lat={lat}
-            lng={lng}
-            defaultLabel={report.nearest_region?.name ?? ""}
-          />
-        </Card>
-      )}
-
-      <SourceAttribution />
-
-      <Link
-        href="/"
-        className="block rounded-lg border border-rule py-3 text-center text-fluid-00 text-ink-2 transition-colors hover:border-ink hover:text-ink"
-      >
-        ← Cek lokasi lain di peta
-      </Link>
-    </div>
+      <footer className="space-y-3">
+        <p className="max-w-[80ch] border-l-2 border-rule-strong pl-3 text-fluid-00 leading-relaxed text-ink-3">
+          {/* methodology_note already carries the not-a-warning line; this
+              only adds the official destination it points to. */}
+          {report.methodology_note}{" "}
+          <a
+            href="https://www.bmkg.go.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-ink-2 underline underline-offset-2"
+          >
+            bmkg.go.id ↗
+          </a>
+        </p>
+        <SourceAttribution />
+      </footer>
+    </article>
   );
 }

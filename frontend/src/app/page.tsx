@@ -1,14 +1,9 @@
 import Link from "next/link";
 import { api } from "@/lib/api";
 import type { HistoricalDisaster, LeaderboardRow } from "@/lib/types";
-import { LiveTicker } from "@/components/map/LiveTicker";
 import { RiskCheckTool } from "@/components/risk/RiskCheckTool";
-import { Card } from "@/components/ui/Card";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { Leaderboard } from "@/components/discover/Leaderboard";
-import { RegionSearch } from "@/components/discover/RegionSearch";
-import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
-import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { magnitude, shortDate } from "@/lib/format";
 import { pageMetadata } from "@/lib/meta";
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/lib/site";
@@ -26,184 +21,104 @@ export const metadata = pageMetadata({
   path: "/",
 });
 
+function ExploreColumn({
+  title,
+  href,
+  linkLabel,
+  children,
+}: {
+  title: string;
+  href: string;
+  linkLabel: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="min-w-0 border-t-2 border-ink pt-4">
+      <div className="mb-3 flex items-baseline justify-between gap-3">
+        <h2 className="text-fluid-1 font-extrabold tracking-tight">{title}</h2>
+        <Link href={href} className="shrink-0 text-fluid-00 font-semibold text-ink underline underline-offset-4 hover:no-underline">
+          {linkLabel}
+        </Link>
+      </div>
+      {children}
+    </section>
+  );
+}
+
 export default async function HomePage() {
-  // Each block degrades on its own — a leaderboard outage should not cost the
-  // reader the live ticker, and vice versa.
-  const [events, top, disasters, example] = await Promise.all([
-    api
-      .liveEvents()
-      .then((d) => d.results)
-      .catch(() => null),
+  // Each block degrades on its own — an outage in one export file should not
+  // cost the reader the others.
+  const [top, disasters] = await Promise.all([
     api
       .leaderboard(5, "desc")
       .then((r) => r.results)
       .catch(() => [] as LeaderboardRow[]),
     api.disasterTimeline().catch(() => [] as HistoricalDisaster[]),
-    // A real region, so the homepage can SHOW how a score is built instead of
-    // only naming what one contains.
-    api.riskProfile("kota-yogyakarta").catch(() => null),
   ]);
 
-  const loadFailed = events === null;
-  const list = events ?? [];
-  const exampleInputs = example ? scoreInputsFromProfile(example) : null;
-
   return (
-    <div className="space-y-8">
-      {/* ------------------------------------------------------------------
-          The homepage IS the risk check (DESIGN.md §1 decision 1, §2.2): the
-          product's question, asked and answered on one screen, no navigation
-          between the two. This used to be a headline over a name-search field
-          that sent a reader to /risk-check for the actual tool — a live map
-          and a 24h stat-tile row sat between the question and its answer.
-          RiskCheckTool already orchestrates the picker map, geolocation, five
-          shortcut cities and an in-place idle/loading/error/report state
-          union; it moved here unchanged (DESIGN.md §6).
-         ------------------------------------------------------------------ */}
-      <section className="animate-fade-in-up relative rounded-2xl border border-rule bg-surface px-5 py-8 shadow-raised sm:px-8 sm:py-10">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-32 -z-10 h-[28rem] w-[28rem] rounded-full bg-ink/[0.07] blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-60"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(115deg, transparent 0 26px, rgba(232,116,59,0.045) 26px 27px)",
-            maskImage: "linear-gradient(to left, black, transparent 55%)",
-            WebkitMaskImage: "linear-gradient(to left, black, transparent 55%)",
-          }}
-        />
+    <div className="space-y-16 sm:space-y-20">
+      {/* The question, the record behind it, and the answer in place
+          (DESIGN.md §2.2, §6, §13). The live feed is not here: its job — "is
+          this current?" — is the "Gempa terkini" pill in the nav. */}
+      <RiskCheckTool />
 
-        <div className="relative space-y-6">
-          <div className="max-w-3xl">
-            <h1 className="text-fluid-5 font-bold tracking-tight">
-              Seberapa rawan gempa{" "}
-              <span className="text-ink">lokasi kamu?</span>
-            </h1>
-            <p className="mt-4 max-w-2xl text-fluid-1 leading-relaxed text-ink-2">
-              Pilih titik di peta, dan dapatkan{" "}
-              <strong className="font-semibold text-ink">
-                skor paparan 0–100
-              </strong>{" "}
-              yang dihitung dari lebih dari 50 tahun catatan gempa BMKG dan
-              USGS — pola historis titikmu sendiri, bukan sekadar daftar gempa
-              terbaru, dan bukan ramalan.
-            </p>
-          </div>
+      {/* Three ways to leave with something, as ruled columns rather than
+          cards: the most active regions, the disaster archive, the method. */}
+      <div className="grid gap-10 lg:grid-cols-3">
+        <ExploreColumn title="Wilayah paling aktif" href="/regions" linkLabel="Semua wilayah →">
+          <Leaderboard rows={top} variant="compact" />
+        </ExploreColumn>
 
-          <RiskCheckTool />
-
-          <p className="max-w-2xl border-t border-rule pt-4 text-fluid-00 leading-relaxed text-ink-3">
-            <strong className="font-semibold text-tier-mod">Penting —</strong>{" "}
-            GempaWatch membaca pola gempa masa lalu. Ini{" "}
-            <strong className="font-semibold text-ink-2">
-              bukan sistem peringatan dini
-            </strong>{" "}
-            dan bukan prediksi. Untuk peringatan gempa dan tsunami resmi, selalu
-            rujuk{" "}
-            <a
-              href="https://www.bmkg.go.id/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-ink underline underline-offset-2 hover:brightness-110"
-            >
-              bmkg.go.id
-            </a>
-            .
-          </p>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------------
-          The live feed's entire footprint here now — a strip, not a 440px map
-          card (DESIGN.md §5.3, §8). It is evidence that the record is live,
-          not a second thing to read before the question above. A map of
-          recent events genuinely belongs on /map, where HazardMap plots them
-          as one of its toggleable layers.
-         ------------------------------------------------------------------ */}
-      <LiveTicker events={list} loadFailed={loadFailed} />
-
-      {/* ------------------------------------------------------------------
-          A worked example, before the reader has typed anything.
-
-          One real region, its four terms, its published total — shows what
-          the product does with fifty years of records, for a visitor who
-          hasn't picked a point yet.
-         ------------------------------------------------------------------ */}
-      {exampleInputs && example?.composite_score != null && (
-        <section>
-          <Card
-            title={`Contoh: bagaimana skor ${example.region.name} tersusun`}
-            subtitle="Satu wilayah nyata, dari catatan gempa mentah sampai satu angka. Aturan yang sama dipakai untuk lokasi mana pun."
-            action={
-              <Link
-                href="/about#skor-lab"
-                className="text-fluid-000 text-ink-2 transition-colors hover:text-ink"
-              >
-                Coba ubah angkanya →
-              </Link>
-            }
-          >
-            <ScoreBreakdown
-              components={scoreBreakdown(exampleInputs)}
-              total={example.composite_score}
-            />
-          </Card>
-        </section>
-      )}
-
-      {/* Discovery + history: two ways to leave the homepage with something. */}
-      <section className="grid gap-5 lg:grid-cols-2">
-        {/* /explore retired (DESIGN.md §10 step 5) — its ranking list is now
-            each region's own page (RegionRankRow), and its search field lives
-            here instead, since name lookup has no other home in the five
-            surviving destinations now that the picker map is the homepage's
-            primary path in. */}
-        <Card
-          title="Wilayah paling aktif"
-          subtitle="Skor 0–100 menimbang frekuensi, magnitudo, kedalaman, dan kedekatan sesar."
-        >
-          <RegionSearch placeholder="Atau cari nama wilayahmu…" />
-          <div className="mt-4">
-            <Leaderboard rows={top} variant="compact" />
-          </div>
-        </Card>
-
-        <Card
-          title="Memori bencana"
-          subtitle="Kejadian yang membentuk kesadaran kebencanaan Indonesia."
-          action={
-            <Link
-              href="/timeline"
-              className="text-fluid-000 text-ink-2 transition-colors hover:text-ink"
-            >
-              Linimasa lengkap →
-            </Link>
-          }
-        >
+        <ExploreColumn title="Memori bencana" href="/timeline" linkLabel="Sejarah →">
           {disasters.length === 0 ? (
             <EmptyState title="Arsip bencana belum tersedia." />
           ) : (
-            <ul className="divide-y divide-rule/70">
-              {disasters.slice(0, 4).map((d) => (
+            <ul className="divide-y divide-rule">
+              {disasters.slice(0, 5).map((d) => (
                 <li key={d.id} className="flex items-baseline gap-3 py-2.5">
                   <span className="w-24 shrink-0 font-mono text-fluid-000 tabular-nums text-ink-3">
                     {shortDate(d.event_date)}
                   </span>
-                  <span className="min-w-0 flex-1 truncate text-fluid-00 text-ink">
-                    {d.name}
-                  </span>
-                  <span className="shrink-0 font-mono text-fluid-000 tabular-nums text-ink">
+                  <span className="min-w-0 flex-1 truncate text-fluid-00 font-medium text-ink">{d.name}</span>
+                  <span className="shrink-0 text-fluid-00 font-bold tabular-nums text-ink">
                     {magnitude(d.magnitude)}
                   </span>
                 </li>
               ))}
             </ul>
           )}
-        </Card>
-      </section>
+        </ExploreColumn>
+
+        <ExploreColumn title="Cara skor dihitung" href="/about" linkLabel="Metodologi →">
+          <div className="space-y-3 text-fluid-00 leading-relaxed text-ink-2">
+            <p>
+              Empat komponen dari catatan gempa dalam radius 100 km: seberapa sering, seberapa besar
+              yang terbesar, berapa banyak yang dangkal, dan seberapa dekat sesar aktif.
+            </p>
+            <p>
+              Bobotnya terbuka. Ubah sendiri di{" "}
+              <Link href="/about#skor-lab" className="font-semibold text-ink underline underline-offset-4">
+                ScoreLab
+              </Link>{" "}
+              dan lihat skornya bergerak.
+            </p>
+            <p className="text-ink-3">
+              GempaWatch membaca pola masa lalu. Ini bukan sistem peringatan dini; peringatan resmi
+              hanya dari{" "}
+              <a
+                href="https://www.bmkg.go.id/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                BMKG
+              </a>
+              .
+            </p>
+          </div>
+        </ExploreColumn>
+      </div>
     </div>
   );
 }
