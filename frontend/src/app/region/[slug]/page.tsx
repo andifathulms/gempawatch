@@ -16,6 +16,7 @@ import { DepthHistogram } from "@/components/risk/DepthHistogram";
 import { RegionRankRow } from "@/components/discover/RegionRankRow";
 import { SeismogramComparePicker } from "@/components/risk/SeismogramComparePicker";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { ShareImageButton } from "@/components/ui/ShareImageButton";
 import { PreparednessChecklist } from "@/components/prepare/PreparednessChecklist";
 import { RegionJsonLd } from "@/components/seo/JsonLd";
 import { CoverageNote } from "@/components/risk/CoverageNote";
@@ -23,6 +24,7 @@ import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { haversineKm } from "@/lib/engine/geo";
 import { islandOf } from "@/lib/islands";
+import { provinceOf } from "@/lib/provinces";
 import { pageMetadata } from "@/lib/meta";
 import { activityTierMeaning, binByDepth, riskTierLabel } from "@/lib/seismic";
 import { depth, magnitude, num, regionType, shortDate } from "@/lib/format";
@@ -226,6 +228,10 @@ export default async function RegionPage({
     .join(" ");
 
   const island = islandOf(profile.region.latitude, profile.region.longitude);
+  const province = provinceOf(profile.region.name);
+  const caption = `Risiko gempa ${profile.region.name}: ${riskTierLabel(profile.activity_tier)} (skor ${
+    profile.composite_score?.toFixed(0) ?? "—"
+  }/100) menurut GempaWatch:`;
   const { latitude: lat, longitude: lng } = profile.region;
 
   return (
@@ -238,12 +244,13 @@ export default async function RegionPage({
             Wilayah
           </Link>{" "}
           / {island}
+          {province && ` · ${province}`}
         </nav>
 
         {profile.composite_score != null ? (
           <VerdictBand
             headingLevel={1}
-            eyebrow={`${regionType(profile.region.type)} · ${island}`}
+            eyebrow={`${regionType(profile.region.type)} · ${province ?? island}`}
             place={profile.region.name}
             meta={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.${
               profile.last_updated ? ` Diperbarui ${shortDate(profile.last_updated)}.` : ""
@@ -254,12 +261,31 @@ export default async function RegionPage({
             plotLabel={profile.region.name}
             plotSlug={profile.region.slug}
             action={
-              <ShareButton
-                path={`/region/${profile.region.slug}`}
-                caption={`Risiko gempa ${profile.region.name}: ${riskTierLabel(
-                  profile.activity_tier,
-                )} (skor ${profile.composite_score.toFixed(0)}/100) menurut GempaWatch:`}
-              />
+              <div className="flex flex-wrap items-center gap-2">
+                <ShareButton path={`/region/${profile.region.slug}`} caption={caption} />
+                <ShareImageButton
+                  caption={caption}
+                  timelineSlug={profile.region.slug}
+                  timelineName={profile.region.name}
+                  data={{
+                    place: profile.region.name,
+                    kicker: `${regionType(profile.region.type)} · ${province ?? island}`,
+                    score: profile.composite_score,
+                    tier: profile.activity_tier,
+                    percentile:
+                      profile.activity_percentile != null
+                        ? `Lebih aktif dari ${profile.activity_percentile}% dari ${
+                            profile.activity_percentile_basis?.region_count ?? "semua"
+                          } wilayah terskor.`
+                        : undefined,
+                    stats: [
+                      { value: num(profile.event_count_m5), label: "gempa M5+ dalam 100 km" },
+                      { value: magnitude(profile.largest_magnitude), label: `terbesar${largestEventYear ? `, ${largestEventYear}` : ""}` },
+                    ],
+                    coverage: coverage ?? undefined,
+                  }}
+                />
+              </div>
             }
           />
         ) : (

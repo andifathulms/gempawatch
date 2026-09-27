@@ -478,3 +478,10 @@ Owner-approved redesign, delivered in five commits' worth of phases:
 
 Route paths stay English (§1 decision 5): the index is `/regions`, the
 methodology page stays `/about`.
+
+Follow-ups (same day): a full-screen map picker with a confirm bar on
+phones; hover/tap details for every dot on the /map history layer; a
+1080×1350 portrait share image drawn in the browser (Web Share API with
+files where available, download otherwise) on results and region pages;
+province names from the seed data (`lib/provinces.ts`, drift-tested).
+Region boundary shading remains open: the seed data has centroids only.

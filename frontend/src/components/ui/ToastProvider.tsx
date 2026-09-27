@@ -37,22 +37,12 @@ export function useToast(): ToastContextValue {
   return ctx;
 }
 
+// Ink, not status colours: colour on this site means depth or risk tier
+// (tokens.css), and a toast is neither. The icon carries the difference.
 const STYLES: Record<ToastVariant, { ring: string; badge: string; icon: string }> = {
-  success: {
-    ring: "border-tier-low/50",
-    badge: "bg-tier-low/20 text-tier-low",
-    icon: "✓",
-  },
-  error: {
-    ring: "border-tier-high/50",
-    badge: "bg-tier-high/20 text-tier-high",
-    icon: "!",
-  },
-  info: {
-    ring: "border-depth-deep/50",
-    badge: "bg-depth-deep/20 text-depth-deep",
-    icon: "i",
-  },
+  success: { ring: "border-rule-strong", badge: "bg-ink text-on-ink", icon: "✓" },
+  error: { ring: "border-ink", badge: "bg-ink text-on-ink", icon: "!" },
+  info: { ring: "border-rule-strong", badge: "bg-raised text-ink", icon: "i" },
 };
 
 // App-wide toast host. Renders a portal viewport (fixed bottom-center) with a

@@ -10,6 +10,7 @@ import { FactRow, VerdictBand } from "@/components/risk/VerdictBand";
 import { Disclosure, DisclosureGroup } from "@/components/ui/Disclosure";
 import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
 import { ShareButton } from "@/components/ui/ShareButton";
+import { ShareImageButton } from "@/components/ui/ShareImageButton";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { IS_STATIC } from "@/lib/api";
 import { magnitude, num } from "@/lib/format";
@@ -155,6 +156,31 @@ export function RiskReportView({ report, lat, lng, headingLevel = 2, animate = f
           <ShareableRiskCard report={report} />
           <div className="mt-4">
             <ShareButton path={riskResultPath(lat, lng)} caption={caption} />
+            <div className="mt-2">
+              <ShareImageButton
+                caption={caption}
+                timelineSlug={report.nearest_region?.slug}
+                timelineName={report.nearest_region?.name}
+                data={{
+                  place,
+                  kicker: `Titik ${lat.toFixed(4)}, ${lng.toFixed(4)}${report.nearest_region ? " · wilayah terdekat" : ""}`,
+                  score: report.composite_score,
+                  tier: report.activity_tier,
+                  percentile:
+                    report.activity_percentile != null
+                      ? `Lebih aktif dari ${report.activity_percentile}% dari ${report.activity_percentile_basis?.region_count ?? "semua"} wilayah terskor.`
+                      : undefined,
+                  stats: [
+                    { value: num(report.event_count_m4_within_50km), label: "gempa M4+ dalam 50 km" },
+                    { value: magnitude(report.largest_magnitude_within_50km), label: "terbesar dalam 50 km" },
+                  ],
+                  coverage:
+                    coverage.earliest_year && coverage.latest_year
+                      ? `${coverage.earliest_year}–${coverage.latest_year}`
+                      : undefined,
+                }}
+              />
+            </div>
           </div>
         </section>
       </div>

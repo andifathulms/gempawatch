@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
 import { RegionIndex, type RegionIndexRow } from "@/components/discover/RegionIndex";
 import { islandOf } from "@/lib/islands";
+import { provinceOf } from "@/lib/provinces";
 import { depthBand } from "@/lib/seismic";
 import { regionType } from "@/lib/format";
 import { pageMetadata } from "@/lib/meta";
@@ -58,6 +59,7 @@ export default async function RegionsPage() {
         name: region.name,
         typeLabel: regionType(region.type),
         island: islandOf(region.latitude, region.longitude),
+        province: provinceOf(region.name),
         score: score?.composite_score ?? null,
         tier: score?.activity_tier ?? null,
         m5: m5.length,

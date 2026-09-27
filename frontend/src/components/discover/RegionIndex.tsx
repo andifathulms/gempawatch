@@ -13,6 +13,7 @@ export interface RegionIndexRow {
   name: string;
   typeLabel: string;
   island: Island;
+  province: string | null;
   score: number | null;
   tier: RiskTier | null;
   m5: number;
@@ -68,7 +69,10 @@ export function RegionIndex({ rows }: { rows: RegionIndexRow[] }) {
     const needle = q.trim().toLowerCase();
     return rows
       .filter((r) => island === "Semua" || r.island === island)
-      .filter((r) => !needle || r.name.toLowerCase().includes(needle))
+      .filter(
+        (r) =>
+          !needle || r.name.toLowerCase().includes(needle) || r.province?.toLowerCase().includes(needle),
+      )
       .sort((a, b) =>
         sort === "name"
           ? a.name.localeCompare(b.name, "id")
@@ -111,7 +115,7 @@ export function RegionIndex({ rows }: { rows: RegionIndexRow[] }) {
               id="region-filter"
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Cari nama wilayah…"
+              placeholder="Cari wilayah atau provinsi…"
               className="min-h-[40px] w-full rounded-lg border border-rule-strong bg-surface px-3 text-fluid-00 text-ink placeholder:text-ink-3 focus:border-ink focus:outline-none"
             />
           </label>
@@ -151,7 +155,7 @@ export function RegionIndex({ rows }: { rows: RegionIndexRow[] }) {
                   <div className="min-w-0">
                     <p className="truncate text-fluid-0 font-bold leading-tight text-ink">{r.name}</p>
                     <p className="text-fluid-000 text-ink-3">
-                      {r.typeLabel} · {r.island}
+                      {r.typeLabel} · {r.province ?? r.island}
                     </p>
                   </div>
                   <p
