@@ -13,8 +13,10 @@
     "og:generate": "vite-node --config scripts/og.vite.config.ts scripts/generate-og.tsx"
   },
   "dependencies": {
+    "@protomaps/basemaps": "^5.7.2",
     "leaflet": "^1.9.4",
     "next": "14.2.5",
+    "protomaps-leaflet": "^5.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-leaflet": "^4.2.1",

@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
-import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { BaseMap, INDONESIA_BOUNDS } from "@/components/map/BaseMap";
+import { MapContainer, Marker, useMap, useMapEvents } from "react-leaflet";
 import { Icon } from "leaflet";
 
 // A minimal pin icon that doesn't depend on Leaflet's asset paths (which break
@@ -66,11 +67,12 @@ export function PickerMap({ position, onPick, height = 440 }: Props) {
       zoom={5}
       style={{ height, width: "100%", borderRadius: 12 }}
       scrollWheelZoom
+      minZoom={4}
+      maxZoom={13}
+      maxBounds={INDONESIA_BOUNDS}
+      maxBoundsViscosity={0.8}
     >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution="&copy; OpenStreetMap &copy; CARTO"
-      />
+        <BaseMap />
       <ClickHandler onPick={onPick} />
       <FollowPin position={position} />
       <Marker

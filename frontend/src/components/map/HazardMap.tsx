@@ -7,11 +7,11 @@ import {
   GeoJSON,
   MapContainer,
   Popup,
-  TileLayer,
-  Tooltip,
+    Tooltip,
 } from "react-leaflet";
 import type { GeoFeatureCollection, EarthquakeEvent, TsunamiZone } from "@/lib/types";
 import { prefersReducedMotion } from "@/lib/motion";
+import { BaseMap, INDONESIA_BOUNDS } from "@/components/map/BaseMap";
 import { DEPTH_BANDS, depthColor, riskTierColor, riskTierLabel } from "@/lib/seismic";
 import { absolute, num, timeAgo } from "@/lib/format";
 import { SourceAttribution } from "@/components/ui/SourceAttribution";
@@ -91,11 +91,12 @@ export function HazardMap({ faults, events, zones }: Props) {
         zoom={5}
         style={{ height: "100%", width: "100%" }}
         scrollWheelZoom
+        minZoom={4}
+        maxZoom={13}
+        maxBounds={INDONESIA_BOUNDS}
+        maxBoundsViscosity={0.8}
       >
-        <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          attribution="&copy; OpenStreetMap &copy; CARTO"
-        />
+        <BaseMap />
 
         {active.faults && (
           <GeoJSON
