@@ -23,6 +23,7 @@ const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const STATIC_PATHS = [
   { path: "/", priority: 1 },
+  { path: "/regions", priority: 0.8 },
   { path: "/map", priority: 0.7 },
   { path: "/timeline", priority: 0.7 },
   { path: "/about", priority: 0.6 },

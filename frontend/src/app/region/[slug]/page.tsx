@@ -1,11 +1,16 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { api, IS_STATIC } from "@/lib/api";
 import type { AdminRegion, RegionRiskProfile, RegionTimeline } from "@/lib/types";
-import { Card } from "@/components/ui/Card";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ButtonLink } from "@/components/ui/Button";
-import { RiskProfileCard } from "@/components/risk/RiskProfileCard";
+import { Disclosure, DisclosureGroup } from "@/components/ui/Disclosure";
+import { RiskTierBadge } from "@/components/ui/RiskTierBadge";
+import { SectionNav } from "@/components/ui/SectionNav";
+import { SourceAttribution } from "@/components/ui/SourceAttribution";
+import { QuakeFieldCanvas } from "@/components/map/QuakeFieldCanvas";
+import { FactRow, VerdictBand } from "@/components/risk/VerdictBand";
 import { MagnitudeFreqChart } from "@/components/risk/MagnitudeFreqChart";
 import { DepthHistogram } from "@/components/risk/DepthHistogram";
 import { RegionRankRow } from "@/components/discover/RegionRankRow";
@@ -17,9 +22,10 @@ import { CoverageNote } from "@/components/risk/CoverageNote";
 import { ScoreBreakdown } from "@/components/risk/ScoreBreakdown";
 import { scoreBreakdown, scoreInputsFromProfile } from "@/lib/engine/scoring";
 import { haversineKm } from "@/lib/engine/geo";
+import { islandOf } from "@/lib/islands";
 import { pageMetadata } from "@/lib/meta";
-import { binByDepth, riskTierLabel } from "@/lib/seismic";
-import { magnitude, num, regionType } from "@/lib/format";
+import { activityTierMeaning, binByDepth, riskTierLabel } from "@/lib/seismic";
+import { depth, magnitude, num, regionType } from "@/lib/format";
 import type { SeismogramEvent } from "@/lib/seismogram";
 
 /**
@@ -194,8 +200,8 @@ export default async function RegionPage({
    * The finding in prose, not a stat row (DESIGN.md §7 item 2) — replaces the
    * four-StatTile row that used to sit here (skor/persentil/magnitudo/tsunami),
    * which was the dashboard reflex this rework exists to remove. The activity
-   * score, percentile, and tsunami tier still live in RiskProfileCard right
-   * below; this sentence states the M5+ record itself.
+   * score, percentile and tier now live in VerdictBand; the figures in the
+   * two FactRows under it. This sentence states the M5+ record itself.
    */
   const coverage =
     profile.earliest_event_year && profile.latest_event_year
@@ -219,38 +225,127 @@ export default async function RegionPage({
     .filter(Boolean)
     .join(" ");
 
+  const island = islandOf(profile.region.latitude, profile.region.longitude);
+  const { latitude: lat, longitude: lng } = profile.region;
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-12 sm:space-y-14">
       <RegionJsonLd profile={profile} />
-      <PageHeader
-        eyebrow={regionType(profile.region.type)}
-        title={profile.region.name}
-        subtitle={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.`}
-        action={
-          <ShareButton
-            path={`/region/${profile.region.slug}`}
-            caption={`Risiko gempa ${profile.region.name}: ${riskTierLabel(
-              profile.activity_tier,
-            )} (skor ${profile.composite_score?.toFixed(0) ?? "—"}/100) menurut GempaWatch:`}
+
+      <div className="space-y-6">
+        <nav aria-label="Breadcrumb" className="text-fluid-00 text-ink-3">
+          <Link href="/regions" className="underline underline-offset-4 hover:text-ink">
+            Wilayah
+          </Link>{" "}
+          / {island}
+        </nav>
+
+        {profile.composite_score != null ? (
+          <VerdictBand
+            headingLevel={1}
+            eyebrow={`${regionType(profile.region.type)} · ${island}`}
+            place={profile.region.name}
+            meta={`Profil risiko historis dari ${num(profile.event_count_m4)} gempa M4+ dalam radius 100 km, ${coverage ?? "catatan historis"}.`}
+            score={profile.composite_score}
+            tier={profile.activity_tier}
+            finding={headline}
+            plotLabel={profile.region.name}
+            plotSlug={profile.region.slug}
+            action={
+              <ShareButton
+                path={`/region/${profile.region.slug}`}
+                caption={`Risiko gempa ${profile.region.name}: ${riskTierLabel(
+                  profile.activity_tier,
+                )} (skor ${profile.composite_score.toFixed(0)}/100) menurut GempaWatch:`}
+              />
+            }
           />
-        }
+        ) : (
+          <PageHeader eyebrow={regionType(profile.region.type)} title={profile.region.name} subtitle={headline} />
+        )}
+      </div>
+
+      <SectionNav
+        items={[
+          { id: "ringkasan", label: "Ringkasan" },
+          { id: "rekaman", label: "Rekaman" },
+          { id: "distribusi", label: "Distribusi" },
+          { id: "kesiapsiagaan", label: "Kesiapsiagaan" },
+          { id: "metodologi", label: "Metodologi" },
+        ]}
       />
 
-      {/* The finding in prose — see the comment above `headline`. */}
-      <p className="animate-fade-in-up max-w-3xl text-fluid-2 font-medium leading-snug text-ink">
-        {headline}
-      </p>
+      <section id="ringkasan" aria-labelledby="h-ringkasan" className="scroll-mt-32">
+        <h2 id="h-ringkasan" className="sr-only">
+          Ringkasan
+        </h2>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)]">
+          <figure className="m-0">
+            <div className="gw-paper-grid h-[280px] overflow-hidden rounded-xl border border-rule sm:h-[320px]">
+              <QuakeFieldCanvas
+                className="h-full w-full"
+                label={`Gempa M4.5+ sejak 1970 di sekitar ${profile.region.name}; yang berada dalam radius 100 km tetap berwarna.`}
+                bbox={[lng - 3.4, lat - 2.4, lng + 3.4, lat + 2.4]}
+                focus={{ lat, lon: lng, radiusKm: 100 }}
+              />
+            </div>
+            <figcaption className="mt-2 text-fluid-000 leading-relaxed text-ink-3">
+              Lingkaran = radius 100 km yang dihitung untuk wilayah ini. Gempa M4.5+ di dalamnya tetap
+              berwarna menurut kedalaman; di luarnya dipudarkan.
+            </figcaption>
+          </figure>
 
-      {/*
-        The signature object (DESIGN.md §5), full width, directly under the
-        headline it backs up — per §7's target order this comes before the
-        gauge and the distribution charts, not after them. RegionSeismogram
-        renders its own SourceAttribution inline, so no Card footer here.
-      */}
-      <Card
-        title="Rekaman gempa 1970–sekarang"
-        subtitle={`${num(timeline.events.length)} kejadian tercatat. Satu paku per kejadian — tinggi menandai magnitudo, warna menandai kedalaman. Rentang tenang terpanjang dan gempa terbesar ditandai otomatis. Skala waktu dan magnitudo sama pada trace pembanding.`}
-      >
+          <div className="space-y-6">
+            <FactRow
+              facts={[
+                { value: num(profile.event_count_m4), label: "gempa M4+ dalam 100 km" },
+                { value: num(profile.event_count_m5), label: "di antaranya M5 ke atas" },
+                { value: magnitude(profile.largest_magnitude), label: `terbesar${largestEventYear ? `, ${largestEventYear}` : ""}` },
+                { value: depth(profile.avg_depth_km), label: "kedalaman rata-rata" },
+              ]}
+            />
+            <FactRow
+              facts={[
+                {
+                  value:
+                    profile.nearest_fault_distance_km != null
+                      ? `${profile.nearest_fault_distance_km.toFixed(0)} km`
+                      : "—",
+                  label: profile.nearest_fault_name ? `ke ${profile.nearest_fault_name}` : "sesar aktif terdekat",
+                },
+                {
+                  value: profile.region.is_coastal ? (
+                    <span className="text-fluid-2">
+                      <RiskTierBadge tier={profile.tsunami_risk_tier} />
+                    </span>
+                  ) : (
+                    "—"
+                  ),
+                  label: profile.region.is_coastal ? "riwayat tsunami (pesisir)" : "bukan wilayah pesisir",
+                },
+                { value: num(profile.event_count_m6), label: "gempa M6+" },
+                { value: num(profile.event_count_m7_plus), label: "gempa M7+" },
+              ]}
+            />
+            {rankRow && (
+              <div>
+                <h3 className="mb-2 text-fluid-00 font-semibold text-ink-2">Peringkat aktivitas</h3>
+                <RegionRankRow row={rankRow} total={totalScored} />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section id="rekaman" aria-labelledby="h-rekaman" className="scroll-mt-32">
+        <h2 id="h-rekaman" className="text-fluid-3 font-extrabold tracking-tight">
+          Rekaman gempa 1970–sekarang
+        </h2>
+        <p className="mb-5 mt-1 max-w-[75ch] text-fluid-00 leading-relaxed text-ink-2">
+          {num(timeline.events.length)} kejadian tercatat. Satu garis per kejadian — tinggi menandai
+          magnitudo, warna menandai kedalaman. Rentang tenang terpanjang dan gempa terbesar ditandai
+          otomatis. Skala waktu dan magnitudo sama pada rekaman pembanding.
+        </p>
         <SeismogramComparePicker
           regionName={profile.region.name}
           events={seismogramEvents}
@@ -259,54 +354,67 @@ export default async function RegionPage({
           defaultReferenceName={nearestReference?.name ?? ""}
           defaultReferenceEvents={defaultReferenceEvents}
         />
-      </Card>
+      </section>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        <div className="lg:col-span-1">
-          <RiskProfileCard profile={profile} />
-        </div>
-
-        {/* Data first, then how the number was made.
-
-            The two methodology panels were inserted at the top of this column
-            last pass, which pushed both charts below roughly a screen of prose.
-            A reader arriving at a region page has already been given the
-            headline figures above; what they want next is the shape of the
-            data, not the derivation. The derivation follows, under eyebrow
-            titles so it reads as the second tier — matching the risk report. */}
-        <div className="space-y-5 lg:col-span-2">
-          <Card
-            title="Frekuensi magnitudo"
-            subtitle="Berapa banyak gempa di tiap tingkat kekuatan, sepanjang catatan."
-          >
+      <section id="distribusi" aria-labelledby="h-distribusi" className="scroll-mt-32">
+        <h2 id="h-distribusi" className="text-fluid-3 font-extrabold tracking-tight">
+          Distribusi
+        </h2>
+        <div className="mt-5 grid gap-10 lg:grid-cols-2">
+          <div>
+            <h3 className="text-fluid-1 font-bold">Frekuensi magnitudo</h3>
+            <p className="mb-3 mt-1 text-fluid-00 text-ink-2">
+              Berapa banyak gempa di tiap tingkat kekuatan, sepanjang catatan.
+            </p>
             <MagnitudeFreqChart profile={profile} />
-          </Card>
-
-          <Card
-            title="Distribusi kedalaman"
-            subtitle="Kedalaman menentukan seberapa keras guncangan terasa di permukaan."
-          >
+          </div>
+          <div>
+            <h3 className="text-fluid-1 font-bold">Distribusi kedalaman</h3>
+            <p className="mb-3 mt-1 text-fluid-00 text-ink-2">
+              Kedalaman menentukan seberapa keras guncangan terasa di permukaan.
+            </p>
             <DepthHistogram bins={depthBins} />
-          </Card>
+          </div>
+        </div>
+      </section>
 
+      <section id="kesiapsiagaan" aria-labelledby="h-siap" className="scroll-mt-32">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+          <div>
+            <h2 id="h-siap" className="text-fluid-3 font-extrabold tracking-tight">
+              Langkah kesiapsiagaan
+            </h2>
+            <p className="mt-1 text-fluid-00 leading-relaxed text-ink-2">
+              Disesuaikan dengan tingkat aktivitas wilayah ini
+              {profile.region.is_coastal ? " dan statusnya sebagai wilayah pesisir" : ""}. Yang bisa
+              dilakukan hari ini — bukan karena gempa akan datang, tetapi karena kesiapan selalu berguna.
+            </p>
+          </div>
+          <PreparednessChecklist
+            tier={profile.activity_tier}
+            coastal={profile.region.is_coastal}
+            initialVisible={4}
+          />
+        </div>
+      </section>
+
+      <section id="metodologi" aria-labelledby="h-metodologi" className="scroll-mt-32">
+        <h2 id="h-metodologi" className="text-fluid-3 font-extrabold tracking-tight">
+          Bagaimana angka ini dibuat
+        </h2>
+        <p className="mb-4 mt-1 max-w-[70ch] text-fluid-00 text-ink-2">
+          Setiap angka di halaman ini bisa ditelusuri ke aturannya.
+        </p>
+        <DisclosureGroup>
           {scoreInputs && (
-            <Card
-              titleAs="eyebrow"
-              title="Dari mana skor ini datang"
-              subtitle="Empat komponen berbobot, dihitung dari catatan gempa dalam radius 100 km."
+            <Disclosure
+              title={`Dari mana skor ${Math.round(profile.composite_score ?? 0)} datang`}
+              summary="Empat komponen berbobot, dari catatan gempa dalam radius 100 km"
             >
-              <ScoreBreakdown
-                components={scoreBreakdown(scoreInputs)}
-                total={profile.composite_score ?? 0}
-              />
-            </Card>
+              <ScoreBreakdown components={scoreBreakdown(scoreInputs)} total={profile.composite_score ?? 0} />
+            </Disclosure>
           )}
-
-          <Card
-            titleAs="eyebrow"
-            title="Cakupan data di balik angka ini"
-            subtitle="Pembagi yang dipakai komponen frekuensi, dan apa yang tidak ada dalam catatan."
-          >
+          <Disclosure title="Cakupan data" summary={`${coverage ?? "—"} · ${num(profile.event_count_m4)} gempa M4+`}>
             <CoverageNote
               earliestYear={profile.earliest_event_year}
               latestYear={profile.latest_event_year}
@@ -314,36 +422,37 @@ export default async function RegionPage({
               m4Count={profile.event_count_m4}
               scope="region"
             />
-          </Card>
-        </div>
-      </div>
+          </Disclosure>
+          <Disclosure title="Apa arti tingkat aktivitas" summary={riskTierLabel(profile.activity_tier)}>
+            <p className="max-w-[70ch] text-fluid-00 leading-relaxed text-ink-2">
+              {activityTierMeaning(profile.activity_tier)} Jumlah kejadian dihitung dalam radius tetap
+              100 km dan <em>tidak</em> dinormalisasi terhadap luas wilayah maupun populasi — gunakan
+              persentil untuk perbandingan relatif. Indikator pola historis, bukan prediksi.
+            </p>
+          </Disclosure>
+        </DisclosureGroup>
+      </section>
 
-      {rankRow && (
-        <Card
-          title="Peringkat aktivitas"
-          subtitle="Posisi wilayah ini di antara semua wilayah yang sudah diskor di sini — bukan seluruh Indonesia."
-        >
-          <RegionRankRow row={rankRow} total={totalScored} />
-        </Card>
-      )}
-
-      <Card
-        title="Langkah kesiapsiagaan"
-        subtitle="Disesuaikan dengan tingkat aktivitas wilayah ini dan status pesisirnya."
-      >
-        <PreparednessChecklist
-          tier={profile.activity_tier}
-          coastal={profile.region.is_coastal}
-        />
-      </Card>
-
-      {/* No "Bandingkan dengan wilayah lain" button here — that was /compare's
-          job, and the seismogram card above already does it inline. */}
-      <div className="flex flex-wrap gap-3">
+      <footer className="space-y-4">
+        <p className="max-w-[80ch] border-l-2 border-rule-strong pl-3 text-fluid-00 leading-relaxed text-ink-3">
+          GempaWatch membaca pola gempa masa lalu. Ini bukan sistem peringatan dini dan bukan prediksi.
+          Untuk peringatan gempa dan tsunami resmi, rujuk{" "}
+          <a
+            href="https://www.bmkg.go.id/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-ink-2 underline underline-offset-2"
+          >
+            bmkg.go.id ↗
+          </a>
+        </p>
+        <SourceAttribution />
+        {/* No "Bandingkan dengan wilayah lain" button — the record section
+            above already compares inline. */}
         <ButtonLink href="/" variant="secondary">
           Cek titik persismu di peta →
         </ButtonLink>
-      </div>
+      </footer>
     </div>
   );
 }

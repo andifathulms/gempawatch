@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { MakerSignature } from "@/components/ui/MakerSignature";
-import { NavHeader } from "@/components/ui/NavHeader";
+import { MobileTabBar, NavHeader } from "@/components/ui/NavHeader";
 import { SiteFooter } from "@/components/ui/SiteFooter";
 import { ToastProvider } from "@/components/ui/ToastProvider";
 import { SiteJsonLd } from "@/components/seo/JsonLd";
@@ -107,19 +107,21 @@ export default function RootLayout({
       lang="id"
       className={`${sans.variable} ${mono.variable}`}
     >
-      <body className="min-h-screen bg-paper text-ink antialiased">
+      {/* Bottom padding on phones clears the fixed tab bar (MobileTabBar). */}
+      <body className="min-h-screen bg-paper pb-[calc(56px+env(safe-area-inset-bottom))] text-ink antialiased md:pb-0">
         <ToastProvider>
           <a href="#main" className="skip-link">
             Lompat ke konten utama
           </a>
           <SiteJsonLd />
-        <NavHeader />
-          <main id="main" className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
+          <NavHeader />
+          <main id="main" className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
             {children}
           </main>
           <SiteFooter>
             <MakerSignature />
           </SiteFooter>
+          <MobileTabBar />
         </ToastProvider>
       </body>
     </html>

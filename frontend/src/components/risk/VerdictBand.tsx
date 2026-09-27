@@ -17,7 +17,7 @@ interface Props {
   plotSlug?: string;
   /** h1 on a standalone page; h2 when the page already has its question as h1. */
   headingLevel?: 1 | 2;
-  /** Right-hand extra (share button) on the header row. */
+  /** Follows the finding — the share row on region pages. */
   action?: React.ReactNode;
 }
 
@@ -45,10 +45,7 @@ export function VerdictBand({
   return (
     <section className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
       <div className="min-w-0">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <p className="text-fluid-000 font-bold uppercase tracking-[0.14em] text-ink-3">{eyebrow}</p>
-          {action}
-        </div>
+        <p className="text-fluid-000 font-bold uppercase tracking-[0.14em] text-ink-3">{eyebrow}</p>
         <Heading className="mt-2 text-fluid-5 font-extrabold tracking-tight">{place}</Heading>
         {meta && <p className="mt-1.5 text-fluid-00 text-ink-3">{meta}</p>}
 
@@ -67,6 +64,7 @@ export function VerdictBand({
         </div>
 
         <p className="mt-5 max-w-[46ch] text-fluid-1 leading-relaxed text-ink">{finding}</p>
+        {action && <div className="mt-5">{action}</div>}
       </div>
 
       <div className="min-w-0">

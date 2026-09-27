@@ -93,6 +93,9 @@ export function RegionDotPlot({ score, label, slug, rows: given }: Props) {
   const self = slug ? placed.find((p) => p.row.slug === slug) : undefined;
   const hx = self?.cx ?? x(score);
   const hy = self?.cy ?? tallest - 6;
+  // The label sits above every stack, with a leader down to the mark, so it
+  // never lands on top of neighbouring dots.
+  const labelY = Math.max(14, tallest - r - 14);
   const anchor = placed.find((p) => p.row.slug === ANCHOR_SLUG && p.row.slug !== slug);
   const endAnchor = (px: number) => (px > width * 0.62 ? "end" : "start");
 
@@ -121,13 +124,18 @@ export function RegionDotPlot({ score, label, slug, rows: given }: Props) {
 
             {/* This place: a ringed dot (or a tick, for a point between regions). */}
             {self ? (
-              <circle cx={hx} cy={hy} r={r + 3.5} fill="none" stroke="var(--ink)" strokeWidth={2} />
+              <>
+                <circle cx={hx} cy={hy} r={r + 3.5} fill="none" stroke="var(--ink)" strokeWidth={2} />
+                {hy - r - 4 > labelY + 4 && (
+                  <line x1={hx} x2={hx} y1={labelY + 4} y2={hy - r - 4} stroke="var(--ink)" strokeWidth={1} />
+                )}
+              </>
             ) : (
-              <line x1={hx} x2={hx} y1={hy} y2={base} stroke="var(--ink)" strokeWidth={2} />
+              <line x1={hx} x2={hx} y1={labelY + 4} y2={base} stroke="var(--ink)" strokeWidth={2} />
             )}
             <text
-              x={hx + (endAnchor(hx) === "end" ? -10 : 10)}
-              y={Math.max(14, hy - 8)}
+              x={hx + (endAnchor(hx) === "end" ? 4 : -4)}
+              y={labelY}
               textAnchor={endAnchor(hx)}
               fontSize={13}
               fontWeight={700}

@@ -2,50 +2,45 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Logo } from "@/components/ui/Logo";
+import { LivePill } from "@/components/map/LiveDrawer";
 
 /**
- * Primary navigation.
+ * Primary navigation — five destinations named for what people want to do
+ * (DESIGN.md §4, §13): check a place, browse regions, explore the map, read
+ * the history, audit the method.
  *
- * Five public destinations (DESIGN.md §4) collapse to four links plus the
- * logo: the logo already goes home, so "Beranda" as a second link to the same
- * place was redundant, and "Jelajahi" (/explore) retired once its ranking
- * context moved onto region pages (§7 item 5, §10 step 5).
+ * - "Wilayah" (/regions) restores a browsable way into the region pages,
+ *   which had only name search after /explore retired.
+ * - "Tentang" became "Metodologi": that page's job is audit (ScoreLab,
+ *   sources, rules), and the name now says so. The path stays /about.
+ * - "Gempa terkini" is a pill, not a link: the latest event and how long ago,
+ *   opening the 24-hour list in a drawer. It answers "is this current?" on
+ *   every page without putting the feed back on the homepage (§12).
  *
- * "Cek Risiko" is pulled out of the link row and rendered as the one solid
- * button on the page, because it is the single action the whole product exists
- * to deliver — everything else is browsing. It now points at "/" itself,
- * since the risk-check tool moved to the homepage (§10 step 4) — and stays
- * suppressed there, so the button never sits next to the exact tool it links
- * to.
+ * Phones get the same destinations as a bottom tab bar (thumb reach, 44px
+ * targets) instead of a hamburger; the header keeps only the logo and pill.
  */
+export const NAV_LINKS = [
+  { href: "/", label: "Cek Lokasi", short: "Cek" },
+  { href: "/regions", label: "Wilayah", short: "Wilayah" },
+  { href: "/map", label: "Peta", short: "Peta" },
+  { href: "/timeline", label: "Sejarah", short: "Sejarah" },
+  { href: "/about", label: "Metodologi", short: "Metode" },
+] as const;
 
-const LINKS = [
-  { href: "/map", label: "Peta Bahaya" },
-  { href: "/timeline", label: "Sejarah" },
-  { href: "/about", label: "Tentang" },
-];
-
-const CTA = { href: "/", label: "Cek Risiko" };
-
-function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+export function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/" || pathname.startsWith("/risk");
+  if (href === "/regions") return pathname.startsWith("/regions") || pathname.startsWith("/region/");
+  return pathname.startsWith(href);
 }
 
 export function NavHeader() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Close the mobile menu whenever the route changes.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  // The header only earns its border and shadow once content is behind it —
-  // at the top of the page it should sit flush with the hero.
+  // The header only earns its rule once content is behind it.
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
@@ -53,154 +48,115 @@ export function NavHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // A menu open behind a scrolling page is disorienting on mobile.
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  /**
-   * Escape closes the menu and hands focus back to the toggle.
-   *
-   * Without this the only way out was to Tab through every link — and because
-   * the menu locks body scroll while open, a keyboard user who tabbed past the
-   * last item landed on page content that could no longer scroll into view. Not
-   * a focus trap in the 2.1.2 sense, since Shift+Tab always worked, but a
-   * dead end with no exit anyone would think to look for.
-   */
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setOpen(false);
-      toggleRef.current?.focus();
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [open]);
-
   return (
     <header
-      className={`sticky top-0 z-[1000] bg-paper/85 backdrop-blur-md transition-shadow duration-200 ${
-        scrolled ? "border-b border-rule shadow-md" : "border-b border-transparent"
+      className={`sticky top-0 z-[1000] bg-paper/85 backdrop-blur-md transition-[border-color] duration-200 ${
+        scrolled ? "border-b border-rule" : "border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center"
-          aria-label="GempaWatch beranda"
-        >
+      <nav aria-label="Utama" className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-2.5">
+        <Link href="/" className="flex shrink-0 items-center" aria-label="GempaWatch — cek lokasi">
           <Logo size={28} className="text-fluid-0" />
         </Link>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-0.5 text-fluid-00 md:flex">
-          {LINKS.map((l) => {
+        <ul className="hidden flex-1 items-center gap-0.5 text-fluid-00 md:flex">
+          {NAV_LINKS.map((l) => {
             const active = isActive(pathname, l.href);
             return (
-              <Link
-                key={l.href}
-                href={l.href}
-                aria-current={active ? "page" : undefined}
-                className={`relative rounded-md px-3 py-2 transition-colors duration-[130ms] ${
-                  active
-                    ? "text-ink"
-                    : "text-ink-2 hover:text-ink"
-                }`}
-              >
-                {l.label}
-                {active && (
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-ink"
-                  />
-                )}
-              </Link>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-2">
-          {pathname !== "/" && (
-            <Link
-              href={CTA.href}
-              aria-current={isActive(pathname, CTA.href) ? "page" : undefined}
-              className="hidden rounded-lg bg-ink px-4 py-2 text-fluid-00 font-semibold text-on-ink shadow-md transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.98] sm:inline-flex"
-            >
-              {CTA.label}
-            </Link>
-          )}
-
-          {/* Mobile toggle */}
-          <button
-            ref={toggleRef}
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Tutup menu" : "Buka menu"}
-            className="flex h-10 w-10 items-center justify-center rounded-md text-ink-2 transition-colors hover:bg-surface hover:text-ink md:hidden"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              {open ? (
-                <>
-                  <path d="M5 5l10 10" />
-                  <path d="M15 5L5 15" />
-                </>
-              ) : (
-                <>
-                  <path d="M3 6h14" />
-                  <path d="M3 10h14" />
-                  <path d="M3 14h14" />
-                </>
-              )}
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile menu */}
-      {open && (
-        <div
-          id="mobile-nav"
-          className="animate-fade-in border-t border-rule bg-paper px-4 py-3 md:hidden"
-        >
-          <div className="flex flex-col gap-0.5">
-            {[...LINKS, CTA].map((l) => {
-              const active = isActive(pathname, l.href);
-              return (
+              <li key={l.href}>
                 <Link
-                  key={l.href}
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex items-center justify-between rounded-md px-3 py-3 text-fluid-0 transition-colors ${
+                  className={`inline-flex min-h-tap-comfortable items-center px-3 transition-colors duration-[130ms] ${
                     active
-                      ? "bg-surface text-ink"
-                      : "text-ink-2 hover:bg-surface hover:text-ink"
+                      ? "font-semibold text-ink shadow-[inset_0_-2px_0_rgb(var(--ink-c))]"
+                      : "text-ink-2 hover:text-ink"
                   }`}
                 >
                   {l.label}
-                  <span aria-hidden="true" className="text-ink-3">
-                    →
-                  </span>
                 </Link>
-              );
-            })}
-          </div>
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="ml-auto flex min-w-0 items-center md:ml-0">
+          <LivePill />
         </div>
-      )}
+      </nav>
     </header>
+  );
+}
+
+const ICONS: Record<string, React.ReactNode> = {
+  "/": (
+    <>
+      <circle cx="12" cy="10" r="3" />
+      <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z" />
+    </>
+  ),
+  "/regions": (
+    <>
+      <rect x="3.5" y="4" width="7" height="7" rx="1.5" />
+      <rect x="13.5" y="4" width="7" height="7" rx="1.5" />
+      <rect x="3.5" y="14" width="7" height="7" rx="1.5" />
+      <rect x="13.5" y="14" width="7" height="7" rx="1.5" />
+    </>
+  ),
+  "/map": (
+    <>
+      <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z" />
+      <path d="M9 4v14M15 6v14" />
+    </>
+  ),
+  "/timeline": <path d="M2.5 12h4l2.5-7 4.5 14 2.5-7h5.5" />,
+  "/about": (
+    <>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 11v5.5M12 7.6v.4" />
+    </>
+  ),
+};
+
+/** Phone navigation: the five destinations in thumb reach. */
+export function MobileTabBar() {
+  const pathname = usePathname();
+  return (
+    <nav
+      aria-label="Utama"
+      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-rule bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+    >
+      <ul className="grid grid-cols-5">
+        {NAV_LINKS.map((l) => {
+          const active = isActive(pathname, l.href);
+          return (
+            <li key={l.href}>
+              <Link
+                href={l.href}
+                aria-current={active ? "page" : undefined}
+                className={`flex min-h-[56px] flex-col items-center justify-center gap-0.5 text-fluid-000 font-semibold ${
+                  active ? "text-ink" : "text-ink-3"
+                }`}
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={active ? 2.2 : 1.8}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  {ICONS[l.href]}
+                </svg>
+                {l.short}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }

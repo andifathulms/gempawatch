@@ -23,7 +23,8 @@ const SECTIONS: { title: string; links: { href: string; label: string }[] }[] = 
   {
     title: "Jelajahi",
     links: [
-      { href: "/", label: "Beranda" },
+      { href: "/", label: "Cek lokasi" },
+      { href: "/regions", label: "Wilayah" },
       { href: "/map", label: "Peta bahaya & sesar" },
     ],
   },
@@ -96,9 +97,9 @@ export function SiteFooter({ children }: { children?: React.ReactNode }) {
           </nav>
         </div>
 
-        <div className="mt-10 rounded-lg border border-tier-mod/25 bg-tier-mod/[0.06] px-4 py-3.5">
-          <p className="text-fluid-00 leading-relaxed text-ink-2">
-            <strong className="font-semibold text-tier-mod">Penting —</strong>{" "}
+        <div className="mt-10 border-l-2 border-ink pl-4">
+          <p className="max-w-[80ch] text-fluid-00 leading-relaxed text-ink-2">
+            <strong className="font-bold text-ink">Penting —</strong>{" "}
             GempaWatch menampilkan pola risiko historis, bukan prediksi, dan{" "}
             <strong className="font-semibold text-ink">bukan pengganti</strong>{" "}
             peringatan dini resmi BMKG. Untuk peringatan tsunami resmi, selalu rujuk{" "}

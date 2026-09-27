@@ -23,7 +23,7 @@ export function Skeleton({ className }: Props) {
 // Header skeleton matching the PageHeader footprint.
 export function PageHeaderSkeleton() {
   return (
-    <div className="rounded-2xl border border-rule bg-surface px-5 py-6 sm:px-7 sm:py-7">
+    <div className="border-b border-rule pb-6 sm:pb-8">
       <div className="space-y-3">
         <Skeleton className="h-3 w-24" />
         <Skeleton className="h-9 w-64 max-w-full" />
